@@ -12,6 +12,6 @@ public class TutorialFeature : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"Secret number is: {secretNumber} | Secret message is: {secretNumber}");
+        Debug.Log($"Secret number is: {secretNumber} | Secret message is: {secretMessage}");
     }
 }
