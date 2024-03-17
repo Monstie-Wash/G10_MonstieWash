@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 253d155b503f25149bd5955e840a9563
+guid: a10c855c8edb2e447bdd35353faccf42
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1721060030411001428
-    second: DirtMask_0
+      213: -7417931830013969913
+    second: softBrush 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
-    sRGBTexture: 0
+    sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -74,7 +74,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DirtMask_0
+      name: softBrush 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 512
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 45e45c5aafe62e710800000000000000
-      internalID: 1721060030411001428
+      spriteID: 70a34ff6d463e0990800000000000000
+      internalID: -7417931830013969913
       vertices: []
       indices: 
       edges: []
@@ -131,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DirtMask_0: 1721060030411001428
+      softBrush 1_0: -7417931830013969913
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
