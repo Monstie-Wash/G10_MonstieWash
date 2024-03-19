@@ -5,48 +5,48 @@ using UnityEngine;
 public class Playerhand : MonoBehaviour
 {
     //Unity Inspector
-	[SerializeField]
+    [SerializeField]
     [Range(1.0f, 50.0f)]
-	private float cursorSpeed = 20;
+    private float cursorSpeed = 20f;
 
     //Private
-    private Transform m_Transform;
-    private Vector3 handPosition;
-	private float moveHorizontal;
-	private float moveVertical;
+    private Transform m_transform;
+    private Vector3 m_handPosition;
+    private float m_moveHorizontal;
+    private float m_moveVertical;
 	
     // Start is called before the first frame update
     void Start()
     {
-        m_Transform = gameObject.transform;
+        m_transform = gameObject.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        handPosition = Camera.main.WorldToScreenPoint(m_Transform.position);
-        moveHorizontal = Input.GetAxis("Horizontal");
-		moveVertical = Input.GetAxis("Vertical");
+        m_handPosition = Camera.main.WorldToScreenPoint(m_transform.position);
+        m_moveHorizontal = Input.GetAxis("Horizontal");
+        m_moveVertical = Input.GetAxis("Vertical");
 
         //Boundary Check X-axis
-        if(handPosition.x > Screen.width && moveHorizontal > 0)
+        if(m_handPosition.x > Screen.width && m_moveHorizontal > 0)
         {
-            moveHorizontal = 0;
+            m_moveHorizontal = 0;
         }
-        else if(handPosition.x < 0 && moveHorizontal < 0)
+        else if(m_handPosition.x < 0 && m_moveHorizontal < 0)
         {
-            moveHorizontal = 0;
+            m_moveHorizontal = 0;
         }
         //Boundary Check Y-axis
-        if(handPosition.y > Screen.height && moveVertical > 0)
+        if(m_handPosition.y > Screen.height && m_moveVertical > 0)
         {
-            moveVertical = 0;
+            m_moveVertical = 0;
         }
-        else if(handPosition.y < 0 && moveVertical < 0)
+        else if(m_handPosition.y < 0 && m_moveVertical < 0)
         {
-            moveVertical = 0;
+            m_moveVertical = 0;
         }
-		
-		m_Transform.position = transform.position + new Vector3(moveHorizontal * cursorSpeed * Time.deltaTime, moveVertical * cursorSpeed * Time.deltaTime, 0);
+        
+        m_transform.position = transform.position + new Vector3(m_moveHorizontal * cursorSpeed * Time.deltaTime, m_moveVertical * cursorSpeed * Time.deltaTime, 0);
     }
 }
