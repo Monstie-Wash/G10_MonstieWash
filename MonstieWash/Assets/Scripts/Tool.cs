@@ -6,11 +6,20 @@ using UnityEngine;
 public class Tool : ScriptableObject
 {
     public Sprite mask;
-    [Range(1, 100)] public float strength = 100;
-    [HideInInspector] public byte[] maskPixels;
+    [HideInInspector]
+    public float strength;
+    [Range(1, 10)] 
+    public int size = 1;
+    [HideInInspector] 
+    public byte[] maskPixels;
+
+    [SerializeField]
+    [Range(1f, 100f)] 
+    private float inputStrength = 100f;
 
     public void Initialize()
     {
+        strength = Mathf.Pow(1.0472f, inputStrength);
         maskPixels = new byte[mask.texture.width * mask.texture.height];
         Color[] maskColors = mask.texture.GetPixels();
         for (int i = 0; i < maskColors.Length; i++)
