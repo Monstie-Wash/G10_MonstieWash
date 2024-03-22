@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testSpawner: {fileID: 8950337201418130598, guid: 19b8b2a4308361d4da2f7a696046c18b, type: 3}
+  firstRoomToLoad: NavTest
 --- !u!4 &1242542189
 Transform:
   m_ObjectHideFlags: 0

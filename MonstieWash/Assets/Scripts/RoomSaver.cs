@@ -8,6 +8,7 @@ public class RoomSaver : MonoBehaviour
     List<string> roomsLoaded;
     Scene currentscene;
     public GameObject testSpawner;
+    public string firstRoomToLoad;
 
     public void loadNewRoom(string target)
     {
@@ -37,8 +38,6 @@ public class RoomSaver : MonoBehaviour
                     ob.SetActive(true);
                 }
 
-
-
                 return;
             }
             
@@ -54,14 +53,12 @@ public class RoomSaver : MonoBehaviour
 
     }
 
-
-
     private void Start()
     {
         roomsLoaded = new List<string>();
-        roomsLoaded.Add("NavTest");
-        SceneManager.LoadScene("NavTest", LoadSceneMode.Additive);
-        currentscene = SceneManager.GetSceneByName("NavTest"); 
+        roomsLoaded.Add(firstRoomToLoad);
+        SceneManager.LoadScene(firstRoomToLoad, LoadSceneMode.Additive);
+        currentscene = SceneManager.GetSceneByName(firstRoomToLoad); 
     }
 
     private void Update()
