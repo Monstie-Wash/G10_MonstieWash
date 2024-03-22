@@ -186,6 +186,7 @@ public class Eraser : MonoBehaviour
 
         //Convert coordinates to pixel in erasable texture
         var erasableTextureWidth = halfErasableSize.x * 2;
+        var erasableTextureHeight = halfErasableSize.y * 2;
         var centrePixelX = halfErasableSize.x + pixelPosFromCentre.x;
         var centrePixelY = (halfErasableSize.y + pixelPosFromCentre.y) * erasableTextureWidth;
         var centrePixel = centrePixelX + centrePixelY;
@@ -203,7 +204,7 @@ public class Eraser : MonoBehaviour
                 yOffset = erasableTextureWidth * (yCount - 1);
 
                 outOfBoundsX = centrePixelX + xOffset < 0 || centrePixelX + xOffset >= erasableTextureWidth;
-                outOfBoundsY = centrePixelY + yOffset < 0 || halfErasableSize.y + pixelPosFromCentre.y + yCount - 1 >= erasableTextureWidth;
+                outOfBoundsY = centrePixelY + yOffset < 0 || halfErasableSize.y + pixelPosFromCentre.y + yCount - 1 >= erasableTextureHeight;
                 if (outOfBoundsX || outOfBoundsY) continue;
 
                 scalePixels.Add(centrePixel + xOffset + yOffset);
