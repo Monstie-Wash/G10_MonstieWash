@@ -11,7 +11,7 @@ public class Playerhand : MonoBehaviour
 
     //Private
     private Transform m_transform;
-    private Vector3 m_handPosition;
+    public Vector3 m_handPosition;
     private float m_moveHorizontal;
     private float m_moveVertical;
 	
