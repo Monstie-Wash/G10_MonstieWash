@@ -1,16 +1,20 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Eraser : MonoBehaviour
 {
-    [SerializeField] private Tool tool;
+    [SerializeField]
+    private Tool tool;
 
     private List<Erasable> m_erasables = new();
     private Playerhand m_playerHand;
     private Vector2Int m_handPos = Vector2Int.zero;
     private Vector2Int m_prevHandPos = Vector2Int.zero;
+
+    private PlayerInput m_playerInput;
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
@@ -56,21 +60,55 @@ public class Eraser : MonoBehaviour
     private void Awake()
     {
         m_playerHand = GetComponentInParent<Playerhand>();
+        m_playerInput = new PlayerInput();
 
         InitializeTool();
         PopulateErasables();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        transform.localScale = Vector3.one * tool.size;
+        m_playerInput.PlayerActions.Activate.performed += Activate_performed;
+        m_playerInput.PlayerActions.Activate.canceled += Activate_canceled;
+        m_playerInput.PlayerActions.Enable();
+    }
 
-        if (!Input.GetKey(KeyCode.Space)) return;
-        if (!HandMoved()) return;
+    private void OnDisable()
+    {
+        m_playerInput.PlayerActions.Activate.performed -= Activate_performed;
+        m_playerInput.PlayerActions.Activate.canceled -= Activate_canceled;
+        m_playerInput.PlayerActions.Disable();
+    }
 
-        foreach (var erasable in m_erasables)
+    private void Activate_performed(InputAction.CallbackContext context)
+    {
+        StartCoroutine(UseTool());
+    }
+
+    private void Activate_canceled(InputAction.CallbackContext context)
+    {
+        StopAllCoroutines();
+    }
+
+    /// <summary>
+    /// Called every frame until the activate button is released.
+    /// </summary>
+    private IEnumerator UseTool()
+    {
+        while (true)
         {
-            if (UpdateErasableMask(erasable)) erasable.ApplyMask();
+            if (!HandMoved())
+            {
+                yield return null;
+                continue;
+            }
+
+            foreach (var erasable in m_erasables)
+            {
+                if (UpdateErasableMask(erasable)) erasable.ApplyMask();
+            }
+
+            yield return null;
         }
     }
 
@@ -126,7 +164,8 @@ public class Eraser : MonoBehaviour
     /// <returns>Whether or not the hand moved since last frame.</returns>
     private bool HandMoved()
     {
-        m_handPos = new Vector2Int(Mathf.RoundToInt(m_playerHand.handPosition.x), Mathf.RoundToInt(m_playerHand.handPosition.y));
+        var handScreenPos = Camera.main.WorldToScreenPoint(m_playerHand.transform.position);
+        m_handPos = new Vector2Int(Mathf.RoundToInt(handScreenPos.x), Mathf.RoundToInt(handScreenPos.y));
 
         if (m_prevHandPos == m_handPos) return false;
         

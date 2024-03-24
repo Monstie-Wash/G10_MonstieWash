@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Playerhand : MonoBehaviour
 {
-    //Public
-    public Vector3 handPosition { get; private set; }
-
     //Unity Inspector
     [SerializeField]
     [Range(1.0f, 50.0f)]
@@ -16,14 +12,43 @@ public class Playerhand : MonoBehaviour
     private float m_moveHorizontal;
     private float m_moveVertical;
 
-    // Update is called once per frame
+    private PlayerInput m_playerInput;
+
+    private void Awake()
+    {
+        m_playerInput = new PlayerInput();
+    }
+
+    private void OnEnable()
+    {
+        m_playerInput.PlayerActions.Move.performed += Move_performed;
+        m_playerInput.PlayerActions.Move.canceled += Move_canceled;
+        m_playerInput.PlayerActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        m_playerInput.PlayerActions.Move.performed -= Move_performed;
+        m_playerInput.PlayerActions.Move.canceled -= Move_canceled;
+        m_playerInput.PlayerActions.Disable();
+    }
+
+    private void Move_performed(InputAction.CallbackContext context)
+    {
+        Vector2 movementInput = context.ReadValue<Vector2>();
+        m_moveHorizontal = movementInput.x;
+        m_moveVertical = movementInput.y;
+    }
+
+    private void Move_canceled(InputAction.CallbackContext context)
+    {
+        m_moveHorizontal = 0f;
+        m_moveVertical = 0f;
+    }
+
     private void Update()
     {
-        m_moveHorizontal = Input.GetAxis("Horizontal");
-        m_moveVertical = Input.GetAxis("Vertical");
-
         transform.position = CalculateMovement();
-        handPosition = Camera.main.WorldToScreenPoint(transform.position);
     }
 
     /// <summary>
@@ -32,8 +57,7 @@ public class Playerhand : MonoBehaviour
     private Vector3 CalculateMovement()
     {
         var newPosition = transform.position + new Vector3(m_moveHorizontal * cursorSpeed * Time.deltaTime, m_moveVertical * cursorSpeed * Time.deltaTime, 0f);
-        var aspectRatio = 16f / 9f;
-        var cameraWidthInWorldUnits = Camera.main.orthographicSize * aspectRatio;
+        var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
         var cameraHeightInWorldUnits = Camera.main.orthographicSize;
 
         //Keep within screen bounds

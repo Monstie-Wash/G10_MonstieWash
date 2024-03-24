@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Soap
   m_EditorClassIdentifier: 
   mask: {fileID: 21300000, guid: a10c855c8edb2e447bdd35353faccf42, type: 3}
-  size: 4
-  inputStrength: 10
-  strength: 1.5859745
+  size: 2
+  inputStrength: 20
+  strength: 2.515315
