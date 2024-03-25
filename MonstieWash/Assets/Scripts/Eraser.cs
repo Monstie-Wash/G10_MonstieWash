@@ -10,11 +10,9 @@ public class Eraser : MonoBehaviour
     private Tool tool;
 
     private List<Erasable> m_erasables = new();
-    private Playerhand m_playerHand;
+    private PlayerHand m_playerHand;
     private Vector2Int m_handPos = Vector2Int.zero;
     private Vector2Int m_prevHandPos = Vector2Int.zero;
-
-    private PlayerInput m_playerInput;
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
@@ -59,56 +57,22 @@ public class Eraser : MonoBehaviour
 
     private void Awake()
     {
-        m_playerHand = GetComponentInParent<Playerhand>();
-        m_playerInput = new PlayerInput();
+        m_playerHand = GetComponentInParent<PlayerHand>();
 
         InitializeTool();
         PopulateErasables();
     }
 
-    private void OnEnable()
-    {
-        m_playerInput.PlayerActions.Activate.performed += Activate_performed;
-        m_playerInput.PlayerActions.Activate.canceled += Activate_canceled;
-        m_playerInput.PlayerActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        m_playerInput.PlayerActions.Activate.performed -= Activate_performed;
-        m_playerInput.PlayerActions.Activate.canceled -= Activate_canceled;
-        m_playerInput.PlayerActions.Disable();
-    }
-
-    private void Activate_performed(InputAction.CallbackContext context)
-    {
-        StartCoroutine(UseTool());
-    }
-
-    private void Activate_canceled(InputAction.CallbackContext context)
-    {
-        StopAllCoroutines();
-    }
-
     /// <summary>
     /// Called every frame until the activate button is released.
     /// </summary>
-    private IEnumerator UseTool()
+    public void UseTool()
     {
-        while (true)
+        if (!HandMoved()) return;
+
+        foreach (var erasable in m_erasables)
         {
-            if (!HandMoved())
-            {
-                yield return null;
-                continue;
-            }
-
-            foreach (var erasable in m_erasables)
-            {
-                if (UpdateErasableMask(erasable)) erasable.ApplyMask();
-            }
-
-            yield return null;
+            if (UpdateErasableMask(erasable)) erasable.ApplyMask();
         }
     }
 

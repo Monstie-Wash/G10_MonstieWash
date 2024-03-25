@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Playerhand : MonoBehaviour
+public class PlayerHand : MonoBehaviour
 {
     //Unity Inspector
     [SerializeField]
@@ -12,35 +12,14 @@ public class Playerhand : MonoBehaviour
     private float m_moveHorizontal;
     private float m_moveVertical;
 
-    private PlayerInput m_playerInput;
-
-    private void Awake()
-    {
-        m_playerInput = new PlayerInput();
-    }
-
-    private void OnEnable()
-    {
-        m_playerInput.PlayerActions.Move.performed += Move_performed;
-        m_playerInput.PlayerActions.Move.canceled += Move_canceled;
-        m_playerInput.PlayerActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        m_playerInput.PlayerActions.Move.performed -= Move_performed;
-        m_playerInput.PlayerActions.Move.canceled -= Move_canceled;
-        m_playerInput.PlayerActions.Disable();
-    }
-
-    private void Move_performed(InputAction.CallbackContext context)
+    public void MovePerformed(InputAction.CallbackContext context)
     {
         Vector2 movementInput = context.ReadValue<Vector2>();
         m_moveHorizontal = movementInput.x;
         m_moveVertical = movementInput.y;
     }
 
-    private void Move_canceled(InputAction.CallbackContext context)
+    public void MoveCancelled()
     {
         m_moveHorizontal = 0f;
         m_moveVertical = 0f;
