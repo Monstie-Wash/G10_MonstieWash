@@ -41,6 +41,7 @@ public class Eraser : MonoBehaviour
         {
             var colors = sprite.texture.GetPixels();
             var newColors = new Color[maskPixels.Length];
+            var erasedCount = 0;
 
             for (int i = 0; i < newColors.Length; i++)
             {
@@ -48,10 +49,14 @@ public class Eraser : MonoBehaviour
                 newColors[i].g = colors[i].g;
                 newColors[i].b = colors[i].b;
                 newColors[i].a = Mathf.Min((255 - maskPixels[i])/255f, colors[i].a);
+                if(maskPixels[i] > 240f) erasedCount++;
             }
 
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
+
+            Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedCount/(maskPixels.Length/100)}%");
+            if(erasedCount/(maskPixels.Length/100) > 90) Debug.Log("Erased!!!");
         }
     }
 
