@@ -11,6 +11,7 @@ public class Eraser : MonoBehaviour
 
     private List<Erasable> m_erasables = new();
     private PlayerHand m_playerHand;
+    private TaskTracker m_taskTracker;
     private Vector2Int m_handPos = Vector2Int.zero;
     private Vector2Int m_prevHandPos = Vector2Int.zero;
 
@@ -28,11 +29,13 @@ public class Eraser : MonoBehaviour
             this.obj = obj;
             sprite = obj.GetComponent<SpriteRenderer>().sprite;
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
+            iErasable = obj.GetComponent<IErasable>();
         }
 
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
         public byte[] maskPixels;
+        public IErasable iErasable;
 
         /// <summary>
         /// Applies the mask to the sprite.
@@ -55,14 +58,16 @@ public class Eraser : MonoBehaviour
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedCount/(maskPixels.Length/100)}%");
-            if(erasedCount/(maskPixels.Length/100) > 90) Debug.Log("Erased!!!");
+            iErasable.taskProgress = erasedCount/(maskPixels.Length/100);
+            //Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedProgress}%");
+            //if(erasedProgress > 90) Debug.Log("Erased!!!");
         }
     }
 
     private void Awake()
     {
         m_playerHand = GetComponentInParent<PlayerHand>();
+        m_taskTracker = FindObjectOfType<TaskTracker>();
 
         InitializeTool();
         PopulateErasables();
@@ -77,7 +82,11 @@ public class Eraser : MonoBehaviour
 
         foreach (var erasable in m_erasables)
         {
-            if (UpdateErasableMask(erasable)) erasable.ApplyMask();
+            if (UpdateErasableMask(erasable)) 
+            {
+                erasable.ApplyMask();
+                m_taskTracker.UpdateTaskTracker(erasable.iErasable.taskName, erasable.iErasable.taskProgress);
+            }
         }
     }
 
