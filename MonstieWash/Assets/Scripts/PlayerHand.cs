@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Playerhand : MonoBehaviour
+public class PlayerHand : MonoBehaviour
 {
     //Unity Inspector
     [SerializeField]
@@ -10,43 +9,40 @@ public class Playerhand : MonoBehaviour
     private float cursorSpeed = 20f;
 
     //Private
-    private Transform m_transform;
-    public Vector3 m_handPosition;
     private float m_moveHorizontal;
     private float m_moveVertical;
-	
-    // Start is called before the first frame update
-    void Start()
+
+    public void MovePerformed(InputAction.CallbackContext context)
     {
-        m_transform = gameObject.transform;
+        Vector2 movementInput = context.ReadValue<Vector2>();
+        m_moveHorizontal = movementInput.x;
+        m_moveVertical = movementInput.y;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MoveCancelled()
     {
-        m_handPosition = Camera.main.WorldToScreenPoint(m_transform.position);
-        m_moveHorizontal = Input.GetAxis("Horizontal");
-        m_moveVertical = Input.GetAxis("Vertical");
+        m_moveHorizontal = 0f;
+        m_moveVertical = 0f;
+    }
 
-        //Boundary Check X-axis
-        if(m_handPosition.x > Screen.width && m_moveHorizontal > 0)
-        {
-            m_moveHorizontal = 0;
-        }
-        else if(m_handPosition.x < 0 && m_moveHorizontal < 0)
-        {
-            m_moveHorizontal = 0;
-        }
-        //Boundary Check Y-axis
-        if(m_handPosition.y > Screen.height && m_moveVertical > 0)
-        {
-            m_moveVertical = 0;
-        }
-        else if(m_handPosition.y < 0 && m_moveVertical < 0)
-        {
-            m_moveVertical = 0;
-        }
-        
-        m_transform.position = transform.position + new Vector3(m_moveHorizontal * cursorSpeed * Time.deltaTime, m_moveVertical * cursorSpeed * Time.deltaTime, 0);
+    private void Update()
+    {
+        transform.position = CalculateMovement();
+    }
+
+    /// <summary>
+    /// Calculates the movement of the hand, restricted to screen space.
+    /// </summary>
+    private Vector3 CalculateMovement()
+    {
+        var newPosition = transform.position + new Vector3(m_moveHorizontal * cursorSpeed * Time.deltaTime, m_moveVertical * cursorSpeed * Time.deltaTime, 0f);
+        var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
+        var cameraHeightInWorldUnits = Camera.main.orthographicSize;
+
+        //Keep within screen bounds
+        newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits, cameraWidthInWorldUnits);
+        newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits, cameraHeightInWorldUnits);
+
+        return newPosition;
     }
 }
