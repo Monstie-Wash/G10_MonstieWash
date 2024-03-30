@@ -58,7 +58,7 @@ public class Eraser : MonoBehaviour
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            iErasable.taskProgress = erasedCount/(maskPixels.Length/100);
+            iErasable.TaskProgress = erasedCount/(maskPixels.Length/100);
             //Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedProgress}%");
             //if(erasedProgress > 90) Debug.Log("Erased!!!");
         }
@@ -85,7 +85,7 @@ public class Eraser : MonoBehaviour
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                m_taskTracker.UpdateTaskTracker(erasable.iErasable.taskName, erasable.iErasable.taskProgress);
+                m_taskTracker.UpdateTaskTracker(erasable.iErasable.TaskName, erasable.iErasable.NewProgress);
             }
         }
     }

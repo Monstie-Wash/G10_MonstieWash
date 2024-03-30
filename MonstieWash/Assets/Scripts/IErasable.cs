@@ -7,12 +7,27 @@ using UnityEngine;
 /// </summary>
 public class IErasable : MonoBehaviour, ITask
 {
-    public string taskName { get; set; }
-    public float taskProgress { get; set; }
+    [SerializeField] private float _taskProgress;
+    [SerializeField] private float _newProgress;
+    public string TaskName { get; set; }
+    public float TaskProgress
+    {
+        get { return _taskProgress; }
+        set
+        {
+            _newProgress = value - _taskProgress;
+            _taskProgress = value;
+        }
+    }
+    public float NewProgress
+    {
+        get { return _newProgress; }
+        set {;}
+    }
 
     public void Awake()
     {
-        taskName = "";
-        taskProgress = 0f;
+        TaskName = "";
+        TaskProgress = 0f;
     }
 }
