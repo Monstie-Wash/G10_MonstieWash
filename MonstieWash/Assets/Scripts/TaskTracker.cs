@@ -10,9 +10,6 @@ public class TaskTracker : MonoBehaviour
     //Container object for all the the different areas to clean 
     [SerializeField] private Transform taskContainer;
     //These are temporary replacement for UI progress bar
-    //[SerializeField] private List<string> subtasks = new List<string>();
-    //[SerializeField] private string[] tempSplit;
-    //[SerializeField] private string taskString;
     [SerializeField] private SerializableDictionary<string, float> m_taskProgress = new SerializableDictionary<string, float>();
 
     //Private
@@ -30,6 +27,11 @@ public class TaskTracker : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Recursive loop will take every child of the taskContainer object and initialize a tracker for its progress. Objects tagged with "Erasable, etc." are assumed to be end node tasks instead of task containers(groups).
+    /// </summary>
+    /// <param name="taskContainer">The parent object that contains all interactable tasks for the monster (mimic).</param>
+    /// <param name="taskName">A compound string made up of all parent objects in the hierarchy seperated by '#' eg. "Mimic#Front#Teeth#Dirt1". Used to identify each task and the associated locations.</param>
     private void InitialiseTasks(Transform taskContainer, string taskName)
     {
         if (taskContainer.tag == "Untagged")
@@ -54,12 +56,21 @@ public class TaskTracker : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds a dictionary entry to track the task progress and sets TaskName for ITask scripts.
+    /// </summary>
+    /// <param name="taskName">A compound string that uniquely identifies the task and all parent objects in the hierachy.</param>
+    /// <param name="iTask">The script that implements the ITask interface. Not required for Untagged objects.</param>
     private void AddTaskTracker(string taskName, ITask iTask)
     {
         AddTaskGroupTracker(taskName);
         if(iTask != null) iTask.TaskName = taskName;
     }
 
+    /// <summary>
+    /// Adds a dictionary entry to track task progress of task groups(containers).
+    /// </summary>
+    /// <param name="taskName">A compound string that uniquely identifies the task and all parent objects in the hierachy.</param>
     private void AddTaskGroupTracker(string taskName)
     {
         if(!m_taskDictKeys.Contains(taskName))
@@ -73,6 +84,11 @@ public class TaskTracker : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates progress on a task given the taskName identifier and new progress.
+    /// </summary>
+    /// <param name="taskName">A compound string that uniquely identifies the task and all parent objects in the hierachy.</param>
+    /// <param name="progress">Float for newest changes to progress since the last update.</param>
     public void UpdateTaskTracker(string taskName, float progress)
     {
         if(m_taskDictKeys.Contains(taskName))
@@ -86,6 +102,11 @@ public class TaskTracker : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Recursively updates parent task trackers using taskName identifier with relative weighting to the number of subtasks for that parent group.
+    /// </summary>
+    /// <param name="taskName">A compound string that uniquely identifies the task and all parent objects in the hierachy.</param>
+    /// <param name="subtaskProgress">Float for new changes to progress to add to group tracker</param>
     private void UpdateTaskGroupTracker(string taskName, float subtaskProgress)
     {
         var tempSplit = taskName.Split('#');
