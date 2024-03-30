@@ -4,30 +4,45 @@ using UnityEngine.InputSystem;
 public class PlayerHand : MonoBehaviour
 {
     //Unity Inspector
-    [SerializeField]
-    [Range(1.0f, 50.0f)]
-    private float cursorSpeed = 20f;
+    [SerializeField][Range(1.0f, 50.0f)] private float cursorSpeed = 20f;
 
     //Private
     private float m_moveHorizontal;
     private float m_moveVertical;
+    private float m_moveThreshold = 0.01f;
 
-    public void MovePerformed(InputAction.CallbackContext context)
+    public bool IsMoving
     {
-        Vector2 movementInput = context.ReadValue<Vector2>();
-        m_moveHorizontal = movementInput.x;
-        m_moveVertical = movementInput.y;
+        get { return Mathf.Abs(m_moveHorizontal) > m_moveThreshold || Mathf.Abs(m_moveVertical) > m_moveThreshold; }
     }
 
-    public void MoveCancelled()
+    private void OnEnable()
     {
-        m_moveHorizontal = 0f;
-        m_moveVertical = 0f;
+        InputManager.Inputs.OnMove += Inputs_MovePerformed;
+        InputManager.Inputs.OnMove_Ended += Inputs_MoveEnded;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Inputs.OnMove -= Inputs_MovePerformed;
+        InputManager.Inputs.OnMove_Ended -= Inputs_MoveEnded;
     }
 
     private void Update()
     {
         transform.position = CalculateMovement();
+    }
+
+    public void Inputs_MovePerformed(Vector2 movementInput)
+    {
+        m_moveHorizontal = movementInput.x;
+        m_moveVertical = movementInput.y;
+    }
+
+    public void Inputs_MoveEnded()
+    {
+        m_moveHorizontal = 0f;
+        m_moveVertical = 0f;
     }
 
     /// <summary>

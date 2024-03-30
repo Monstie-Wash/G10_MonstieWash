@@ -1,20 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerHandInput : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
-    [SerializeField]
-    private PlayerHand m_playerHand;
-    [SerializeField]
-    private Eraser m_eraser;
+    public static InputManager Inputs;
+
+#pragma warning disable 67
+
+    public event Action<Vector2> OnMove;
+    public event Action OnMove_Ended;
+
+    public event Action OnActivate_Started;
+    public event Action OnActivate_Held;
+    public event Action OnActivate_Ended;
+
+    public event Action OnTransfer;
+    public event Action OnTransfer_Ended;
+
+#pragma warning restore 67
 
     private PlayerInput m_playerInput;
     private Coroutine m_activeRoutine;
 
     private void Awake()
     {
+        //Ensure there's only one
+        if (Inputs == null) Inputs = this;
+        else Destroy(this);
+
         m_playerInput = new PlayerInput();
     }
 
@@ -24,6 +40,7 @@ public class PlayerHandInput : MonoBehaviour
         m_playerInput.PlayerActions.Move.canceled += Move_canceled;
         m_playerInput.PlayerActions.Activate.performed += Activate_performed;
         m_playerInput.PlayerActions.Activate.canceled += Activate_canceled;
+        m_playerInput.PlayerActions.Transfer.performed += Transfer_performed;
         m_playerInput.PlayerActions.Enable();
     }
 
@@ -38,12 +55,12 @@ public class PlayerHandInput : MonoBehaviour
 
     private void Move_performed(InputAction.CallbackContext context)
     {
-        m_playerHand.MovePerformed(context);
+        OnMove?.Invoke(context.ReadValue<Vector2>());
     }
 
     private void Move_canceled(InputAction.CallbackContext context)
     {
-        m_playerHand.MoveCancelled();
+        OnMove_Ended?.Invoke();
     }
 
     private void Activate_performed(InputAction.CallbackContext context)
@@ -51,7 +68,7 @@ public class PlayerHandInput : MonoBehaviour
         m_activeRoutine = StartCoroutine(Activate());
     }
 
-    private void Activate_canceled(InputAction.CallbackContext obj)
+    private void Activate_canceled(InputAction.CallbackContext context)
     {
         StopCoroutine(m_activeRoutine);
     }
@@ -60,10 +77,15 @@ public class PlayerHandInput : MonoBehaviour
     {
         while (true)
         {
-            m_eraser.UseTool();
+            OnActivate_Held?.Invoke();
 
             yield return null;
         }
+    }
+
+    private void Transfer_performed(InputAction.CallbackContext context)
+    {
+        OnTransfer?.Invoke();
     }
 }
 

@@ -3,68 +3,69 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-/*
-Notes for Refactoring:
-- Fix discourse between worldspace and screenspace
-- FindObjectOfType is deprecated
-- Find better method for detecting collision (if possible); more tolerance for hand (not just middle point of hand)
-*/
-
 public class DragTool : MonoBehaviour
 {
-    private bool beingHeld = false;
-    private bool tempInactive = false;  // allows picking up object without using it
-    private PlayerHand m_playerHand;
-    private SpriteRenderer mySprite;
-    private float myWidth;
-    private float myHeight;
+    [SerializeField] private bool alwaysCenterTool = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private bool m_holding = false;
+    private Collider2D m_collider;
+    private ContactFilter2D m_contactFilter;
+    private Transform toolTransform;
+
+    private void Awake()
     {
-        mySprite = GetComponent<SpriteRenderer>();
-        myWidth = mySprite.bounds.size.x;
-        myHeight = mySprite.bounds.size.y;
+        m_collider = GetComponent<Collider2D>();
 
-        m_playerHand = FindAnyObjectByType<PlayerHand>(); 
+        m_contactFilter = new ContactFilter2D();
+        m_contactFilter.SetLayerMask(LayerMask.GetMask("Tool"));
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
+        InputManager.Inputs.OnTransfer += Inputs_OnTransfer;
+    }
 
+    private void OnDisable()
+    {
+        InputManager.Inputs.OnTransfer -= Inputs_OnTransfer;
+    }
+
+    private void Inputs_OnTransfer()
+    {
         // pickup item
-        if (Input.GetButtonDown("Fire1") & (CollidingWithHand())) { 
-            if (!beingHeld) {
-                tempInactive = true;    
-                beingHeld = true;   // hold the item
+        if (!m_holding)
+        {
+            if (CollidingWithHand())
+            {
+                m_holding = true; // hold the item
+                toolTransform.parent = transform;
+                if (alwaysCenterTool) toolTransform.localPosition = Vector3.zero; // snap to centre of hand
+                toolTransform.GetComponent<Eraser>().enabled = true;
             }
         }
-
-        // allow item to be used once pickup is complete
-        if (Input.GetButtonUp("Fire1") & beingHeld) {
-                tempInactive = false;
-        }
-
-        // while tool is held
-        if (beingHeld) {
-            transform.position = m_playerHand.transform.position; // follow hand
-            if (Input.GetButton("Fire1") & !tempInactive) {     // press fire1 to use the item
-                Debug.Log("Tool used"); 
-            }
-            else if (Input.GetButton("Fire2")) {    // press fire2 to drop the item
-                beingHeld = false;  
-            }
+        else // drop item
+        {
+            m_holding = false; // release the item
+            toolTransform.parent = null;
+            toolTransform.GetComponent<Eraser>().enabled = false;
         }
     }
 
-    bool CollidingWithHand() {
-        Vector3 myPos = transform.position;
-        if (m_playerHand.transform.position.x > myPos.x - (myWidth/2) && m_playerHand.transform.position.x < myPos.x + (myWidth/2)) {
-            if (m_playerHand.transform.position.y > myPos.y - (myHeight/2) && m_playerHand.transform.position.y < myPos.y + (myHeight/2)) {
-                return true;
-            }
+    /// <summary>
+    /// Check for a tool underneath the hand.
+    /// </summary>
+    /// <returns>Whether or not the hand is colliding with a tool.</returns>
+    private bool CollidingWithHand() 
+    {
+        var results = new Collider2D[1];
+        Physics2D.OverlapCollider(m_collider, m_contactFilter, results);
+        
+        if (results[0] != null)
+        {
+            toolTransform = results[0].transform;
+            return true;
         }
+
         return false;
     }
 }
