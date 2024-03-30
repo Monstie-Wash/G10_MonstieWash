@@ -65,6 +65,7 @@ public class TaskTracker : MonoBehaviour
     {
         AddTaskGroupTracker(taskName);
         if(iTask != null) iTask.TaskName = taskName;
+        else {Debug.Log($"Warning: {taskName} did not have an ITask script!");}
     }
 
     /// <summary>
