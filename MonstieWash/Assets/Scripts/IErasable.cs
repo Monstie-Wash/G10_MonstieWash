@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class IErasable : MonoBehaviour, ITask
 {
-    [SerializeField] private float _taskProgress;
-    [SerializeField] private float _newProgress;
+    private float _taskProgress;
+    private float _newProgress;
     public string TaskName { get; set; }
     public float TaskProgress
     {
