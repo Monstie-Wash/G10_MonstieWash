@@ -14,7 +14,7 @@ public class DragTool : MonoBehaviour
 {
     private bool beingHeld = false;
     private bool tempInactive = false;  // allows picking up object without using it
-    private Playerhand uiHand;
+    private PlayerHand m_playerHand;
     private SpriteRenderer mySprite;
     private float myWidth;
     private float myHeight;
@@ -26,7 +26,7 @@ public class DragTool : MonoBehaviour
         myWidth = mySprite.bounds.size.x;
         myHeight = mySprite.bounds.size.y;
 
-        uiHand = (Playerhand)FindObjectOfType(typeof(Playerhand));      // fix this later :)
+        m_playerHand = FindAnyObjectByType<PlayerHand>(); 
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class DragTool : MonoBehaviour
 
         // while tool is held
         if (beingHeld) {
-            transform.position = Camera.main.ScreenToWorldPoint(uiHand.m_handPosition); // follow hand
+            transform.position = m_playerHand.transform.position; // follow hand
             if (Input.GetButton("Fire1") & !tempInactive) {     // press fire1 to use the item
                 Debug.Log("Tool used"); 
             }
@@ -60,8 +60,8 @@ public class DragTool : MonoBehaviour
 
     bool CollidingWithHand() {
         Vector3 myPos = transform.position;
-        if (Camera.main.ScreenToWorldPoint(uiHand.m_handPosition).x > myPos.x - (myWidth/2) & Camera.main.ScreenToWorldPoint(uiHand.m_handPosition).x < myPos.x + (myWidth/2)) {
-            if (Camera.main.ScreenToWorldPoint(uiHand.m_handPosition).y > myPos.y - (myHeight/2) & Camera.main.ScreenToWorldPoint(uiHand.m_handPosition).y < myPos.y + (myHeight/2)) {
+        if (m_playerHand.transform.position.x > myPos.x - (myWidth/2) && m_playerHand.transform.position.x < myPos.x + (myWidth/2)) {
+            if (m_playerHand.transform.position.y > myPos.y - (myHeight/2) && m_playerHand.transform.position.y < myPos.y + (myHeight/2)) {
                 return true;
             }
         }
