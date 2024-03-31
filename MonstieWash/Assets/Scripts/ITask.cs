@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface ITask
 {
-    string TaskName { get; set; }
-    float TaskProgress { get; set; }
-    float NewProgress { get; set; }
+    public string TaskName { get; set; }
+    public float TaskProgress { get; set; }
+    public float NewProgress { get; set; }
 }

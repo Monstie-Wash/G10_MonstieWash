@@ -52,13 +52,13 @@ public class Eraser : MonoBehaviour
                 newColors[i].g = colors[i].g;
                 newColors[i].b = colors[i].b;
                 newColors[i].a = Mathf.Min((255 - maskPixels[i])/255f, colors[i].a);
-                if(maskPixels[i] > 240f) erasedCount++;
+                if(maskPixels[i] > 240) erasedCount++;
             }
 
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            iErasable.TaskProgress = erasedCount/(maskPixels.Length/100);
+            iErasable.TaskProgress = erasedCount/(maskPixels.Length/100f);
             //Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedProgress}%");
             //if(erasedProgress > 90) Debug.Log("Erased!!!");
         }
@@ -67,7 +67,7 @@ public class Eraser : MonoBehaviour
     private void Awake()
     {
         m_playerHand = GetComponentInParent<PlayerHand>();
-        m_taskTracker = FindObjectOfType<TaskTracker>();
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
 
         InitializeTool();
         PopulateErasables();

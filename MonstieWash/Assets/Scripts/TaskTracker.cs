@@ -10,10 +10,10 @@ public class TaskTracker : MonoBehaviour
     //Container object for all the the different areas to clean 
     [SerializeField] private Transform taskContainer;
     //These are temporary replacement for UI progress bar
-    [SerializeField] private SerializableDictionary<string, float> m_taskProgress = new SerializableDictionary<string, float>();
+    [SerializeField] private SerializableDictionary<string, float> m_taskProgress = new();
 
     //Private
-    private List<string> m_taskDictKeys = new List<string>();
+    private List<string> m_taskDictKeys = new();
     
     private void Awake()
     {
@@ -92,6 +92,7 @@ public class TaskTracker : MonoBehaviour
     /// <param name="progress">Float for newest changes to progress since the last update.</param>
     public void UpdateTaskTracker(string taskName, float progress)
     {
+        if (progress == 0f) return;
         if(m_taskDictKeys.Contains(taskName))
         {
             m_taskProgress[taskName] += progress;
