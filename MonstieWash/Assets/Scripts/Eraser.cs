@@ -58,7 +58,10 @@ public class Eraser : MonoBehaviour
     {
         m_playerHand = FindAnyObjectByType<PlayerHand>();
         m_drawPosTransform = transform.GetChild(0);
+    }
 
+    private void Start()
+    {
         InitializeTool();
     }
 
@@ -93,7 +96,6 @@ public class Eraser : MonoBehaviour
     private void InitializeTool()
     {
         tool.Initialize();
-        transform.localScale = Vector3.one * tool.size;
     }
 
     /// <summary>

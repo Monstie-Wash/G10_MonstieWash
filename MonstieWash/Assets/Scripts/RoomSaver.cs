@@ -8,12 +8,11 @@ public class RoomSaver : MonoBehaviour
     //public GameObject testSpawner;
     public string firstRoomToLoad;
 
-    private List<string> roomsLoaded;
+    private List<string> roomsLoaded = new();
     private Scene currentscene;
-    
+
     private void Start()
     {
-        roomsLoaded = new List<string>();
         roomsLoaded.Add(firstRoomToLoad);
         SceneManager.LoadScene(firstRoomToLoad, LoadSceneMode.Additive);
         currentscene = SceneManager.GetSceneByName(firstRoomToLoad); 
@@ -21,18 +20,10 @@ public class RoomSaver : MonoBehaviour
 
     private void Update()
     {
-        if (currentscene.isLoaded)
+        if (SceneManager.GetActiveScene() != currentscene && currentscene.isLoaded)
         {
             SceneManager.SetActiveScene(currentscene);
         }
-
-        /* Section for testing Saving
-        if (Input.GetMouseButtonDown(2))
-        {
-            var point = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-            Instantiate(testSpawner, point, Quaternion.identity);
-        }
-        */
     }
 
     public void LoadNewScene(string target)
@@ -45,9 +36,9 @@ public class RoomSaver : MonoBehaviour
 
         scene.GetRootGameObjects(rootObjects);
 
-        foreach (var rootObj in rootObjects)
+        foreach (var ob in rootObjects)
         {
-            rootObj.SetActive(false);
+            ob.SetActive(false);
         }
 
         //Check if room has already been loaded before
@@ -58,12 +49,12 @@ public class RoomSaver : MonoBehaviour
                 sceneLoaded = true;
 
                 //ReOpen the already loaded room.
-                List<GameObject> rotObjects = new List<GameObject>();
+                var rotObjects = new List<GameObject>();
 
                 currentscene = SceneManager.GetSceneByName(target);
                 currentscene.GetRootGameObjects(rotObjects);
 
-                foreach (GameObject ob in rotObjects)
+                foreach (var ob in rotObjects)
                 {
                     ob.SetActive(true);
                 }
