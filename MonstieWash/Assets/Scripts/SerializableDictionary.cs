@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
 {
-    [SerializeField] private List<bool> b = new();
+    [SerializeField] private List<bool> ignoreThis = new();
     [SerializeField] private List<TKey> keys = new();
     [SerializeField] private List<TValue> values = new();
 

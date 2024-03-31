@@ -29,13 +29,13 @@ public class Eraser : MonoBehaviour
             this.obj = obj;
             sprite = obj.GetComponent<SpriteRenderer>().sprite;
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
-            iErasable = obj.GetComponent<IErasable>();
+            erasableTask = obj.GetComponent<ErasableTaskWrapper>();
         }
 
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
         public byte[] maskPixels;
-        public IErasable iErasable;
+        public ErasableTaskWrapper erasableTask;
 
         /// <summary>
         /// Applies the mask to the sprite.
@@ -58,7 +58,7 @@ public class Eraser : MonoBehaviour
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            iErasable.TaskProgress = erasedCount/(maskPixels.Length/100f);
+            erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
             //Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedProgress}%");
             //if(erasedProgress > 90) Debug.Log("Erased!!!");
         }
@@ -85,7 +85,7 @@ public class Eraser : MonoBehaviour
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                m_taskTracker.UpdateTaskTracker(erasable.iErasable.TaskName, erasable.iErasable.NewProgress);
+                m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
             }
         }
     }

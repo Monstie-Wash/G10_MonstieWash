@@ -17,7 +17,7 @@ public class TaskTracker : MonoBehaviour
     
     private void Awake()
     {
-        if(taskContainer)
+        if (taskContainer)
         {
             InitialiseTasks(taskContainer, taskContainer.name);
         }
@@ -45,7 +45,7 @@ public class TaskTracker : MonoBehaviour
         else
         {
             ITask iTask = taskContainer.GetComponent<ITask>();
-            if(iTask != null) 
+            if (iTask != null) 
             {
                 AddTaskTracker(taskName, iTask);
             }
@@ -64,7 +64,7 @@ public class TaskTracker : MonoBehaviour
     private void AddTaskTracker(string taskName, ITask iTask)
     {
         AddTaskGroupTracker(taskName);
-        if(iTask != null) iTask.TaskName = taskName;
+        if (iTask != null) iTask.TaskName = taskName;
         else {Debug.Log($"Warning: {taskName} did not have an ITask script!");}
     }
 
@@ -74,7 +74,7 @@ public class TaskTracker : MonoBehaviour
     /// <param name="taskName">A compound string that uniquely identifies the task and all parent objects in the hierachy.</param>
     private void AddTaskGroupTracker(string taskName)
     {
-        if(!m_taskDictKeys.Contains(taskName))
+        if (!m_taskDictKeys.Contains(taskName))
         {
             m_taskDictKeys.Add(taskName);
             m_taskProgress.Add(taskName,0f);
@@ -93,7 +93,7 @@ public class TaskTracker : MonoBehaviour
     public void UpdateTaskTracker(string taskName, float progress)
     {
         if (progress == 0f) return;
-        if(m_taskDictKeys.Contains(taskName))
+        if (m_taskDictKeys.Contains(taskName))
         {
             m_taskProgress[taskName] += progress;
             UpdateTaskGroupTracker(taskName, progress);
@@ -113,7 +113,7 @@ public class TaskTracker : MonoBehaviour
     {
         var tempSplit = taskName.Split('#');
 
-        if(tempSplit.Length > 1)
+        if (tempSplit.Length > 1)
         {
             var taskGroup = String.Join("#", tempSplit.Take(tempSplit.Length - 1));
             var subtasks = m_taskDictKeys.FindAll(s => s.Contains(taskGroup) && s.Count(x => x == '#') == taskGroup.Count(x => x == '#') + 1);

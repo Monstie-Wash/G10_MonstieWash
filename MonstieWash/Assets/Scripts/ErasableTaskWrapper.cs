@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// I needed an intermediary to pass data from Erasable struct to TaskTracker and in reverse. I couldn't find an alternative so this is a quick ugly fix. 
 /// </summary>
-public class IErasable : MonoBehaviour, ITask
+public class ErasableTaskWrapper : MonoBehaviour, ITask
 {
     private float _taskProgress;
     private float _newProgress;
@@ -23,11 +23,5 @@ public class IErasable : MonoBehaviour, ITask
     {
         get { return _newProgress; }
         set {;}
-    }
-
-    public void Awake()
-    {
-        TaskName = "";
-        TaskProgress = 0f;
     }
 }
