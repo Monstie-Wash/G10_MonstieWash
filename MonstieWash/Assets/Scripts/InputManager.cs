@@ -50,6 +50,7 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Move.canceled -= Move_canceled;
         m_playerInput.PlayerActions.Activate.performed -= Activate_performed;
         m_playerInput.PlayerActions.Activate.canceled -= Activate_canceled;
+        m_playerInput.PlayerActions.Transfer.performed -= Transfer_performed;
         m_playerInput.PlayerActions.Disable();
     }
 

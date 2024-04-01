@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class RoomSaver : MonoBehaviour
 {
-    //public GameObject testSpawner;
     public string firstRoomToLoad;
 
     private List<string> roomsLoaded = new();

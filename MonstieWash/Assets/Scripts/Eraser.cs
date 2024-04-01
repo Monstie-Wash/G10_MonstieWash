@@ -57,7 +57,7 @@ public class Eraser : MonoBehaviour
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
+            //erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
             //Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedProgress}%");
             //if(erasedProgress > 90) Debug.Log("Erased!!!");
         }
@@ -67,7 +67,7 @@ public class Eraser : MonoBehaviour
     {
         m_playerHand = FindAnyObjectByType<PlayerHand>();
         m_drawPosTransform = transform.GetChild(0);
-        m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        //m_taskTracker = FindFirstObjectByType<TaskTracker>();
     }
 
     private void Start()
@@ -99,7 +99,7 @@ public class Eraser : MonoBehaviour
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
+                //m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
             }
         }
     }
