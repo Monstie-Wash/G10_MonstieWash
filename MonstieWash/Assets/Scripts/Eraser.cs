@@ -12,6 +12,7 @@ public class Eraser : MonoBehaviour
     private PlayerHand m_playerHand;
     private Vector2Int m_drawPos;
     private Transform m_drawPosTransform;
+    private TaskTracker m_taskTracker;
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
@@ -21,6 +22,7 @@ public class Eraser : MonoBehaviour
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
         public byte[] maskPixels;
+        public ErasableTaskWrapper erasableTask;
 
         /// <summary>
         /// An erasable object representation.
@@ -31,6 +33,7 @@ public class Eraser : MonoBehaviour
             this.obj = obj;
             sprite = obj.GetComponent<SpriteRenderer>().sprite;
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
+            erasableTask = obj.GetComponent<ErasableTaskWrapper>();
         }
 
         /// <summary>
@@ -40,6 +43,7 @@ public class Eraser : MonoBehaviour
         {
             var colors = sprite.texture.GetPixels();
             var newColors = new Color[maskPixels.Length];
+            var erasedCount = 0;
 
             for (int i = 0; i < newColors.Length; i++)
             {
@@ -47,10 +51,15 @@ public class Eraser : MonoBehaviour
                 newColors[i].g = colors[i].g;
                 newColors[i].b = colors[i].b;
                 newColors[i].a = Mathf.Min((255 - maskPixels[i])/255f, colors[i].a);
+                if(maskPixels[i] > 240) erasedCount++;
             }
 
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
+
+            erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
+            //Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedProgress}%");
+            //if(erasedProgress > 90) Debug.Log("Erased!!!");
         }
     }
 
@@ -58,6 +67,7 @@ public class Eraser : MonoBehaviour
     {
         m_playerHand = FindAnyObjectByType<PlayerHand>();
         m_drawPosTransform = transform.GetChild(0);
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
     }
 
     private void Start()
@@ -86,7 +96,11 @@ public class Eraser : MonoBehaviour
         foreach (var erasable in m_erasables)
         {
             if (!erasable.obj.activeSelf) continue;
-            if (UpdateErasableMask(erasable)) erasable.ApplyMask();
+            if (UpdateErasableMask(erasable)) 
+            {
+                erasable.ApplyMask();
+                m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
+            }
         }
     }
 
