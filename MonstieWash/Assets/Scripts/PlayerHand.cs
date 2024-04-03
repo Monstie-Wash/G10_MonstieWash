@@ -10,6 +10,7 @@ public class PlayerHand : MonoBehaviour
     private float m_moveHorizontal;
     private float m_moveVertical;
     private float m_moveThreshold = 0.01f;
+    private const float k_mouseSpeedMultiplier = 0.001f;
 
     public bool IsMoving
     {
@@ -50,7 +51,22 @@ public class PlayerHand : MonoBehaviour
     /// </summary>
     private Vector3 CalculateMovement()
     {
-        var newPosition = transform.position + new Vector3(m_moveHorizontal * cursorSpeed * Time.deltaTime, m_moveVertical * cursorSpeed * Time.deltaTime, 0f);
+        var velocityModifer = 1f;
+
+        switch (InputManager.Inputs.InputDevice)
+        {
+            case InputManager.PlayerInputDevice.MKB:
+                {
+                    velocityModifer = cursorSpeed * k_mouseSpeedMultiplier;
+                } break;
+            case InputManager.PlayerInputDevice.Controller:
+                {
+                    velocityModifer = cursorSpeed * Time.deltaTime;
+                } break;
+        }
+
+        var newVelocity = new Vector3(m_moveHorizontal * velocityModifer, m_moveVertical * velocityModifer, 0f);
+        var newPosition = transform.position + newVelocity;
         var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
         var cameraHeightInWorldUnits = Camera.main.orthographicSize;
 

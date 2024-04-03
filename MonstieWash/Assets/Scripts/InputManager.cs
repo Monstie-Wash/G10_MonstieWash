@@ -24,6 +24,15 @@ public class InputManager : MonoBehaviour
 
     private PlayerInput m_playerInput;
     private Coroutine m_activeRoutine;
+    private PlayerInputDevice m_inputDevice = PlayerInputDevice.Controller;
+
+    public PlayerInputDevice InputDevice { get { return m_inputDevice; } }
+
+    public enum PlayerInputDevice
+    {
+        Controller,
+        MKB,
+    }
 
     private void Awake()
     {
@@ -32,6 +41,9 @@ public class InputManager : MonoBehaviour
         else Destroy(this);
 
         m_playerInput = new PlayerInput();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void OnEnable()
@@ -54,18 +66,28 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Disable();
     }
 
+    private void UpdateInputDevice(InputDevice device)
+    {
+        if (device is Gamepad) m_inputDevice = PlayerInputDevice.Controller;
+        if (device is Keyboard || device is Mouse) m_inputDevice = PlayerInputDevice.MKB;
+        
+    }
+
     private void Move_performed(InputAction.CallbackContext context)
     {
+        UpdateInputDevice(context.control.device);
         OnMove?.Invoke(context.ReadValue<Vector2>());
     }
 
     private void Move_canceled(InputAction.CallbackContext context)
     {
+        UpdateInputDevice(context.control.device);
         OnMove_Ended?.Invoke();
     }
 
     private void Activate_performed(InputAction.CallbackContext context)
     {
+        UpdateInputDevice(context.control.device);
         m_activeRoutine = StartCoroutine(Activate());
     }
 
@@ -86,6 +108,7 @@ public class InputManager : MonoBehaviour
 
     private void Transfer_performed(InputAction.CallbackContext context)
     {
+        UpdateInputDevice(context.control.device);
         OnTransfer?.Invoke();
     }
 }
