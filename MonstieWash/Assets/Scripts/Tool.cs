@@ -4,11 +4,8 @@ using UnityEngine;
 public class Tool : ScriptableObject
 {
     public Sprite mask;
-    [Range(1, 10)] 
-    public int size = 1;
-    [SerializeField]
-    [Range(1f, 100f)] 
-    private float inputStrength = 100f;
+    [Range(1, 10)] public int size = 1;
+    [SerializeField][Range(1f, 100f)] private float inputStrength = 100f;
 
     public byte[] maskPixels { get; private set; }
     [HideInInspector]

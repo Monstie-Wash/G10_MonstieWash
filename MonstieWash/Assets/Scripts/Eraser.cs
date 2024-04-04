@@ -6,20 +6,24 @@ using UnityEngine.InputSystem;
 
 public class Eraser : MonoBehaviour
 {
-    [SerializeField]
-    private Tool tool;
+    [SerializeField] private Tool tool;
 
     private List<Erasable> m_erasables = new();
     private PlayerHand m_playerHand;
+    private Vector2Int m_drawPos;
+    private Transform m_drawPosTransform;
     private TaskTracker m_taskTracker;
-    private Vector2Int m_handPos = Vector2Int.zero;
-    private Vector2Int m_prevHandPos = Vector2Int.zero;
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
     /// </summary>
     private struct Erasable
     {
+        public GameObject obj { get; private set; }
+        public Sprite sprite { get; private set; }
+        public byte[] maskPixels;
+        public ErasableTaskWrapper erasableTask;
+
         /// <summary>
         /// An erasable object representation.
         /// </summary>
@@ -31,11 +35,6 @@ public class Eraser : MonoBehaviour
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
             erasableTask = obj.GetComponent<ErasableTaskWrapper>();
         }
-
-        public GameObject obj { get; private set; }
-        public Sprite sprite { get; private set; }
-        public byte[] maskPixels;
-        public ErasableTaskWrapper erasableTask;
 
         /// <summary>
         /// Applies the mask to the sprite.
@@ -58,7 +57,7 @@ public class Eraser : MonoBehaviour
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
+            //erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
             //Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedProgress}%");
             //if(erasedProgress > 90) Debug.Log("Erased!!!");
         }
@@ -66,11 +65,25 @@ public class Eraser : MonoBehaviour
 
     private void Awake()
     {
-        m_playerHand = GetComponentInParent<PlayerHand>();
-        m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_playerHand = FindAnyObjectByType<PlayerHand>();
+        m_drawPosTransform = transform.GetChild(0);
+        //m_taskTracker = FindFirstObjectByType<TaskTracker>();
+    }
 
+    private void Start()
+    {
         InitializeTool();
+    }
+
+    private void OnEnable()
+    {
+        InputManager.Inputs.OnActivate_Held += UseTool;
         PopulateErasables();
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Inputs.OnActivate_Held -= UseTool;
     }
 
     /// <summary>
@@ -82,10 +95,11 @@ public class Eraser : MonoBehaviour
 
         foreach (var erasable in m_erasables)
         {
+            if (!erasable.obj.activeSelf) continue;
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
+                //m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
             }
         }
     }
@@ -96,8 +110,6 @@ public class Eraser : MonoBehaviour
     private void InitializeTool()
     {
         tool.Initialize();
-        transform.localScale = Vector3.one * tool.size;
-        GetComponent<SpriteRenderer>().sprite = tool.mask;
     }
 
     /// <summary>
@@ -113,7 +125,7 @@ public class Eraser : MonoBehaviour
             spriteRenderer.sprite = DuplicateSprite(spriteRenderer.sprite);
 
             var newErasable = new Erasable(erasable);
-            m_erasables.Add(newErasable);
+            if (!m_erasables.Contains(newErasable)) m_erasables.Add(newErasable);
         }
     }
 
@@ -142,13 +154,11 @@ public class Eraser : MonoBehaviour
     /// <returns>Whether or not the hand moved since last frame.</returns>
     private bool HandMoved()
     {
-        var handScreenPos = Camera.main.WorldToScreenPoint(m_playerHand.transform.position);
-        m_handPos = new Vector2Int(Mathf.RoundToInt(handScreenPos.x), Mathf.RoundToInt(handScreenPos.y));
+        var drawPointScreenPos = Camera.main.WorldToScreenPoint(m_drawPosTransform.position);
+        m_drawPos = new Vector2Int(Mathf.RoundToInt(drawPointScreenPos.x), Mathf.RoundToInt(drawPointScreenPos.y));
 
-        if (m_prevHandPos == m_handPos) return false;
-        
-        m_prevHandPos = m_handPos;
-        return true;
+        if (m_playerHand.IsMoving) return true;
+        return false;
     }
 
     /// <summary>
@@ -160,7 +170,7 @@ public class Eraser : MonoBehaviour
     {
         var erasableScreenPos = Camera.main.WorldToScreenPoint(erasable.obj.transform.position);
         var erasableCentrePixel = new Vector2Int(Mathf.RoundToInt(erasableScreenPos.x), Mathf.RoundToInt(erasableScreenPos.y));
-        var mouseDistFromErasableCentre = m_handPos - erasableCentrePixel;
+        var mouseDistFromErasableCentre = m_drawPos - erasableCentrePixel;
         var halfErasableSize = new Vector2Int(erasable.sprite.texture.width / 2, erasable.sprite.texture.height / 2);
         var halfToolSize = new Vector2Int(tool.mask.texture.width / 2, tool.mask.texture.height / 2);
 

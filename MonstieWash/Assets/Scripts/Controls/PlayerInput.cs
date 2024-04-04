@@ -44,6 +44,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Transfer"",
+                    ""type"": ""Button"",
+                    ""id"": ""c4f8f9c9-5084-45cb-a1fd-ce85f2f94cfd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -59,59 +68,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Arrows"",
-                    ""id"": ""2c23da64-6dbc-416d-8062-ffd704d6d2df"",
-                    ""path"": ""2DVector"",
+                    ""name"": """",
+                    ""id"": ""13084278-88f8-49e0-b91d-2e0a33962250"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
-                    ""isComposite"": true,
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""4abe3b39-d9ef-4deb-a334-dcf4539b93d5"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""95807ebf-1ba6-40c3-8fbd-3fdc7b9de40b"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""2708f701-e515-4cd8-9680-40cbebfc75ce"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""67ab2fc7-e3a0-4109-8ecf-c28f52c3064d"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -134,6 +99,39 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Activate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""41197187-4f87-4a6d-93fd-a5fea2193f4d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Activate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e544581a-994e-4838-a8b8-da9e78983f0f"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Transfer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6fd1c3b3-da0f-4e3f-a8df-59fa828999f4"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Transfer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -150,6 +148,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
         m_PlayerActions_Activate = m_PlayerActions.FindAction("Activate", throwIfNotFound: true);
+        m_PlayerActions_Transfer = m_PlayerActions.FindAction("Transfer", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -213,12 +212,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
     private readonly InputAction m_PlayerActions_Move;
     private readonly InputAction m_PlayerActions_Activate;
+    private readonly InputAction m_PlayerActions_Transfer;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
         public InputAction @Activate => m_Wrapper.m_PlayerActions_Activate;
+        public InputAction @Transfer => m_Wrapper.m_PlayerActions_Transfer;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -234,6 +235,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Activate.started += instance.OnActivate;
             @Activate.performed += instance.OnActivate;
             @Activate.canceled += instance.OnActivate;
+            @Transfer.started += instance.OnTransfer;
+            @Transfer.performed += instance.OnTransfer;
+            @Transfer.canceled += instance.OnTransfer;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -244,6 +248,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Activate.started -= instance.OnActivate;
             @Activate.performed -= instance.OnActivate;
             @Activate.canceled -= instance.OnActivate;
+            @Transfer.started -= instance.OnTransfer;
+            @Transfer.performed -= instance.OnTransfer;
+            @Transfer.canceled -= instance.OnTransfer;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -274,5 +281,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnActivate(InputAction.CallbackContext context);
+        void OnTransfer(InputAction.CallbackContext context);
     }
 }
