@@ -7,21 +7,21 @@ public class RoomSaver : MonoBehaviour
 {
     public string firstRoomToLoad;
 
-    private List<string> roomsLoaded = new();
-    private Scene currentscene;
+    private List<string> m_roomsLoaded = new();
+    private Scene m_currentscene;
 
     private void Start()
     {
-        roomsLoaded.Add(firstRoomToLoad);
+        m_roomsLoaded.Add(firstRoomToLoad);
         SceneManager.LoadScene(firstRoomToLoad, LoadSceneMode.Additive);
-        currentscene = SceneManager.GetSceneByName(firstRoomToLoad); 
+        m_currentscene = SceneManager.GetSceneByName(firstRoomToLoad); 
     }
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene() != currentscene && currentscene.isLoaded)
+        if (SceneManager.GetActiveScene() != m_currentscene && m_currentscene.isLoaded)
         {
-            SceneManager.SetActiveScene(currentscene);
+            SceneManager.SetActiveScene(m_currentscene);
         }
     }
 
@@ -41,7 +41,7 @@ public class RoomSaver : MonoBehaviour
         }
 
         //Check if room has already been loaded before
-        foreach (var room in roomsLoaded)
+        foreach (var room in m_roomsLoaded)
         {
             if (room == target)
             {
@@ -50,8 +50,8 @@ public class RoomSaver : MonoBehaviour
                 //ReOpen the already loaded room.
                 var rotObjects = new List<GameObject>();
 
-                currentscene = SceneManager.GetSceneByName(target);
-                currentscene.GetRootGameObjects(rotObjects);
+                m_currentscene = SceneManager.GetSceneByName(target);
+                m_currentscene.GetRootGameObjects(rotObjects);
 
                 foreach (var ob in rotObjects)
                 {
@@ -65,9 +65,9 @@ public class RoomSaver : MonoBehaviour
         if (!sceneLoaded)
         {
             //If room has never been loaded, load it and add it to the list of loaded rooms.
-            roomsLoaded.Add(target);
+            m_roomsLoaded.Add(target);
             SceneManager.LoadScene(target, LoadSceneMode.Additive);
-            currentscene = SceneManager.GetSceneByName(target);
+            m_currentscene = SceneManager.GetSceneByName(target);
         }
     }
 }
