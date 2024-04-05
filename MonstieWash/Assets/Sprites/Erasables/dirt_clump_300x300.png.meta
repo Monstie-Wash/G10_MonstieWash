@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      dirt_clump_300x300_0: -7741468245173625612
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
