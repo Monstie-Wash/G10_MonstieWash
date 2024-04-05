@@ -1,39 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class RoomSaver : MonoBehaviour
 {
-    public string firstRoomToLoad;
+    [SerializeField] private Object startingScene;
 
-    private List<string> m_roomsLoaded = new();
-    private Scene m_currentscene;
+    private List<SceneAsset> m_roomsLoaded = new();
+    private SceneAsset m_startingScene;
+    private Scene m_currentScene;
+
+    private void Awake()
+    {
+        if (startingScene == null) Debug.LogError($"Target scene not assigned for {name}!");
+        else if (!(startingScene is SceneAsset)) Debug.LogError($"Target scene is not a scene for {name}!");
+        else m_startingScene = startingScene as SceneAsset;
+    }
 
     private void Start()
     {
-        m_roomsLoaded.Add(firstRoomToLoad);
-        SceneManager.LoadScene(firstRoomToLoad, LoadSceneMode.Additive);
-        m_currentscene = SceneManager.GetSceneByName(firstRoomToLoad); 
+        LoadNewScene(m_startingScene);
     }
 
-    private void Update()
-    {
-        if (SceneManager.GetActiveScene() != m_currentscene && m_currentscene.isLoaded)
-        {
-            SceneManager.SetActiveScene(m_currentscene);
-        }
-    }
-
-    public void LoadNewScene(string target)
+    public void LoadScene(SceneAsset target)
     {
         var sceneLoaded = false;
 
         //Unload current room.
         var rootObjects = new List<GameObject>();
-        var scene = SceneManager.GetActiveScene();
 
-        scene.GetRootGameObjects(rootObjects);
+        m_currentScene.GetRootGameObjects(rootObjects);
 
         foreach (var ob in rootObjects)
         {
@@ -50,8 +48,8 @@ public class RoomSaver : MonoBehaviour
                 //ReOpen the already loaded room.
                 var rotObjects = new List<GameObject>();
 
-                m_currentscene = SceneManager.GetSceneByName(target);
-                m_currentscene.GetRootGameObjects(rotObjects);
+                m_currentScene = SceneManager.GetSceneByName(target.name);
+                m_currentScene.GetRootGameObjects(rotObjects);
 
                 foreach (var ob in rotObjects)
                 {
@@ -65,9 +63,16 @@ public class RoomSaver : MonoBehaviour
         if (!sceneLoaded)
         {
             //If room has never been loaded, load it and add it to the list of loaded rooms.
-            m_roomsLoaded.Add(target);
-            SceneManager.LoadScene(target, LoadSceneMode.Additive);
-            m_currentscene = SceneManager.GetSceneByName(target);
+            LoadNewScene(target);
         }
+    }
+
+    private void LoadNewScene(SceneAsset scene)
+    {
+        m_roomsLoaded.Add(scene);
+
+        SceneManager.LoadScene(scene.name, LoadSceneMode.Additive);
+
+        m_currentScene = SceneManager.GetSceneByName(scene.name);
     }
 }

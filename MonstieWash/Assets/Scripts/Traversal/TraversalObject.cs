@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TraversalObject : MonoBehaviour
 {
-    [SerializeField] private RoomSaver saveObj;
-    [SerializeField] public string targetScene;
+    [SerializeField] private Object targetScene;
 
-    public void Start()
+    private RoomSaver m_saveObj;
+    private SceneAsset m_targetScene;
+
+    public void Awake()
     {
-        saveObj = FindFirstObjectByType<RoomSaver>();
+        if (targetScene == null) Debug.LogError($"Target scene not assigned for {name}!");
+        else if (!(targetScene is SceneAsset)) Debug.LogError($"Target scene is not a scene for {name}!");
+        else m_targetScene = targetScene as SceneAsset;
+
+        m_saveObj = FindFirstObjectByType<RoomSaver>();
     }
 
-    public void OnMouseDown()
+    public void OnClicked()
     {
-        saveObj.LoadNewScene(targetScene);
+        m_saveObj.LoadScene(m_targetScene);
     }
 }

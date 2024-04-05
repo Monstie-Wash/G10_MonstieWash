@@ -20,6 +20,9 @@ public class InputManager : MonoBehaviour
     public event Action OnTransfer;
     public event Action OnTransfer_Ended;
 
+    public event Action OnNavigate;
+    public event Action OnNavigate_Ended;
+
 #pragma warning restore 67
 
     private PlayerInput m_playerInput;
@@ -53,6 +56,8 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Activate.performed += Activate_performed;
         m_playerInput.PlayerActions.Activate.canceled += Activate_canceled;
         m_playerInput.PlayerActions.Transfer.performed += Transfer_performed;
+        m_playerInput.PlayerActions.Navigate.performed += Navigate_performed;
+        m_playerInput.PlayerActions.Navigate.canceled += Navigate_canceled; ;
         m_playerInput.PlayerActions.Enable();
     }
 
@@ -110,6 +115,18 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnTransfer?.Invoke();
+    }
+
+    private void Navigate_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnNavigate?.Invoke();
+    }
+
+    private void Navigate_canceled(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnNavigate_Ended?.Invoke();
     }
 }
 
