@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      floss_840x350_0: -1166922986467759959
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

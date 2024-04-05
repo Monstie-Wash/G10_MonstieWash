@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Mimic_placeholder_bck_0: 4664912857361994140
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

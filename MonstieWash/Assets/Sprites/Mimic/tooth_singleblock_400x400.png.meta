@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tooth_singleblock_400x400_0: 1260364440963050080
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

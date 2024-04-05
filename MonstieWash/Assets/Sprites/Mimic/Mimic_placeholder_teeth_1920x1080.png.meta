@@ -154,7 +154,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Mimic_placeholder_teeth_1920x1080_0: -4673043760528579913
+      Mimic_placeholder_teeth_1920x1080_1: -1609647361213840350
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

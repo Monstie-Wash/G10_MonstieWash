@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Mouth_brace_840x350_0: 7457448986837397644
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
