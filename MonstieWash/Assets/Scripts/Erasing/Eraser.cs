@@ -13,6 +13,7 @@ public class Eraser : MonoBehaviour
     private Vector2Int m_drawPos;
     private Transform m_drawPosTransform;
     private TaskTracker m_taskTracker;
+    private RoomSaver m_roomSaver;
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
@@ -57,17 +58,17 @@ public class Eraser : MonoBehaviour
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            //erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
-            //Debug.Log($"{erasedCount} erased of {maskPixels.Length}. {erasedProgress}%");
-            //if(erasedProgress > 90) Debug.Log("Erased!!!");
+            erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
         }
     }
 
     private void Awake()
     {
-        m_playerHand = FindAnyObjectByType<PlayerHand>();
+        m_playerHand = FindFirstObjectByType<PlayerHand>();
         m_drawPosTransform = transform.GetChild(0);
-        //m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_roomSaver = FindFirstObjectByType<RoomSaver>();
+        m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
     }
 
     private void Start()
@@ -78,7 +79,12 @@ public class Eraser : MonoBehaviour
     private void OnEnable()
     {
         InputManager.Inputs.OnActivate_Held += UseTool;
+    }
+
+    private void RoomSaver_OnScenesLoaded()
+    {
         PopulateErasables();
+        m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
     private void OnDisable()
@@ -95,11 +101,11 @@ public class Eraser : MonoBehaviour
 
         foreach (var erasable in m_erasables)
         {
-            if (!erasable.obj.activeSelf) continue;
+            if (!erasable.obj.activeInHierarchy) continue;
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                //m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
+                m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
             }
         }
     }

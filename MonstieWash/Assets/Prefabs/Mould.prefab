@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3772029328255838128}
   - component: {fileID: 4938277568639111315}
+  - component: {fileID: -4494036722680962481}
   m_Layer: 0
   m_Name: Mould
   m_TagString: Erasable
@@ -86,3 +87,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
+--- !u!114 &-4494036722680962481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487633809713049485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8fbb86415f949445b920ae82a3cee84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

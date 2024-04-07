@@ -1,78 +1,99 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+using Unity.Collections.LowLevel.Unsafe;
 
 public class RoomSaver : MonoBehaviour
 {
-    [SerializeField] private Object startingScene;
+    public event Action OnScenesLoaded;
+    public event Action OnSceneChanged;
 
-    private List<SceneAsset> m_roomsLoaded = new();
-    private SceneAsset m_startingScene;
-    private Scene m_currentScene;
+    [SerializeField] private List<UnityEngine.Object> allScenes = new();
+
+    private List<SceneAsset> m_allScenes = new();
+    private SceneAsset m_currentScene;
+
 
     private void Awake()
     {
-        if (startingScene == null) Debug.LogError($"Target scene not assigned for {name}!");
-        else if (!(startingScene is SceneAsset)) Debug.LogError($"Target scene is not a scene for {name}!");
-        else m_startingScene = startingScene as SceneAsset;
+        for (int i = 0; i < allScenes.Count; i++)
+        {
+            if (allScenes[i] == null) Debug.LogError($"Target scene not assigned for {name}!");
+            else if (!(allScenes[i] is SceneAsset)) Debug.LogError($"Target scene is not a scene for {name}!");
+            else m_allScenes.Add(allScenes[i] as SceneAsset);
+        }
     }
 
     private void Start()
     {
-        LoadNewScene(m_startingScene);
+        LoadScenes();
     }
 
-    public void LoadScene(SceneAsset target)
+    /// <summary>
+    /// Asynchronously oads all the scenes in the m_allScenes list.
+    /// </summary>
+    private async void LoadScenes()
     {
-        var sceneLoaded = false;
+        var tasks = new Task[m_allScenes.Count];
 
-        //Unload current room.
-        var rootObjects = new List<GameObject>();
-
-        m_currentScene.GetRootGameObjects(rootObjects);
-
-        foreach (var ob in rootObjects)
+        for (int i = 0; i < m_allScenes.Count; i++)
         {
-            ob.SetActive(false);
+            tasks[i] = LoadScene(m_allScenes[i]);
         }
 
-        //Check if room has already been loaded before
-        foreach (var room in m_roomsLoaded)
+        await Task.WhenAll(tasks);
+
+        OnScenesLoaded?.Invoke();
+
+        for (int i = 0; i < m_allScenes.Count; i++)
         {
-            if (room == target)
-            {
-                sceneLoaded = true;
-
-                //ReOpen the already loaded room.
-                var rotObjects = new List<GameObject>();
-
-                m_currentScene = SceneManager.GetSceneByName(target.name);
-                m_currentScene.GetRootGameObjects(rotObjects);
-
-                foreach (var ob in rotObjects)
-                {
-                    ob.SetActive(true);
-                }
-
-                return;
-            }
+            SetSceneActive(m_allScenes[i], false);
         }
 
-        if (!sceneLoaded)
-        {
-            //If room has never been loaded, load it and add it to the list of loaded rooms.
-            LoadNewScene(target);
-        }
+        SetSceneActive(m_allScenes[0], true);
     }
 
-    private void LoadNewScene(SceneAsset scene)
+    /// <summary>
+    /// Loads a scene and disables it when it is finished loading.
+    /// </summary>
+    /// <param name="scene">The scene to load.</param>
+    /// <returns></returns>
+    private async Task LoadScene(SceneAsset scene)
     {
-        m_roomsLoaded.Add(scene);
+        await SceneManager.LoadSceneAsync(scene.name, LoadSceneMode.Additive);
+    }
 
-        SceneManager.LoadScene(scene.name, LoadSceneMode.Additive);
+    /// <summary>
+    /// Swaps the current active scene to a new scene
+    /// </summary>
+    /// <param name="target">The scene to move to.</param>
+    public void MoveToScene(SceneAsset target)
+    {
+        SetSceneActive(m_currentScene, false);
+        SetSceneActive(target, true);
 
-        m_currentScene = SceneManager.GetSceneByName(scene.name);
+        OnSceneChanged?.Invoke();
+    }
+
+    /// <summary>
+    /// Disables all gameobjects within a scene.
+    /// </summary>
+    /// <param name="scene">The scene to disable.</param>
+    private void SetSceneActive(SceneAsset scene, bool active)
+    {
+        var currentScene = SceneManager.GetSceneByName(scene.name);
+        var gameObjs = currentScene.GetRootGameObjects();
+
+        foreach (var gameObject in gameObjs)
+        {
+            gameObject.SetActive(active);
+        }
+
+        if (active) m_currentScene = scene;
     }
 }

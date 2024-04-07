@@ -22,6 +22,6 @@ public class TraversalObject : MonoBehaviour
 
     public void OnClicked()
     {
-        m_saveObj.LoadScene(m_targetScene);
+        m_saveObj.MoveToScene(m_targetScene);
     }
 }

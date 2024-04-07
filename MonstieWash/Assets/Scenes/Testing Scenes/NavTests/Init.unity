@@ -403,9 +403,21 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
-      propertyPath: startingScene
+      propertyPath: allScenes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'allScenes.Array.data[0]'
       value: 
       objectReference: {fileID: 102900000, guid: dffb3e3ba12eddf498db57565a9a254c, type: 3}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'allScenes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 102900000, guid: 0e0f4e387f939c24ca425993aae816d0, type: 3}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'allScenes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 102900000, guid: 34b0b2b2716c0b748bb8627a9de9bf33, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
