@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,10 +10,10 @@ public class RoomSaver : MonoBehaviour
     public event Action OnScenesLoaded;
     public event Action OnSceneChanged;
 
-    [SerializeField] private List<UnityEngine.Object> allScenes = new();
+    [SerializeField] private List<GameScene> allScenes = new();
 
-    private List<SceneAsset> m_allScenes = new();
-    private SceneAsset m_currentScene;
+    private List<string> m_allScenes = new();
+    private Scene m_currentScene;
 
 
     private void Awake()
@@ -22,8 +21,7 @@ public class RoomSaver : MonoBehaviour
         for (int i = 0; i < allScenes.Count; i++)
         {
             if (allScenes[i] == null) Debug.LogError($"Target scene not assigned for {name}!");
-            else if (!(allScenes[i] is SceneAsset)) Debug.LogError($"Target scene is not a scene for {name}!");
-            else m_allScenes.Add(allScenes[i] as SceneAsset);
+            else m_allScenes.Add(allScenes[i].SceneName);
         }
     }
 
@@ -61,18 +59,18 @@ public class RoomSaver : MonoBehaviour
     /// </summary>
     /// <param name="scene">The scene to load.</param>
     /// <returns></returns>
-    private async Task LoadScene(SceneAsset scene)
+    private async Task LoadScene(string scene)
     {
-        await SceneManager.LoadSceneAsync(scene.name, LoadSceneMode.Additive);
+        await SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
     }
 
     /// <summary>
     /// Swaps the current active scene to a new scene
     /// </summary>
     /// <param name="target">The scene to move to.</param>
-    public void MoveToScene(SceneAsset target)
+    public void MoveToScene(string target)
     {
-        SetSceneActive(m_currentScene, false);
+        SetSceneActive(m_currentScene.name, false);
         SetSceneActive(target, true);
 
         OnSceneChanged?.Invoke();
@@ -82,9 +80,11 @@ public class RoomSaver : MonoBehaviour
     /// Disables all gameobjects within a scene.
     /// </summary>
     /// <param name="scene">The scene to disable.</param>
-    private void SetSceneActive(SceneAsset scene, bool active)
+    private void SetSceneActive(string scene, bool active)
     {
-        var currentScene = SceneManager.GetSceneByName(scene.name);
+        var currentScene = SceneManager.GetSceneByName(scene);
+        if (currentScene.name == null) Debug.LogError($"{scene} is not a scene!");
+
         var gameObjs = currentScene.GetRootGameObjects();
 
         foreach (var gameObject in gameObjs)
@@ -92,6 +92,6 @@ public class RoomSaver : MonoBehaviour
             gameObject.SetActive(active);
         }
 
-        if (active) m_currentScene = scene;
+        if (active) m_currentScene = currentScene;
     }
 }
