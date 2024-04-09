@@ -50,7 +50,7 @@ public class Eraser : MonoBehaviour
                 newColors[i].g = colors[i].g;
                 newColors[i].b = colors[i].b;
                 newColors[i].a = Mathf.Min((255 - maskPixels[i])/255f, colors[i].a);
-                if(maskPixels[i] > 240) erasedCount++;
+                if (newColors[i].a < 0.01f) erasedCount++;
             }
 
             sprite.texture.SetPixels(newColors, 0);
@@ -126,7 +126,7 @@ public class Eraser : MonoBehaviour
         foreach (var erasable in tempErasables)
         {
             var spriteRenderer = erasable.GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = DuplicateSprite(spriteRenderer.sprite);
+            if (!spriteRenderer.sprite.name.Contains("Sprite Duplicate")) spriteRenderer.sprite = DuplicateSprite(spriteRenderer.sprite);
 
             var newErasable = new Erasable(erasable);
             if (!m_erasables.Contains(newErasable)) m_erasables.Add(newErasable);
