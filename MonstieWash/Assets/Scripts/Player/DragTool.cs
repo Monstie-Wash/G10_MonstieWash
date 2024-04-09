@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DragTool : MonoBehaviour
@@ -15,7 +12,6 @@ public class DragTool : MonoBehaviour
     private void Awake()
     {
         m_collider = GetComponent<Collider2D>();
-
         m_contactFilter = new ContactFilter2D();
         m_contactFilter.SetLayerMask(LayerMask.GetMask("Tool"));
     }
@@ -59,13 +55,10 @@ public class DragTool : MonoBehaviour
     {
         var results = new Collider2D[1];
         Physics2D.OverlapCollider(m_collider, m_contactFilter, results);
-        
-        if (results[0] != null)
-        {
-            toolTransform = results[0].transform;
-            return true;
-        }
 
-        return false;
+        if (results[0] == null) return false;
+
+        toolTransform = results[0].transform;
+        return true;
     }
 }

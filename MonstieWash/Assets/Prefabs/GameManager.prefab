@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 504427494389466731}
   - component: {fileID: 2787953857554938795}
   - component: {fileID: 8437575934485402516}
+  - component: {fileID: 7199044649729086818}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -57,4 +58,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc18eeac230b4643ac3c3354d0e2b56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstRoomToLoad: NavTest
+  allScenes: []
+--- !u!114 &7199044649729086818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059618893801588742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c330dc06251f3da488d2b35918bf4d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_taskProgress:
+    ignoreThis: 
+    keys: []
+    values: []

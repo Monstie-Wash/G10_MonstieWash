@@ -53,6 +53,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Navigate"",
+                    ""type"": ""Button"",
+                    ""id"": ""c473e6d4-095f-4d10-a91f-e65111fc81e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Transfer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a5422ff9-1335-4e29-947c-b68341538458"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""760fdebc-5747-4764-8802-3c6104e7f727"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -149,6 +180,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
         m_PlayerActions_Activate = m_PlayerActions.FindAction("Activate", throwIfNotFound: true);
         m_PlayerActions_Transfer = m_PlayerActions.FindAction("Transfer", throwIfNotFound: true);
+        m_PlayerActions_Navigate = m_PlayerActions.FindAction("Navigate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -213,6 +245,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Move;
     private readonly InputAction m_PlayerActions_Activate;
     private readonly InputAction m_PlayerActions_Transfer;
+    private readonly InputAction m_PlayerActions_Navigate;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -220,6 +253,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
         public InputAction @Activate => m_Wrapper.m_PlayerActions_Activate;
         public InputAction @Transfer => m_Wrapper.m_PlayerActions_Transfer;
+        public InputAction @Navigate => m_Wrapper.m_PlayerActions_Navigate;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -238,6 +272,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Transfer.started += instance.OnTransfer;
             @Transfer.performed += instance.OnTransfer;
             @Transfer.canceled += instance.OnTransfer;
+            @Navigate.started += instance.OnNavigate;
+            @Navigate.performed += instance.OnNavigate;
+            @Navigate.canceled += instance.OnNavigate;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -251,6 +288,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Transfer.started -= instance.OnTransfer;
             @Transfer.performed -= instance.OnTransfer;
             @Transfer.canceled -= instance.OnTransfer;
+            @Navigate.started -= instance.OnNavigate;
+            @Navigate.performed -= instance.OnNavigate;
+            @Navigate.canceled -= instance.OnNavigate;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -282,5 +322,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnActivate(InputAction.CallbackContext context);
         void OnTransfer(InputAction.CallbackContext context);
+        void OnNavigate(InputAction.CallbackContext context);
     }
 }

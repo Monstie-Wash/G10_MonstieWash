@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerHand : MonoBehaviour
 {
@@ -12,6 +11,9 @@ public class PlayerHand : MonoBehaviour
     private float m_moveThreshold = 0.01f;
     private const float k_mouseSpeedMultiplier = 0.001f;
 
+    private Collider2D m_collider;
+    private ContactFilter2D m_contactFilter;
+
     public bool IsMoving
     {
         get { return Mathf.Abs(m_moveHorizontal) > m_moveThreshold || Mathf.Abs(m_moveVertical) > m_moveThreshold; }
@@ -21,12 +23,21 @@ public class PlayerHand : MonoBehaviour
     {
         InputManager.Inputs.OnMove += Inputs_MovePerformed;
         InputManager.Inputs.OnMove_Ended += Inputs_MoveEnded;
+        InputManager.Inputs.OnNavigate += Inputs_OnNavigate;
     }
 
     private void OnDisable()
     {
         InputManager.Inputs.OnMove -= Inputs_MovePerformed;
         InputManager.Inputs.OnMove_Ended -= Inputs_MoveEnded;
+        InputManager.Inputs.OnNavigate -= Inputs_OnNavigate;
+    }
+
+    private void Awake()
+    {
+        m_collider = GetComponent<Collider2D>();
+        m_contactFilter = new ContactFilter2D();
+        m_contactFilter.SetLayerMask(LayerMask.GetMask("Navigation"));
     }
 
     private void Update()
@@ -44,6 +55,11 @@ public class PlayerHand : MonoBehaviour
     {
         m_moveHorizontal = 0f;
         m_moveVertical = 0f;
+    }
+
+    private void Inputs_OnNavigate()
+    {
+        TryNavigate();
     }
 
     /// <summary>
@@ -75,5 +91,17 @@ public class PlayerHand : MonoBehaviour
         newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits, cameraHeightInWorldUnits);
 
         return newPosition;
+    }
+
+    private void TryNavigate()
+    {
+        var results = new Collider2D[1];
+        Physics2D.OverlapCollider(m_collider, m_contactFilter, results);
+
+        if (results[0] == null) return;
+        
+        //Navigate
+        TraversalObject navArrow = results[0].GetComponent<TraversalObject>();
+        navArrow.OnClicked();
     }
 }

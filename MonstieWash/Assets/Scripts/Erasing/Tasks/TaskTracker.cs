@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -7,24 +6,40 @@ using System.Linq;
 public class TaskTracker : MonoBehaviour
 {
     //Unity Inspector
-    //Container object for all the the different areas to clean 
-    [SerializeField] private Transform taskContainer;
     //These are temporary replacement for UI progress bar
     [SerializeField] private SerializableDictionary<string, float> m_taskProgress = new();
 
     //Private
     private List<string> m_taskDictKeys = new();
-    
+    //Container object for all the the different areas to clean 
+    private List<Transform> m_taskContainers = new();
+    private RoomSaver m_roomSaver;
+
     private void Awake()
     {
-        if (taskContainer)
+        m_roomSaver = GetComponent<RoomSaver>();
+    }
+
+    private void OnEnable()
+    {
+        m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
+    }
+
+    private void RoomSaver_OnScenesLoaded()
+    {
+        m_taskContainers.Add(transform);
+
+        foreach (var obj in GameObject.FindGameObjectsWithTag("TaskContainer"))
+        {
+            m_taskContainers.Add(obj.transform);
+        }
+
+        foreach (var taskContainer in m_taskContainers)
         {
             InitialiseTasks(taskContainer, taskContainer.name);
         }
-        else
-        {
-            Debug.Log("WARNING: Please assign taskContainer to TaskTracker script!!!");
-        }
+
+        m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
     /// <summary>
@@ -34,24 +49,29 @@ public class TaskTracker : MonoBehaviour
     /// <param name="taskName">A compound string made up of all parent objects in the hierarchy seperated by '#' eg. "Mimic#Front#Teeth#Dirt1". Used to identify each task and the associated locations.</param>
     private void InitialiseTasks(Transform taskContainer, string taskName)
     {
-        if (taskContainer.tag == "Untagged")
-        {
-            AddTaskGroupTracker(taskName);
-            foreach (Transform child in taskContainer)
-            {
-                InitialiseTasks(child, taskName + "#" + child.name);
-            }
-        }
-        else
+        if (taskContainer.tag == "Erasable")
         {
             ITask iTask = taskContainer.GetComponent<ITask>();
-            if (iTask != null) 
+            if (iTask != null)
             {
                 AddTaskTracker(taskName, iTask);
             }
             else
             {
-                Debug.Log($"{taskContainer.name} should implmement the ITask interface but doesn't!");
+                Debug.LogWarning($"{taskContainer.name} should implmement the ITask interface but doesn't!");
+            }
+        }
+        else
+        {
+            var newTaskName = "";
+            if (taskContainer == transform) newTaskName = "OverallTask";
+            else if (taskContainer.parent == null) newTaskName = $"OverallTask#{taskContainer.gameObject.scene.name}Container";
+            else newTaskName = taskName;
+
+            AddTaskGroupTracker(newTaskName);
+            foreach (Transform child in taskContainer)
+            {
+                InitialiseTasks(child, newTaskName + "#" + child.name);
             }
         }
     }
@@ -65,7 +85,7 @@ public class TaskTracker : MonoBehaviour
     {
         AddTaskGroupTracker(taskName);
         if (iTask != null) iTask.TaskName = taskName;
-        else {Debug.Log($"Warning: {taskName} did not have an ITask script!");}
+        else Debug.LogWarning($"Warning: {taskName} does not have an ITask script!");
     }
 
     /// <summary>
@@ -81,7 +101,7 @@ public class TaskTracker : MonoBehaviour
         }
         else
         {
-            Debug.Log($"{taskName} is already being tracked.");
+            Debug.LogWarning($"{taskName} is already being tracked.");
         }
     }
 

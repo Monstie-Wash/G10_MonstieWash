@@ -5,20 +5,20 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/MonstieWash.unity
+  - enabled: 0
+    path: Assets/Scenes/Testing Scenes/MonstieWash.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/NavTests/Init.unity
+    path: Assets/Scenes/Testing Scenes/NavTests/Init.unity
     guid: 74113b9c7d48d474c989b27dd7b0998c
   - enabled: 1
-    path: Assets/Scenes/NavTests/NavTest.unity
+    path: Assets/Scenes/Testing Scenes/NavTests/NavTest.unity
     guid: dffb3e3ba12eddf498db57565a9a254c
   - enabled: 1
-    path: Assets/Scenes/NavTests/NavTest2.unity
+    path: Assets/Scenes/Testing Scenes/NavTests/NavTest2.unity
     guid: 0e0f4e387f939c24ca425993aae816d0
   - enabled: 1
-    path: Assets/Scenes/NavTests/NavTest3.unity
+    path: Assets/Scenes/Testing Scenes/NavTests/NavTest3.unity
     guid: 34b0b2b2716c0b748bb8627a9de9bf33
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
