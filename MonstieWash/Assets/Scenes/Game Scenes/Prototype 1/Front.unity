@@ -130,7 +130,7 @@ PrefabInstance:
     - target: {fileID: 335779019713315462, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: targetScene
       value: 
-      objectReference: {fileID: 102900000, guid: ed6338a07a820ea4090f06926eb91978, type: 3}
+      objectReference: {fileID: 11400000, guid: ef3f9a570dbff8840a51fbb1fea3c7e9, type: 2}
     - target: {fileID: 5883377530239027236, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: m_Name
       value: NavigationArrow
@@ -292,7 +292,7 @@ PrefabInstance:
     - target: {fileID: 335779019713315462, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: targetScene
       value: 
-      objectReference: {fileID: 102900000, guid: 793317c1f72ae74408ada9706c343169, type: 3}
+      objectReference: {fileID: 11400000, guid: 0b18b108c7e151f4499e12cc75d0b9c3, type: 2}
     - target: {fileID: 5883377530239027236, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: m_Name
       value: NavigationArrow (1)
@@ -509,7 +509,7 @@ PrefabInstance:
     - target: {fileID: 335779019713315462, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: targetScene
       value: 
-      objectReference: {fileID: 102900000, guid: 8b49fecc4bd037a49b50d861bfd33f93, type: 3}
+      objectReference: {fileID: 11400000, guid: 10780f6b9ba09244b96aa06679ecc181, type: 2}
     - target: {fileID: 5883377530239027236, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: m_Name
       value: NavigationArrow (2)
