@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class MonsterBrain : MonoBehaviour
 {
@@ -12,12 +14,17 @@ public class MonsterBrain : MonoBehaviour
 
     [SerializeField] public bool Pause;
 
+    [SerializeField] public int designerSanityBuff; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
+
+    [SerializeField] public TextMeshProUGUI DebugUi;
+
     [HideInInspector] public Dictionary<int, float> ActiveMoods { get { return activeMoods; } }
     [HideInInspector] public List<MoodType> MoodData { get { return moodData; } }
 
 
     private void Awake()
     {
+        activeMoods = new Dictionary<int, float>();
         loadMoods();
     }
 
@@ -35,6 +42,10 @@ public class MonsterBrain : MonoBehaviour
         negativeChainReactions();
         //Moods are kept to their upper and lower limits.
         maintainLimits();
+
+
+        //Debug Updates
+        if (Debug) updateDebugText();
     }
 
 
@@ -52,7 +63,7 @@ public class MonsterBrain : MonoBehaviour
             //Assign new value to active mood.
             activeMoods[i] = currentValue;
 
-            if (Debug) print("Active Mood: " + moodData[i].name + "naturally changed to " + currentValue );
+            if (Debug) print("Active Mood: " + moodData[i].MoodName + " naturally changed to " + currentValue );
         }
     }
 
@@ -65,12 +76,12 @@ public class MonsterBrain : MonoBehaviour
 
             float currentValue = activeMoods[i];
             //Determine chaotic value
-            float chaosVal = Random.Range(-moodData[i].ChaosMultiplier, moodData[i].ChaosMultiplier);
+            float chaosVal = Random.Range(-moodData[i].ChaosMultiplier, moodData[i].ChaosMultiplier) * designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Changes current value by chaos value;
             activeMoods[i] = currentValue + (chaosVal * Time.deltaTime);
 
-            if (Debug) print("Active Mood: " + moodData[i].name + "chaotically changed by " + chaosVal * Time.deltaTime);
+            if (Debug) print("Active Mood: " + moodData[i].MoodName + " chaotically changed by " + chaosVal * Time.deltaTime);
         }
     }
 
@@ -84,7 +95,7 @@ public class MonsterBrain : MonoBehaviour
 
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
             var percentageStrength = ((activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
-            float chainAmount = (percentageStrength / 100) * MoodData[i].PositiveReactionStrength * Time.deltaTime;
+            float chainAmount = (percentageStrength / 100) * MoodData[i].PositiveReactionStrength * designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of positive reactions in mood.
             for (int j = 0; j < moodData[i].PositiveChainReactions.Count; j++)
@@ -94,7 +105,7 @@ public class MonsterBrain : MonoBehaviour
                 //Apply positive chain amount to each active mood that is in the list of positive reactions.
                 activeMoods[targetMood] += chainAmount * Time.deltaTime;
 
-                if (Debug) print("Active Mood: " + moodData[i].name + "positively influenced " + activeMoods[targetMood] + "by amount " + chainAmount * Time.deltaTime);
+                if (Debug) print("Active Mood: " + moodData[i].MoodName + " positively influenced " + moodData[targetMood].MoodName + "by amount " + chainAmount * Time.deltaTime);
             }
         }
     }
@@ -109,7 +120,7 @@ public class MonsterBrain : MonoBehaviour
 
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
             var percentageStrength = ((activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
-            float chainAmount = (percentageStrength / 100) * MoodData[i].NegativeReactionStrength;
+            float chainAmount = (percentageStrength / 100) * MoodData[i].NegativeReactionStrength * designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of negative reactions in mood.
             for (int j = 0; j < moodData[i].NegativeChainReactions.Count; j++)
@@ -119,7 +130,7 @@ public class MonsterBrain : MonoBehaviour
                 //Apply negative chain amount to each active mood that is in the list of negative reactions.
                 activeMoods[targetMood] -= chainAmount * Time.deltaTime;
 
-                if (Debug) print("Active Mood: " + moodData[i].name + "negatively influenced " + activeMoods[targetMood] + "by amount " + chainAmount * Time.deltaTime);
+                if (Debug) print("Active Mood: " + moodData[i].MoodName + " negatively influenced " + moodData[targetMood].MoodName + " by amount " + chainAmount * Time.deltaTime);
             }
         }
     }
@@ -150,13 +161,26 @@ public class MonsterBrain : MonoBehaviour
         }
     }
 
+    private void updateDebugText()
+    {
+        DebugUi.text = "";
+        for (int i = 0; i < activeMoods.Count; i++)
+        {
+            DebugUi.text += "MoodName: " + moodData[i].MoodName + " MoodValue: " + Mathf.FloorToInt(activeMoods[i]).ToString() + "\n" + 
+            " Mood Lower/Upper Limits: " + moodData[i].MoodLowerLimit.ToString() + "/" + moodData[i].MoodUpperLimit.ToString();
+            DebugUi.text += "\n";
+            DebugUi.text += "\n";
+        }
+
+    }
+
 
     //Finds and returns active mood index by given string name.
     private int accessActiveMoodIndexByName(string name)
     {
         for (int i = 0; i < activeMoods.Count; i++)
         {
-            if (name == MoodData[i].name) return i;
+            if (name == MoodData[i].MoodName) return i;
         }
         throw new System.Exception("No mood index found by that name");
     }
@@ -166,7 +190,7 @@ public class MonsterBrain : MonoBehaviour
     {
         for (int i = 0; i < activeMoods.Count; i++)
         {
-            if (refMT.MoodName == MoodData[i].name) return i;
+            if (refMT.MoodName == MoodData[i].MoodName) return i;
         }
         throw new System.Exception("No mood index found by that name");
     }
