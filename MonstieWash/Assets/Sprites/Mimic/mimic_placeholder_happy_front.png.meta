@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: e35efc46301272248bab2ebc5b2110da
+guid: f70dd3f5c5d3e734cbff86e302f45cd9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1179006366527861049
-    second: mimic_placeholder_angry_front_0
-  - first:
-      213: 1774759521142297334
-    second: mimic_placeholder_angry_front_1
+      213: 762153654712106070
+    second: mimic_placeholder_happy_front_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mimic_placeholder_angry_front_0
+      name: mimic_placeholder_happy_front_0
       rect:
         serializedVersion: 2
-        x: 47
-        y: 4
-        width: 1285
-        height: 976
+        x: 39
+        y: 20
+        width: 1322
+        height: 950
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,29 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7cece2fc4f353afe0800000000000000
-      internalID: -1179006366527861049
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: mimic_placeholder_angry_front_1
-      rect:
-        serializedVersion: 2
-        x: 1120
-        y: 935
-        width: 64
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6f2dd63a16631a810800000000000000
-      internalID: 1774759521142297334
+      spriteID: 65c716df5b6b39a00800000000000000
+      internalID: 762153654712106070
       vertices: []
       indices: 
       edges: []
@@ -154,9 +130,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      mimic_placeholder_angry_front_0: -1179006366527861049
-      mimic_placeholder_angry_front_1: 1774759521142297334
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
