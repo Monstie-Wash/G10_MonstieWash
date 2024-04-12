@@ -18,12 +18,12 @@ public class DragTool : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnTransfer += Inputs_OnTransfer;
+        InputManager.Inputs.OnSwitchTool += Inputs_OnTransfer;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnTransfer -= Inputs_OnTransfer;
+        InputManager.Inputs.OnSwitchTool -= Inputs_OnTransfer;
     }
 
     private void Inputs_OnTransfer()

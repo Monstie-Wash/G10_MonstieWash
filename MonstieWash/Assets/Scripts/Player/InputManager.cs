@@ -16,8 +16,8 @@ public class InputManager : MonoBehaviour
     public event Action OnActivate_Held;
     public event Action OnActivate_Ended;
 
-    public event Action OnTransfer;
-    public event Action OnTransfer_Ended;
+    public event Action OnSwitchTool;
+    public event Action OnSwitchTool_Ended;
 
     public event Action OnNavigate;
     public event Action OnNavigate_Ended;
@@ -54,9 +54,9 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Move.canceled += Move_canceled;
         m_playerInput.PlayerActions.Activate.performed += Activate_performed;
         m_playerInput.PlayerActions.Activate.canceled += Activate_canceled;
-        m_playerInput.PlayerActions.Transfer.performed += Transfer_performed;
+        m_playerInput.PlayerActions.SwitchTool.performed += SwitchTool_performed;
         m_playerInput.PlayerActions.Navigate.performed += Navigate_performed;
-        m_playerInput.PlayerActions.Navigate.canceled += Navigate_canceled; ;
+        m_playerInput.PlayerActions.Navigate.canceled += Navigate_canceled;
         m_playerInput.PlayerActions.Enable();
     }
 
@@ -66,7 +66,9 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Move.canceled -= Move_canceled;
         m_playerInput.PlayerActions.Activate.performed -= Activate_performed;
         m_playerInput.PlayerActions.Activate.canceled -= Activate_canceled;
-        m_playerInput.PlayerActions.Transfer.performed -= Transfer_performed;
+        m_playerInput.PlayerActions.SwitchTool.performed -= SwitchTool_performed;
+        m_playerInput.PlayerActions.Navigate.performed -= Navigate_performed;
+        m_playerInput.PlayerActions.Navigate.canceled -= Navigate_canceled;
         m_playerInput.PlayerActions.Disable();
     }
 
@@ -110,10 +112,10 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void Transfer_performed(InputAction.CallbackContext context)
+    private void SwitchTool_performed(InputAction.CallbackContext context)
     {
         UpdateInputDevice(context.control.device);
-        OnTransfer?.Invoke();
+        OnSwitchTool?.Invoke();
     }
 
     private void Navigate_performed(InputAction.CallbackContext context)

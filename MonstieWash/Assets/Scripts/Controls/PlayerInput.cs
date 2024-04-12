@@ -46,7 +46,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Transfer"",
+                    ""name"": ""SwitchTool"",
                     ""type"": ""Button"",
                     ""id"": ""c4f8f9c9-5084-45cb-a1fd-ce85f2f94cfd"",
                     ""expectedControlType"": ""Button"",
@@ -127,7 +127,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Transfer"",
+                    ""action"": ""SwitchTool"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -138,7 +138,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Transfer"",
+                    ""action"": ""SwitchTool"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -179,7 +179,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_Move = m_PlayerActions.FindAction("Move", throwIfNotFound: true);
         m_PlayerActions_Activate = m_PlayerActions.FindAction("Activate", throwIfNotFound: true);
-        m_PlayerActions_Transfer = m_PlayerActions.FindAction("Transfer", throwIfNotFound: true);
+        m_PlayerActions_SwitchTool = m_PlayerActions.FindAction("SwitchTool", throwIfNotFound: true);
         m_PlayerActions_Navigate = m_PlayerActions.FindAction("Navigate", throwIfNotFound: true);
     }
 
@@ -244,7 +244,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
     private readonly InputAction m_PlayerActions_Move;
     private readonly InputAction m_PlayerActions_Activate;
-    private readonly InputAction m_PlayerActions_Transfer;
+    private readonly InputAction m_PlayerActions_SwitchTool;
     private readonly InputAction m_PlayerActions_Navigate;
     public struct PlayerActionsActions
     {
@@ -252,7 +252,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public PlayerActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerActions_Move;
         public InputAction @Activate => m_Wrapper.m_PlayerActions_Activate;
-        public InputAction @Transfer => m_Wrapper.m_PlayerActions_Transfer;
+        public InputAction @SwitchTool => m_Wrapper.m_PlayerActions_SwitchTool;
         public InputAction @Navigate => m_Wrapper.m_PlayerActions_Navigate;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
@@ -269,9 +269,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Activate.started += instance.OnActivate;
             @Activate.performed += instance.OnActivate;
             @Activate.canceled += instance.OnActivate;
-            @Transfer.started += instance.OnTransfer;
-            @Transfer.performed += instance.OnTransfer;
-            @Transfer.canceled += instance.OnTransfer;
+            @SwitchTool.started += instance.OnSwitchTool;
+            @SwitchTool.performed += instance.OnSwitchTool;
+            @SwitchTool.canceled += instance.OnSwitchTool;
             @Navigate.started += instance.OnNavigate;
             @Navigate.performed += instance.OnNavigate;
             @Navigate.canceled += instance.OnNavigate;
@@ -285,9 +285,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Activate.started -= instance.OnActivate;
             @Activate.performed -= instance.OnActivate;
             @Activate.canceled -= instance.OnActivate;
-            @Transfer.started -= instance.OnTransfer;
-            @Transfer.performed -= instance.OnTransfer;
-            @Transfer.canceled -= instance.OnTransfer;
+            @SwitchTool.started -= instance.OnSwitchTool;
+            @SwitchTool.performed -= instance.OnSwitchTool;
+            @SwitchTool.canceled -= instance.OnSwitchTool;
             @Navigate.started -= instance.OnNavigate;
             @Navigate.performed -= instance.OnNavigate;
             @Navigate.canceled -= instance.OnNavigate;
@@ -321,7 +321,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnActivate(InputAction.CallbackContext context);
-        void OnTransfer(InputAction.CallbackContext context);
+        void OnSwitchTool(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
     }
 }

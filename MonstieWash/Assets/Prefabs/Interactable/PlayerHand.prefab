@@ -86,6 +86,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2221545181074572128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7124938238809717833}
+  m_Layer: 0
+  m_Name: ToolHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7124938238809717833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2221545181074572128}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1316933848323378630}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3635255560880722609
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +128,7 @@ GameObject:
   - component: {fileID: 1316933848323378630}
   - component: {fileID: 381105064800417206}
   - component: {fileID: 8211790447339308997}
-  - component: {fileID: 962849403305382100}
+  - component: {fileID: 8624381380993330181}
   m_Layer: 0
   m_Name: PlayerHand
   m_TagString: Untagged
@@ -119,6 +150,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 935980241668332579}
+  - {fileID: 7124938238809717833}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &381105064800417206
@@ -180,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorSpeed: 5
---- !u!114 &962849403305382100
+--- !u!114 &8624381380993330181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,7 +221,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3635255560880722609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4531506ba272a2346b753b1b30ed669e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fe524638c4dc0947959af53802a22af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alwaysCenterTool: 0
+  tools:
+  - {fileID: 3773855883548905670, guid: 3d37fcf689aa19e4e9536b8e2f5394e5, type: 3}
+  - {fileID: 3773855883548905670, guid: f2de723e4718072438ad301b00419490, type: 3}
+  - {fileID: 3773855883548905670, guid: 9845d15f7aa07804bb8532e130a6e72f, type: 3}
+  - {fileID: 3773855883548905670, guid: f1a322ecb56d2f644b9c61ae61373aae, type: 3}
+  toolHolder: {fileID: 7124938238809717833}
