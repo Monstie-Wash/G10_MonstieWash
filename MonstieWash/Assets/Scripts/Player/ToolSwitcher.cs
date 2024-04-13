@@ -50,7 +50,7 @@ public class ToolSwitcher : MonoBehaviour
     {
         //Increase by one in the chosen direction, looping from -1 (empty hand) to the last tool index and back to -1
         var nextToolIndex = LoopValue(m_currentToolIndex + dir, -1, tools.Count - 1);
-        Debug.Log(nextToolIndex);
+        
         SetActiveTool(nextToolIndex);
     }
 
