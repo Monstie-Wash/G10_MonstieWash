@@ -8,15 +8,13 @@ public class ToolFX : MonoBehaviour
     [SerializeField] private ParticleSystem particlesOnUse;
     ParticleSystem myParticles;
 
-    private void Awake()
+    private void Start()
     {
-        PlayerHand playerHand = FindFirstObjectByType<PlayerHand>();
-
-        myParticles = Instantiate(particlesOnUse, playerHand.transform);
-        //myParticles.Stop();
+        myParticles = Instantiate(particlesOnUse, transform); 
+        myParticles.Stop();
     }
 
-        private void OnEnable()
+    private void OnEnable()
     {
         InputManager.Inputs.OnActivate_Started += StartParticles;
         InputManager.Inputs.OnActivate_Ended += StopParticles;
@@ -39,7 +37,7 @@ public class ToolFX : MonoBehaviour
 
     private void StopParticles() 
     {
-        //myParticles.Stop();
+        myParticles.Stop();
     }
 
 }

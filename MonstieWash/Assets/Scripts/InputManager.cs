@@ -88,11 +88,13 @@ public class InputManager : MonoBehaviour
     private void Activate_performed(InputAction.CallbackContext context)
     {
         UpdateInputDevice(context.control.device);
+        OnActivate_Started?.Invoke();
         m_activeRoutine = StartCoroutine(Activate());
     }
 
     private void Activate_canceled(InputAction.CallbackContext context)
     {
+        OnActivate_Ended?.Invoke();
         StopCoroutine(m_activeRoutine);
     }
 
