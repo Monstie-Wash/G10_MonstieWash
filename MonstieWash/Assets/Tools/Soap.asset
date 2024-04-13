@@ -15,4 +15,5 @@ MonoBehaviour:
   mask: {fileID: 21300000, guid: a10c855c8edb2e447bdd35353faccf42, type: 3}
   size: 2
   inputStrength: 50
+  particlesOnUse: {fileID: 3058718715873599778, guid: 585f89ab2d129e14abbd2670d6ca340a, type: 3}
   strength: 10.034158
