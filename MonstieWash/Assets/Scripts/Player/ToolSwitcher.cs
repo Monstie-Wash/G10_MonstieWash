@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class ToolSwitcher : MonoBehaviour
     [SerializeField] private Transform toolHolder;
 
     private List<GameObject> m_toolInstances = new();
+
     /// <summary>
     /// The current index in the m_toolInstances list. -1 represents an empty hand.
     /// </summary>
@@ -32,19 +34,54 @@ public class ToolSwitcher : MonoBehaviour
         InputManager.Inputs.OnSwitchTool -= Inputs_OnSwitchTool;
     }
 
-    private void Inputs_OnSwitchTool()
+    private void Inputs_OnSwitchTool(float dirInput)
     {
-        RotateCurrentTool();
+        var dir = Math.Sign(dirInput);
+        if (dir == 0) return;
+
+        RotateCurrentTool(dir);
     }
 
-    private void RotateCurrentTool()
+    /// <summary>
+    /// Changes the current tool based on the direction input.
+    /// </summary>
+    /// <param name="dir">The direction to rotate through the tools.</param>
+    private void RotateCurrentTool(int dir)
     {
-        //Increase by one, looping from -1 (empty hand) to the last tool index and back to -1
-        var nextToolIndex = ((m_currentToolIndex + 2) % (tools.Count + 1)) - 1;
-
+        //Increase by one in the chosen direction, looping from -1 (empty hand) to the last tool index and back to -1
+        var nextToolIndex = LoopValue(m_currentToolIndex + dir, -1, tools.Count - 1);
+        Debug.Log(nextToolIndex);
         SetActiveTool(nextToolIndex);
     }
 
+    /// <summary>
+    /// Keeps a given value within the bounds of min and max cyclically.
+    /// </summary>
+    /// <param name="value">The value to loop.</param>
+    /// <param name="min">The minimum value of the loop.</param>
+    /// <param name="max">The maximum value of the loop.</param>
+    /// <returns>The given value as it fits into the loop.</returns>
+    private int LoopValue(int value, int min, int max)
+    {
+        var loopSize = max - min + 1;
+        
+        while (value > max)
+        {
+            value -= loopSize;
+        }
+
+        while (value < min)
+        {
+            value += loopSize;
+        }
+
+        return value;
+    }
+
+    /// <summary>
+    /// Sets the current tool.
+    /// </summary>
+    /// <param name="toolIndex">The index of the tool to use within the m_toolInstances list.</param>
     private void SetActiveTool(int toolIndex)
     {
         if (m_currentToolIndex >= 0) m_toolInstances[m_currentToolIndex].SetActive(false);

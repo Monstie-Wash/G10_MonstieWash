@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
     public event Action OnActivate_Held;
     public event Action OnActivate_Ended;
 
-    public event Action OnSwitchTool;
+    public event Action<float> OnSwitchTool;
     public event Action OnSwitchTool_Ended;
 
     public event Action OnNavigate;
@@ -115,7 +115,7 @@ public class InputManager : MonoBehaviour
     private void SwitchTool_performed(InputAction.CallbackContext context)
     {
         UpdateInputDevice(context.control.device);
-        OnSwitchTool?.Invoke();
+        OnSwitchTool?.Invoke(context.ReadValue<float>());
     }
 
     private void Navigate_performed(InputAction.CallbackContext context)

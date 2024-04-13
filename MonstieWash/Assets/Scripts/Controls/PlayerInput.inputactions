@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "SwitchTool",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "c4f8f9c9-5084-45cb-a1fd-ce85f2f94cfd",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Navigate",
@@ -99,26 +99,70 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "e544581a-994e-4838-a8b8-da9e78983f0f",
-                    "path": "<Keyboard>/space",
+                    "name": "KBM",
+                    "id": "e983739c-ea2d-4de2-98f7-65c228fdaceb",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "SwitchTool",
-                    "isComposite": false,
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "6fd1c3b3-da0f-4e3f-a8df-59fa828999f4",
-                    "path": "<Gamepad>/buttonWest",
+                    "name": "negative",
+                    "id": "6590d9ff-b60e-43d2-a060-465ef1a4c639",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "SwitchTool",
                     "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "be650a99-efdf-4472-8b8c-90e07e74cc08",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchTool",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Controller",
+                    "id": "f108f390-ac83-4401-97e9-d3741cf7a2c2",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "AxisDeadzone(min=0.8,max=0.8)",
+                    "groups": "",
+                    "action": "SwitchTool",
+                    "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "daca3370-e1f4-4d6d-8364-a366c30661d3",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "AxisDeadzone",
+                    "groups": "",
+                    "action": "SwitchTool",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "69e75680-7a4e-4705-ba79-37c99423c01c",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchTool",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
