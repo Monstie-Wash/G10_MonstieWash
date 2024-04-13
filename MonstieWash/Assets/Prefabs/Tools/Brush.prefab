@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 6599800761030589703}
   - component: {fileID: 918303946129739868}
   - component: {fileID: 6328301067441581968}
+  - component: {fileID: 502209552893978823}
   m_Layer: 6
   m_Name: Brush
   m_TagString: Untagged
@@ -234,3 +235,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: e7fc82490f269a042ac45ac4db2bc7f6, type: 2}
+--- !u!114 &502209552893978823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773855883548905670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17740c5b7ca69dc4cbc85067eda7e26c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlesOnUse: {fileID: 3058718715873599778, guid: 585f89ab2d129e14abbd2670d6ca340a, type: 3}
