@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      mouth_background_placeholder_0: -3858713167454131067
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
