@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      mimic_placeholder_happy_front_0: 762153654712106070
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
