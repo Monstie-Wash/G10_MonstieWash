@@ -13,9 +13,9 @@ public class Eraser : MonoBehaviour
     private TaskTracker m_taskTracker;
     private RoomSaver m_roomSaver;
 
-    // Particles
-    [SerializeField] private ParticleSystem particlesOnUse;
-    private ParticleSystem m_myParticles;
+    private bool IsErasing = false;
+    public event Action OnErasing_Started;
+    public event Action OnErasing_Ended;
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
@@ -76,8 +76,6 @@ public class Eraser : MonoBehaviour
     private void Start()
     {
         InitializeTool();
-        m_myParticles = Instantiate(particlesOnUse, transform);
-        m_myParticles.Stop();
     }
 
     private void OnEnable()
@@ -86,17 +84,16 @@ public class Eraser : MonoBehaviour
         InputManager.Inputs.OnActivate_Ended += StopUseTool;
     }
 
+    private void OnDisable()
+    {
+        InputManager.Inputs.OnActivate_Held -= UseTool;
+        InputManager.Inputs.OnActivate_Ended -= StopUseTool;
+    }
+
     private void RoomSaver_OnScenesLoaded()
     {
         PopulateErasables();
         m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
-    }
-
-    private void OnDisable()
-    {
-        m_myParticles.Stop();   // safety check
-        InputManager.Inputs.OnActivate_Held -= UseTool;
-        InputManager.Inputs.OnActivate_Ended -= StopUseTool;
     }
 
     /// <summary>
@@ -104,10 +101,11 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void UseTool()
     {
-        if (!m_myParticles.isEmitting) m_myParticles.Play();
-
         if (!HandMoved()) return;
-  
+
+        var wasErasing = IsErasing;
+        IsErasing = false;
+
         foreach (var erasable in m_erasables)
         {
             if (!erasable.obj.activeInHierarchy) continue;
@@ -115,8 +113,13 @@ public class Eraser : MonoBehaviour
             {
                 erasable.ApplyMask();
                 m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
+
+                IsErasing = true;
             }
         }
+
+        if (!wasErasing && IsErasing) OnErasing_Started?.Invoke();
+        if (wasErasing && !IsErasing) OnErasing_Ended?.Invoke();
     }
 
     /// <summary>
@@ -124,7 +127,11 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void StopUseTool() 
     {
-        m_myParticles.Stop();
+        if (IsErasing)
+        {
+            OnErasing_Ended?.Invoke();
+            IsErasing = false;
+        }
     }
 
     /// <summary>
@@ -202,6 +209,8 @@ public class Eraser : MonoBehaviour
         var outOfBoundsY = Math.Abs(mouseDistFromErasableCentre.y) - (halfToolSize.y * tool.size) >= halfErasableSize.y;
         if (outOfBoundsX || outOfBoundsY) return false;
 
+        var erased = false;
+
         for (var i = 0; i < tool.maskPixels.Length; i++)
         {
             if (tool.maskPixels[i] == 0) continue;
@@ -209,10 +218,10 @@ public class Eraser : MonoBehaviour
             var currentPixelOnBrush = GetPixelCoordinatesOnTexture(tool.mask.texture, i);
             var pixels = GetPixelsOnTexture(currentPixelOnBrush, mouseDistFromErasableCentre, halfErasableSize, halfToolSize);
 
-            ApplyPixels(tool.maskPixels[i], erasable.maskPixels, pixels);
+            erased |= ApplyPixels(tool.maskPixels[i], erasable.maskPixels, pixels);
         }
 
-        return true;
+        return erased;
     }
 
     /// <summary>
@@ -236,7 +245,7 @@ public class Eraser : MonoBehaviour
     /// <param name="mouseDistFromErasableCentre">Vector representing the mouse distance from the centre of the erasable in pixels.</param>
     /// <param name="halfErasableSize">Vector representing half the size of the erasable in pixels.</param>
     /// <param name="halfToolSize">Vector representing half the size of the tool in pixels.</param>
-    /// <returns></returns>
+    /// <returns>The array of pixels affected by the given pixel.</returns>
     private int[] GetPixelsOnTexture(Vector2Int currentPixelOnBrush, Vector2Int mouseDistFromErasableCentre, Vector2Int halfErasableSize, Vector2Int halfToolSize)
     {
         //Get the position of this pixel on the erasable texture
@@ -281,14 +290,24 @@ public class Eraser : MonoBehaviour
     /// <param name="toolMaskPixelAlpha">The alpha of the tool pixel to use.</param>
     /// <param name="erasableMaskPixels">The erasable mask.</param>
     /// <param name="drawingPixels">The array of pixels to apply.</param>
-    private void ApplyPixels(byte toolMaskPixelAlpha, byte[] erasableMaskPixels, int[] drawingPixels)
+    /// <returns>Whether a change was made to the erasable mask.</returns>
+    private bool ApplyPixels(byte toolMaskPixelAlpha, byte[] erasableMaskPixels, int[] drawingPixels)
     {
         var pixelStrength = toolMaskPixelAlpha * (tool.strength / 100f);
+        var erased = false;
 
         foreach (var pixel in drawingPixels)
         {
             var newAlpha = Mathf.Clamp(erasableMaskPixels[pixel] + pixelStrength, 0f, 255f);
-            erasableMaskPixels[pixel] = (byte)Mathf.FloorToInt(newAlpha);
+            var newValue = (byte)Mathf.FloorToInt(newAlpha);
+
+            if (erasableMaskPixels[pixel] != newValue)
+            {
+                erasableMaskPixels[pixel] = newValue;
+                erased = true;
+            }
         }
+
+        return erased;
     }
 }
