@@ -43,3 +43,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Backgrounds
+    uniqueID: 3090574103
+    locked: 0
+  - name: Monsters
+    uniqueID: 2983730943
+    locked: 0
+  - name: Tools
+    uniqueID: 1881744917
+    locked: 0
+  - name: Particles
+    uniqueID: 2049462369
+    locked: 0
+  - name: MenuUI
+    uniqueID: 2095423953
+    locked: 0
