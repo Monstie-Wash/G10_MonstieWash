@@ -234,3 +234,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: 00e09ce6ac17a5447a5d26aa269393bf, type: 2}
+  particlesOnUse: {fileID: 3058718715873599778, guid: 585f89ab2d129e14abbd2670d6ca340a, type: 3}

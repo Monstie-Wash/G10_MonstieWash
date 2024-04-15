@@ -13,6 +13,10 @@ public class Eraser : MonoBehaviour
     private TaskTracker m_taskTracker;
     private RoomSaver m_roomSaver;
 
+    // Particles
+    [SerializeField] private ParticleSystem particlesOnUse;
+    private ParticleSystem m_myParticles;
+
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
     /// </summary>
@@ -72,11 +76,14 @@ public class Eraser : MonoBehaviour
     private void Start()
     {
         InitializeTool();
+        m_myParticles = Instantiate(particlesOnUse, transform);
+        m_myParticles.Stop();
     }
 
     private void OnEnable()
     {
         InputManager.Inputs.OnActivate_Held += UseTool;
+        InputManager.Inputs.OnActivate_Ended += StopUseTool;
     }
 
     private void RoomSaver_OnScenesLoaded()
@@ -87,7 +94,9 @@ public class Eraser : MonoBehaviour
 
     private void OnDisable()
     {
+        m_myParticles.Stop();   // safety check
         InputManager.Inputs.OnActivate_Held -= UseTool;
+        InputManager.Inputs.OnActivate_Ended -= StopUseTool;
     }
 
     /// <summary>
@@ -95,8 +104,10 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void UseTool()
     {
-        if (!HandMoved()) return;
+        if (!m_myParticles.isEmitting) m_myParticles.Play();
 
+        if (!HandMoved()) return;
+  
         foreach (var erasable in m_erasables)
         {
             if (!erasable.obj.activeInHierarchy) continue;
@@ -106,6 +117,14 @@ public class Eraser : MonoBehaviour
                 m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
             }
         }
+    }
+
+    /// <summary>
+    /// Called when the activate button is released. 
+    /// </summary>
+    public void StopUseTool() 
+    {
+        m_myParticles.Stop();
     }
 
     /// <summary>
