@@ -6,12 +6,12 @@ using UnityEngine;
 public class ToolFX : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particlesOnUse;
-    ParticleSystem myParticles;
+    private ParticleSystem m_myParticles;
 
     private void Start()
     {
-        myParticles = Instantiate(particlesOnUse, transform); 
-        myParticles.Stop();
+        m_myParticles = Instantiate(particlesOnUse, transform); 
+        m_myParticles.Stop();
     }
 
     private void OnEnable()
@@ -26,18 +26,14 @@ public class ToolFX : MonoBehaviour
         InputManager.Inputs.OnActivate_Ended -= StopParticles;
     }
 
-        /// <summary>
-    /// Called every frame until the activate button is released.
-    /// </summary>
     private void StartParticles()
     {
-        Debug.Log("Subscribed");
-        myParticles.Play();
+        m_myParticles.Play();
     }
 
     private void StopParticles() 
     {
-        myParticles.Stop();
+        m_myParticles.Stop();
     }
 
 }
