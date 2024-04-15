@@ -88,6 +88,9 @@ public class Eraser : MonoBehaviour
     {
         InputManager.Inputs.OnActivate_Held -= UseTool;
         InputManager.Inputs.OnActivate_Ended -= StopUseTool;
+
+        OnErasing_Ended?.Invoke();
+        IsErasing = false;
     }
 
     private void RoomSaver_OnScenesLoaded()
