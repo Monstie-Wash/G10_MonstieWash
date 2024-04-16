@@ -22,6 +22,9 @@ public class InputManager : MonoBehaviour
     public event Action OnNavigate;
     public event Action OnNavigate_Ended;
 
+    public event Action OnToggleUI;
+
+
 #pragma warning restore 67
 
     private PlayerInput m_playerInput;
@@ -56,7 +59,8 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Activate.canceled += Activate_canceled;
         m_playerInput.PlayerActions.Transfer.performed += Transfer_performed;
         m_playerInput.PlayerActions.Navigate.performed += Navigate_performed;
-        m_playerInput.PlayerActions.Navigate.canceled += Navigate_canceled; ;
+        m_playerInput.PlayerActions.Navigate.canceled += Navigate_canceled;
+        m_playerInput.PlayerActions.ToggleUI.performed += ToggleUI_performed;
         m_playerInput.PlayerActions.Enable();
     }
 
@@ -126,6 +130,11 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnNavigate_Ended?.Invoke();
+    }
+    private void ToggleUI_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnToggleUI?.Invoke();
     }
 }
 

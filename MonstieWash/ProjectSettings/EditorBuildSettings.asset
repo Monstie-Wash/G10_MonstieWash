@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/Prototype 1/StartingScene.unity
     guid: aa33355a735657949b555275e662b643
   - enabled: 1
+    path: Assets/Scenes/Game Scenes/Prototype 1/Overview.unity
+    guid: 5f12d0f1c93aed941b27a58233e9fd0e
+  - enabled: 1
     path: Assets/Scenes/Game Scenes/Prototype 1/Front.unity
     guid: 8bbe0ba87cfeb654aae04488097a3808
   - enabled: 1
