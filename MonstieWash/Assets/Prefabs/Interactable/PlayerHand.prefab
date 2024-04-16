@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 381105064800417206}
   - component: {fileID: 8211790447339308997}
   - component: {fileID: 8624381380993330181}
+  - component: {fileID: 910600158149282078}
   m_Layer: 0
   m_Name: PlayerHand
   m_TagString: Untagged
@@ -151,6 +152,7 @@ Transform:
   m_Children:
   - {fileID: 935980241668332579}
   - {fileID: 7124938238809717833}
+  - {fileID: 4106818671195916241}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &381105064800417206
@@ -197,7 +199,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4.3, y: 2.6}
+  m_Size: {x: 0.667137, y: 0.6645921}
   m_EdgeRadius: 0
 --- !u!114 &8211790447339308997
 MonoBehaviour:
@@ -230,3 +232,47 @@ MonoBehaviour:
   - {fileID: 3773855883548905670, guid: 9845d15f7aa07804bb8532e130a6e72f, type: 3}
   - {fileID: 3773855883548905670, guid: f1a322ecb56d2f644b9c61ae61373aae, type: 3}
   toolHolder: {fileID: 7124938238809717833}
+--- !u!114 &910600158149282078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3635255560880722609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4531506ba272a2346b753b1b30ed669e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldItemsTransform: {fileID: 4106818671195916241}
+--- !u!1 &8487065927594770960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4106818671195916241}
+  m_Layer: 0
+  m_Name: ItemHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4106818671195916241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8487065927594770960}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1316933848323378630}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -14,6 +14,8 @@ public class ToolSwitcher : MonoBehaviour
     /// </summary>
     private int m_currentToolIndex = -1;
 
+    public int CurrentToolIndex { get { return m_currentToolIndex; } }
+
     private void Awake()
     {
         foreach (var tool in tools)

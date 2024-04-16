@@ -5,11 +5,11 @@ using UnityEngine;
 public class Eraser : MonoBehaviour
 {
     [SerializeField] private Tool tool;
+    [SerializeField] private Transform drawPosTransform;
 
     private List<Erasable> m_erasables = new();
     private PlayerHand m_playerHand;
     private Vector2Int m_drawPos;
-    private Transform m_drawPosTransform;
     private TaskTracker m_taskTracker;
     private RoomSaver m_roomSaver;
 
@@ -67,7 +67,6 @@ public class Eraser : MonoBehaviour
     private void Awake()
     {
         m_playerHand = FindFirstObjectByType<PlayerHand>();
-        m_drawPosTransform = transform.GetChild(0);
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
         m_roomSaver = FindFirstObjectByType<RoomSaver>();
         m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
@@ -187,7 +186,7 @@ public class Eraser : MonoBehaviour
     /// <returns>Whether or not the hand moved since last frame.</returns>
     private bool HandMoved()
     {
-        var drawPointScreenPos = Camera.main.WorldToScreenPoint(m_drawPosTransform.position);
+        var drawPointScreenPos = Camera.main.WorldToScreenPoint(drawPosTransform.position);
         m_drawPos = new Vector2Int(Mathf.RoundToInt(drawPointScreenPos.x), Mathf.RoundToInt(drawPointScreenPos.y));
 
         if (m_playerHand.IsMoving) return true;
