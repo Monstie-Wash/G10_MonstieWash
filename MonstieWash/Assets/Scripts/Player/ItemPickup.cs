@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -22,17 +23,19 @@ public class ItemPickup : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnActivate_Started += OnActivate_Started;
-        InputManager.Inputs.OnSwitchTool += OnSwitchTool;
+        InputManager.Inputs.OnActivate += Inputs_OnActivate;
+        InputManager.Inputs.OnSwitchTool += Inputs_OnSwitchTool;
+        InputManager.Inputs.OnNavigate += Inputs_OnNavigate;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnActivate_Started -= OnActivate_Started;
-        InputManager.Inputs.OnSwitchTool -= OnSwitchTool;
+        InputManager.Inputs.OnActivate -= Inputs_OnActivate;
+        InputManager.Inputs.OnSwitchTool -= Inputs_OnSwitchTool;
+        InputManager.Inputs.OnNavigate -= Inputs_OnNavigate;
     }
 
-    private void OnActivate_Started()
+    private void Inputs_OnActivate()
     {
         if (m_toolSwitcher.CurrentToolIndex == -1) //Empty hand
         {
@@ -40,11 +43,16 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
-    private void OnSwitchTool(float dirInput)
+    private void Inputs_OnSwitchTool(float dirInput)
     {
         var dir = Math.Sign(dirInput);
         if (dir == 0) return;
 
+        if (m_holding) DropItem();
+    }
+
+    private void Inputs_OnNavigate()
+    {
         if (m_holding) DropItem();
     }
 
