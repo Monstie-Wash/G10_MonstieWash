@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 312063306794273981}
   - component: {fileID: 6328301067441581968}
+  - component: {fileID: 453079263775863193}
   m_Layer: 6
   m_Name: Brush
   m_TagString: Untagged
