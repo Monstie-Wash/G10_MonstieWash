@@ -15,16 +15,17 @@ public class DragTool : MonoBehaviour
         m_contactFilter = new ContactFilter2D();
         m_contactFilter.SetLayerMask(LayerMask.GetMask("Tool"));
     }
-
+    /*
     private void OnEnable()
     {
-        InputManager.Inputs.OnTransfer += Inputs_OnTransfer;
+        InputManager.Inputs.OnSwitchTool += Inputs_OnTransfer;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnTransfer -= Inputs_OnTransfer;
+        InputManager.Inputs.OnSwitchTool -= Inputs_OnTransfer;
     }
+    */
 
     private void Inputs_OnTransfer()
     {
