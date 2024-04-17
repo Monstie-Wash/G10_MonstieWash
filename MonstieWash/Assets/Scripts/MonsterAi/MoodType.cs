@@ -8,27 +8,27 @@ using UnityEngine;
 public class MoodType : ScriptableObject
 {
 
-    [SerializeField] private string moodName; //Used to reference.
+    [Tooltip("Name of Mood, used to reference it")] [SerializeField] private string moodName; //Used to reference.
 
-    [SerializeField] private float moodUpperLimit; //Highest point the mood can reach.
+    [Tooltip("Highest number mood can reach")][SerializeField] private float moodUpperLimit; //Highest point the mood can reach.
 
-    [SerializeField] private float moodLowerLimit; //Lowest point the mood can reach. 
+    [Tooltip("Lowest number mood can reach (Can be negative)")][SerializeField] private float moodLowerLimit; //Lowest point the mood can reach. 
 
-    [SerializeField] private float moodStartingPoint; //Where the mood scale is placed upon game starting.
+    [Tooltip("What number the mood will start on when level starts")][SerializeField] private float moodStartingPoint; //Where the mood scale is placed upon game starting.
 
-    [SerializeField] private float moodNaturalChange; //Constant force pushing mood towards resting point.
+    [Tooltip("A number the mood will change by every second towards its resting point, Set to 0 if no natural change desired, Shouldn't be negative")][SerializeField] private float moodNaturalChange; //Constant force pushing mood towards resting point.
 
-    [SerializeField] private float moodRestingPoint; //The point at which the mood will remain stationary.
+    [Tooltip("The resting point that the mood will naturally change towards by above number")][SerializeField] private float moodRestingPoint; //The point at which the mood will remain stationary.
 
-    [SerializeField] private float chaosMultiplier; //Random interference of mood level to create less certainty.
+    [Tooltip("Introduces random changes to the mood, recomended number 0-10 and can use decimals")][SerializeField] private float chaosMultiplier; //Random interference of mood level to create less certainty.
 
-    [SerializeField] private List<MoodType> positiveChainReactions; //This mood will push other moods of this type towards their upper limit based on how close this mood itself is to its upper limit.
+    [Tooltip("Drag other moodtypes here that the brain has that will be positively affected by this mood")][SerializeField] private List<MoodType> positiveChainReactions; //This mood will push other moods of this type towards their upper limit based on how close this mood itself is to its upper limit.
 
-    [SerializeField] private float positiveReactionStrength; //How strong positive chain reactions will be.
+    [Tooltip("How strongly the positive effect is on other moods")][SerializeField] private float positiveReactionStrength; //How strong positive chain reactions will be.
 
-    [SerializeField] private List<MoodType> negativeChainReactions; //This mood will push other moods of this type towards their lower limit based on how close this mood itself is to its lower limit.
+    [Tooltip("Drag other moodtypes here that the brain has that will be negatively affected by this mood")][SerializeField] private List<MoodType> negativeChainReactions; //This mood will push other moods of this type towards their lower limit based on how close this mood itself is to its lower limit.
 
-    [SerializeField] private float negativeReactionStrength; //How strong negative chain reactions will be.
+    [Tooltip("How strongly the negative effect is on other moods")][SerializeField] private float negativeReactionStrength; //How strong negative chain reactions will be.
 
     [HideInInspector] public string MoodName { get { return moodName; } }
     [HideInInspector] public float MoodUpperLimit { get { return moodUpperLimit; } }

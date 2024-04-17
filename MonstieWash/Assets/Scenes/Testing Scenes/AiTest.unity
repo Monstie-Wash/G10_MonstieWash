@@ -357,9 +357,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
   - {fileID: 11400000, guid: 5a7db6333fdbab54090e44e3df77eca9, type: 2}
   - {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
-  Debug: 0
+  Debug: 1
   Pause: 0
-  designerSanityBuff: 10
   DebugUi: {fileID: 671326388}
 --- !u!212 &1217813238
 SpriteRenderer:

@@ -6,17 +6,22 @@ using TMPro;
 
 public class MonsterBrain : MonoBehaviour
 {
-    [SerializeField] private List<MoodType> moodData; //Scriptable objects holding data about moods.
 
-    [SerializeField] private Dictionary<int,float> activeMoods; //Current moods status. int refers to id and number of mood in list, float refers to current value of mood on its own scale.
+    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] private List<MoodType> moodData; //Scriptable objects holding data about moods.
 
-    [SerializeField] public bool Debug;
+    private Dictionary<int,float> activeMoods; //Current moods status. int refers to id and number of mood in list, float refers to current value of mood on its own scale.
 
-    [SerializeField] public bool Pause;
+    private Dictionary<string, int> activeMoodNames; // Current moods and their names. int refers to id and number of mood in list, string refers to name.
 
-    [SerializeField] public int designerSanityBuff; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
+    [Tooltip("Updates the debug window when turned on")] [SerializeField] public bool Debug;
 
-    [SerializeField] public TextMeshProUGUI DebugUi;
+
+    [Tooltip("Pauses the brain when on.")][SerializeField] public bool Pause;
+
+    private int designerSanityBuff; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
+
+
+    [Tooltip("Attach Text Mesh Pro Box here for displaying debug info")][SerializeField] public TextMeshProUGUI DebugUi;
 
     [HideInInspector] public Dictionary<int, float> ActiveMoods { get { return activeMoods; } }
     [HideInInspector] public List<MoodType> MoodData { get { return moodData; } }
@@ -24,9 +29,13 @@ public class MonsterBrain : MonoBehaviour
 
     private void Awake()
     {
+        designerSanityBuff = 10;
         activeMoods = new Dictionary<int, float>();
+        activeMoodNames = new Dictionary<string, int>();
+
         loadMoods();
     }
+
 
     private void Update()
     {
@@ -49,7 +58,9 @@ public class MonsterBrain : MonoBehaviour
     }
 
 
-    //Natural progression of all moods towards their resting point.
+    /// <summary>
+    /// Accesses the Moods resting point and natural rate of change, then moves mood towards its resting point by its rate of change.
+    /// </summary>
     private void naturalChange()
     {
         for (int i = 0; i < activeMoods.Count; i++)
@@ -67,7 +78,9 @@ public class MonsterBrain : MonoBehaviour
         }
     }
 
-    //Random interference in moods based on chaos amount.
+    /// <summary>
+    ///  Accesses the Moods chaos multiplier, randomly generates a number using the chaos multiplier as the upper and lower bound and then applies the random number to the moods value.
+    /// </summary>
     private void chaoticInterference()
     {
         for (int i = 0; i < activeMoods.Count; i++)
@@ -85,14 +98,17 @@ public class MonsterBrain : MonoBehaviour
         }
     }
 
-    //Checks each mood for any positive chain reactions and then affects other moods listed.
+    /// <summary>
+    /// Accesses moods list of positive chain reaction moods, applies a positive addition to the listed moods based on the positive reaction strength and how far the 
+    /// the current mood is inbetween its lower and upper bounds.
+    /// </summary>
     private void positiveChainReactions()
     {
         //Loop through active moods.
         for (int i = 0; i < activeMoods.Count; i++)
         {
             if (MoodData[i].PositiveReactionStrength == 0) continue; //Skip if reaction strenght is 0
-
+            
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
             var percentageStrength = ((activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
             float chainAmount = (percentageStrength / 100) * MoodData[i].PositiveReactionStrength * designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
@@ -110,7 +126,10 @@ public class MonsterBrain : MonoBehaviour
         }
     }
 
-    //Checks each mood for any negative chain reactions and then affects other moods listed.
+    /// <summary>
+    /// Accesses moodsl ist of negative chain reaction moods, applies a negative reduction to the listed moods based on the negative reaction strength
+    /// and how far the current mood is inbetween its lower and upper bounds.
+    /// </summary>
     private void negativeChainReactions()
     {
         //Loop through active moods.
@@ -135,7 +154,9 @@ public class MonsterBrain : MonoBehaviour
         }
     }
 
-    //Keeps moods to their limits.
+    /// <summary>
+    /// Calls other function maintain limit for each mood currently active.
+    /// </summary>
     private void maintainLimits()
     {
         for (int i = 0; i < activeMoods.Count; i++)
@@ -144,6 +165,10 @@ public class MonsterBrain : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if mood given by its current index in active list has gone over or under its limits and then corrects it back.
+    /// </summary>
+    /// <param name="moodInt"> Given index of desired mood in active moods.</param> 
     private void maintainLimit(int moodInt)
     {
         //Check upper limit and set back if over.
@@ -152,15 +177,22 @@ public class MonsterBrain : MonoBehaviour
         if (activeMoods[moodInt] < moodData[moodInt].MoodLowerLimit) activeMoods[moodInt] = moodData[moodInt].MoodLowerLimit;
     }
 
-    //Add data from mood scriptable objects to dictionary to store live values.
+    /// <summary>
+    /// Takes all moodtypes and stores them in activeMood dictionary, where first value is their index in moodtypes list and the second is their current value;
+    /// </summary>
     private void loadMoods()
     {
         for(int i = 0; i < moodData.Count; i++)
         {
             activeMoods.Add(i, moodData[i].MoodStartingPoint);
+            activeMoodNames.Add(moodData[i].MoodName,i);
         }
     }
 
+
+    /// <summary>
+    /// Updates ui textbox with information useful to debugging.
+    /// </summary>
     private void updateDebugText()
     {
         DebugUi.text = "";
@@ -175,28 +207,34 @@ public class MonsterBrain : MonoBehaviour
     }
 
 
-    //Finds and returns active mood index by given string name.
+    /// <summary>
+    /// Returns the index of a moodtype within active moods by its string name.
+    /// </summary>
+    /// <param name="name"> The name of the desired mood index</param>
+    /// <returns></returns>
+    /// <exception cref="System.Exception"> When no mood exists with that name </exception>
     private int accessActiveMoodIndexByName(string name)
     {
-        for (int i = 0; i < activeMoods.Count; i++)
-        {
-            if (name == MoodData[i].MoodName) return i;
-        }
-        throw new System.Exception("No mood index found by that name");
+        return activeMoodNames[name];
     }
 
-    //Finds and returns active mood index by given moodtype.
+    /// <summary>
+    /// Returns the index of a moodtype within active moods by a scriptable object reference.
+    /// </summary>
+    /// <param name="name"> The name of the desired mood index</param>
+    /// <returns></returns>
+    /// <exception cref="System.Exception"> When no mood exists with that name </exception>
     private int accessActiveMoodIndexByMoodType(MoodType refMT)
     {
-        for (int i = 0; i < activeMoods.Count; i++)
-        {
-            if (refMT.MoodName == MoodData[i].MoodName) return i;
-        }
-        throw new System.Exception("No mood index found by that name");
+        return activeMoodNames[refMT.MoodName];
     }
 
 
-    //Functions for use by other scripts to influence the monsters mood. amount is how much to change mood by, and then referenced by either string name or moodtype object.
+    /// <summary>
+    /// Updates a mood with the given name by the amount given, useful for other scripts to interact with this.
+    /// </summary>
+    /// <param name="amount"> The float amount to change the mood by.</param>
+    /// <param name="name"> The name of the mood desired to change.</param>
     public void updateMoodByName(float amount, string name)
     {
         var index = accessActiveMoodIndexByName(name);
@@ -204,6 +242,11 @@ public class MonsterBrain : MonoBehaviour
         maintainLimit(index);
     }
 
+    /// <summary>
+    /// Updates a mood with the given moodtype object by the amount given, useful for other scripts to interact with this.
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="mt"></param>
     public void updateMoodByType(float amount, MoodType mt)
     {
         var index = accessActiveMoodIndexByMoodType(mt);
@@ -212,7 +255,35 @@ public class MonsterBrain : MonoBehaviour
 
     }
 
-    //Moves a float value towards a target by a set amount of change and returns it.
+    /// <summary>
+    /// Returns the value of a given moodtype, useful for other scripts.
+    /// </summary>
+    /// <param name="mt"> A moodtype object.</param>
+    /// <returns></returns>
+    public float readMood(MoodType mt)
+    {
+        var index = accessActiveMoodIndexByMoodType(mt);
+        return activeMoods[index];
+    }
+
+    /// <summary>
+    /// Returns the value of a given mood by its name, useful for other scripts.
+    /// </summary>
+    /// <param name="name"> The desired moodtype</param>
+    /// <returns></returns>
+    public float readMood(string name)
+    {
+        var index = accessActiveMoodIndexByName(name);
+        return activeMoods[index];
+    }
+
+    /// <summary>
+    /// Tool to move a float value towards a target by a certain amount whether negative or positive.
+    /// </summary>
+    /// <param name="value"> The value to move</param>
+    /// <param name="change"> The amount to change the value by</param>
+    /// <param name="target"> The target value to move towards</param>
+    /// <returns></returns>
     private float floatTowardsTarget(float value, float change, float target)
     {
         //Exit early if already at target.
