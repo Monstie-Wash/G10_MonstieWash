@@ -18,7 +18,7 @@ public class MonsterBrain : MonoBehaviour
 
     [Tooltip("Pauses the brain when on.")][SerializeField] public bool Pause;
 
-    private int designerSanityBuff; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
+    private int m_designerSanityBuff; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
 
 
     [Tooltip("Attach Text Mesh Pro Box here for displaying debug info")][SerializeField] public TextMeshProUGUI DebugUi;
@@ -29,11 +29,11 @@ public class MonsterBrain : MonoBehaviour
 
     private void Awake()
     {
-        designerSanityBuff = 10;
+        m_designerSanityBuff = 10;
         activeMoods = new Dictionary<int, float>();
         activeMoodNames = new Dictionary<string, int>();
 
-        loadMoods();
+        LoadMoods();
     }
 
 
@@ -42,26 +42,26 @@ public class MonsterBrain : MonoBehaviour
         if (Pause) return;
 
         //Moods move by their natural change value to their resting point value.
-        naturalChange();
+        NaturalChange();
         //Moods are affected by Chaos Multipliers.
-        chaoticInterference();
+        ChaoticInterference();
         //Moods affect their positive chain reactions.
-        positiveChainReactions();
+        PositiveChainReactions();
         //Moods affect their negative chain reactions.
-        negativeChainReactions();
+        NegativeChainReactions();
         //Moods are kept to their upper and lower limits.
-        maintainLimits();
+        MaintainLimits();
 
 
         //Debug Updates
-        if (Debug) updateDebugText();
+        if (Debug) UpdateDebugText();
     }
 
 
     /// <summary>
     /// Accesses the Moods resting point and natural rate of change, then moves mood towards its resting point by its rate of change.
     /// </summary>
-    private void naturalChange()
+    private void NaturalChange()
     {
         for (int i = 0; i < activeMoods.Count; i++)
         {
@@ -70,7 +70,7 @@ public class MonsterBrain : MonoBehaviour
 
             float currentValue = activeMoods[i];
             //Move currentvalue towards resting point by rate of change;
-            currentValue = floatTowardsTarget(currentValue, moodData[i].MoodNaturalChange * Time.deltaTime , moodData[i].MoodRestingPoint);
+            currentValue = FloatTowardsTarget(currentValue, moodData[i].MoodNaturalChange * Time.deltaTime , moodData[i].MoodRestingPoint);
             //Assign new value to active mood.
             activeMoods[i] = currentValue;
 
@@ -81,7 +81,7 @@ public class MonsterBrain : MonoBehaviour
     /// <summary>
     ///  Accesses the Moods chaos multiplier, randomly generates a number using the chaos multiplier as the upper and lower bound and then applies the random number to the moods value.
     /// </summary>
-    private void chaoticInterference()
+    private void ChaoticInterference()
     {
         for (int i = 0; i < activeMoods.Count; i++)
         {           
@@ -89,7 +89,7 @@ public class MonsterBrain : MonoBehaviour
 
             float currentValue = activeMoods[i];
             //Determine chaotic value
-            float chaosVal = Random.Range(-moodData[i].ChaosMultiplier, moodData[i].ChaosMultiplier) * designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
+            float chaosVal = Random.Range(-moodData[i].ChaosMultiplier, moodData[i].ChaosMultiplier) * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Changes current value by chaos value;
             activeMoods[i] = currentValue + (chaosVal * Time.deltaTime);
@@ -102,7 +102,7 @@ public class MonsterBrain : MonoBehaviour
     /// Accesses moods list of positive chain reaction moods, applies a positive addition to the listed moods based on the positive reaction strength and how far the 
     /// the current mood is inbetween its lower and upper bounds.
     /// </summary>
-    private void positiveChainReactions()
+    private void PositiveChainReactions()
     {
         //Loop through active moods.
         for (int i = 0; i < activeMoods.Count; i++)
@@ -111,12 +111,12 @@ public class MonsterBrain : MonoBehaviour
             
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
             var percentageStrength = ((activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
-            float chainAmount = (percentageStrength / 100) * MoodData[i].PositiveReactionStrength * designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
+            float chainAmount = (percentageStrength / 100) * MoodData[i].PositiveReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of positive reactions in mood.
             for (int j = 0; j < moodData[i].PositiveChainReactions.Count; j++)
             {
-                int targetMood = accessActiveMoodIndexByMoodType(moodData[i].PositiveChainReactions[j]);
+                int targetMood = AccessActiveMoodIndex(moodData[i].PositiveChainReactions[j]);
 
                 //Apply positive chain amount to each active mood that is in the list of positive reactions.
                 activeMoods[targetMood] += chainAmount * Time.deltaTime;
@@ -130,7 +130,7 @@ public class MonsterBrain : MonoBehaviour
     /// Accesses moodsl ist of negative chain reaction moods, applies a negative reduction to the listed moods based on the negative reaction strength
     /// and how far the current mood is inbetween its lower and upper bounds.
     /// </summary>
-    private void negativeChainReactions()
+    private void NegativeChainReactions()
     {
         //Loop through active moods.
         for (int i = 0; i < activeMoods.Count; i++)
@@ -139,12 +139,12 @@ public class MonsterBrain : MonoBehaviour
 
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
             var percentageStrength = ((activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
-            float chainAmount = (percentageStrength / 100) * MoodData[i].NegativeReactionStrength * designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
+            float chainAmount = (percentageStrength / 100) * MoodData[i].NegativeReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of negative reactions in mood.
             for (int j = 0; j < moodData[i].NegativeChainReactions.Count; j++)
             {
-                int targetMood = accessActiveMoodIndexByMoodType(moodData[i].NegativeChainReactions[j]);
+                int targetMood = AccessActiveMoodIndex(moodData[i].NegativeChainReactions[j]);
 
                 //Apply negative chain amount to each active mood that is in the list of negative reactions.
                 activeMoods[targetMood] -= chainAmount * Time.deltaTime;
@@ -157,11 +157,11 @@ public class MonsterBrain : MonoBehaviour
     /// <summary>
     /// Calls other function maintain limit for each mood currently active.
     /// </summary>
-    private void maintainLimits()
+    private void MaintainLimits()
     {
         for (int i = 0; i < activeMoods.Count; i++)
         {
-            maintainLimit(i);
+            MaintainLimit(i);
         }
     }
 
@@ -169,18 +169,15 @@ public class MonsterBrain : MonoBehaviour
     /// Checks if mood given by its current index in active list has gone over or under its limits and then corrects it back.
     /// </summary>
     /// <param name="moodInt"> Given index of desired mood in active moods.</param> 
-    private void maintainLimit(int moodInt)
+    private void MaintainLimit(int moodInt)
     {
-        //Check upper limit and set back if over.
-        if (activeMoods[moodInt] > moodData[moodInt].MoodUpperLimit) activeMoods[moodInt] = moodData[moodInt].MoodUpperLimit;
-        //Check lower limit and set back if under.
-        if (activeMoods[moodInt] < moodData[moodInt].MoodLowerLimit) activeMoods[moodInt] = moodData[moodInt].MoodLowerLimit;
+        activeMoods[moodInt] = Mathf.Clamp(activeMoods[moodInt], moodData[moodInt].MoodLowerLimit, moodData[moodInt].MoodUpperLimit);
     }
 
     /// <summary>
     /// Takes all moodtypes and stores them in activeMood dictionary, where first value is their index in moodtypes list and the second is their current value;
     /// </summary>
-    private void loadMoods()
+    private void LoadMoods()
     {
         for(int i = 0; i < moodData.Count; i++)
         {
@@ -193,17 +190,13 @@ public class MonsterBrain : MonoBehaviour
     /// <summary>
     /// Updates ui textbox with information useful to debugging.
     /// </summary>
-    private void updateDebugText()
+    private void UpdateDebugText()
     {
         DebugUi.text = "";
         for (int i = 0; i < activeMoods.Count; i++)
         {
-            DebugUi.text += "MoodName: " + moodData[i].MoodName + " MoodValue: " + Mathf.FloorToInt(activeMoods[i]).ToString() + "\n" + 
-            " Mood Lower/Upper Limits: " + moodData[i].MoodLowerLimit.ToString() + "/" + moodData[i].MoodUpperLimit.ToString();
-            DebugUi.text += "\n";
-            DebugUi.text += "\n";
+            DebugUi.text += $"MoodName: {moodData[i].MoodName} MoodValue: { Mathf.FloorToInt(activeMoods[i]).ToString()}\nMood Lower / Upper Limits: { moodData[i].MoodLowerLimit.ToString()}/{ moodData[i].MoodUpperLimit.ToString()}\n\n";
         }
-
     }
 
 
@@ -213,7 +206,7 @@ public class MonsterBrain : MonoBehaviour
     /// <param name="name"> The name of the desired mood index</param>
     /// <returns></returns>
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
-    private int accessActiveMoodIndexByName(string name)
+    private int AccessActiveMoodIndex(string name)
     {
         return activeMoodNames[name];
     }
@@ -224,7 +217,7 @@ public class MonsterBrain : MonoBehaviour
     /// <param name="name"> The name of the desired mood index</param>
     /// <returns></returns>
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
-    private int accessActiveMoodIndexByMoodType(MoodType refMT)
+    private int AccessActiveMoodIndex(MoodType refMT)
     {
         return activeMoodNames[refMT.MoodName];
     }
@@ -235,11 +228,11 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     /// <param name="amount"> The float amount to change the mood by.</param>
     /// <param name="name"> The name of the mood desired to change.</param>
-    public void updateMoodByName(float amount, string name)
+    public void UpdateMood(float amount, string name)
     {
-        var index = accessActiveMoodIndexByName(name);
+        var index = AccessActiveMoodIndex(name);
         activeMoods[index] += amount;
-        maintainLimit(index);
+        MaintainLimit(index);
     }
 
     /// <summary>
@@ -247,12 +240,11 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     /// <param name="amount"></param>
     /// <param name="mt"></param>
-    public void updateMoodByType(float amount, MoodType mt)
+    public void UpdateMood(float amount, MoodType mt)
     {
-        var index = accessActiveMoodIndexByMoodType(mt);
+        var index = AccessActiveMoodIndex(mt);
         activeMoods[index] += amount;
-        maintainLimit(index);
-
+        MaintainLimit(index);
     }
 
     /// <summary>
@@ -260,9 +252,9 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     /// <param name="mt"> A moodtype object.</param>
     /// <returns></returns>
-    public float readMood(MoodType mt)
+    public float ReadMood(MoodType mt)
     {
-        var index = accessActiveMoodIndexByMoodType(mt);
+        var index = AccessActiveMoodIndex(mt);
         return activeMoods[index];
     }
 
@@ -271,9 +263,9 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     /// <param name="name"> The desired moodtype</param>
     /// <returns></returns>
-    public float readMood(string name)
+    public float ReadMood(string name)
     {
-        var index = accessActiveMoodIndexByName(name);
+        var index = AccessActiveMoodIndex(name);
         return activeMoods[index];
     }
 
@@ -284,7 +276,7 @@ public class MonsterBrain : MonoBehaviour
     /// <param name="change"> The amount to change the value by</param>
     /// <param name="target"> The target value to move towards</param>
     /// <returns></returns>
-    private float floatTowardsTarget(float value, float change, float target)
+    private float FloatTowardsTarget(float value, float change, float target)
     {
         //Exit early if already at target.
         if (value == target) return value;
