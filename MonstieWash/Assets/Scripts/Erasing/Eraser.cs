@@ -93,7 +93,11 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void UseTool()
     {
-        if (!HandMoved()) return;
+        if (!HandMoved())
+        {
+            StopUseTool();
+            return;
+        }
 
         var wasErasing = IsErasing;
         IsErasing = false;
