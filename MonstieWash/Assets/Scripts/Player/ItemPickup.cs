@@ -9,13 +9,17 @@ public class ItemPickup : MonoBehaviour
     private bool m_holding = false;
     private Collider2D m_collider;
     private ContactFilter2D m_contactFilter;
-    private GameObject heldItem;
+    private Transform m_heldItem;
     private Transform m_itemInitialParent;
+    private PlayerHand m_playerHand;
+
+    bool stuck = true;
 
     private void Awake()
     {
         m_toolSwitcher = GetComponent<ToolSwitcher>();
         m_collider = GetComponent<Collider2D>();
+        m_playerHand = GetComponent<PlayerHand>();
         m_contactFilter = new ContactFilter2D();
         m_contactFilter.SetLayerMask(LayerMask.GetMask("Pickupable"));
     }
@@ -38,7 +42,7 @@ public class ItemPickup : MonoBehaviour
     {
         if (m_toolSwitcher.CurrentToolIndex == -1) //Empty hand
         {
-            TransferItem();
+            Interact();
         }
     }
 
@@ -55,23 +59,56 @@ public class ItemPickup : MonoBehaviour
         if (m_holding) DropItem();
     }
 
+    private void Interact()
+    {
+        if (!m_holding)
+        {
+            var item = TryPickup();
+            if (item != null)
+            {
+                m_heldItem = item;
+                m_holding = true;
+                if (stuck)
+                {
+                    m_playerHand.SetMoveable(m_playerHand.IsStuck);
+                }
+                else
+                {
+                    TransferItem();
+                }
+            }
+        }
+        else
+        {
+            if (stuck)
+            {
+
+            }
+            else
+            {
+                TransferItem();
+            }
+        }
+    }
+
     private void TransferItem()
     {
-        if (!m_holding) TryPickup();
+        if (!m_holding) PickupItem();
         else DropItem();
     }
 
     /// <summary>
     /// Attempts to pick up an item.
     /// </summary>
-    private void TryPickup()
+    /// <returns>The picked up item or null if no item was found.</returns>
+    private Transform TryPickup()
     {
         var results = new Collider2D[20];
         Physics2D.OverlapCollider(m_collider, m_contactFilter, results);
 
-        if (results[0] == null) return;
+        if (results[0] == null) return null;
 
-        PickupItem(GetClosestItem(results));
+        return GetClosestItem(results);
     }
 
     /// <summary>
@@ -79,7 +116,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     /// <param name="items">The list of items to check.</param>
     /// <returns>The closest item.</returns>
-    private GameObject GetClosestItem(Collider2D[] items)
+    private Transform GetClosestItem(Collider2D[] items)
     {
         var closestObj = items[0];
         var closestObjDistFromCentre = Vector3.Distance(transform.position, closestObj.transform.position);
@@ -96,20 +133,19 @@ public class ItemPickup : MonoBehaviour
             }
         }
 
-        return closestObj.gameObject;
+        return closestObj.transform;
     }
 
     /// <summary>
     /// Picks up the given item.
     /// </summary>
     /// <param name="item">The item to pick up.</param>
-    private void PickupItem(GameObject item)
+    private void PickupItem()
     {
         m_holding = true; // hold the item
-        m_itemInitialParent = item.transform.parent;
-        heldItem = item;
-        heldItem.transform.parent = heldItemsTransform;
-        heldItem.transform.localPosition = Vector3.zero; // snap to centre of hand
+        m_itemInitialParent = m_heldItem.parent;
+        m_heldItem.parent = heldItemsTransform;
+        m_heldItem.localPosition = Vector3.zero; // snap to centre of hand
     }
 
     /// <summary>
@@ -118,7 +154,7 @@ public class ItemPickup : MonoBehaviour
     private void DropItem()
     {
         m_holding = false; // release the item
-        heldItem.transform.parent = m_itemInitialParent;
-        heldItem = null;
+        m_heldItem.parent = m_itemInitialParent;
+        m_heldItem = null;
     }
 }
