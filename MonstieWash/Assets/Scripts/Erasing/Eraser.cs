@@ -11,7 +11,6 @@ public class Eraser : MonoBehaviour
     private PlayerHand m_playerHand;
     private Vector2Int m_drawPos;
     private TaskTracker m_taskTracker;
-    private RoomSaver m_roomSaver;
 
     private bool IsErasing = false;
     public event Action OnErasing_Started;
@@ -68,8 +67,6 @@ public class Eraser : MonoBehaviour
     {
         m_playerHand = FindFirstObjectByType<PlayerHand>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
-        m_roomSaver = FindFirstObjectByType<RoomSaver>();
-        m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
     }
 
     private void Start()
@@ -88,14 +85,7 @@ public class Eraser : MonoBehaviour
         InputManager.Inputs.OnActivate_Held -= UseTool;
         InputManager.Inputs.OnActivate_Ended -= StopUseTool;
 
-        OnErasing_Ended?.Invoke();
-        IsErasing = false;
-    }
-
-    private void RoomSaver_OnScenesLoaded()
-    {
-        PopulateErasables();
-        m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
+        StopUseTool();
     }
 
     /// <summary>
@@ -139,9 +129,10 @@ public class Eraser : MonoBehaviour
     /// <summary>
     /// Sets up the tool and related variables ready for use.
     /// </summary>
-    private void InitializeTool()
+    public void InitializeTool()
     {
         tool.Initialize();
+        PopulateErasables();
     }
 
     /// <summary>
