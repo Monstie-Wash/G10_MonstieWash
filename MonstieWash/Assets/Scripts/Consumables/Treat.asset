@@ -12,4 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc2fe512cde9694c961c7ddcc726df5, type: 3}
   m_Name: Treat
   m_EditorClassIdentifier: 
-  type: 0
+  consumableName: 
+  sprite: {fileID: 0}
+  diminishingReturns: 0
+  craftingRequirements: []
+  craftingQuantities: 
+  maxQuantity: 0
+  moodTargets:
+  - {fileID: 0}
+  - {fileID: 0}
+  moodEffects:
+  - 35
+  - -10

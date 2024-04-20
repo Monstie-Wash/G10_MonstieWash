@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbba9c306f5e40a4ebec94b46a4773d7, type: 3}
   m_Name: DefaultConsumable
   m_EditorClassIdentifier: 
+  consumableName: 
+  sprite: {fileID: 0}
+  diminishingReturns: 0
+  craftingRequirements: []
+  craftingQuantities: 
+  maxQuantity: 0
