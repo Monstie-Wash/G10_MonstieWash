@@ -219,7 +219,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      half_moon_x2_0: -5171840457225903030
+      half_moon_x2_1: 48560361230474541
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
