@@ -19,6 +19,7 @@ public class PlayerHand : MonoBehaviour
     {
         get { return Mathf.Abs(m_moveHorizontal) > m_moveThreshold || Mathf.Abs(m_moveVertical) > m_moveThreshold; }
     }
+    public Vector2 Velocity { get { return new Vector2(m_moveHorizontal, m_moveVertical); } }
 
     public bool IsStuck { get; private set; }
 
@@ -106,31 +107,5 @@ public class PlayerHand : MonoBehaviour
         //Navigate
         TraversalObject navArrow = results[0].GetComponent<TraversalObject>();
         navArrow.OnClicked();
-    }
-
-    public void SetMoveable(bool moveable)
-    {
-        IsStuck = !moveable;
-
-        if (moveable)
-        {
-            //Unsubscribe first to prevent double subscribing
-            InputManager.Inputs.OnMove -= Inputs_MovePerformed;
-            InputManager.Inputs.OnMove_Ended -= Inputs_MoveEnded;
-            InputManager.Inputs.OnNavigate -= Inputs_OnNavigate;
-
-            InputManager.Inputs.OnMove += Inputs_MovePerformed;
-            InputManager.Inputs.OnMove_Ended += Inputs_MoveEnded;
-            InputManager.Inputs.OnNavigate += Inputs_OnNavigate;
-        }
-        else
-        {
-            m_moveHorizontal = 0f;
-            m_moveVertical = 0f;
-
-            InputManager.Inputs.OnMove -= Inputs_MovePerformed;
-            InputManager.Inputs.OnMove_Ended -= Inputs_MoveEnded;
-            InputManager.Inputs.OnNavigate -= Inputs_OnNavigate;
-        }
     }
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 935980241668332579}
   - component: {fileID: 7272061443664702863}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7124938238809717833}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ToolHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 8211790447339308997}
   - component: {fileID: 8624381380993330181}
   - component: {fileID: 910600158149282078}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4106818671195916241}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ItemHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
