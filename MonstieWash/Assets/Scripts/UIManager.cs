@@ -7,22 +7,33 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] public TextMeshProUGUI Text;
-    [SerializeField] public Image Clipboard;
-    [SerializeField] public Animator CBAnimator;
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Image clipboard;
+    [SerializeField] private Animator CBAnimator;
 
-    private Dictionary<string, float> m_Tasks;
+    private Dictionary<string, float> m_tasks;
     private bool m_UIVisible;
     // Start is called before the first frame update
-    private void Awake()
+    private void OnEnable()
     {
-        m_Tasks = gameObject.GetComponent<TaskTracker>().m_taskProgress;
+        m_tasks = gameObject.GetComponent<TaskTracker>().m_taskProgress;
         InputManager.Inputs.OnToggleUI += Inputs_OnToggleUI;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Inputs.OnToggleUI -= Inputs_OnToggleUI;
     }
 
     private void Inputs_OnToggleUI()
     {
         ToggleUIVisibility();
+    }
+    private void ToggleUIVisibility()
+    {
+        //Clipboard.gameObject.SetActive(!Clipboard.gameObject.activeSelf);
+        m_UIVisible = !m_UIVisible;
+        CBAnimator.SetBool("Hide", m_UIVisible);
     }
 
     // Update is called once per frame
@@ -30,19 +41,14 @@ public class UIManager : MonoBehaviour
     {
         string output = "";
 
-        foreach (var task in m_Tasks)
+        foreach (var task in m_tasks)
         {
             //Task names need to be redone for readability, but at least it's currently functional.
-            output += task.Key + ": " + Math.Round(task.Value, 2) + "%\n";
+            output += $"{task.Key}: {Math.Round(task.Value, 2)}%\n";
         }
 
-        Text.text = output;
+        text.text = output;
     }
 
-    private void ToggleUIVisibility()
-    {
-        //Clipboard.gameObject.SetActive(!Clipboard.gameObject.activeSelf);
-        m_UIVisible = !m_UIVisible;
-        CBAnimator.SetBool("Hide", m_UIVisible);
-    }
+    
 }
