@@ -8,11 +8,11 @@ using UnityEngine.SceneManagement;
 public class RoomSaver : MonoBehaviour
 {
     public event Action OnScenesLoaded;
-    public event Action OnSceneChanged;
+    public event Action<string> OnSceneChanged;
 
     [SerializeField] private List<GameScene> allScenes = new();
 
-    private List<string> m_allScenes = new();
+    public List<string> m_allScenes = new();
     private Scene m_currentScene;
 
 
@@ -73,7 +73,7 @@ public class RoomSaver : MonoBehaviour
         SetSceneActive(m_currentScene.name, false);
         SetSceneActive(target, true);
 
-        OnSceneChanged?.Invoke();
+        OnSceneChanged?.Invoke(target);
     }
 
     /// <summary>
