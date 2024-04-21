@@ -51,7 +51,8 @@ public class MonsterBrain : MonoBehaviour
         NegativeChainReactions();
         //Moods are kept to their upper and lower limits.
         MaintainLimits();
-
+        //Update animations based on these new mood values. 
+        UpdateAnimations();
 
         //Debug Updates
         if (Debug) UpdateDebugText();
@@ -172,6 +173,14 @@ public class MonsterBrain : MonoBehaviour
     private void MaintainLimit(int moodInt)
     {
         activeMoods[moodInt] = Mathf.Clamp(activeMoods[moodInt], moodData[moodInt].MoodLowerLimit, moodData[moodInt].MoodUpperLimit);
+    }
+
+    /// <summary>
+    /// Evaluates mood values to perform animation logic and provide visual feedback to the player. 
+    /// </summary>
+    private void UpdateAnimations()
+    {   
+
     }
 
     /// <summary>

@@ -16,11 +16,12 @@ MonoBehaviour:
   moodUpperLimit: 50
   moodLowerLimit: -100
   moodStartingPoint: 0
-  moodNaturalChange: 0
-  moodRestingPoint: 50
+  moodNaturalChange: 5
+  moodRestingPoint: 75
   chaosMultiplier: 0
   positiveChainReactions: []
   positiveReactionStrength: 0
   negativeChainReactions:
   - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
   negativeReactionStrength: 0.1
+  idleAnimation: {fileID: 0}

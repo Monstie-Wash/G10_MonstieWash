@@ -24,3 +24,4 @@ MonoBehaviour:
   positiveReactionStrength: 1
   negativeChainReactions: []
   negativeReactionStrength: 1
+  idleAnimation: {fileID: 0}
