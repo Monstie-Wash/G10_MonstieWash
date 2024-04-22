@@ -30,8 +30,6 @@ public class MoodType : ScriptableObject
 
     [Tooltip("How strongly the negative effect is on other moods")][SerializeField] private float negativeReactionStrength; //How strong negative chain reactions will be.
 
-    [Tooltip("The monster animation that plays while this mood has the highest value among all moods")][SerializeField] private Animation idleAnimation; //Base animation that plays while this mood has the highest value.
-
     [HideInInspector] public string MoodName { get { return moodName; } }
     [HideInInspector] public float MoodUpperLimit { get { return moodUpperLimit; } }
     [HideInInspector] public float MoodLowerLimit { get { return moodLowerLimit; } }
@@ -43,6 +41,5 @@ public class MoodType : ScriptableObject
     [HideInInspector] public float PositiveReactionStrength { get { return positiveReactionStrength; } }
     [HideInInspector] public List<MoodType> NegativeChainReactions { get { return negativeChainReactions; } }
     [HideInInspector] public float NegativeReactionStrength { get { return negativeReactionStrength; } }
-    [HideInInspector] public Animation IdleAnimation { get { return idleAnimation; } }
 
 }

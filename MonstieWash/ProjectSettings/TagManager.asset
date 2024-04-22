@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Erasable
   - TaskContainer
+  - Front
+  - Right
+  - Left
+  - Back
   layers:
   - Default
   - TransparentFX

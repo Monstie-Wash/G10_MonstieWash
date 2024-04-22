@@ -611,6 +611,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mimic_Front
       objectReference: {fileID: 0}
+    - target: {fileID: 5381096203401150910, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: m_TagString
+      value: Front
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

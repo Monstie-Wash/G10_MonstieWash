@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class MonsterBrain : MonoBehaviour
+public abstract class MonsterBrain : MonoBehaviour
 {
 
-    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] private List<MoodType> moodData; //Scriptable objects holding data about moods.
+    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] protected List<MoodType> moodData; //Scriptable objects holding data about moods.
 
-    private Dictionary<int,float> activeMoods; //Current moods status. int refers to id and number of mood in list, float refers to current value of mood on its own scale.
+    protected Dictionary<int,float> activeMoods; //Current moods status. int refers to id and number of mood in list, float refers to current value of mood on its own scale.
 
     private Dictionary<string, int> activeMoodNames; // Current moods and their names. int refers to id and number of mood in list, string refers to name.
 
@@ -27,7 +27,7 @@ public class MonsterBrain : MonoBehaviour
     [HideInInspector] public List<MoodType> MoodData { get { return moodData; } }
 
 
-    private void Awake()
+    public void Awake()
     {
         m_designerSanityBuff = 10;
         activeMoods = new Dictionary<int, float>();
@@ -178,9 +178,9 @@ public class MonsterBrain : MonoBehaviour
     /// <summary>
     /// Evaluates mood values to perform animation logic and provide visual feedback to the player. 
     /// </summary>
-    private void UpdateAnimations()
+    protected virtual void UpdateAnimations()
     {   
-
+        // Should be overrided in each derived monsterbrain class.
     }
 
     /// <summary>
@@ -268,6 +268,17 @@ public class MonsterBrain : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns the value of a given mood by its ID, useful for other scripts.
+    /// </summary>
+    /// <param id="id"> The desired moodtype</param>
+    /// <returns></returns>
+    public string ReadMood(int id)
+    {
+        return moodData[id].MoodName;
+    }
+
+
+    /// <summary>
     /// Returns the value of a given mood by its name, useful for other scripts.
     /// </summary>
     /// <param name="name"> The desired moodtype</param>
@@ -305,5 +316,21 @@ public class MonsterBrain : MonoBehaviour
         return value;
     }
 
+    /// <summary>
+    /// Returns the ID (as an int) of the Moodtype with the highest value.
+    /// </summary>
+    protected int GetHighestMood()
+    {
+        float highestVal = float.MinValue;
+        int highestValID = 0; // :)
+        foreach(var mood in activeMoods)
+        {
+            if (mood.Value > highestVal) 
+            {
+                highestValID = mood.Key;
+            }
+        }
+        return highestValID;
+    }
 
 }

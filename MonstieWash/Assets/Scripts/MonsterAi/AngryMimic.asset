@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14fa3bbe3a6cba041997a365ccc6cfd5, type: 3}
-  m_Name: HappinessMimic
+  m_Name: AngryMimic
   m_EditorClassIdentifier: 
-  moodName: Happiness
+  moodName: Angry
   moodUpperLimit: 50
   moodLowerLimit: -100
-  moodStartingPoint: 30
-  moodNaturalChange: 0
-  moodRestingPoint: 30
+  moodStartingPoint: 0
+  moodNaturalChange: 5
+  moodRestingPoint: 75
   chaosMultiplier: 0
   positiveChainReactions: []
   positiveReactionStrength: 0
-  negativeChainReactions: []
-  negativeReactionStrength: 0
+  negativeChainReactions:
+  - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
+  negativeReactionStrength: 0.1
   idleAnimation: {fileID: 0}
