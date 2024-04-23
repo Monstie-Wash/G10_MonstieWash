@@ -257,6 +257,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1618143253}
     m_Modifications:
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: maxRotation
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: wiggleCount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: startMaxRotation
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4520279438470780351, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
       propertyPath: m_Name
       value: Item (2)
@@ -582,6 +594,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1618143253}
     m_Modifications:
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: maxRotation
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: wiggleCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: endMaxRotation
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: startMaxRotation
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4520279438470780351, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
       propertyPath: m_Name
       value: Item
@@ -690,6 +718,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1618143253}
     m_Modifications:
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: maxRotation
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: wiggleCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: endMaxRotation
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: startMaxRotation
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4520279438470780351, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
       propertyPath: m_Name
       value: Item (1)

@@ -1,4 +1,3 @@
-using System.IO.IsolatedStorage;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
@@ -7,8 +6,7 @@ public class PlayerHand : MonoBehaviour
     [SerializeField][Range(1.0f, 50.0f)] private float cursorSpeed = 20f;
 
     //Private
-    private float m_moveHorizontal;
-    private float m_moveVertical;
+    private Vector2 m_movement;
     private float m_moveThreshold = 0.01f;
     private const float k_mouseSpeedMultiplier = 0.001f;
 
@@ -17,11 +15,9 @@ public class PlayerHand : MonoBehaviour
 
     public bool IsMoving
     {
-        get { return Mathf.Abs(m_moveHorizontal) > m_moveThreshold || Mathf.Abs(m_moveVertical) > m_moveThreshold; }
+        get { return m_movement.magnitude > m_moveThreshold; }
     }
-    public Vector2 Velocity { get { return new Vector2(m_moveHorizontal, m_moveVertical); } }
-
-    public bool IsStuck { get; private set; }
+    public Vector2 Velocity { get { return m_movement; } }
 
     private void OnEnable()
     {
@@ -51,14 +47,12 @@ public class PlayerHand : MonoBehaviour
 
     public void Inputs_MovePerformed(Vector2 movementInput)
     {
-        m_moveHorizontal = movementInput.x;
-        m_moveVertical = movementInput.y;
+        m_movement = movementInput;
     }
 
     public void Inputs_MoveEnded()
     {
-        m_moveHorizontal = 0f;
-        m_moveVertical = 0f;
+        m_movement = Vector2.zero;
     }
 
     private void Inputs_OnNavigate()
@@ -85,7 +79,7 @@ public class PlayerHand : MonoBehaviour
                 } break;
         }
 
-        var newVelocity = new Vector3(m_moveHorizontal * velocityModifer, m_moveVertical * velocityModifer, 0f);
+        var newVelocity = new Vector3(m_movement.x * velocityModifer, m_movement.y * velocityModifer, 0f);
         var newPosition = transform.position + newVelocity;
         var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
         var cameraHeightInWorldUnits = Camera.main.orthographicSize;

@@ -4,16 +4,17 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour
 {
     [SerializeField] private Transform heldItemsTransform;
+    [SerializeField] private float throwSpeedMultiplier = 10f;
 
     private ToolSwitcher m_toolSwitcher;
-    private Collider2D m_collider;
+    private Collider2D m_handCollider;
     private ContactFilter2D m_contactFilter;
-    private Item m_heldItem;
+    private StuckItem m_heldItem;
     private Transform m_itemInitialParent;
 
     private float m_initialRotation;
     private Vector3 m_prevPos = Vector3.zero;
-    private Vector3 m_minimumDir = Vector3.zero;
+    private Vector3 m_minimumDir;
     private bool m_lastWiggleUp = false;
 
     private bool m_holding { get { return m_heldItem != null; } }
@@ -21,7 +22,7 @@ public class ItemPickup : MonoBehaviour
     private void Awake()
     {
         m_toolSwitcher = GetComponent<ToolSwitcher>();
-        m_collider = GetComponent<Collider2D>();
+        m_handCollider = GetComponent<Collider2D>();
         m_contactFilter = new ContactFilter2D();
         m_contactFilter.SetLayerMask(LayerMask.GetMask("Pickupable"));
     }
@@ -66,20 +67,18 @@ public class ItemPickup : MonoBehaviour
         if (!m_holding) return;
 
         if (m_heldItem.Stuck) SetHandPosition();
-        else
-        {
-            m_heldItem.transform.position = transform.position;
-        }
+        else m_heldItem.transform.position = transform.position;
     }
 
+    /// <summary>
+    /// Apply the context-relevant action to interact with an item.
+    /// </summary>
     private void Interact()
     {
         if (!m_holding)
         {
             var item = TryGrabItem();
-
             if (item == null) return;
-
             m_heldItem = item;
 
             if (m_heldItem.Stuck)
@@ -87,21 +86,12 @@ public class ItemPickup : MonoBehaviour
                 SetupHoldingStuckItem();                
                 SetHandPosition();
             }
-            else
-            {
-                PickupItem();
-            }
+            else PickupItem();
         }
         else
         {
-            if (m_heldItem.Stuck)
-            {
-                LetGoItem();
-            }
-            else
-            {
-                DropItem();
-            }
+            if (m_heldItem.Stuck) LetGoItem();
+            else DropItem();
         }
     }
 
@@ -109,10 +99,10 @@ public class ItemPickup : MonoBehaviour
     /// Attempts to pick up an item.
     /// </summary>
     /// <returns>The picked up item or null if no item was found.</returns>
-    private Item TryGrabItem()
+    private StuckItem TryGrabItem()
     {
         var results = new Collider2D[20];
-        Physics2D.OverlapCollider(m_collider, m_contactFilter, results);
+        Physics2D.OverlapCollider(m_handCollider, m_contactFilter, results);
 
         if (results[0] == null) return null;
 
@@ -124,7 +114,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     /// <param name="items">The list of items to check.</param>
     /// <returns>The closest item.</returns>
-    private Item GetClosestItem(Collider2D[] items)
+    private StuckItem GetClosestItem(Collider2D[] items)
     {
         var closestObj = items[0];
         var closestObjDistFromCentre = Vector3.Distance(transform.position, closestObj.transform.position);
@@ -141,7 +131,7 @@ public class ItemPickup : MonoBehaviour
             }
         }
 
-        return closestObj.GetComponent<Item>();
+        return closestObj.GetComponent<StuckItem>();
     }
 
     /// <summary>
@@ -161,6 +151,7 @@ public class ItemPickup : MonoBehaviour
         m_itemInitialParent = m_heldItem.transform.parent;
         m_heldItem.transform.parent = heldItemsTransform;
         m_heldItem.transform.localPosition = Vector3.zero; // snap to centre of hand
+        m_heldItem.Rb.angularVelocity = 0f;
     }
 
     /// <summary>
@@ -170,7 +161,9 @@ public class ItemPickup : MonoBehaviour
     {
         m_heldItem.transform.parent = m_itemInitialParent;
 
-        var handMovement = GetComponent<PlayerHand>().Velocity;
+        var handMovement = GetComponent<PlayerHand>().Velocity.normalized;
+        handMovement *= throwSpeedMultiplier;
+
         var rotationalVelocity = UnityEngine.Random.Range(90f, 540f) * Mathf.Sign(handMovement.x);
         m_heldItem.Rb.velocity = handMovement;
         m_heldItem.Rb.angularVelocity = rotationalVelocity;
@@ -178,17 +171,16 @@ public class ItemPickup : MonoBehaviour
         m_heldItem = null;
     }
 
+    /// <summary>
+    /// Sets up the appropriate variables for wiggling.
+    /// </summary>
     private void SetupHoldingStuckItem()
     {
         m_initialRotation = m_heldItem.transform.rotation.eulerAngles.z;
 
-        var theta = m_initialRotation - (m_heldItem.MaxRotation / 2f);
-        var x = Mathf.Cos(theta * Mathf.Deg2Rad) * m_heldItem.GrabDistance;
-        var y = Mathf.Sin(theta * Mathf.Deg2Rad) * m_heldItem.GrabDistance;
+        SetMinimumDir();
 
-        m_minimumDir = new Vector3(x, y, 0).normalized;
-
-        m_prevPos = Vector3.zero;
+        m_prevPos = transform.position;
     }
 
     /// <summary>
@@ -215,8 +207,8 @@ public class ItemPickup : MonoBehaviour
 
             var baseTheta = overMaxAngle ? m_heldItem.MaxRotation : 0f;
             var relativeTheta = baseTheta + relativeOffset;
-            var x = Mathf.Cos(relativeTheta * Mathf.Deg2Rad) * m_heldItem.GrabDistance;
-            var y = Mathf.Sin(relativeTheta * Mathf.Deg2Rad) * m_heldItem.GrabDistance;
+            var x = Mathf.Cos(relativeTheta * Mathf.Deg2Rad);
+            var y = Mathf.Sin(relativeTheta * Mathf.Deg2Rad);
 
             dir = new Vector3(x, y, 0f).normalized;
             finalRelativeAngle = relativeTheta;
@@ -228,11 +220,29 @@ public class ItemPickup : MonoBehaviour
         m_prevPos = transform.position;
     }
 
+    /// <summary>
+    /// Applies a wiggle to the held item if it is in the opposite direction to the previous wiggle call.
+    /// </summary>
+    /// <param name="upwardsWiggle">Whether the wiggle was in the upwards direction.</param>
     private void Wiggled(bool upwardsWiggle)
     {
         if (m_lastWiggleUp == upwardsWiggle) return;
         m_lastWiggleUp = upwardsWiggle;
 
         m_heldItem.Wiggle();
+
+        SetMinimumDir();
+    }
+
+    /// <summary>
+    /// Sets the m_minimumDir field to the appropriate value based on the held item's max rotation.
+    /// </summary>
+    private void SetMinimumDir()
+    {
+        var theta = m_initialRotation - (m_heldItem.MaxRotation / 2f);
+        var x = Mathf.Cos(theta * Mathf.Deg2Rad);
+        var y = Mathf.Sin(theta * Mathf.Deg2Rad);
+
+        m_minimumDir = new Vector3(x, y, 0).normalized;
     }
 }
