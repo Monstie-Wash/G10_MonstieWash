@@ -22,7 +22,9 @@ public class InputManager : MonoBehaviour
     public event Action OnNavigate_Started;
     public event Action OnNavigate;
     public event Action OnNavigate_Ended;
-
+	
+    public event Action OnToggleUI;
+	
     private PlayerInput m_playerInput;
     private Coroutine m_activeRoutine;
     private PlayerInputDevice m_inputDevice = PlayerInputDevice.Controller;
@@ -64,7 +66,9 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Navigate.started += Navigate_started;
         m_playerInput.PlayerActions.Navigate.performed += Navigate_performed;
         m_playerInput.PlayerActions.Navigate.canceled += Navigate_canceled;
-
+		
+        m_playerInput.PlayerActions.ToggleUI.performed += ToggleUI_performed;
+		
         m_playerInput.PlayerActions.Enable();
     }
 
@@ -85,6 +89,8 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Navigate.started -= Navigate_started;
         m_playerInput.PlayerActions.Navigate.performed -= Navigate_performed;
         m_playerInput.PlayerActions.Navigate.canceled -= Navigate_canceled;
+		
+		m_playerInput.PlayerActions.ToggleUI.performed -= ToggleUI_performed;
 
         m_playerInput.PlayerActions.Disable();
     }
@@ -184,6 +190,14 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnNavigate_Ended?.Invoke();
+    }
+	#endregion
+	
+	#region ToggleUI
+    private void ToggleUI_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnToggleUI?.Invoke();
     }
     #endregion
 }
