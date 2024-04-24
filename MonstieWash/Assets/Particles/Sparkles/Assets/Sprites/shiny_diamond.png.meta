@@ -195,7 +195,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      shiny_diamond_0: -2511735548309408644
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
