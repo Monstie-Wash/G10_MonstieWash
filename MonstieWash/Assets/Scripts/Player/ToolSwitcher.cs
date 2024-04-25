@@ -47,13 +47,12 @@ public class ToolSwitcher : MonoBehaviour
             tool.SetActive(false);
         }
     }
-
-    private void Inputs_OnSwitchTool(float dirInput)
+    
+    private void Inputs_OnSwitchTool(int dirInput)
     {
-        var dir = Math.Sign(dirInput);
-        if (dir == 0) return;
+        if (dirInput == 0) return;
 
-        RotateCurrentTool(dir);
+        RotateCurrentTool(dirInput);
     }
 
     /// <summary>

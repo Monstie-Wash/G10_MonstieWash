@@ -47,9 +47,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""SwitchTool"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""c4f8f9c9-5084-45cb-a1fd-ce85f2f94cfd"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -58,6 +58,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Navigate"",
                     ""type"": ""Button"",
                     ""id"": ""c473e6d4-095f-4d10-a91f-e65111fc81e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""0184552f-1d0c-4316-8dde-f5d82f6469a0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -158,7 +167,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""f108f390-ac83-4401-97e9-d3741cf7a2c2"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
-                    ""processors"": ""AxisDeadzone(min=0.8,max=0.8)"",
+                    ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchTool"",
                     ""isComposite"": true,
@@ -169,7 +178,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""daca3370-e1f4-4d6d-8364-a366c30661d3"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
-                    ""processors"": ""AxisDeadzone"",
+                    ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchTool"",
                     ""isComposite"": false,
@@ -207,6 +216,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5cd40825-0c31-4fc6-8c50-d27c20594cf3"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d6e5a4d-3fc3-4388-a4db-14f457db2be4"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -225,6 +256,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions_Activate = m_PlayerActions.FindAction("Activate", throwIfNotFound: true);
         m_PlayerActions_SwitchTool = m_PlayerActions.FindAction("SwitchTool", throwIfNotFound: true);
         m_PlayerActions_Navigate = m_PlayerActions.FindAction("Navigate", throwIfNotFound: true);
+        m_PlayerActions_ToggleUI = m_PlayerActions.FindAction("ToggleUI", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -290,6 +322,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Activate;
     private readonly InputAction m_PlayerActions_SwitchTool;
     private readonly InputAction m_PlayerActions_Navigate;
+    private readonly InputAction m_PlayerActions_ToggleUI;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -298,6 +331,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Activate => m_Wrapper.m_PlayerActions_Activate;
         public InputAction @SwitchTool => m_Wrapper.m_PlayerActions_SwitchTool;
         public InputAction @Navigate => m_Wrapper.m_PlayerActions_Navigate;
+        public InputAction @ToggleUI => m_Wrapper.m_PlayerActions_ToggleUI;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -319,6 +353,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Navigate.started += instance.OnNavigate;
             @Navigate.performed += instance.OnNavigate;
             @Navigate.canceled += instance.OnNavigate;
+            @ToggleUI.started += instance.OnToggleUI;
+            @ToggleUI.performed += instance.OnToggleUI;
+            @ToggleUI.canceled += instance.OnToggleUI;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -335,6 +372,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Navigate.started -= instance.OnNavigate;
             @Navigate.performed -= instance.OnNavigate;
             @Navigate.canceled -= instance.OnNavigate;
+            @ToggleUI.started -= instance.OnToggleUI;
+            @ToggleUI.performed -= instance.OnToggleUI;
+            @ToggleUI.canceled -= instance.OnToggleUI;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -367,5 +407,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnActivate(InputAction.CallbackContext context);
         void OnSwitchTool(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
+        void OnToggleUI(InputAction.CallbackContext context);
     }
 }
