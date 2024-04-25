@@ -10,7 +10,6 @@ public class Treat : Consumable
    [SerializeField] private List<MoodType> moodTargets;
    [SerializeField] private List<float> moodEffects;
 
-
     [HideInInspector] public List<MoodType> MoodTargets { get { return MoodTargets; } }
     [HideInInspector] public float MoodEffects { get { return MoodEffects; } }
 

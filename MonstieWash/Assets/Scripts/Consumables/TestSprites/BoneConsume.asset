@@ -10,17 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcc2fe512cde9694c961c7ddcc726df5, type: 3}
-  m_Name: Treat
+  m_Name: BoneConsume
   m_EditorClassIdentifier: 
-  consumableName: 
-  sprite: {fileID: 0}
+  consumableName: Bone
+  sprite: {fileID: -7629076001477199492, guid: 6023c200936c91e4083230f2a7fc9897, type: 3}
   diminishingReturns: 0
   craftingRequirements: []
   craftingQuantities: 
-  maxQuantity: 0
-  moodTargets:
-  - {fileID: 0}
-  - {fileID: 0}
-  moodEffects:
-  - 35
-  - -10
+  maxQuantity: 1
+  moodTargets: []
+  moodEffects: []
