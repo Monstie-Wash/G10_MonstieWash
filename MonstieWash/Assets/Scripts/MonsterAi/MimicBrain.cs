@@ -21,19 +21,20 @@ public class MimicBrain : MonsterBrain
     private Animator m_mimicRightAnimator;
     private Animator m_mimicBackAnimator;
 
-    private void Awake()
-    {
-        base.Awake();
-        m_RoomSaver = FindFirstObjectByType<RoomSaver>();
-    }
+    //private void Awake()
+    //{
+        //base.Awake();
+        //m_RoomSaver = FindFirstObjectByType<RoomSaver>();
+    //}
 
     private void OnEnable() 
     {
-        m_RoomSaver.OnScenesLoaded += LoadMimic;
+        //m_RoomSaver.OnScenesLoaded += LoadMimic;
     }
 
     private void LoadMimic()
     {
+        /*
             // Get mimic prefabs
             mimicFrontPrefab = GameObject.FindGameObjectWithTag("Front");
             mimicLeftPrefab = GameObject.FindGameObjectWithTag("Left");
@@ -45,43 +46,44 @@ public class MimicBrain : MonsterBrain
             m_mimicLeftAnimator = mimicLeftPrefab.GetComponent<Animator>();
             m_mimicRightAnimator = mimicRightPrefab.GetComponent<Animator>();
             m_mimicBackAnimator = mimicBackPrefab.GetComponent<Animator>();
+        */
     }
 
     /// <summary>
     // State machine that applies animations to mimic GameObject prefabs based on the mimic's current mood. 
     /// Overridden from MonsterBrain
     /// </summary>
-    protected override void UpdateAnimations()
-    {   
-        var highestMood = GetHighestMood();
-        var highestMoodName = ReadMood(highestMood);
+    protected void UpdateAnimations()
+    {
+        /*
+        string highestMood = GetHighestMood();
 
-        if (highestMoodName == m_currentMood) return;
+        if (highestMood == m_currentMood) return;
 
-        print(highestMoodName);
+        print(highestMood);
 
-        switch (highestMoodName)
+        switch (highestMood)
         {
             case "Angry":
                 m_mimicFrontAnimator.Play("Mimic_Angry_Front");
                 m_mimicLeftAnimator.Play("Mimic_Angry_Left");
                 m_mimicRightAnimator.Play("Mimic_Angry_Right");
                 m_mimicBackAnimator.Play("Mimic_Angry_Back");
-                m_currentMood = highestMoodName;
+                m_currentMood = highestMood;
                 break;
             case "Happy":
                 m_mimicFrontAnimator.Play("Mimic_Happy_Front");
                 m_mimicLeftAnimator.Play("Mimic_Happy_Left");
                 m_mimicRightAnimator.Play("Mimic_Happy_Right");
                 m_mimicBackAnimator.Play("Mimic_Happy_Back");
-                m_currentMood = highestMoodName;
+                m_currentMood = highestMood;
                 break;
             case "Hungry":
                 m_mimicFrontAnimator.Play("Mimic_Hungry_Front");
                 m_mimicLeftAnimator.Play("Mimic_Hungry_Left");
                 m_mimicRightAnimator.Play("Mimic_Hungry_Right");
                 m_mimicBackAnimator.Play("Mimic_Hungry_Back");
-                m_currentMood = highestMoodName;
+                m_currentMood = highestMood;
                 break;
             default:
                 m_mimicFrontAnimator.Play("Mimic_Idle_Front");
@@ -90,6 +92,7 @@ public class MimicBrain : MonsterBrain
                 m_mimicBackAnimator.Play("Mimic_Idle_Back");
                 break;
         }
+        */
     }
 
 }

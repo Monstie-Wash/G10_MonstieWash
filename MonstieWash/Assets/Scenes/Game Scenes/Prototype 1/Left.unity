@@ -248,7 +248,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6569485676934061755, guid: 070ad2168a3771e4b80e2709fbe626e2, type: 3}
   m_PrefabInstance: {fileID: 184414835}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &417625602
+--- !u!1001 &320035726
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -299,10 +299,6 @@ PrefabInstance:
     - target: {fileID: 5381096203401150910, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
       propertyPath: m_Name
       value: Mimic_Right
-      objectReference: {fileID: 0}
-    - target: {fileID: 5381096203401150910, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
-      propertyPath: m_TagString
-      value: Right
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -498,7 +494,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 417625602}
   - {fileID: 84416960}
   - {fileID: 439105288}
   - {fileID: 184414835}
+  - {fileID: 320035726}

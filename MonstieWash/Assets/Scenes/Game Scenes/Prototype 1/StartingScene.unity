@@ -337,7 +337,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1379800827}
+      addedObject: {fileID: 1462391451}
   m_SourcePrefab: {fileID: 100100000, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
 --- !u!1 &705617960
 GameObject:
@@ -658,21 +658,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1379800822 stripped
+--- !u!1 &1462391446 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
   m_PrefabInstance: {fileID: 665156552}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1379800827
+--- !u!114 &1462391451
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1379800822}
+  m_GameObject: {fileID: 1462391446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea2d1a29177ce243bd68dbc5538cdd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 774e27de974a0cc42951eda5207092cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moodData:
@@ -680,13 +680,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
   - {fileID: 11400000, guid: 5a7db6333fdbab54090e44e3df77eca9, type: 2}
   - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
-  Debug: 1
+  Debug: 0
   Pause: 0
-  DebugUi: {fileID: 281005895}
-  mimicFrontPrefab: {fileID: 0}
-  mimicLeftPrefab: {fileID: 0}
-  mimicRightPrefab: {fileID: 0}
-  mimicBackPrefab: {fileID: 0}
+  DebugUi: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

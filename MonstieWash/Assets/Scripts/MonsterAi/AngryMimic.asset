@@ -21,7 +21,5 @@ MonoBehaviour:
   chaosMultiplier: 0
   positiveChainReactions: []
   positiveReactionStrength: 0
-  negativeChainReactions:
-  - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
+  negativeChainReactions: []
   negativeReactionStrength: 0.1
-  idleAnimation: {fileID: 0}

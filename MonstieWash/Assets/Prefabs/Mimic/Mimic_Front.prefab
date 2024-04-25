@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5036995656876074879}
   - component: {fileID: 9094874810309194301}
   - component: {fileID: 8196705921026612750}
+  - component: {fileID: -136019198694521269}
   m_Layer: 0
   m_Name: Mimic_Front
   m_TagString: Front
@@ -98,7 +99,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 7f161cb1ebfe45841b84c1052e0785ad, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -109,3 +110,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-136019198694521269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381096203401150910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f5936f02230c9d4ab07e6cced241ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moodToAnimationMap:
+  - moodName: Angry
+    animName: Mimic_Angry_Front
+  - moodName: Happy
+    animName: Mimic_Happy_Front
+  - moodName: Hungry
+    animName: Mimic_Hungry_Front
+  - moodName: Mischief
+    animName: Mimic_Mischief_Front
