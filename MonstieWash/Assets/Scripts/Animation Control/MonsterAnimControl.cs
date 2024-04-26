@@ -50,7 +50,7 @@ public class MonsterAnimControl : MonoBehaviour
             Debug.Log($"MoodToAnimationMap for MoodType {highestMood} is missing/incorrect");
             return;
         }
-        // If mood hasn't changed from last frame, don't bother updating animations
+        // If mood hasn't changed from last frame, don't bother updating animations (performance increase)
         if (m_myAnimator.GetCurrentAnimatorStateInfo(0).IsName(animToPlay.animName))
         {
             return;
