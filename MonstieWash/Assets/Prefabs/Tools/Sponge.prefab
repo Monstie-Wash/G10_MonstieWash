@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: 8daa16cb36407fd4fa4e589f78ed8cb9, type: 2}
+  drawPosTransform: {fileID: 8245340559071156610}
 --- !u!1 &8844650258625875270
 GameObject:
   m_ObjectHideFlags: 0
