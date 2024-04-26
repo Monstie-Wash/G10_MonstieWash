@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
@@ -10,9 +11,7 @@ public class ItemPickup : MonoBehaviour
     private Collider2D m_handCollider;
     private ContactFilter2D m_contactFilter;
     private StuckItem m_heldItem;
-    private Transform m_itemInitialParent;
 
-    private float m_initialRotation;
     private Vector3 m_prevPos = Vector3.zero;
     private Vector3 m_minimumDir;
     private bool m_lastWiggleUp = false;
@@ -49,17 +48,24 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
-    private void Inputs_OnSwitchTool(float dirInput)
+    private void Inputs_OnSwitchTool(int dirInput)
     {
-        var dir = Math.Sign(dirInput);
-        if (dir == 0) return;
+        if (dirInput == 0) return;
 
-        if (m_holding) DropItem();
+        if (m_holding)
+        {
+            if (m_heldItem.Stuck) LetGoItem();
+            else DropItem();
+        }
     }
 
     private void Inputs_OnNavigate()
     {
-        if (m_holding) DropItem();
+        if (m_holding)
+        {
+            if (m_heldItem.Stuck) LetGoItem();
+            else DropItem();
+        }
     }
 
     private void LateUpdate()
@@ -148,7 +154,6 @@ public class ItemPickup : MonoBehaviour
     /// <param name="item">The item to pick up.</param>
     private void PickupItem()
     {
-        m_itemInitialParent = m_heldItem.transform.parent;
         m_heldItem.transform.parent = heldItemsTransform;
         m_heldItem.transform.localPosition = Vector3.zero; // snap to centre of hand
         m_heldItem.Rb.angularVelocity = 0f;
@@ -159,7 +164,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void DropItem()
     {
-        m_heldItem.transform.parent = m_itemInitialParent;
+        m_heldItem.transform.parent = m_heldItem.InitialParent;
 
         var handMovement = GetComponent<PlayerHand>().Velocity.normalized;
         handMovement *= throwSpeedMultiplier;
@@ -176,8 +181,6 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void SetupHoldingStuckItem()
     {
-        m_initialRotation = m_heldItem.transform.rotation.eulerAngles.z;
-
         SetMinimumDir();
 
         m_prevPos = transform.position;
@@ -194,7 +197,7 @@ public class ItemPickup : MonoBehaviour
         var dir = (transform.position + movement - m_heldItem.transform.position).normalized;
 
         var relativeAngle = Vector3.SignedAngle(m_minimumDir, dir, Vector3.forward);
-        var relativeOffset = m_initialRotation - (m_heldItem.MaxRotation / 2f);
+        var relativeOffset = m_heldItem.InitialRotation - (m_heldItem.MaxRotation / 2f);
 
         var overMaxAngle = relativeAngle > m_heldItem.MaxRotation;
         var underMinAngle = relativeAngle < 0f;
@@ -239,7 +242,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void SetMinimumDir()
     {
-        var theta = m_initialRotation - (m_heldItem.MaxRotation / 2f);
+        var theta = m_heldItem.InitialRotation - (m_heldItem.MaxRotation / 2f);
         var x = Mathf.Cos(theta * Mathf.Deg2Rad);
         var y = Mathf.Sin(theta * Mathf.Deg2Rad);
 

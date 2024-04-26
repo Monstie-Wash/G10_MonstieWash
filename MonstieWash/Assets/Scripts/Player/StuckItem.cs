@@ -9,27 +9,33 @@ public class StuckItem : MonoBehaviour
     [SerializeField] private float grabDistanceMultiplier = 1.5f;
 
     private Rigidbody2D m_rb;
-    private int initialWiggleCount;
+    private int m_initialWiggleCount;
     private Coroutine m_OOBCheckRoutine;
+    private float m_initialRotation;
+    private Transform m_initialParent;
 
     public bool Stuck { get; private set; } = true;
     public float GrabDistance { get; private set; }
+    public float InitialRotation { get { return m_initialRotation; } }
     public float MaxRotation
     {
         get
         {
-            return Mathf.Lerp(startMaxRotation, endMaxRotation, (initialWiggleCount - wiggleCount + 1) / (float)initialWiggleCount);
+            return Mathf.Lerp(startMaxRotation, endMaxRotation, (m_initialWiggleCount - wiggleCount + 1) / (float)m_initialWiggleCount);
         }
     }
     public Rigidbody2D Rb { get { return m_rb; } }
     public int WiggleCount { get {  return wiggleCount; } }
+    public Transform InitialParent {  get { return m_initialParent; } }
 
 
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody2D>();
         GrabDistance = grabDistanceMultiplier * transform.lossyScale.x;
-        initialWiggleCount = wiggleCount;
+        m_initialWiggleCount = wiggleCount;
+        m_initialRotation = transform.rotation.eulerAngles.z;
+        m_initialParent = transform.parent;
     }
 
     /// <summary>
