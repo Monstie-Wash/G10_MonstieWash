@@ -1,21 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class UIConsumable : MonoBehaviour
 {
-    public Consumable consumable;
+    [SerializeField]  public Consumable consumable;
 
-    public Vector3 extendedPos;
-    public Vector3 closedPos;
+    [HideInInspector] public Vector3 extendedPos;
+    [HideInInspector] public Vector3 closedPos;
 
-    public bool clickable;
+    [HideInInspector] public bool clickable;
+    [HideInInspector] public bool holding;
 
-    public float distToPoint;
+    [HideInInspector] public float distToPoint;
 
+    [HideInInspector] public ConsumablesManager manager;
 
+    [HideInInspector] public TextMeshProUGUI quantityText;
 
-    public void moveTowardsExtendedPos(float speed)
+    public void Awake()
+    {
+        quantityText = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    private void Update()
+    {
+        if (holding) this.transform.position = Input.mousePosition;
+    }
+
+    public void ClickedOn()
+    {
+        //Return if bag isnt in an open state.
+        if (manager.state != ConsumablesManager.UiState.Open) return;
+        
+        if (!holding) holding = true;
+        else
+        {
+            if (CheckOverPlayer())
+            {
+                consumable.Consume();
+            }
+            else
+            {
+                manager.state = ConsumablesManager.UiState.Opening;
+            }
+            holding = false;
+            clickable = false;
+            manager.RefreshUI();
+        }
+    }
+
+    public void MoveTowardsExtendedPos(float speed)
     {
         //Get Distance to Pos;
         distToPoint = Vector3.Distance(this.transform.position, extendedPos);
@@ -31,7 +69,7 @@ public class UIConsumable : MonoBehaviour
         }
     }
 
-    public void moveTowardsClosedPos(float speed)
+    public void MoveTowardsClosedPos(float speed)
     {
         //Get Distance to Pos;
         distToPoint = Vector3.Distance(this.transform.position, closedPos);
@@ -47,6 +85,12 @@ public class UIConsumable : MonoBehaviour
             gameObject.SetActive(false);
         }
 
+    }
+
+    public bool CheckOverPlayer()
+    {
+        if (Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1, manager.monsterLayer,-999999,999999)) return true;
+        else return false;
     }
     
 }

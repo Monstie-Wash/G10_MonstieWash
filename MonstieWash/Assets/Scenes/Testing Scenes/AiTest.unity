@@ -334,7 +334,8 @@ GameObject:
   - component: {fileID: 1217813239}
   - component: {fileID: 1217813238}
   - component: {fileID: 1217813240}
-  m_Layer: 0
+  - component: {fileID: 1217813241}
+  m_Layer: 9
   m_Name: Mimic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,9 +427,55 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
   - {fileID: 11400000, guid: 5a7db6333fdbab54090e44e3df77eca9, type: 2}
   - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
-  Debug: 0
+  Debug: 1
   Pause: 0
   DebugUi: {fileID: 671326388}
+--- !u!61 &1217813241
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217813236}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 12.037037, y: 10}
+    newSize: {x: 12.037037, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 12.037037, y: 10}
+  m_EdgeRadius: 0
 --- !u!1 &1374180702
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,10 +674,13 @@ MonoBehaviour:
   activeUiElements: []
   imageHolder: {fileID: 1539564182}
   refObject: {fileID: 7159353656609723325, guid: 1adc1322144855144abf480f216cc4fc, type: 3}
-  testingObjs:
-  - {fileID: 11400000, guid: 7512082f8c59b844eb338c70137bdf5a, type: 2}
-  - {fileID: 11400000, guid: 9a7599d6f8210e34987e0f2a7a6dea01, type: 2}
+  monsterLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  consumableData:
   - {fileID: 11400000, guid: 3e4b3f9f8c6c8754791d650e718d27ed, type: 2}
+  - {fileID: 11400000, guid: 9a7599d6f8210e34987e0f2a7a6dea01, type: 2}
+  - {fileID: 11400000, guid: 7512082f8c59b844eb338c70137bdf5a, type: 2}
   state: 0
 --- !u!1 &1560662610
 GameObject:

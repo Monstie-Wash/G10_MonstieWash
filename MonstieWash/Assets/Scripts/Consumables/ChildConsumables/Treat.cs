@@ -15,6 +15,7 @@ public class Treat : Consumable
 
     public override void Consume()
     {
+        Debug.Log("called treat consume");
         //Find Monster Brain
         var brain = FindFirstObjectByType<MonsterBrain>();
 

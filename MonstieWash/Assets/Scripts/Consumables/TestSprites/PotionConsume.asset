@@ -18,5 +18,7 @@ MonoBehaviour:
   craftingRequirements: []
   craftingQuantities: 
   maxQuantity: 1
-  moodTargets: []
-  moodEffects: []
+  moodTargets:
+  - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
+  moodEffects:
+  - 30
