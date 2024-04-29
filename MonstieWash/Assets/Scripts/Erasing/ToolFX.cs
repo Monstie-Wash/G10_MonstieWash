@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ToolFX : MonoBehaviour
@@ -31,7 +29,6 @@ public class ToolFX : MonoBehaviour
     private void Start()
     {
         m_myParticles = Instantiate(particlesOnUse, m_drawPosTransform);
-        m_myParticles.Stop();
     }
 
     private void Eraser_OnErasing()

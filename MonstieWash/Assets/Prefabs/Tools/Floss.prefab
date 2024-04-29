@@ -219,4 +219,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: fa4a9c7ea3b6eeb47ab74dc140ab1839, type: 2}
-  particlesOnUse: {fileID: 3058718715873599778, guid: 585f89ab2d129e14abbd2670d6ca340a, type: 3}
+  drawPosTransform: {fileID: 8245340559071156610}

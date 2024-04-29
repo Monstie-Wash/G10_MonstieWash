@@ -7,7 +7,7 @@ public class TaskTracker : MonoBehaviour
 {
     //Unity Inspector
     //These are temporary replacement for UI progress bar
-    [SerializeField] private SerializableDictionary<string, float> m_taskProgress = new();
+    [SerializeField] public SerializableDictionary<string, float> m_taskProgress = new();
 
     //Private
     private List<string> m_taskDictKeys = new();

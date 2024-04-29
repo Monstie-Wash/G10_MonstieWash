@@ -19,7 +19,9 @@ TagManager:
   - UI
   - Tool
   - Navigation
-  - 
+  - Pickupable
+  - PlayerHand
+  - Background
   - 
   - 
   - 
