@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 15ac9f0e47b85354899bd9781f035c8d
+guid: ad28d0a2b7038634397d714f30e18305
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1180082853116738015
-    second: plaque_300x300_0
+      213: 1211655712805223222
+    second: Supersoft_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: plaque_300x300_0
+      name: Supersoft_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 300
-        height: 300
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 126827eb5e08f9fe0800000000000000
-      internalID: -1180082853116738015
+      spriteID: 63bf3df737aa0d010800000000000000
+      internalID: 1211655712805223222
       vertices: []
       indices: 
       edges: []
@@ -131,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      plaque_300x300_0: -1180082853116738015
+      Supersoft_0: 1211655712805223222
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

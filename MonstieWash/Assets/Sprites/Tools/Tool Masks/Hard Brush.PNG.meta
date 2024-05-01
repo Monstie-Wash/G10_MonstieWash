@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 15ac9f0e47b85354899bd9781f035c8d
+guid: 0164c7e401b05ec4c9f268127bc98a86
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1180082853116738015
-    second: plaque_300x300_0
+      213: -6438691999125949675
+    second: Hard Brush_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: plaque_300x300_0
+      name: Hard Brush_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 300
-        height: 300
+        x: 4
+        y: 5
+        width: 57
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 126827eb5e08f9fe0800000000000000
-      internalID: -1180082853116738015
+      spriteID: 513b2fd8dbb25a6a0800000000000000
+      internalID: -6438691999125949675
       vertices: []
       indices: 
       edges: []
@@ -131,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      plaque_300x300_0: -1180082853116738015
+      Hard Brush_0: -6438691999125949675
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

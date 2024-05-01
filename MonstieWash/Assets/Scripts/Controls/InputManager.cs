@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour
     public event Action OnMove_Ended;
 
     public event Action OnActivate_Started;
+    public event Action OnActivate;
     public event Action OnActivate_Held;
     public event Action OnActivate_Ended;
 
@@ -132,7 +133,7 @@ public class InputManager : MonoBehaviour
     private void Activate_performed(InputAction.CallbackContext context)
     {
         UpdateInputDevice(context.control.device);
-        OnActivate_Started?.Invoke();
+        OnActivate?.Invoke();
         m_activeRoutine = StartCoroutine(Activate());
     }
 
