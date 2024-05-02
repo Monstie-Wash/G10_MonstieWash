@@ -5,12 +5,12 @@ using UnityEngine;
 
 public abstract class Consumable : ScriptableObject
 {
-    [SerializeField] private string consumableName;
-    [SerializeField] private Sprite sprite;
-    [SerializeField] private bool diminishingReturns;
-    [SerializeField] private List<CraftingMaterial> craftingRequirements;
-    [SerializeField] private List<int> craftingQuantities;
-    [SerializeField] private int maxQuantity;
+    [Tooltip("Name of this consumable, should be unique")] [SerializeField] private string consumableName;
+    [Tooltip("Sprite to represent consumable in UI")] [SerializeField] private Sprite sprite;
+    [Tooltip("If the consumable weakens effectiveness after multiple uses")] [SerializeField] private bool diminishingReturns; //Still needs implementation after confirming if designers want it.
+    [Tooltip("List of craftingmaterial types needed to craft")] [SerializeField] private List<CraftingMaterial> craftingRequirements; //Still needs implementation after confirming if designers want it.
+    [Tooltip("List of quantities 1-1 of each crafting material")] [SerializeField] private List<int> craftingQuantities; //Still needs implementation after confirming if designers want it.
+    [Tooltip("Max amount of consumables that can be held in storage")] [SerializeField] private int maxQuantity;
     [HideInInspector] public string ConsumableName { get { return consumableName; } }
     [HideInInspector] public Sprite Sprite { get { return sprite; } }
     [HideInInspector] public bool DiminishingReturns { get { return diminishingReturns; } }
@@ -18,6 +18,9 @@ public abstract class Consumable : ScriptableObject
     [HideInInspector] public List<int> CraftingQuantities { get { return craftingQuantities; } }
     [HideInInspector] public int MaxQuantity { get { return maxQuantity; } }
 
+    /// <summary>
+    /// Each type of consumable will uniquely implement this based on what they should do. i.e treats simply remove one of themselves and change a mood.
+    /// </summary>
     public abstract void Consume();
     
 }

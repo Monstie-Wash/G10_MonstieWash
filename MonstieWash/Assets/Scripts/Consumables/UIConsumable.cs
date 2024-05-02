@@ -7,7 +7,7 @@ using TMPro;
 
 public class UIConsumable : MonoBehaviour
 {
-    [SerializeField]  public Consumable consumable;
+    [Tooltip("The consumable type represented by this object")] [SerializeField]  public Consumable consumable;
 
     [HideInInspector] public Vector3 extendedPos;
     [HideInInspector] public Vector3 closedPos;

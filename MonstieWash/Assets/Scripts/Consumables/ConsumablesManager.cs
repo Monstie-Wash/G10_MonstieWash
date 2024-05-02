@@ -9,17 +9,17 @@ using System.Xml;
 public class ConsumablesManager : MonoBehaviour
 {
 
-    [SerializeField] private int uiBorderDistance; //Distance between objects in the Ui;
-    [SerializeField] private float uiMoveSpeed; //How fast Ui Elements close and open;
-    [SerializeField] private Sprite openSprite;
-    [SerializeField] private Sprite closedSprite;
+    [Tooltip("How far apart the consumables are in the UI")] [SerializeField] private int uiBorderDistance; //Distance between objects in the Ui;
+    [Tooltip("How quickly Consumables move towards their open position")] [SerializeField] private float uiMoveSpeed; //How fast Ui Elements close and open;
+    [Tooltip("Sprite to represent open bag.")] [SerializeField] private Sprite openSprite; //Sprite used to represent open bag.
+    [Tooltip("Sprite to represent closed bag.")] [SerializeField] private Sprite closedSprite; //Sprite used to represent closed bag.
     [SerializeField] private List<UIConsumable> activeUiElements; //UI Elements already generated in the scene;
-    [SerializeField] private GameObject imageHolder; //Empty Gameobject in Ui to hold images;
-    [SerializeField] private GameObject refObject; //blank object for instantiate to reference;
-    [SerializeField] public LayerMask monsterLayer; //Layer of monster hitbox;
+    [Tooltip("Gameobject new Ui consumable items will be parented under")] [SerializeField] private GameObject imageHolder; //Empty Gameobject in Ui to hold images;
+    [Tooltip("A template obj requiring, image, UIconsumableScript, button linked to the scripts onclick")] [SerializeField] private GameObject refObject; //blank object for instantiate to reference; Needs a button, UIConsumableScript, Image.
+    [Tooltip("Layer that checks player mouse is over monster collider")] [SerializeField] public LayerMask monsterLayer; //Layer of monster hitbox;
 
     [Header("All consumables go here")]
-    [SerializeField] private List<Consumable> consumableData;
+    [Tooltip("List all starting consumables")] [SerializeField] private List<Consumable> consumableData;
 
     private Image managerimage; //Reference to the image object for this manager.
     private Dictionary<string, int> storedDict; //string is name of consumable type, int is stored amount.
@@ -41,6 +41,7 @@ public class ConsumablesManager : MonoBehaviour
         managerimage = gameObject.GetComponent<Image>();
         state = UiState.Closed;
 
+        //For testing purposes randomises amount of consumables, will remove later.
         foreach (Consumable c in consumableData)
         {
             var randInt = Random.Range(1, 6);
@@ -109,7 +110,9 @@ public class ConsumablesManager : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// Checks if any new consumables need UI objects and creates them, removes UI objects for used items, moves objects towards their new position.
+    /// </summary>
     public void RefreshUI()
     {
         //Generate new Ui objects
@@ -145,10 +148,16 @@ public class ConsumablesManager : MonoBehaviour
             activeUiElements[i].clickable = false;
         }
 
+        //Reset state to opening so objects move to new positions.
         if (state == UiState.Open) state = UiState.Opening;
     }
 
 
+    /// <summary>
+    /// Takes a type of consumable and changes its value in storage by the given change amount.
+    /// </summary>
+    /// <param name="type">The type of consumable to change.</param> 
+    /// <param name="change">The change to apply to that consumable can be pos or neg</param>
     public void UpdateStorageAmount(Consumable type, int change)
     {
         if (storedDict.ContainsKey(type.ConsumableName))
@@ -163,7 +172,11 @@ public class ConsumablesManager : MonoBehaviour
         print($"Consumable {type.ConsumableName} doesn't exist. ");
     }
     
-
+    /// <summary>
+    /// Sets the amount of a certain consumable in storage to a given value.
+    /// </summary>
+    /// <param name="type"> Type of consumable to set storage of</param>
+    /// <param name="amount">Amount to set consumable to</param>
     public void SetStorageAmount(Consumable type, int amount)
     {
         if (storedDict.ContainsKey(type.ConsumableName))
@@ -175,6 +188,11 @@ public class ConsumablesManager : MonoBehaviour
         else print($"Consumable {type.ConsumableName} doesn't exist. ");
     }
 
+    /// <summary>
+    /// Adds a new consumable of the given type to storage.
+    /// </summary>
+    /// <param name="type">Type of consumable to add</param>
+    /// <param name="amount">Amount starting in storage</param>
     public void AddNewConsumable(Consumable type, int amount)
     {
         if (!storedDict.ContainsKey(type.ConsumableName))
@@ -185,6 +203,10 @@ public class ConsumablesManager : MonoBehaviour
         else print($"Consumable {type.ConsumableName} already exists.");
     }
 
+    /// <summary>
+    /// Removes a given consumable from storage and deletes its relevant UI object.
+    /// </summary>
+    /// <param name="type">Type of consumable to remove</param>
     public void RemoveConsumable(Consumable type)
     {
         if (storedDict.ContainsKey(type.ConsumableName))
@@ -213,6 +235,11 @@ public class ConsumablesManager : MonoBehaviour
         RefreshUI();
     }
 
+    /// <summary>
+    /// Retrieves a consumable type from the data pool by its name.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public Consumable RetrieveConsumableData(string name)
     {
         foreach (Consumable c in consumableData)
@@ -225,6 +252,11 @@ public class ConsumablesManager : MonoBehaviour
         throw new KeyNotFoundException();
     }
 
+    /// <summary>
+    /// Retrieves an active UI objects by its given name.
+    /// </summary>
+    /// <param name="name">Name of the consumables UI to retrieve</param>
+    /// <returns></returns>
     public UIConsumable RetrieveActiveUi(string name)
     {
         foreach (UIConsumable c in activeUiElements)
@@ -237,6 +269,9 @@ public class ConsumablesManager : MonoBehaviour
         throw new KeyNotFoundException();
     }
 
+    /// <summary>
+    /// Opens bag or UI equivalent and begins moving items to their assigned UI positions.
+    /// </summary>
     public void OpenUI()
     {
         //Only open when closed;
@@ -246,6 +281,9 @@ public class ConsumablesManager : MonoBehaviour
         managerimage.sprite = openSprite;
     }
 
+    /// <summary>
+    /// Closes bag or UI equivalent and begins moving items to closed UI position.
+    /// </summary>
     public void CloseUi()
     {
         //Only close when opened

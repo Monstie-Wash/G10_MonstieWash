@@ -7,15 +7,17 @@ using UnityEngine;
 
 public class Treat : Consumable
 {
-   [SerializeField] private List<MoodType> moodTargets;
-   [SerializeField] private List<float> moodEffects;
+    [Tooltip("Which moods this treat will effect")] [SerializeField] private List<MoodType> moodTargets;
+    [Tooltip("How much the affected moods will alter by, should match values 1-1 with values in moodtarget list")] [SerializeField] private List<float> moodEffects;
 
     [HideInInspector] public List<MoodType> MoodTargets { get { return MoodTargets; } }
     [HideInInspector] public float MoodEffects { get { return MoodEffects; } }
 
+    /// <summary>
+    /// Removes one of this consumable from storage and apply its effect to its targeted mood.
+    /// </summary>
     public override void Consume()
     {
-        Debug.Log("called treat consume");
         //Find Monster Brain
         var brain = FindFirstObjectByType<MonsterBrain>();
 
