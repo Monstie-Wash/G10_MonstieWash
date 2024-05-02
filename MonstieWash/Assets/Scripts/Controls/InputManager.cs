@@ -12,17 +12,20 @@ public class InputManager : MonoBehaviour
     public event Action OnMove_Ended;
 
     public event Action OnActivate_Started;
+    public event Action OnActivate;
     public event Action OnActivate_Held;
     public event Action OnActivate_Ended;
 
     public event Action OnSwitchTool_Started;
-    public event Action<float> OnSwitchTool;
+    public event Action<int> OnSwitchTool;
     public event Action OnSwitchTool_Ended;
 
     public event Action OnNavigate_Started;
     public event Action OnNavigate;
     public event Action OnNavigate_Ended;
-
+	
+    public event Action OnToggleUI;
+	
     private PlayerInput m_playerInput;
     private Coroutine m_activeRoutine;
     private PlayerInputDevice m_inputDevice = PlayerInputDevice.Controller;
@@ -64,7 +67,9 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Navigate.started += Navigate_started;
         m_playerInput.PlayerActions.Navigate.performed += Navigate_performed;
         m_playerInput.PlayerActions.Navigate.canceled += Navigate_canceled;
-
+		
+        m_playerInput.PlayerActions.ToggleUI.performed += ToggleUI_performed;
+		
         m_playerInput.PlayerActions.Enable();
     }
 
@@ -85,6 +90,8 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Navigate.started -= Navigate_started;
         m_playerInput.PlayerActions.Navigate.performed -= Navigate_performed;
         m_playerInput.PlayerActions.Navigate.canceled -= Navigate_canceled;
+		
+		m_playerInput.PlayerActions.ToggleUI.performed -= ToggleUI_performed;
 
         m_playerInput.PlayerActions.Disable();
     }
@@ -126,7 +133,7 @@ public class InputManager : MonoBehaviour
     private void Activate_performed(InputAction.CallbackContext context)
     {
         UpdateInputDevice(context.control.device);
-        OnActivate_Started?.Invoke();
+        OnActivate?.Invoke();
         m_activeRoutine = StartCoroutine(Activate());
     }
 
@@ -157,7 +164,7 @@ public class InputManager : MonoBehaviour
     private void SwitchTool_performed(InputAction.CallbackContext context)
     {
         UpdateInputDevice(context.control.device);
-        OnSwitchTool?.Invoke(context.ReadValue<float>());
+        OnSwitchTool?.Invoke(Math.Sign(context.ReadValue<float>()));
     }
 
     private void SwitchTool_canceled(InputAction.CallbackContext context)
@@ -184,6 +191,14 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnNavigate_Ended?.Invoke();
+    }
+	#endregion
+	
+	#region ToggleUI
+    private void ToggleUI_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnToggleUI?.Invoke();
     }
     #endregion
 }
