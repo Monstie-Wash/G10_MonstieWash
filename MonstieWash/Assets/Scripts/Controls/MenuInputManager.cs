@@ -31,8 +31,8 @@ public class MenuInputManager : MonoBehaviour
 
         m_playerInput = new PlayerInput();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     private void OnEnable()
