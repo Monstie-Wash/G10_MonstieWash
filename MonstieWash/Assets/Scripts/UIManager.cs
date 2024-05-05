@@ -8,17 +8,16 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] public TextMeshProUGUI Text;
-    [SerializeField] public Image Clipboard;
-    [SerializeField] public Animator CBAnimator;
-    [SerializeField] public float fontSize = 36f;
-    [SerializeField] public float fontScaling = 0.75f;
-    [SerializeField] public float paddingScaling = 1.2f;
-
     public GameObject m_TaskContainer;
     public GameObject m_TaskTextPrefab;
 
+    [SerializeField] private Image Clipboard;
+    [SerializeField] private Animator CBAnimator;
+    [SerializeField] private float fontSize = 36f;
+    [SerializeField] private float fontScaling = 0.75f;
+    [SerializeField] private float paddingScaling = 1.2f;
     [SerializeField] private List<string> m_TaskKeys = new();
+    
     private Dictionary<string, List<string>> m_SceneTasks = new();
     private RoomSaver m_roomSaver;
     private bool m_UIVisible;
@@ -44,6 +43,10 @@ public class UIManager : MonoBehaviour
         ToggleUIVisibility();
     }
 
+/// <summary>
+/// Public method used by TaskTracker to initialise clipboard after all task trackers have been initialised. Creates filters for tasks to show on each scene.
+/// </summary>
+/// <param name="keys">A list of all the keys used to identify tasks tracked in TaskTracker</param>
     public void LoadKeys(List<string> keys)
     {
         m_TaskKeys = keys;
@@ -66,6 +69,12 @@ public class UIManager : MonoBehaviour
         UpdateClipboardUI("Overview");
     }
 
+/// <summary>
+/// Recursively creates objects inside the clipboard object for each layer of tasks across all monster scenes. 
+/// </summary>
+/// <param name="currentParent">The parent object of the layer of tasks current being initialised.</param>
+/// <param name="currentParentName">The name identifier of the current parent object.</param>
+/// <param name="taskLayer">The current depth of the layer of tasks being processed.</param>
     private void InitialiseClipboard(GameObject currentParent, string currentParentName, int taskLayer)
     {
         var currentTaskLayer = m_TaskKeys.FindAll(s => s.Contains(currentParentName) && s.Count(x => x == '#') == taskLayer);
@@ -96,6 +105,10 @@ public class UIManager : MonoBehaviour
         CBAnimator.SetBool("Hide", m_UIVisible);
     }
 
+/// <summary>
+/// Updates the clipboard to hide irrelevant tasks using a filter for the loaded scene.
+/// </summary>
+/// <param name="sceneName">Name of the scene currently loaded.</param>
     private void UpdateClipboardUI(string sceneName)
     {
         foreach (var textObject in m_TaskContainer.GetComponentsInChildren<Transform>())
@@ -115,6 +128,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+/// <summary>
+/// Updates the progress value displayed on the clipboard for a given task.
+/// </summary>
+/// <param name="taskName">String identifier of the task to update.</param>
+/// <param name="taskProgress">Progress of the task to be displayed on the clipboard.</param>
     public void UpdateClipboardTask(string taskName, float taskProgress)
     {
         var taskObject = FindTaskObject(taskName);
@@ -123,6 +141,11 @@ public class UIManager : MonoBehaviour
         taskText.text = $"{taskObject.name}: {Math.Round(taskProgress, 2)}%"; 
     }
 
+/// <summary>
+/// Finds the corresponding task object using the string identifier by diving through the unity hierarchy.
+/// </summary>
+/// <param name="taskName">String identifier for the task to find</param>
+/// <returns>Object corresponding to the task.</returns>
     private GameObject FindTaskObject(string taskName)
     {
         var tempSplit = taskName.Split('#');
