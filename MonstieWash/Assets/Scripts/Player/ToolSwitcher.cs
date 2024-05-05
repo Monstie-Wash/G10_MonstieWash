@@ -8,18 +8,22 @@ public class ToolSwitcher : MonoBehaviour
     [SerializeField] private Transform toolHolder;
 
     private List<GameObject> m_toolInstances = new();
+    private RoomSaver m_roomSaver;
 
     /// <summary>
     /// The current index in the m_toolInstances list. -1 represents an empty hand.
     /// </summary>
     private int m_currentToolIndex = -1;
 
+    public int CurrentToolIndex { get { return m_currentToolIndex; } }
+
     private void Awake()
     {
+        m_roomSaver = FindFirstObjectByType<RoomSaver>();
+
         foreach (var tool in tools)
         {
             var toolInstance = Instantiate(tool, toolHolder);
-            toolInstance.SetActive(false);
             m_toolInstances.Add(toolInstance);
         }
     }
@@ -27,6 +31,7 @@ public class ToolSwitcher : MonoBehaviour
     private void OnEnable()
     {
         InputManager.Inputs.OnSwitchTool += Inputs_OnSwitchTool;
+        m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
     }
 
     private void OnDisable()
@@ -34,12 +39,20 @@ public class ToolSwitcher : MonoBehaviour
         InputManager.Inputs.OnSwitchTool -= Inputs_OnSwitchTool;
     }
 
-    private void Inputs_OnSwitchTool(float dirInput)
+    private void RoomSaver_OnScenesLoaded()
     {
-        var dir = Math.Sign(dirInput);
-        if (dir == 0) return;
+        foreach (var tool in m_toolInstances)
+        {
+            tool.GetComponent<Eraser>().InitializeTool();
+            tool.SetActive(false);
+        }
+    }
+    
+    private void Inputs_OnSwitchTool(int dirInput)
+    {
+        if (dirInput == 0) return;
 
-        RotateCurrentTool(dir);
+        RotateCurrentTool(dirInput);
     }
 
     /// <summary>

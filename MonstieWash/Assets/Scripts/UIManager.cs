@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject m_TaskContainer;
     public GameObject m_TaskTextPrefab;
 
-    [SerializeField] private Image Clipboard;
+    [SerializeField] private Image clipboard;
     [SerializeField] private Animator CBAnimator;
     [SerializeField] private float fontSize = 36f;
     [SerializeField] private float fontScaling = 0.75f;
@@ -22,25 +22,32 @@ public class UIManager : MonoBehaviour
     private RoomSaver m_roomSaver;
     private bool m_UIVisible;
     // Start is called before the first frame update
-    private void Awake()
+    private void OnEnable()
     {
         m_roomSaver = GetComponent<RoomSaver>();
-        InputManager.Inputs.OnToggleUI += Inputs_OnToggleUI;
     }
 
     private void OnEnable()
     {
+        InputManager.Inputs.OnToggleUI += Inputs_OnToggleUI;
         m_roomSaver.OnSceneChanged += UpdateClipboardUI;
     }
 
     private void OnDisable()
     {
+        InputManager.Inputs.OnToggleUI -= Inputs_OnToggleUI;
         m_roomSaver.OnSceneChanged -= UpdateClipboardUI;
     }
 
     private void Inputs_OnToggleUI()
     {
         ToggleUIVisibility();
+    }
+    private void ToggleUIVisibility()
+    {
+        //Clipboard.gameObject.SetActive(!Clipboard.gameObject.activeSelf);
+        m_UIVisible = !m_UIVisible;
+        CBAnimator.SetBool("Hide", m_UIVisible);
     }
 
 /// <summary>
@@ -64,7 +71,6 @@ public class UIManager : MonoBehaviour
                     break;
             } 
         }
-
         InitialiseClipboard(m_TaskContainer, "", 0);
         UpdateClipboardUI("Overview");
     }

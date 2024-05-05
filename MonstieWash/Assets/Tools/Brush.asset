@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd12614b63339a409d105d30a05b7c0, type: 3}
   m_Name: Brush
   m_EditorClassIdentifier: 
-  mask: {fileID: 21300000, guid: c26f584e2a3ccbd43baa0472155dc9c6, type: 3}
+  mask: {fileID: 21300000, guid: 0164c7e401b05ec4c9f268127bc98a86, type: 3}
   size: 2
-  inputStrength: 60
-  strength: 15.9139185
+  inputStrength: 36
+  strength: 5.2609754
