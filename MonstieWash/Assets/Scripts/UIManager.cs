@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     private RoomSaver m_roomSaver;
     private bool m_UIVisible;
     // Start is called before the first frame update
-    private void OnEnable()
+    private void Awake()
     {
         m_roomSaver = GetComponent<RoomSaver>();
     }
@@ -102,13 +102,6 @@ public class UIManager : MonoBehaviour
             newTaskText.text = $"{newTaskObject.name}: 0%";
             InitialiseClipboard(newTaskObject, currentParentName + newTaskObject.name + "#", taskLayer + 1);
         } 
-    }
-
-    private void ToggleUIVisibility()
-    {
-        //Clipboard.gameObject.SetActive(!Clipboard.gameObject.activeSelf);
-        m_UIVisible = !m_UIVisible;
-        CBAnimator.SetBool("Hide", m_UIVisible);
     }
 
 /// <summary>
