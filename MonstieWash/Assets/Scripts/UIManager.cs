@@ -138,7 +138,7 @@ public class UIManager : MonoBehaviour
         var taskObject = FindTaskObject(taskName);
         var taskText = taskObject.GetComponent<TextMeshProUGUI>();
 
-        taskText.text = $"{taskObject.name}: {Math.Round(taskProgress, 2)}%"; 
+        taskText.text = $"{taskObject.name}: {Math.Round(taskProgress, 0)}%"; // Rounding up with no decimals makes the display show 100% even with small amounts of dirt remaining
     }
 
 /// <summary>

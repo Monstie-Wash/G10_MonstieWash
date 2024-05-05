@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2787953857554938795}
   - component: {fileID: 8437575934485402516}
   - component: {fileID: 7199044649729086818}
+  - component: {fileID: -334859519322762873}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -59,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allScenes: []
+  m_allScenes: []
 --- !u!114 &7199044649729086818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +73,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c330dc06251f3da488d2b35918bf4d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_taskProgress:
-    ignoreThis: 
-    keys: []
-    values: []
+--- !u!114 &-334859519322762873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059618893801588742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1640cfac3b933404b8fcf4cef7c94a5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Text: {fileID: 0}
+  Clipboard: {fileID: 0}
+  CBAnimator: {fileID: 0}
+  fontSize: 36
+  fontScaling: 0.75
+  paddingScaling: 1.2
+  m_TaskContainer: {fileID: 0}
+  m_TaskTextPrefab: {fileID: 9051000898727591749, guid: 46543417b13805f4e9b01f49812cc32b, type: 3}
+  m_TaskKeys: []
