@@ -85,12 +85,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1640cfac3b933404b8fcf4cef7c94a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: {fileID: 0}
-  Clipboard: {fileID: 0}
-  CBAnimator: {fileID: 0}
-  fontSize: 36
-  fontScaling: 0.75
-  paddingScaling: 1.2
   m_TaskContainer: {fileID: 0}
   m_TaskTextPrefab: {fileID: 9051000898727591749, guid: 46543417b13805f4e9b01f49812cc32b, type: 3}
+  Clipboard: {fileID: 0}
+  CBAnimator: {fileID: 0}
+  fontSize: 40
+  fontScaling: 0.85
+  paddingScaling: 1.3
   m_TaskKeys: []
