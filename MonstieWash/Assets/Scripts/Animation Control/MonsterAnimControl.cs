@@ -19,7 +19,7 @@ public class MonsterAnimControl : MonoBehaviour
 
     private void Start()
     {
-        m_mimicAI = FindFirstObjectByType<MonsterBrain>();
+        m_monsterAI = FindFirstObjectByType<MonsterBrain>();
         m_myAnimator = GetComponent<Animator>();
     }
 
@@ -34,7 +34,7 @@ public class MonsterAnimControl : MonoBehaviour
     void UpdateAnimations()
     {
         // Get the name of the mood with the highest float value from mimicAI MoodData
-        var highestMood = m_mimicAI.GetHighestMood();
+        var highestMood = m_monsterAI.GetHighestMood();
         // Match that name to the name of that mood's animation
         var animToPlay = moodToAnimationMap.Find(obj => obj.mood.MoodName == highestMood).animation;
         
