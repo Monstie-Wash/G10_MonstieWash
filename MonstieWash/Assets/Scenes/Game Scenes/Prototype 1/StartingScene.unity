@@ -252,6 +252,102 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerHand
       objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: playerHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageAnimationCap
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageAnimationDuration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageAnimationMaxDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[1].time
+      value: 0.14566866
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[1].value
+      value: 0.14957982
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[0].inSlope
+      value: 1.0268497
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[1].inSlope
+      value: 0.003208278
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[2].inSlope
+      value: -0.17508408
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[0].outSlope
+      value: 1.0268497
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[1].outSlope
+      value: 0.003208278
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[2].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[2].outSlope
+      value: -0.17508408
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[1].outWeight
+      value: 0.09637009
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[0].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: damageShake.m_Curve.Array.data[2].tangentMode
+      value: 34
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,9 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerHand : MonoBehaviour
 {
     //Unity Inspector
     [SerializeField][Range(1.0f, 50.0f)] private float cursorSpeed = 20f;
+
+    [Tooltip("Player's current health (initial value is starting health)")] [SerializeField] private float playerHealth;
+    [Tooltip("Damage beyond this value won't affect the intensity of damage animations")] [SerializeField] private float damageAnimationCap;
+    [Tooltip("Duration of the damage animation (in seconds)")] [SerializeField] private float damageAnimationDuration;
+    [Tooltip("Animation curve for screen shake upon taking damage")][SerializeField] private AnimationCurve damageShake;   
 
     //Private
     private float m_moveHorizontal;
@@ -24,6 +30,8 @@ public class PlayerHand : MonoBehaviour
         InputManager.Inputs.OnMove += Inputs_MovePerformed;
         InputManager.Inputs.OnMove_Ended += Inputs_MoveEnded;
         InputManager.Inputs.OnNavigate += Inputs_OnNavigate;
+
+        TakeDamage(2f);
     }
 
     private void OnDisable()
@@ -104,4 +112,30 @@ public class PlayerHand : MonoBehaviour
         TraversalObject navArrow = results[0].GetComponent<TraversalObject>();
         navArrow.OnClicked();
     }
+
+    public void TakeDamage(float dmgTaken)
+    {
+        playerHealth -= dmgTaken;
+        StartCoroutine(PlayDamageEffects(dmgTaken));
+    }
+
+    IEnumerator PlayDamageEffects(float dmgTaken)
+    {
+        Camera activeCam = Camera.main;
+        Vector3 camStartPos = activeCam.transform.position;
+        float elapsedTime = 0f;
+
+        float dmgNormal = Mathf.Clamp((dmgTaken / damageAnimationCap) + 1, 1, 2);
+
+        while (elapsedTime < damageAnimationDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float strength = damageShake.Evaluate(elapsedTime / dmgTaken);
+            activeCam.transform.position = camStartPos + Random.insideUnitSphere * strength * dmgNormal;
+            yield return null;
+        }
+
+        activeCam.transform.position = camStartPos;
+    }
+
 }
