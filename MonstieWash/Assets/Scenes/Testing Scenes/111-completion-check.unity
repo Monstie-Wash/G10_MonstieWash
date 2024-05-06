@@ -164,9 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fbb86415f949445b920ae82a3cee84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskProgress: 0
-  _newProgress: 0
-  _taskName: 
 --- !u!212 &18515362
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -218,7 +215,7 @@ SpriteRenderer:
   m_Size: {x: 4.740741, y: 4.740741}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!1001 &162080453
@@ -333,9 +330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fbb86415f949445b920ae82a3cee84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskProgress: 0
-  _newProgress: 0
-  _taskName: 
 --- !u!212 &202912122
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -387,7 +381,7 @@ SpriteRenderer:
   m_Size: {x: 4.740741, y: 4.740741}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!1 &420363012
@@ -629,7 +623,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &680305996
@@ -731,7 +725,7 @@ SpriteRenderer:
   m_Size: {x: 4.740741, y: 4.740741}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!114 &808553989
@@ -746,9 +740,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fbb86415f949445b920ae82a3cee84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskProgress: 0
-  _newProgress: 0
-  _taskName: 
 --- !u!1 &1148363667
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,9 +784,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c330dc06251f3da488d2b35918bf4d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskContainer: {fileID: 448362686}
   m_taskProgress:
-    keys2: []
+    ignoreThis: 
     keys: []
     values: []
 --- !u!1 &1388365089
@@ -882,7 +872,7 @@ SpriteRenderer:
   m_Size: {x: 4.740741, y: 4.740741}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!114 &1388365092
@@ -897,9 +887,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fbb86415f949445b920ae82a3cee84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskProgress: 0
-  _newProgress: 0
-  _taskName: 
 --- !u!1 &1493109183
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,7 +971,7 @@ SpriteRenderer:
   m_Size: {x: 4.740741, y: 4.740741}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!114 &1493109187
@@ -999,9 +986,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8fbb86415f949445b920ae82a3cee84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskProgress: 0
-  _newProgress: 0
-  _taskName: 
 --- !u!1 &1813373683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,17 +1058,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3635255560880722609, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
   m_PrefabInstance: {fileID: 162080453}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2082899511 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7918249578158479502, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
-  m_PrefabInstance: {fileID: 162080453}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082899510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7847184bfdd0c9248a57ecaf61510a95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2082899513 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1316933848323378630, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
@@ -1102,8 +1075,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07731d05c1d1d1943bddfe47bf8523ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerHand: {fileID: 2082899511}
-  m_eraser: {fileID: 680305994}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
