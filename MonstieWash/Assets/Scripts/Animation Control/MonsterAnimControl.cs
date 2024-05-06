@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MonsterAnimControl : MonoBehaviour
 {
-    private MonsterBrain m_mimicAI;   
+    private MonsterBrain m_monsterAI;   
     private Animator m_myAnimator;
 
     [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
