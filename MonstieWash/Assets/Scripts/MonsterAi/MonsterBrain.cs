@@ -27,7 +27,7 @@ public class MonsterBrain : MonoBehaviour
     [HideInInspector] public List<MoodType> MoodData { get { return moodData; } }
 
 
-    public void Awake()
+    private void Awake()
     {
         m_designerSanityBuff = 10;
         activeMoods = new Dictionary<int, float>();
@@ -309,10 +309,12 @@ public class MonsterBrain : MonoBehaviour
     /// <summary>
     /// Returns the ID (as an int) of the Moodtype with the highest value.
     /// </summary>
+    /// <returns>The name of the mood with the highest float value.</returns>
     public string GetHighestMood()
     {
-        float highestVal = float.MinValue;
-        int highestValID = 0;
+        var highestVal = float.MinValue;
+        var highestValID = 0;
+
         foreach(var mood in activeMoods)
         {
             if (mood.Value > highestVal) 
@@ -322,7 +324,7 @@ public class MonsterBrain : MonoBehaviour
             }
         }
 
-        string highestMoodName = ReadMood(highestValID);
+        var highestMoodName = ReadMood(highestValID);
 
         return highestMoodName;
     }

@@ -3,35 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class MoodToAnimName
-{
-    public string moodName;
-    public string animName;
-}
-
 public class MonsterAnimControl : MonoBehaviour
 {
     private MonsterBrain m_mimicAI;   
-    private string m_currentMood;   // tracks the monster's current mood (accurate to last frame)
     private Animator m_myAnimator;
 
-    [SerializeField] private List<MoodToAnimName> moodToAnimationMap; // maps the name of moods to their animation names
+    [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
 
-    void Start()
+    [Serializable]
+    private struct MoodToAnimation
     {
+        public MoodType mood;
+        public AnimationClip animation;
+    }
+
+    private void Start()
+    {
+        m_mimicAI = FindFirstObjectByType<MonsterBrain>();
         m_myAnimator = GetComponent<Animator>();
     }
 
-    private void OnEnable()
-    {
-        if (m_mimicAI == null)
-        {
-            m_mimicAI = FindFirstObjectByType<MonsterBrain>();
-        }
-    }
-
-    void Update()
+    private void Update()
     {
         UpdateAnimations();
     }
@@ -42,21 +34,23 @@ public class MonsterAnimControl : MonoBehaviour
     void UpdateAnimations()
     {
         // Get the name of the mood with the highest float value from mimicAI MoodData
-        string highestMood = m_mimicAI.GetHighestMood();
+        var highestMood = m_mimicAI.GetHighestMood();
         // Match that name to the name of that mood's animation
-        MoodToAnimName animToPlay = moodToAnimationMap.Find(x => x.moodName == highestMood);
+        var animToPlay = moodToAnimationMap.Find(obj => obj.mood.MoodName == highestMood).animation;
+        
         if (animToPlay == null)
         {
             Debug.Log($"MoodToAnimationMap for MoodType {highestMood} is missing/incorrect");
             return;
         }
+        
         // If mood hasn't changed from last frame, don't bother updating animations (performance increase)
-        if (m_myAnimator.GetCurrentAnimatorStateInfo(0).IsName(animToPlay.animName))
+        if (m_myAnimator.GetCurrentAnimatorStateInfo(0).IsName(animToPlay.name))
         {
             return;
         }
+        
         // Play that animation
-        m_myAnimator.Play(animToPlay.animName);
-
+        m_myAnimator.Play(animToPlay.name);
     }
 }

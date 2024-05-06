@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5036995656876074879}
   - component: {fileID: 9094874810309194301}
   - component: {fileID: 6751848231219191472}
-  - component: {fileID: -773800244762131073}
+  - component: {fileID: -4850747262108209868}
   m_Layer: 0
   m_Name: Mimic_Right
   m_TagString: Right
@@ -110,7 +110,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-773800244762131073
+--- !u!114 &-4850747262108209868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,11 +123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moodToAnimationMap:
-  - moodName: Angry
-    animName: Mimic_Angry_Right
-  - moodName: Happy
-    animName: Mimic_Happy_Right
-  - moodName: Hungry
-    animName: Mimic_Hungry_Right
-  - moodName: Mischief
-    animName: Mimic_Mischief_Right
+  - mood: {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
+    animation: {fileID: 7400000, guid: 356b7badf2e4eb84089a097ca9738584, type: 2}
+  - mood: {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
+    animation: {fileID: 7400000, guid: 93958d84a93055c44a21f88b4c0a42b4, type: 2}
+  - mood: {fileID: 11400000, guid: 5a7db6333fdbab54090e44e3df77eca9, type: 2}
+    animation: {fileID: 7400000, guid: 07062cd3ee79f264c8c1296ab6023ca8, type: 2}
+  - mood: {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
+    animation: {fileID: 7400000, guid: 8ce0c9d00bab3fa449b33ecff005729e, type: 2}

@@ -233,6 +233,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       insertIndex: -1
       addedObject: {fileID: 665156554}
+    - targetCorrespondingSourceObject: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 665156559}
   m_SourcePrefab: {fileID: 100100000, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
 --- !u!1 &665156553 stripped
 GameObject:
@@ -254,6 +257,26 @@ MonoBehaviour:
   text: {fileID: 492612825}
   clipboard: {fileID: 203054434}
   CBAnimator: {fileID: 203054433}
+--- !u!114 &665156559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665156553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 774e27de974a0cc42951eda5207092cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moodData:
+  - {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
+  - {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
+  - {fileID: 11400000, guid: 5a7db6333fdbab54090e44e3df77eca9, type: 2}
+  - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
+  Debug: 0
+  Pause: 0
+  DebugUi: {fileID: 0}
 --- !u!1001 &773685606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -412,8 +435,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 281005894}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -618,3 +640,4 @@ SceneRoots:
   - {fileID: 665156552}
   - {fileID: 773685606}
   - {fileID: 1333992974056510846}
+  - {fileID: 819297811}
