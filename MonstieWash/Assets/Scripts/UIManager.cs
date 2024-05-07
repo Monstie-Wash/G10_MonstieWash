@@ -8,13 +8,13 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject taskContainer;
-    [SerializeField] private GameObject taskTextPrefab;
     [SerializeField] private Image clipboard;
     [SerializeField] private Animator CBAnimator;
+    [SerializeField] private GameObject taskContainer;
+    [SerializeField] private GameObject taskTextPrefab;
     [SerializeField] private float fontSize = 36f;
-    [SerializeField] [Range(0.5f, 1.0f)] private float fontScaling = 0.75f;
-    [SerializeField] [Range(0.0f, 2.0f)]private float paddingScaling = 1.2f;
+    [SerializeField] [Range(0.6f, 1.0f)] private float fontScaling = 0.75f;
+    [SerializeField] [Range(1.0f, 2.0f)]private float paddingScaling = 1.2f;
     [SerializeField] private List<string> taskKeys = new();
     
     private Dictionary<string, List<string>> m_sceneTasks = new();
