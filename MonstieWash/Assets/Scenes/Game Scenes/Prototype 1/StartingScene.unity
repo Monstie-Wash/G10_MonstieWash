@@ -128,6 +128,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: clipboard
       value: 
       objectReference: {fileID: 1333992974056510849}
@@ -135,6 +139,18 @@ PrefabInstance:
       propertyPath: CBAnimator
       value: 
       objectReference: {fileID: 1333992974056510848}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: fontScaling
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: taskContainer
+      value: 
+      objectReference: {fileID: 1333992974056510847}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: paddingScaling
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: m_TaskContainer
       value: 
@@ -217,9 +233,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 665156554}
-    - targetCorrespondingSourceObject: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 665156559}
   m_SourcePrefab: {fileID: 100100000, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
 --- !u!1 &665156553 stripped
@@ -227,21 +240,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
   m_PrefabInstance: {fileID: 665156552}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &665156554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665156553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1640cfac3b933404b8fcf4cef7c94a5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 492612825}
-  clipboard: {fileID: 203054434}
-  CBAnimator: {fileID: 203054433}
 --- !u!114 &665156559
 MonoBehaviour:
   m_ObjectHideFlags: 0
