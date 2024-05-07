@@ -12,9 +12,10 @@ public class RoomSaver : MonoBehaviour
 
     [SerializeField] private List<GameScene> allScenes = new();
 
-    public List<string> m_allScenes = new();
+    private List<string> m_allScenes = new();
     private Scene m_currentScene;
 
+    public List<string> AllScenes { get { return m_allScenes; } }
 
     private void Awake()
     {

@@ -8,20 +8,19 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject m_TaskContainer;
-    public GameObject m_TaskTextPrefab;
-
+    [SerializeField] private GameObject taskContainer;
+    [SerializeField] private GameObject taskTextPrefab;
     [SerializeField] private Image clipboard;
     [SerializeField] private Animator CBAnimator;
     [SerializeField] private float fontSize = 36f;
-    [SerializeField] private float fontScaling = 0.75f;
-    [SerializeField] private float paddingScaling = 1.2f;
-    [SerializeField] private List<string> m_TaskKeys = new();
+    [SerializeField] [Range(0.5f, 1.0f)] private float fontScaling = 0.75f;
+    [SerializeField] [Range(0.0f, 2.0f)]private float paddingScaling = 1.2f;
+    [SerializeField] private List<string> taskKeys = new();
     
-    private Dictionary<string, List<string>> m_SceneTasks = new();
+    private Dictionary<string, List<string>> m_sceneTasks = new();
     private RoomSaver m_roomSaver;
-    private bool m_UIVisible;
-    // Start is called before the first frame update
+    private bool m_UIVisible = true;
+
     private void Awake()
     {
         m_roomSaver = GetComponent<RoomSaver>();
@@ -56,22 +55,21 @@ public class UIManager : MonoBehaviour
 /// <param name="keys">A list of all the keys used to identify tasks tracked in TaskTracker</param>
     public void LoadKeys(List<string> keys)
     {
-        m_TaskKeys = keys;
-        foreach (var scene in m_roomSaver.m_allScenes)
+        taskKeys = keys;
+        foreach (var scene in m_roomSaver.AllScenes)
         {
-            switch (scene)
+            if (scene == "Overview")
             {
-                case "Overview":
-                    m_SceneTasks.Add(scene, m_TaskKeys.FindAll(s => s.Contains("Overall") && s.Count(x => x == '#') <= 1));
-                    break;
-                default:
-                    var sceneKeys = m_TaskKeys.FindAll(s => s.Contains(scene));
-                    sceneKeys.Add("Overall");
-                    m_SceneTasks.Add(scene, sceneKeys);
-                    break;
-            } 
+                m_sceneTasks.Add(scene, taskKeys.FindAll(s => s.Contains("Overall") && s.Count(x => x == '#') <= 1));
+            }
+            else
+            {
+                var sceneKeys = taskKeys.FindAll(s => s.Contains(scene));
+                sceneKeys.Add("Overall");
+                m_sceneTasks.Add(scene, sceneKeys);
+            }
         }
-        InitialiseClipboard(m_TaskContainer, "", 0);
+        InitialiseClipboard(taskContainer, "", 0);
         UpdateClipboardUI("Overview");
     }
 
@@ -83,10 +81,10 @@ public class UIManager : MonoBehaviour
 /// <param name="taskLayer">The current depth of the layer of tasks being processed.</param>
     private void InitialiseClipboard(GameObject currentParent, string currentParentName, int taskLayer)
     {
-        var currentTaskLayer = m_TaskKeys.FindAll(s => s.Contains(currentParentName) && s.Count(x => x == '#') == taskLayer);
+        var currentTaskLayer = taskKeys.FindAll(s => s.Contains(currentParentName) && s.Count(x => x == '#') == taskLayer);
         foreach (var task in currentTaskLayer)
         {
-            var newTaskObject = GameObject.Instantiate(m_TaskTextPrefab, currentParent.transform);
+            var newTaskObject = Instantiate(taskTextPrefab, currentParent.transform);
 
             if (!task.Contains('#'))
             {
@@ -110,12 +108,12 @@ public class UIManager : MonoBehaviour
 /// <param name="sceneName">Name of the scene currently loaded.</param>
     private void UpdateClipboardUI(string sceneName)
     {
-        foreach (var textObject in m_TaskContainer.GetComponentsInChildren<Transform>())
+        foreach (var textObject in taskContainer.GetComponentsInChildren<Transform>())
         {
-            if(textObject != m_TaskContainer.transform) textObject.gameObject.SetActive(false);
+            if(textObject != taskContainer.transform) textObject.gameObject.SetActive(false);
         }
 
-        foreach (var taskName in m_SceneTasks[sceneName])
+        foreach (var taskName in m_sceneTasks[sceneName])
         {
             var taskObject = FindTaskObject(taskName);
 
@@ -149,6 +147,6 @@ public class UIManager : MonoBehaviour
     {
         var tempSplit = taskName.Split('#');
         var tempString = String.Join("/", tempSplit);
-        return m_TaskContainer.transform.Find(tempString).gameObject;
+        return taskContainer.transform.Find(tempString).gameObject;
     }
 }
