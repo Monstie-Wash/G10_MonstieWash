@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14fa3bbe3a6cba041997a365ccc6cfd5, type: 3}
-  m_Name: HungerMimic
+  m_Name: HappyMimic
   m_EditorClassIdentifier: 
-  moodName: Hunger
-  moodUpperLimit: 40
-  moodLowerLimit: -10
-  moodStartingPoint: -10
-  moodNaturalChange: 0.2
-  moodRestingPoint: 40
+  moodName: Happy
+  moodUpperLimit: 50
+  moodLowerLimit: -100
+  moodStartingPoint: 30
+  moodNaturalChange: 0
+  moodRestingPoint: 30
   chaosMultiplier: 0
-  positiveChainReactions:
-  - {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
-  positiveReactionStrength: 1
+  positiveChainReactions: []
+  positiveReactionStrength: 0
   negativeChainReactions: []
-  negativeReactionStrength: 1
+  negativeReactionStrength: 0
+  idleAnimation: {fileID: 0}

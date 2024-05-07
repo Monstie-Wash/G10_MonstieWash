@@ -7,7 +7,7 @@ using TMPro;
 public class MonsterBrain : MonoBehaviour
 {
 
-    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] private List<MoodType> moodData; //Scriptable objects holding data about moods.
+    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] protected List<MoodType> moodData; //Scriptable objects holding data about moods.
 
     private Dictionary<int,float> activeMoods; //Current moods status. int refers to id and number of mood in list, float refers to current value of mood on its own scale.
 
@@ -51,7 +51,6 @@ public class MonsterBrain : MonoBehaviour
         NegativeChainReactions();
         //Moods are kept to their upper and lower limits.
         MaintainLimits();
-
 
         //Debug Updates
         if (Debug) UpdateDebugText();
@@ -259,6 +258,17 @@ public class MonsterBrain : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns the value of a given mood by its ID, useful for other scripts.
+    /// </summary>
+    /// <param id="id"> The desired moodtype's ID</param>
+    /// <returns></returns>
+    public string ReadMood(int id)
+    {
+        return moodData[id].MoodName;
+    }
+
+
+    /// <summary>
     /// Returns the value of a given mood by its name, useful for other scripts.
     /// </summary>
     /// <param name="name"> The desired moodtype</param>
@@ -296,5 +306,27 @@ public class MonsterBrain : MonoBehaviour
         return value;
     }
 
+    /// <summary>
+    /// Returns the ID (as an int) of the Moodtype with the highest value.
+    /// </summary>
+    /// <returns>The name of the mood with the highest float value.</returns>
+    public string GetHighestMood()
+    {
+        var highestVal = float.MinValue;
+        var highestValID = 0;
+
+        foreach(var mood in activeMoods)
+        {
+            if (mood.Value > highestVal) 
+            {
+                highestValID = mood.Key;
+                highestVal = mood.Value;
+            }
+        }
+
+        var highestMoodName = ReadMood(highestValID);
+
+        return highestMoodName;
+    }
 
 }
