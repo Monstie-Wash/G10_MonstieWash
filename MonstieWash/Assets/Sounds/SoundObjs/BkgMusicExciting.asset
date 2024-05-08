@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61afbadc8a49190409832e82cab2b189, type: 3}
-  m_Name: BkgMusicCalm
+  m_Name: BkgMusicExciting
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 417dc8e909936e141b159859a54b0d1d, type: 3}
+  clip: {fileID: 8300000, guid: a0c9bec195fd2544d9cf3ec1d4d3d57f, type: 3}
   mixer: {fileID: -6379261314806015809, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
   volume: 1
   pitch: 1
-  loop: 1
+  loop: 0
   playOnAwake: 1

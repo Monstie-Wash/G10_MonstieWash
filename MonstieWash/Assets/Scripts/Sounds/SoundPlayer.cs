@@ -9,6 +9,8 @@ public class SoundPlayer : MonoBehaviour
 
     private AudioSource m_audioSource;
 
+    public Sound Sound { get { return sound; } }
+
     private void Awake()
     {
         m_audioSource = GetComponent<AudioSource>();
@@ -49,5 +51,12 @@ public class SoundPlayer : MonoBehaviour
     public void StopSound()
     {
         m_audioSource.Stop();
+    }
+
+    public void SwitchSound(Sound newSound)
+    {
+        StopSound();
+        sound = newSound;
+        SetupAudio();
     }
 }
