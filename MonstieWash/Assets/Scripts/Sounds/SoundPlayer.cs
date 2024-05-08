@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -18,6 +16,9 @@ public class SoundPlayer : MonoBehaviour
         SetupAudio();
     }
 
+    /// <summary>
+    /// Sets up the AudioSource to play the sound, playing it if required.
+    /// </summary>
     private void SetupAudio()
     {
         m_audioSource.playOnAwake = false;
@@ -30,6 +31,10 @@ public class SoundPlayer : MonoBehaviour
         if (sound.PlayOnAwake) PlaySound();
     }
 
+    /// <summary>
+    /// Plays the sound.
+    /// </summary>
+    /// <param name="mutate">Whether or not to make minor modifications to add variety.</param>
     public void PlaySound(bool mutate = false)
     {
         if (!mutate) m_audioSource.Play();
@@ -48,11 +53,18 @@ public class SoundPlayer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stops the sound.
+    /// </summary>
     public void StopSound()
     {
         m_audioSource.Stop();
     }
 
+    /// <summary>
+    /// Switches the sound for a new one.
+    /// </summary>
+    /// <param name="newSound">The new sound to replace the old one with.</param>
     public void SwitchSound(Sound newSound)
     {
         StopSound();
