@@ -55,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -195,14 +195,18 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      crying0038_0: -5081790484973837289
+      crying0038_1: -3072005665042048247
+      crying0038_2: -6558264759955042185
+      crying0038_3: -1416258461382153215
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
