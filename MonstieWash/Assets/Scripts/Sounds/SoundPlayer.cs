@@ -24,6 +24,8 @@ public class SoundPlayer : MonoBehaviour
         m_audioSource.volume = sound.Volume;
         m_audioSource.pitch = sound.Pitch;
         m_audioSource.loop = sound.Loop;
+
+        if (sound.PlayOnAwake) PlaySound();
     }
 
     public void PlaySound(bool mutate = false)
