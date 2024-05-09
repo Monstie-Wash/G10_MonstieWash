@@ -22,14 +22,10 @@ public class UIConsumable : MonoBehaviour
     [HideInInspector] public TextMeshProUGUI quantityText;
     public PlayerHand m_playerHand;
 
-    private void OnEnable()
-    {
-        InputManager.Inputs.OnActivate += CheckClickedOn;
-    }
-
 
     public void Awake()
-    {     
+    {
+        InputManager.Inputs.OnActivate += CheckClickedOn;
         quantityText = GetComponentInChildren<TextMeshProUGUI>();
         m_playerHand = FindFirstObjectByType<PlayerHand>();
     }
