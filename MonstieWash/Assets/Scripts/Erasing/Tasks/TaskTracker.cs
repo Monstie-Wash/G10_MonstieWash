@@ -8,15 +8,20 @@ public class TaskTracker : MonoBehaviour
     //Private
     private SerializableDictionary<string, float> m_taskProgress = new();
     private List<string> m_taskDictKeys = new();
+    private List<bool> m_tasksComplete = new();
     //Container object for all the cleaning activities
     private List<Transform> m_taskContainers = new();
     private RoomSaver m_roomSaver;
     private UIManager m_uiManager;
+    private SoundPlayer m_soundPlayer;
+
+    private const float k_taskCompleteThreshold = 95f;
 
     private void Awake()
     {
         m_roomSaver = GetComponent<RoomSaver>();
         m_uiManager = GetComponent<UIManager>();
+        m_soundPlayer = GetComponent<SoundPlayer>();
     }
 
     private void OnEnable()
@@ -97,6 +102,7 @@ public class TaskTracker : MonoBehaviour
         {
             m_taskDictKeys.Add(taskName);
             m_taskProgress.Add(taskName,0f);
+            m_tasksComplete.Add(false);
         }
         else
         {
@@ -122,6 +128,8 @@ public class TaskTracker : MonoBehaviour
             Debug.Log($"{taskName} is not being tracked! Something went wrong!");
         }
         m_uiManager.UpdateClipboardTask(taskName, m_taskProgress[taskName]);
+        var taskIndex = m_taskDictKeys.IndexOf(taskName);
+        CheckTaskComplete(m_taskProgress[taskName], taskIndex);
     }
 
     /// <summary>
@@ -138,6 +146,21 @@ public class TaskTracker : MonoBehaviour
             var taskGroup = String.Join("#", tempSplit.Take(tempSplit.Length - 1));
             var subtasks = m_taskDictKeys.FindAll(s => s.Contains(taskGroup) && s.Count(x => x == '#') == taskGroup.Count(x => x == '#') + 1);
             UpdateTaskTracker(taskGroup, subtaskProgress / subtasks.Count);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the task has been completed
+    /// </summary>
+    /// <param name="taskProgress">The overall progress off the task.</param>
+    /// <param name="taskIndex">The index of the task in the m_taskDictKeys list.</param>
+    private void CheckTaskComplete(float taskProgress, int taskIndex)
+    {
+        if (taskProgress >= k_taskCompleteThreshold && !m_tasksComplete[taskIndex])
+        {
+            //Task complete
+            m_tasksComplete[taskIndex] = true;
+            m_soundPlayer.PlaySound(true, true);
         }
     }
 }
