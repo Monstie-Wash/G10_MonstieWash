@@ -1,10 +1,7 @@
-using JetBrains.Annotations;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Xml;
+
 
 public class ConsumablesManager : MonoBehaviour
 {
@@ -17,12 +14,13 @@ public class ConsumablesManager : MonoBehaviour
     [Tooltip("Gameobject new Ui consumable items will be parented under")] [SerializeField] private GameObject imageHolder; //Empty Gameobject in Ui to hold images;
     [Tooltip("A template obj requiring, image, UIconsumableScript, button linked to the scripts onclick")] [SerializeField] private GameObject refObject; //blank object for instantiate to reference; Needs a button, UIConsumableScript, Image.
     [Tooltip("Layer that checks player mouse is over monster collider")] [SerializeField] public LayerMask monsterLayer; //Layer of monster hitbox;
+    [Tooltip("Layer that checks player mouse is over monster collider")] [SerializeField] public LayerMask consumableLayer; //Layer of consumables hitbox;
 
     [Header("All consumables go here")]
     [Tooltip("List all starting consumables")] [SerializeField] private List<Consumable> consumableData;
 
-    private Image managerimage; //Reference to the image object for this manager.
-    private Dictionary<string, int> storedDict; //string is name of consumable type, int is stored amount.
+    private Image m_managerimage; //Reference to the image object for this manager.
+    private Dictionary<string, int> m_storedDict; //string is name of consumable type, int is stored amount.
 
     public UiState state;
     public enum UiState
@@ -37,8 +35,8 @@ public class ConsumablesManager : MonoBehaviour
 
     private void Awake()
     {
-        storedDict = new Dictionary<string, int>();
-        managerimage = gameObject.GetComponent<Image>();
+        m_storedDict = new Dictionary<string, int>();
+        m_managerimage = gameObject.GetComponent<Image>();
         state = UiState.Closed;
 
         //For testing purposes randomises amount of consumables, will remove later.
@@ -102,7 +100,7 @@ public class ConsumablesManager : MonoBehaviour
 
                 if (stillClosing == 0)
                 {
-                    managerimage.sprite = closedSprite;
+                    m_managerimage.sprite = closedSprite;
                     state = UiState.Closed;
                 }
                 break;
@@ -116,7 +114,7 @@ public class ConsumablesManager : MonoBehaviour
     public void RefreshUI()
     {
         //Generate new Ui objects
-        foreach (KeyValuePair<string, int> consumable in storedDict)
+        foreach (KeyValuePair<string, int> consumable in m_storedDict)
         {
             //Check if consumable already has Ui object and skip
             var matches = 0;
@@ -160,11 +158,11 @@ public class ConsumablesManager : MonoBehaviour
     /// <param name="change">The change to apply to that consumable can be pos or neg</param>
     public void UpdateStorageAmount(Consumable type, int change)
     {
-        if (storedDict.ContainsKey(type.ConsumableName))
+        if (m_storedDict.ContainsKey(type.ConsumableName))
         {
-            storedDict[type.ConsumableName] = Mathf.Clamp(storedDict[type.ConsumableName] + change, 0, 999999);
-            if (storedDict[type.ConsumableName] == 0) RemoveConsumable(type);
-            else RetrieveActiveUi(type.ConsumableName).quantityText.text = storedDict[type.ConsumableName].ToString();
+            m_storedDict[type.ConsumableName] = Mathf.Clamp(m_storedDict[type.ConsumableName] + change, 0, 999999);
+            if (m_storedDict[type.ConsumableName] == 0) RemoveConsumable(type);
+            else RetrieveActiveUi(type.ConsumableName).quantityText.text = m_storedDict[type.ConsumableName].ToString();
 
             return;        
         }
@@ -179,11 +177,11 @@ public class ConsumablesManager : MonoBehaviour
     /// <param name="amount">Amount to set consumable to</param>
     public void SetStorageAmount(Consumable type, int amount)
     {
-        if (storedDict.ContainsKey(type.ConsumableName))
+        if (m_storedDict.ContainsKey(type.ConsumableName))
         {
-            storedDict[type.ConsumableName] = Mathf.Clamp(amount, 0, type.MaxQuantity);
-            if (storedDict[type.ConsumableName] == 0) RemoveConsumable(type);
-            else RetrieveActiveUi(type.ConsumableName).quantityText.text = storedDict[type.ConsumableName].ToString();
+            m_storedDict[type.ConsumableName] = Mathf.Clamp(amount, 0, type.MaxQuantity);
+            if (m_storedDict[type.ConsumableName] == 0) RemoveConsumable(type);
+            else RetrieveActiveUi(type.ConsumableName).quantityText.text = m_storedDict[type.ConsumableName].ToString();
         }
         else print($"Consumable {type.ConsumableName} doesn't exist. ");
     }
@@ -195,9 +193,9 @@ public class ConsumablesManager : MonoBehaviour
     /// <param name="amount">Amount starting in storage</param>
     public void AddNewConsumable(Consumable type, int amount)
     {
-        if (!storedDict.ContainsKey(type.ConsumableName))
+        if (!m_storedDict.ContainsKey(type.ConsumableName))
         {
-            storedDict.Add(type.ConsumableName, amount);
+            m_storedDict.Add(type.ConsumableName, amount);
             RefreshUI();
         }
         else print($"Consumable {type.ConsumableName} already exists.");
@@ -209,7 +207,7 @@ public class ConsumablesManager : MonoBehaviour
     /// <param name="type">Type of consumable to remove</param>
     public void RemoveConsumable(Consumable type)
     {
-        if (storedDict.ContainsKey(type.ConsumableName))
+        if (m_storedDict.ContainsKey(type.ConsumableName))
         {
             //Find active Ui Element Index and remove         
             var index = -1;
@@ -229,7 +227,7 @@ public class ConsumablesManager : MonoBehaviour
             Destroy(objectToDestroy);
 
             //Remove dictionary stored type.
-            storedDict.Remove(type.ConsumableName);
+            m_storedDict.Remove(type.ConsumableName);
         }
         else print($"Consumable {type.ConsumableName} doesn't exist.");
         RefreshUI();
@@ -278,7 +276,7 @@ public class ConsumablesManager : MonoBehaviour
         if (state != UiState.Closed) return;
 
         state = UiState.Opening;
-        managerimage.sprite = openSprite;
+        m_managerimage.sprite = openSprite;
     }
 
     /// <summary>

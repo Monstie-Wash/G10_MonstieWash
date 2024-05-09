@@ -15,20 +15,28 @@ public class UIConsumable : MonoBehaviour
     [HideInInspector] public bool clickable;
     [HideInInspector] public bool holding;
 
-    [HideInInspector] public float distToPoint;
+    [HideInInspector] public float m_distToPoint;
 
     [HideInInspector] public ConsumablesManager manager;
 
     [HideInInspector] public TextMeshProUGUI quantityText;
+    public PlayerHand m_playerHand;
+
+    private void OnEnable()
+    {
+        InputManager.Inputs.OnActivate += CheckClickedOn;
+    }
+
 
     public void Awake()
-    {
+    {     
         quantityText = GetComponentInChildren<TextMeshProUGUI>();
+        m_playerHand = FindFirstObjectByType<PlayerHand>();
     }
 
     private void Update()
     {
-        if (holding) this.transform.position = Input.mousePosition;
+        if (holding) transform.position = Input.mousePosition;
     }
 
     public void ClickedOn()
@@ -56,12 +64,12 @@ public class UIConsumable : MonoBehaviour
     public void MoveTowardsExtendedPos(float speed)
     {
         //Get Distance to Pos;
-        distToPoint = Vector3.Distance(this.transform.position, extendedPos);
+        m_distToPoint = Vector3.Distance(transform.position, extendedPos);
 
         //Move towards pos if not close enough.
-        if (distToPoint >= 0.2f)
+        if (m_distToPoint >= 0.2f)
         {
-           this.transform.position = Vector3.Lerp(this.transform.position, extendedPos, speed * Time.deltaTime);
+           transform.position = Vector3.Lerp(transform.position, extendedPos, speed * Time.deltaTime);
         }
         else // Become clickable
         {
@@ -72,12 +80,12 @@ public class UIConsumable : MonoBehaviour
     public void MoveTowardsClosedPos(float speed)
     {
         //Get Distance to Pos;
-        distToPoint = Vector3.Distance(this.transform.position, closedPos);
+        m_distToPoint = Vector3.Distance(transform.position, closedPos);
 
         //Move towards pos if not close enough.
-        if (distToPoint >= 0.5f)
+        if (m_distToPoint >= 0.5f)
         {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, closedPos, speed * Time.deltaTime * 100);
+            transform.position = Vector3.MoveTowards(transform.position, closedPos, speed * Time.deltaTime * 100f);
         }
         else // Become unclickable
         {
@@ -89,8 +97,18 @@ public class UIConsumable : MonoBehaviour
 
     public bool CheckOverPlayer()
     {
-        if (Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 1, manager.monsterLayer,-999999,999999)) return true;
-        else return false;
+        if (Physics2D.OverlapCircle(m_playerHand.transform.position, 1, manager.monsterLayer)) return true;
+            else return false;
     }
-    
+
+    public void CheckClickedOn()
+    {
+        print("Checked clicked on called");
+        var col = Physics2D.OverlapCircle(m_playerHand.transform.position, 1, manager.consumableLayer);
+        if (col != null)
+        {
+            if (col.gameObject == gameObject) ClickedOn();
+        }
+    }
+
 }

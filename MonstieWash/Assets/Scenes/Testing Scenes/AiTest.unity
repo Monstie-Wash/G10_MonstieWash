@@ -676,7 +676,7 @@ MonoBehaviour:
   refObject: {fileID: 7159353656609723325, guid: 1adc1322144855144abf480f216cc4fc, type: 3}
   monsterLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 8192
   consumableData:
   - {fileID: 11400000, guid: 3e4b3f9f8c6c8754791d650e718d27ed, type: 2}
   - {fileID: 11400000, guid: 9a7599d6f8210e34987e0f2a7a6dea01, type: 2}

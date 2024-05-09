@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cupcaketreat_0: -7323574915270243347
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
