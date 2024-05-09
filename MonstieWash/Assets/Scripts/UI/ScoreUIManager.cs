@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public struct PHTask
@@ -23,6 +24,7 @@ public class ScoreUIManager : MonoBehaviour
     [SerializeField] private GameObject m_lineItem;
     [SerializeField] private TextMeshProUGUI m_totalScore;
 
+    //Probably temporary, may change to calc scale with number of tasks later.
     [SerializeField][Range(0.0f, 5.0f)] private float m_spacing;
 
     /// <summary>
@@ -31,55 +33,22 @@ public class ScoreUIManager : MonoBehaviour
     [SerializeField] private List<PHTask> m_tasks;
     [SerializeField] private List<GameObject> m_LIList;
 
+    [SerializeField][Range(0.0f, 2.0f)] private float m_secondsWait = 1.0f;
+    private bool m_skip = false;
+
     // Start is called before the first frame update
     private void OnEnable()
     {
+        MenuInputManager.Inputs.OnAltSelect += Inputs_OnAlt_Select;
+
         m_tasks = PlaceholderTaskFill();
 
-        Transform clipTransform = m_clipboard.transform;
-        RectTransform LITransform;
-
-        TextMeshProUGUI name = null;
-        TextMeshProUGUI score = null;
-
-        int totalScore = 0;
-
-        for (int i = 0; i < m_tasks.Count; i++)
-        {
-            m_LIList.Add(Instantiate(m_lineItem, clipTransform));
-            LITransform = m_LIList[i].GetComponent<RectTransform>();
-            LITransform.anchoredPosition = new Vector2(0, LITransform.rect.height / m_spacing * -i);
-
-            name = m_LIList[i].transform.Find("TaskName").GetComponent<TextMeshProUGUI>();
-            
-
-            name.text = m_tasks[i].name;
-            
-
-            //Put the score in the score.
-            if (m_tasks[i].complete)
-            {
-                score = m_LIList[i].transform.Find("TaskScore").GetComponent<TextMeshProUGUI>();
-                score.text = $"${m_tasks[i].score.ToString()}";
-
-                //Add to score total
-                totalScore += m_tasks[i].score;
-            }
-        }
-
-
-
-        //Animate clipboard
-
-        //Animate crossing out
-
-        //Setactive Total Score
-        m_totalScore.text = $"${totalScore.ToString()}";
+        StartCoroutine(LineItemSetActive());
     }
 
     private void OnDisable()
     {
-        m_tasks.Clear();
+        MenuInputManager.Inputs.OnAltSelect -= Inputs_OnAlt_Select;
     }
 
     /// <summary>
@@ -96,6 +65,58 @@ public class ScoreUIManager : MonoBehaviour
         }
 
         return ph_tasks;
+    }
+
+    private IEnumerator LineItemSetActive()
+    {
+        Transform clipTransform = m_clipboard.transform;
+        RectTransform LITransform;
+
+        TextMeshProUGUI name = null;
+        TextMeshProUGUI score = null;
+
+        int totalScore = 0;
+
+        for (int i = 0; i < m_tasks.Count; i++)
+        {
+            for (float timer = m_secondsWait; timer >= 0; timer -= Time.deltaTime)
+            {
+                if (m_skip)
+                {
+                    break;
+                }
+                yield return null;
+            }
+
+            m_LIList.Add(Instantiate(m_lineItem, clipTransform));
+            m_LIList[i].SetActive(false);
+            LITransform = m_LIList[i].GetComponent<RectTransform>();
+            LITransform.anchoredPosition = new Vector2(0, LITransform.rect.height / m_spacing * -i);
+
+            name = m_LIList[i].transform.Find("TaskName").GetComponent<TextMeshProUGUI>();
+
+
+            name.text = m_tasks[i].name;
+
+            //Put the score in the score.
+            if (m_tasks[i].complete)
+            {
+                score = m_LIList[i].transform.Find("TaskScore").GetComponent<TextMeshProUGUI>();
+                score.text = $"${m_tasks[i].score.ToString()}";
+
+                //Add to score total
+                totalScore += m_tasks[i].score;
+            }
+
+            m_LIList[i].SetActive(true);
+        }
+
+        m_totalScore.text = $"${totalScore.ToString()}";
+    }
+
+    private void Inputs_OnAlt_Select()
+    {
+        m_skip = true;
     }
 
     public void OnLevelExit()
