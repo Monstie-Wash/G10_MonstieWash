@@ -67,6 +67,8 @@ public class SoundPlayer : MonoBehaviour
     /// <param name="newSound">The new sound to replace the old one with.</param>
     public void SwitchSound(Sound newSound)
     {
+        if (newSound == sound) return;
+
         StopSound();
         sound = newSound;
         SetupAudio();
