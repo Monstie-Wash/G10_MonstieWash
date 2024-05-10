@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3a0dbe8455733a145a3fac482c91a101, type: 3}
-  m_Name: Atk_Mimic_F_Bite
+  m_Name: Mimic_Atk_Bite
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 25
   telegraphAnimation: {fileID: 0}
   telegraphSFX: {fileID: 0}
-  attackAnimation: {fileID: 0}
+  attackAnimation: {fileID: 7400000, guid: e5bd70c7fd75ea44b876c94d6de40d98, type: 2}
   attackSFX: {fileID: 0}
   hurtbox: {fileID: 0}
   hitSFX: {fileID: 0}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
+// [RequireComponent(typeof(Collider2D))]
 
 public class PlayerHealth : MonoBehaviour 
 {
@@ -77,6 +77,12 @@ public class PlayerHealth : MonoBehaviour
 
         // Reset the camera
         activeCam.transform.position = camStartPos;
+    }
+
+    // === TESTING COLLISIONS - DELETE LATER ===
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log("Touch");
     }
 
 }

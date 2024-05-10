@@ -106,4 +106,9 @@ public class PlayerHand : MonoBehaviour
         navArrow.OnClicked();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Ouch!");
+    }
+
 }
