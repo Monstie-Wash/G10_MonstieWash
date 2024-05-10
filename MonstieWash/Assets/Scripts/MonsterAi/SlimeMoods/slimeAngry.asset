@@ -18,7 +18,7 @@ MonoBehaviour:
   moodStartingPoint: 0
   moodNaturalChange: 0
   moodRestingPoint: 0
-  chaosMultiplier: 0
+  chaosMultiplier: 10
   positiveChainReactions: []
   positiveReactionStrength: 0
   negativeChainReactions: []
