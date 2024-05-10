@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: slimeIdle
   m_EditorClassIdentifier: 
   moodName: slimeIdle
-  moodUpperLimit: 50
-  moodLowerLimit: -50
-  moodStartingPoint: 50
-  moodNaturalChange: 1
-  moodRestingPoint: 0
-  chaosMultiplier: 10
+  moodUpperLimit: 90
+  moodLowerLimit: -90
+  moodStartingPoint: -10
+  moodNaturalChange: 4
+  moodRestingPoint: 35
+  chaosMultiplier: 0
   positiveChainReactions: []
   positiveReactionStrength: 0
   negativeChainReactions: []

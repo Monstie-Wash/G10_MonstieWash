@@ -15,10 +15,10 @@ MonoBehaviour:
   moodName: slimeSad
   moodUpperLimit: 60
   moodLowerLimit: -50
-  moodStartingPoint: 40
+  moodStartingPoint: 20
   moodNaturalChange: 2
-  moodRestingPoint: 0
-  chaosMultiplier: 10
+  moodRestingPoint: 20
+  chaosMultiplier: 0
   positiveChainReactions: []
   positiveReactionStrength: 0
   negativeChainReactions: []
