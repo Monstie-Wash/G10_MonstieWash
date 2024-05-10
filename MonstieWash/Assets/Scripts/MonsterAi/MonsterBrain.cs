@@ -3,35 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
-public abstract class MonsterBrain : MonoBehaviour
+public class MonsterBrain : MonoBehaviour
 {
-
-    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] private List<MoodType> moodData; //Scriptable objects holding data about moods.
+    // Moods
+    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] private List<MoodAndAttackData> moodData; //Scriptable objects holding data about moods.
 
     private Dictionary<int,float> m_activeMoods; //Current moods status. int refers to id and number of mood in list, float refers to current value of mood on its own scale.
 
     private Dictionary<string, int> m_activeMoodNames; // Current moods and their names. int refers to id and number of mood in list, string refers to name.
 
-    [Tooltip("Updates the debug window when turned on")] [SerializeField] public bool Debug;
+    // Attacks
 
+    [Tooltip("Minimum time (inclusive) between attack attempts while the monster is aggressive")][SerializeField] private float minBetweenAttacks; // Create an attack event between the min and max time, if possible.
+
+    [Tooltip("Maximum time (inclusive) between attack attempts while the monster is aggressive")][SerializeField] private float maxBetweenAttacks; // Create an attack event between the min and max time, if possible.
+
+    private float m_attackTimer; // Minimum time to wait before the next attack (randomized between min and max after attack).
+
+    private float m_lastAttackTime; // Time elapsed since the last attack. 
+
+    public event EventHandler MonsterAttack;
+
+    // Debugging
+
+    [Tooltip("Updates the debug window when turned on")][SerializeField] public bool Debug;
 
     [Tooltip("Pauses the brain when on.")][SerializeField] public bool Pause;
 
     private int m_designerSanityBuff; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
 
-
     [Tooltip("Attach Text Mesh Pro Box here for displaying debug info")][SerializeField] public TextMeshProUGUI DebugUi;
 
     [HideInInspector] public Dictionary<int, float> ActiveMoods { get { return m_activeMoods; } }
-    [HideInInspector] public List<MoodType> MoodData { get { return moodData; } }
+    [HideInInspector] public List<MoodType> MoodData 
+    { get 
+        { 
+            List<MoodType> result = new List<MoodType>();
 
+            for (int i = 0; i < m_activeMoods.Count; i++)
+            {
+                result.Add(moodData[i].mood);
+            }
+
+            return result;
+        } 
+    }
+
+    [Serializable] private struct MoodAndAttackData
+    {
+        public MoodType mood;
+        [Tooltip("Monster won't attack unless this mood value is equal or higher")] public float attackThreshold;
+    }
 
     private void Awake()
     {
         m_designerSanityBuff = 10;
         m_activeMoods = new Dictionary<int, float>();
         m_activeMoodNames = new Dictionary<string, int>();
+        m_lastAttackTime = 0f;
+        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
 
         LoadMoods();
     }
@@ -51,6 +83,8 @@ public abstract class MonsterBrain : MonoBehaviour
         NegativeChainReactions();
         //Moods are kept to their upper and lower limits.
         MaintainLimits();
+        // Check whether an attack should occur
+        CalculateAggression();
 
 
         //Debug Updates
@@ -66,15 +100,15 @@ public abstract class MonsterBrain : MonoBehaviour
         for (int i = 0; i < m_activeMoods.Count; i++)
         {
             //Skip if doesn't naturally update.
-            if (moodData[i].MoodNaturalChange == 0) continue;
+            if (moodData[i].mood.MoodNaturalChange == 0) continue;
 
             float currentValue = m_activeMoods[i];
             //Move currentvalue towards resting point by rate of change;
-            currentValue = FloatTowardsTarget(currentValue, moodData[i].MoodNaturalChange * Time.deltaTime , moodData[i].MoodRestingPoint);
+            currentValue = FloatTowardsTarget(currentValue, moodData[i].mood.MoodNaturalChange * Time.deltaTime , moodData[i].mood.MoodRestingPoint);
             //Assign new value to active mood.
             m_activeMoods[i] = currentValue;
 
-            if (Debug) print("Active Mood: " + moodData[i].MoodName + " naturally changed to " + currentValue );
+            if (Debug) print("Active Mood: " + moodData[i].mood.MoodName + " naturally changed to " + currentValue );
         }
     }
 
@@ -89,12 +123,12 @@ public abstract class MonsterBrain : MonoBehaviour
 
             float currentValue = m_activeMoods[i];
             //Determine chaotic value
-            float chaosVal = Random.Range(-moodData[i].ChaosMultiplier, moodData[i].ChaosMultiplier) * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
+            float chaosVal = UnityEngine.Random.Range(-moodData[i].mood.ChaosMultiplier, moodData[i].mood.ChaosMultiplier) * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Changes current value by chaos value;
             m_activeMoods[i] = currentValue + (chaosVal * Time.deltaTime);
 
-            if (Debug) print("Active Mood: " + moodData[i].MoodName + " chaotically changed by " + chaosVal * Time.deltaTime);
+            if (Debug) print("Active Mood: " + moodData[i].mood.MoodName + " chaotically changed by " + chaosVal * Time.deltaTime);
         }
     }
 
@@ -110,18 +144,18 @@ public abstract class MonsterBrain : MonoBehaviour
             if (MoodData[i].PositiveReactionStrength == 0) continue; //Skip if reaction strenght is 0
             
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
-            var percentageStrength = ((m_activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
+            var percentageStrength = ((m_activeMoods[i] - moodData[i].mood.MoodLowerLimit) * 100) / (moodData[i].mood.MoodUpperLimit - moodData[i].mood.MoodLowerLimit);
             float chainAmount = (percentageStrength / 100) * MoodData[i].PositiveReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of positive reactions in mood.
-            for (int j = 0; j < moodData[i].PositiveChainReactions.Count; j++)
+            for (int j = 0; j < moodData[i].mood.PositiveChainReactions.Count; j++)
             {
-                int targetMood = AccessActiveMoodIndex(moodData[i].PositiveChainReactions[j]);
+                int targetMood = AccessActiveMoodIndex(moodData[i].mood.PositiveChainReactions[j]);
 
                 //Apply positive chain amount to each active mood that is in the list of positive reactions.
                 m_activeMoods[targetMood] += chainAmount * Time.deltaTime;
 
-                if (Debug) print("Active Mood: " + moodData[i].MoodName + " positively influenced " + moodData[targetMood].MoodName + "by amount " + chainAmount * Time.deltaTime);
+                if (Debug) print("Active Mood: " + moodData[i].mood.MoodName + " positively influenced " + moodData[targetMood].mood.MoodName + "by amount " + chainAmount * Time.deltaTime);
             }
         }
     }
@@ -138,18 +172,18 @@ public abstract class MonsterBrain : MonoBehaviour
             if (MoodData[i].NegativeReactionStrength == 0) continue; //Skip if reaction strenght is 0
 
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
-            var percentageStrength = ((m_activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
+            var percentageStrength = ((m_activeMoods[i] - moodData[i].mood.MoodLowerLimit) * 100) / (moodData[i].mood.MoodUpperLimit - moodData[i].mood.MoodLowerLimit);
             float chainAmount = (percentageStrength / 100) * MoodData[i].NegativeReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of negative reactions in mood.
-            for (int j = 0; j < moodData[i].NegativeChainReactions.Count; j++)
+            for (int j = 0; j < moodData[i].mood.NegativeChainReactions.Count; j++)
             {
-                int targetMood = AccessActiveMoodIndex(moodData[i].NegativeChainReactions[j]);
+                int targetMood = AccessActiveMoodIndex(moodData[i].mood.NegativeChainReactions[j]);
 
                 //Apply negative chain amount to each active mood that is in the list of negative reactions.
                 m_activeMoods[targetMood] -= chainAmount * Time.deltaTime;
 
-                if (Debug) print("Active Mood: " + moodData[i].MoodName + " negatively influenced " + moodData[targetMood].MoodName + " by amount " + chainAmount * Time.deltaTime);
+                if (Debug) print("Active Mood: " + moodData[i].mood.MoodName + " negatively influenced " + moodData[targetMood].mood.MoodName + " by amount " + chainAmount * Time.deltaTime);
             }
         }
     }
@@ -171,7 +205,7 @@ public abstract class MonsterBrain : MonoBehaviour
     /// <param name="moodInt"> Given index of desired mood in active moods.</param> 
     private void MaintainLimit(int moodInt)
     {
-        m_activeMoods[moodInt] = Mathf.Clamp(m_activeMoods[moodInt], moodData[moodInt].MoodLowerLimit, moodData[moodInt].MoodUpperLimit);
+        m_activeMoods[moodInt] = Mathf.Clamp(m_activeMoods[moodInt], moodData[moodInt].mood.MoodLowerLimit, moodData[moodInt].mood.MoodUpperLimit);
     }
 
     /// <summary>
@@ -181,8 +215,8 @@ public abstract class MonsterBrain : MonoBehaviour
     {
         for(int i = 0; i < moodData.Count; i++)
         {
-            m_activeMoods.Add(i, moodData[i].MoodStartingPoint);
-            m_activeMoodNames.Add(moodData[i].MoodName,i);
+            m_activeMoods.Add(i, moodData[i].mood.MoodStartingPoint);
+            m_activeMoodNames.Add(moodData[i].mood.MoodName,i);
         }
     }
 
@@ -195,7 +229,7 @@ public abstract class MonsterBrain : MonoBehaviour
         DebugUi.text = "";
         for (int i = 0; i < m_activeMoods.Count; i++)
         {
-            DebugUi.text += $"MoodName: {moodData[i].MoodName} MoodValue: { Mathf.FloorToInt(m_activeMoods[i]).ToString()}\nMood Lower / Upper Limits: { moodData[i].MoodLowerLimit.ToString()}/{ moodData[i].MoodUpperLimit.ToString()}\n\n";
+            DebugUi.text += $"MoodName: {moodData[i].mood.MoodName} MoodValue: { Mathf.FloorToInt(m_activeMoods[i]).ToString()}\nMood Lower / Upper Limits: { moodData[i].mood.MoodLowerLimit.ToString()}/{ moodData[i].mood.MoodUpperLimit.ToString()}\n\n";
         }
     }
 
@@ -296,5 +330,33 @@ public abstract class MonsterBrain : MonoBehaviour
         return value;
     }
 
+    /// <summary>
+    /// Determine whether an attack event should be created based on the game state and the values given by the designers. 
+    /// </summary>
+    private void CalculateAggression()
+    {
+        // Update time since the last attack.
+        m_lastAttackTime += Time.deltaTime;
+
+        // Check to see if an attack should be performed based on time (creates a cooldown effect).
+        if (m_lastAttackTime < m_attackTimer)
+        {
+            return;
+        }
+
+        // Check to see if an attack should be performed based on moods.
+        for (int i = 0; i < m_activeMoods.Count; i++)
+        {
+            if (m_activeMoods[i] < moodData[i].attackThreshold)    // If value of any moods are below their attack threshold
+            {
+                return;
+            }
+        }
+
+        // Perform the attack
+        m_lastAttackTime = 0f;
+        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
+        MonsterAttack?.Invoke(this, EventArgs.Empty);
+    }
 
 }

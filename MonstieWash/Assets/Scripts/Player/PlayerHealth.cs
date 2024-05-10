@@ -2,48 +2,80 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+[RequireComponent(typeof(Collider2D))]
+
+public class PlayerHealth : MonoBehaviour 
 {
+    // Player Health
+    [Tooltip("Player's max health")][SerializeField] private float playerMaxHealth;     // The max amount of health the player can have.
+    [Tooltip("Player's current health")][SerializeField] private float playerHealth;    // The current amount of health the player has.
 
-    [Tooltip("Player's current health (initial value is starting health)")][SerializeField] private float playerHealth;
-    [Tooltip("Damage beyond this value won't affect the intensity of damage animations")][SerializeField] private float damageAnimationCap;
-    [Tooltip("Duration of the damage animation (in seconds)")][SerializeField] private float damageAnimationDuration;
-    [Tooltip("Animation curve for screen shake upon taking damage")][SerializeField] private AnimationCurve damageShake;
-    [Tooltip("The collider for being hit by attacks")][SerializeField] private Collider2D hitbox;
+    //Damage Controls for designers
+    [Tooltip("Damage beyond this value won't affect the intensity of damage animations")][SerializeField] private float damageAnimationCap; // Amount of damage taken scales the damage animation, up to this amount of damage.
+    [Tooltip("Duration of the damage animation (in seconds)")][SerializeField] private float damageAnimationDuration;                       // Duration of the "take damage" animation.
+    [Tooltip("Animation curve for screen shake upon taking damage")][SerializeField] private AnimationCurve damageShake;                    // An Animation Curve 
 
-    // Start is called before the first frame update
-    void Start()
+    //Other
+    private Collider2D m_playerHitbox;
+
+    private void Start()
     {
-        
+        m_playerHitbox = GetComponent<Collider2D>();
+        playerHealth = playerMaxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Heals damage from the player. 
+    /// </summary>
+    /// <param name="dmgHealed"> The amount of damage to be healed.</param> 
+    public void HealDamage(float dmgHealed)
     {
-        TakeDamage(3f);
+        playerHealth = Mathf.Min(playerMaxHealth, playerHealth + dmgHealed);
+        StartCoroutine(PlayHealingEffects());
     }
 
+    /// <summary>
+    /// Plays sound effects, visuals, etc. for when the player heals damage.
+    /// </summary>
+    IEnumerator PlayHealingEffects()
+    {
+        // Empty at the moment - add effects here when they're finished, or delete if designers don't need healing effects
+        yield return null;
+    }
+
+    /// <summary>
+    /// Deals damage to the player. 
+    /// </summary>
+    /// <param name="dmgTaken"> The amount of damage to be dealt.</param> 
     public void TakeDamage(float dmgTaken)
     {
         playerHealth -= dmgTaken;
+        // Check if the player is dead - to do when death scene is complete
         StartCoroutine(PlayDamageEffects(dmgTaken));
     }
 
+    /// <summary>
+    /// Plays sound effects, visuals, etc. for when the player takes damage.
+    /// </summary>
+    /// <param name="dmgTaken"> The amount of damage that was dealt.</param> 
     IEnumerator PlayDamageEffects(float dmgTaken)
     {
+        // Initialize variables to shake the camera
         var activeCam = Camera.main;
         var camStartPos = activeCam.transform.position;
         var elapsedTime = 0f;
-        var dmgNormal = Mathf.Clamp((dmgTaken / damageAnimationCap) + 1, 1, 2);
+        var dmgScale = Mathf.Clamp((dmgTaken / damageAnimationCap) + 1, 1, 2);
 
+        // Transform the camera's position based on Animation Curve and the amount of damage taken
         while (elapsedTime < damageAnimationDuration)
         {
             elapsedTime += Time.deltaTime;
-            var strength = damageShake.Evaluate(elapsedTime / dmgTaken);
-            activeCam.transform.position = camStartPos + Random.insideUnitSphere * strength * dmgNormal;
+            var strength = damageShake.Evaluate(elapsedTime / damageAnimationDuration);
+            activeCam.transform.position = camStartPos + Random.insideUnitSphere * strength * dmgScale;
             yield return null;
         }
 
+        // Reset the camera
         activeCam.transform.position = camStartPos;
     }
 

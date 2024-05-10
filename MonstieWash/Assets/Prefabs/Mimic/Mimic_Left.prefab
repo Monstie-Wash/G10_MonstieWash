@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5036995656876074879}
   - component: {fileID: 9094874810309194301}
+  - component: {fileID: -8571558545827026619}
   m_Layer: 0
   m_Name: Mimic_Left
   m_TagString: Untagged
@@ -86,3 +87,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8571558545827026619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381096203401150910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91d905fbe54e9ef48a018cee2391eb68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabName: Left
