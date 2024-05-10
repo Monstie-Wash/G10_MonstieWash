@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Slime@atk_eyes_ent
+  m_Name: Slime@atk_eyes_en
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
