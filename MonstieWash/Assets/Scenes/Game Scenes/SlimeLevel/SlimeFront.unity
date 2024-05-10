@@ -1271,6 +1271,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TaskContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 4540854289783259834, guid: 070ad2168a3771e4b80e2709fbe626e2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6569485676934061755, guid: 070ad2168a3771e4b80e2709fbe626e2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
