@@ -15,9 +15,9 @@ MonoBehaviour:
   moodName: slimeIdle
   moodUpperLimit: 50
   moodLowerLimit: -50
-  moodStartingPoint: 50
-  moodNaturalChange: 1
-  moodRestingPoint: 50
+  moodStartingPoint: 30
+  moodNaturalChange: 0
+  moodRestingPoint: 0
   chaosMultiplier: 0
   positiveChainReactions: []
   positiveReactionStrength: 0
