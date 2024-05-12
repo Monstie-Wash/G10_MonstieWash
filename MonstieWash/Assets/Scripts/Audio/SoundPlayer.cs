@@ -21,6 +21,11 @@ public class SoundPlayer : MonoBehaviour
     /// </summary>
     private void SetupAudio()
     {
+        if (m_audioSource == null)
+        {
+            Debug.LogWarning($"No sound set for {name}!");
+            return;
+        }
         m_audioSource.playOnAwake = false;
         m_audioSource.clip = sound.Clip;
         m_audioSource.outputAudioMixerGroup = sound.Mixer;
