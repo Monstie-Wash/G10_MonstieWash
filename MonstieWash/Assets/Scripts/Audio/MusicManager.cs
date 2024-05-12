@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SoundPlayer))]
 public class MusicManager : MonoBehaviour
 {
     [SerializeField] private List<Sound> backgroundMusic;
