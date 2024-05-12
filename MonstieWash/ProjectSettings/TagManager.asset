@@ -43,8 +43,6 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
@@ -52,8 +50,14 @@ TagManager:
   - name: Backgrounds
     uniqueID: 3090574103
     locked: 0
+  - name: DirtBack
+    uniqueID: 4246771755
+    locked: 0
   - name: Monsters
     uniqueID: 2983730943
+    locked: 0
+  - name: DirtFront
+    uniqueID: 3114074857
     locked: 0
   - name: Tools
     uniqueID: 1881744917

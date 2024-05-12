@@ -70,7 +70,7 @@ public class UIManager : MonoBehaviour
             }
         }
         InitialiseClipboard(taskContainer, "", 0);
-        UpdateClipboardUI("Overview");
+        UpdateClipboardUI(m_roomSaver.AllScenes[0]);
     }
 
 /// <summary>

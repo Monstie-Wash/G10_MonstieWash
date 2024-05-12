@@ -196,6 +196,8 @@ public class MonsterBrain : MonoBehaviour
         {
             DebugUi.text += $"MoodName: {moodData[i].MoodName} MoodValue: { Mathf.FloorToInt(activeMoods[i]).ToString()}\nMood Lower / Upper Limits: { moodData[i].MoodLowerLimit.ToString()}/{ moodData[i].MoodUpperLimit.ToString()}\n\n";
         }
+        var highestMood = GetHighestMood();
+        DebugUi.text += $"Current Mood: {highestMood}";
     }
 
 
