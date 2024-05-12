@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7847184bfdd0c9248a57ecaf61510a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorSpeed: 5
+  cursorSpeed: 10
 --- !u!114 &8624381380993330181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heldItemsTransform: {fileID: 4106818671195916241}
-  throwSpeedMultiplier: 10
+  throwSpeedMultiplier: 15
 --- !u!1 &8487065927594770960
 GameObject:
   m_ObjectHideFlags: 0
