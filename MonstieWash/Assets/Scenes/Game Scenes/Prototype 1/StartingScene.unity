@@ -423,6 +423,7 @@ GameObject:
   - component: {fileID: 1782948110}
   - component: {fileID: 1782948109}
   - component: {fileID: 1782948108}
+  - component: {fileID: 1782948111}
   m_Layer: 5
   m_Name: ConsumableManager
   m_TagString: Untagged
@@ -499,7 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b5d6820b81ce7498123fa849944cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiBorderDistance: 100
+  uiBorderDistance: 125
   uiMoveSpeed: 8
   openSprite: {fileID: 2333532504608575059, guid: f1504bbb8aa08f54abc22e98c696a94e, type: 3}
   closedSprite: {fileID: -9194654181630058782, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
@@ -511,12 +512,61 @@ MonoBehaviour:
     m_Bits: 8192
   consumableLayer:
     serializedVersion: 2
-    m_Bits: 0
-  consumableData:
-  - {fileID: 11400000, guid: 3e4b3f9f8c6c8754791d650e718d27ed, type: 2}
-  - {fileID: 11400000, guid: 9a7599d6f8210e34987e0f2a7a6dea01, type: 2}
-  - {fileID: 11400000, guid: 7512082f8c59b844eb338c70137bdf5a, type: 2}
+    m_Bits: 32
+  consumableList:
+  - consumable: {fileID: 11400000, guid: 3e4b3f9f8c6c8754791d650e718d27ed, type: 2}
+    quantity: 4
+  - consumable: {fileID: 11400000, guid: 9a7599d6f8210e34987e0f2a7a6dea01, type: 2}
+    quantity: 3
+  - consumable: {fileID: 11400000, guid: 7512082f8c59b844eb338c70137bdf5a, type: 2}
+    quantity: 5
   state: 0
+--- !u!61 &1782948111
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782948106}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.10479355, y: -0.000019073486}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 100.13622, y: 100.34588}
+  m_EdgeRadius: 0
 --- !u!224 &1873382993 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4695030007197572884, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}

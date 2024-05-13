@@ -7,7 +7,7 @@ using TMPro;
 
 public class UIConsumable : MonoBehaviour
 {
-    [Tooltip("The consumable type represented by this object")] [SerializeField]  public Consumable consumable;
+    [Tooltip("The consumable type represented by this object")] public Consumable consumable;
 
     [HideInInspector] public Vector3 extendedPos;
     [HideInInspector] public Vector3 closedPos;
@@ -15,32 +15,44 @@ public class UIConsumable : MonoBehaviour
     [HideInInspector] public bool clickable;
     [HideInInspector] public bool holding;
 
-    [HideInInspector] public float m_distToPoint;
+    private float m_distToPoint;
 
     [HideInInspector] public ConsumablesManager manager;
 
     [HideInInspector] public TextMeshProUGUI quantityText;
-    public PlayerHand m_playerHand;
+    private PlayerHand m_playerHand;
 
+    public void OnEnable()
+    {
+        InputManager.Inputs.OnActivate += CheckClickedOn;
+    }
+
+    public void OnDisable()
+    {
+        InputManager.Inputs.OnActivate -= CheckClickedOn;
+    }
 
     public void Awake()
     {
-        InputManager.Inputs.OnActivate += CheckClickedOn;
         quantityText = GetComponentInChildren<TextMeshProUGUI>();
         m_playerHand = FindFirstObjectByType<PlayerHand>();
     }
 
     private void Update()
     {
-        if (holding) transform.position = Input.mousePosition;
+        if (holding) transform.position = Camera.main.WorldToScreenPoint(m_playerHand.transform.position);
     }
 
     public void ClickedOn()
     {
         //Return if bag isnt in an open state.
         if (manager.state != ConsumablesManager.UiState.Open) return;
-        
-        if (!holding) holding = true;
+
+        if (!manager.holdingConsumable)
+        {
+            manager.holdingConsumable = true;
+            holding = true;
+        }
         else
         {
             if (CheckOverPlayer())
@@ -51,7 +63,8 @@ public class UIConsumable : MonoBehaviour
             {
                 manager.state = ConsumablesManager.UiState.Opening;
             }
-            holding = false;
+            manager.dropItems();
+            manager.holdingConsumable = false;
             clickable = false;
             manager.RefreshUI();
         }
@@ -93,14 +106,13 @@ public class UIConsumable : MonoBehaviour
 
     public bool CheckOverPlayer()
     {
-        if (Physics2D.OverlapCircle(m_playerHand.transform.position, 1, manager.monsterLayer)) return true;
+        if (Physics2D.OverlapCircle(m_playerHand.transform.position, 1f, manager.MonsterLayer)) return true;
             else return false;
     }
 
     public void CheckClickedOn()
     {
-        print("Checked clicked on called");
-        var col = Physics2D.OverlapCircle(m_playerHand.transform.position, 1, manager.consumableLayer);
+        var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, manager.consumableLayer,-999999,999999);
         if (col != null)
         {
             if (col.gameObject == gameObject) ClickedOn();

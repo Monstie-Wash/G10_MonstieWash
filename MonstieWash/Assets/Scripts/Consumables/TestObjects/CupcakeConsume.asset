@@ -16,9 +16,9 @@ MonoBehaviour:
   sprite: {fileID: -7323574915270243347, guid: a5a5d212f071d8647b3916e8e8dfba85, type: 3}
   diminishingReturns: 0
   craftingRequirements: []
-  craftingQuantities: 
-  maxQuantity: 1
+  maxQuantity: 99
   moodTargets:
   - {fileID: 11400000, guid: 5a7db6333fdbab54090e44e3df77eca9, type: 2}
   moodEffects:
   - -25
+  moods: []

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 
 public class ConsumablesManager : MonoBehaviour
@@ -11,18 +12,22 @@ public class ConsumablesManager : MonoBehaviour
     [Tooltip("Sprite to represent open bag.")] [SerializeField] private Sprite openSprite; //Sprite used to represent open bag.
     [Tooltip("Sprite to represent closed bag.")] [SerializeField] private Sprite closedSprite; //Sprite used to represent closed bag.
     [SerializeField] private List<UIConsumable> activeUiElements; //UI Elements already generated in the scene;
-    [Tooltip("Gameobject new Ui consumable items will be parented under")] [SerializeField] private GameObject imageHolder; //Empty Gameobject in Ui to hold images;
+    [Tooltip("Gameobject new Ui consumable items will be parented under")] [SerializeField] private GameObject imageHolder; //Empty Gameobject in Ui to hold images; (I tried changing to transform as per feedback but doesn't seem to work with rect transform in ui)
     [Tooltip("A template obj requiring, image, UIconsumableScript, button linked to the scripts onclick")] [SerializeField] private GameObject refObject; //blank object for instantiate to reference; Needs a button, UIConsumableScript, Image.
-    [Tooltip("Layer that checks player mouse is over monster collider")] [SerializeField] public LayerMask monsterLayer; //Layer of monster hitbox;
+    [Tooltip("Layer that checks player mouse is over monster collider")] [SerializeField] private LayerMask monsterLayer; //Layer of monster hitbox;
     [Tooltip("Layer that checks player mouse is over monster collider")] [SerializeField] public LayerMask consumableLayer; //Layer of consumables hitbox;
 
     [Header("All consumables go here")]
-    [Tooltip("List all starting consumables")] [SerializeField] private List<Consumable> consumableData;
+    [Tooltip("List all starting consumables")] [SerializeField] private List<consumableData> consumableList;
 
     private Image m_managerimage; //Reference to the image object for this manager.
-    private Dictionary<string, int> m_storedDict; //string is name of consumable type, int is stored amount.
+    private PlayerHand m_playerHand;
+    public bool holdingConsumable;
 
     public UiState state;
+
+    public LayerMask MonsterLayer {  get { return monsterLayer; } }
+
     public enum UiState
     {
         Open,
@@ -31,55 +36,65 @@ public class ConsumablesManager : MonoBehaviour
         Closed
     }
 
+    [Serializable]
+    private class consumableData
+    {
+        [SerializeField] private Consumable consumable;
+        [SerializeField] private int quantity;
 
+        public Consumable Consumable { get { return consumable; } }
+        public int Quantity 
+        { 
+            get { return quantity;  }
+            set { quantity = value; }        
+        }  
+
+        public consumableData(Consumable type, int quant)
+        {
+            consumable = type;
+            quantity = quant;
+        }
+    }
+
+    public void OnEnable()
+    {
+        InputManager.Inputs.OnActivate += CheckClickedOn;
+    }
+
+    public void OnDisable()
+    {
+        InputManager.Inputs.OnActivate -= CheckClickedOn;
+    }
 
     private void Awake()
     {
-        m_storedDict = new Dictionary<string, int>();
+        holdingConsumable = false;
+        m_playerHand = FindFirstObjectByType<PlayerHand>();
         m_managerimage = gameObject.GetComponent<Image>();
         state = UiState.Closed;
-
-        //For testing purposes randomises amount of consumables, will remove later.
-        foreach (Consumable c in consumableData)
-        {
-            var randInt = Random.Range(1, 6);
-            AddNewConsumable(c,randInt);
-        }
         RefreshUI();
     }
 
     private void Update()
     {
-        //Testing Buttons
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            OpenUI();         
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            CloseUi();
-        }
-
-
-
         //State Transitions
         switch (state)
         {
             case UiState.Opening:
-                var stillMoving = 0;
+                var stillMoving = false;
                 //Move all Ui Objects towards their intended pos and check if all are finished moving;
 
-                foreach (UIConsumable u in activeUiElements)
+                foreach (var consumableUI in activeUiElements)
                 {
-                    if (!u.isActiveAndEnabled) u.gameObject.SetActive(true); //Set objects to be active.
-                    if (!u.clickable)
+                    if (!consumableUI.isActiveAndEnabled) consumableUI.gameObject.SetActive(true); //Set objects to be active.
+                    if (!consumableUI.clickable)
                     {
-                        u.MoveTowardsExtendedPos(uiMoveSpeed);
-                        stillMoving += 1; //Increments value to check if any clickables are still moving towards their pos.
+                        consumableUI.MoveTowardsExtendedPos(uiMoveSpeed);
+                        stillMoving = true; 
                     }
                 }
 
-                if (stillMoving == 0)
+                if (stillMoving == false)
                 {
                     state = UiState.Open;
                 }
@@ -88,17 +103,17 @@ public class ConsumablesManager : MonoBehaviour
 
             case UiState.Closing:
                 //Move all Ui Objects towards their intended pos and check if all are finished moving;
-                var stillClosing = 0;
-                foreach (UIConsumable u in activeUiElements)
+                var stillClosing = false;
+                foreach (var consumableUI in activeUiElements)
                 {
-                    if (u.clickable)
+                    if (consumableUI.clickable)
                     {
-                        u.MoveTowardsClosedPos(uiMoveSpeed);
-                        stillClosing += 1; //Increments value to check if any clickables are still moving towards their pos.
+                        consumableUI.MoveTowardsClosedPos(uiMoveSpeed);
+                        stillClosing = true; 
                     }
                 }
 
-                if (stillClosing == 0)
+                if (stillClosing == false)
                 {
                     m_managerimage.sprite = closedSprite;
                     state = UiState.Closed;
@@ -108,34 +123,31 @@ public class ConsumablesManager : MonoBehaviour
 
     }
 
+    public void toggleBag()
+    {
+        if (state == UiState.Closed) OpenUI();
+        if (state == UiState.Open) CloseUI();
+    }
+
+
+
     /// <summary>
     /// Checks if any new consumables need UI objects and creates them, removes UI objects for used items, moves objects towards their new position.
     /// </summary>
     public void RefreshUI()
     {
         //Generate new Ui objects
-        foreach (KeyValuePair<string, int> consumable in m_storedDict)
+        foreach (consumableData consumeStruct in consumableList)
         {
             //Check if consumable already has Ui object and skip
-            var matches = 0;
-            foreach (UIConsumable u in activeUiElements)
+            var matched = false; 
+            foreach (UIConsumable uiConsumable in activeUiElements)
             {
-                if (consumable.Key == u.consumable.ConsumableName) matches += 1;
+                if (consumeStruct.Consumable.ConsumableName == uiConsumable.consumable.ConsumableName) matched = true;
             }
-            if (matches > 0) continue;
+            if (matched) continue;
 
-            //If no object exists create a new one and insert data from its scriptable obj.
-            var newImage = Instantiate(refObject,refObject.transform.position,Quaternion.identity);
-            newImage.transform.SetParent(imageHolder.transform);
-            newImage.transform.position = this.transform.position;
-            newImage.GetComponent<Image>().sprite = RetrieveConsumableData(consumable.Key).Sprite;
-            newImage.gameObject.SetActive(false);
-
-            var newImageUi = newImage.GetComponent<UIConsumable>();
-            newImageUi.consumable = RetrieveConsumableData(consumable.Key);
-            newImageUi.manager = this;
-            newImageUi.quantityText.text = consumable.Value.ToString();
-            activeUiElements.Add(newImageUi); 
+            CreateUiElement(consumeStruct);
         }
 
         //Assign Ui positions.
@@ -150,6 +162,22 @@ public class ConsumablesManager : MonoBehaviour
         if (state == UiState.Open) state = UiState.Opening;
     }
 
+    private void CreateUiElement(consumableData data)
+    {
+        //If no object exists create a new one and insert data from its scriptable obj.
+        var newImage = Instantiate(refObject, refObject.transform.position, Quaternion.identity);
+        newImage.transform.SetParent(imageHolder.transform);
+        newImage.transform.position = this.transform.position;
+        newImage.GetComponent<Image>().sprite = data.Consumable.Sprite;
+        newImage.gameObject.SetActive(false);
+
+        var newImageUi = newImage.GetComponent<UIConsumable>();
+        newImageUi.consumable = data.Consumable;
+        newImageUi.manager = this;
+        newImageUi.quantityText.text = data.Quantity.ToString();
+        activeUiElements.Add(newImageUi);
+    }
+
 
     /// <summary>
     /// Takes a type of consumable and changes its value in storage by the given change amount.
@@ -158,16 +186,14 @@ public class ConsumablesManager : MonoBehaviour
     /// <param name="change">The change to apply to that consumable can be pos or neg</param>
     public void UpdateStorageAmount(Consumable type, int change)
     {
-        if (m_storedDict.ContainsKey(type.ConsumableName))
+        var index = RetrieveConsumableIndex(type);
+        if (index != -1)
         {
-            m_storedDict[type.ConsumableName] = Mathf.Clamp(m_storedDict[type.ConsumableName] + change, 0, 999999);
-            if (m_storedDict[type.ConsumableName] == 0) RemoveConsumable(type);
-            else RetrieveActiveUi(type.ConsumableName).quantityText.text = m_storedDict[type.ConsumableName].ToString();
-
-            return;        
+            consumableList[index].Quantity = Mathf.Clamp(consumableList[index].Quantity + change, 0, type.MaxQuantity);
+            if (consumableList[index].Quantity == 0) RemoveConsumable(type);
+            else RetrieveActiveUi(type.ConsumableName).quantityText.text = consumableList[index].Quantity.ToString();
         }
-        else
-        print($"Consumable {type.ConsumableName} doesn't exist. ");
+        else Debug.LogWarning($"Consumable {type.ConsumableName} doesn't exist."); ;
     }
     
     /// <summary>
@@ -177,13 +203,14 @@ public class ConsumablesManager : MonoBehaviour
     /// <param name="amount">Amount to set consumable to</param>
     public void SetStorageAmount(Consumable type, int amount)
     {
-        if (m_storedDict.ContainsKey(type.ConsumableName))
+        var index = RetrieveConsumableIndex(type);
+        if (index != -1)
         {
-            m_storedDict[type.ConsumableName] = Mathf.Clamp(amount, 0, type.MaxQuantity);
-            if (m_storedDict[type.ConsumableName] == 0) RemoveConsumable(type);
-            else RetrieveActiveUi(type.ConsumableName).quantityText.text = m_storedDict[type.ConsumableName].ToString();
+            consumableList[index].Quantity = Mathf.Clamp(amount, 0, type.MaxQuantity);
+            if (consumableList[index].Quantity == 0) RemoveConsumable(type);
+            else RetrieveActiveUi(type.ConsumableName).quantityText.text = consumableList[index].Quantity.ToString();
         }
-        else print($"Consumable {type.ConsumableName} doesn't exist. ");
+        else Debug.LogWarning($"Consumable {type.ConsumableName} doesn't exist."); ;
     }
 
     /// <summary>
@@ -193,12 +220,13 @@ public class ConsumablesManager : MonoBehaviour
     /// <param name="amount">Amount starting in storage</param>
     public void AddNewConsumable(Consumable type, int amount)
     {
-        if (!m_storedDict.ContainsKey(type.ConsumableName))
+        var index = RetrieveConsumableIndex(type);
+        if (index != -1)
         {
-            m_storedDict.Add(type.ConsumableName, amount);
-            RefreshUI();
+            Debug.LogWarning($"Consumable {type.ConsumableName} already exists."); 
         }
-        else print($"Consumable {type.ConsumableName} already exists.");
+        else consumableList.Add( new consumableData(type, amount));
+
     }
 
     /// <summary>
@@ -207,7 +235,8 @@ public class ConsumablesManager : MonoBehaviour
     /// <param name="type">Type of consumable to remove</param>
     public void RemoveConsumable(Consumable type)
     {
-        if (m_storedDict.ContainsKey(type.ConsumableName))
+        var consumeIndex = RetrieveConsumableIndex(type);
+        if (consumeIndex != -1)
         {
             //Find active Ui Element Index and remove         
             var index = -1;
@@ -227,28 +256,30 @@ public class ConsumablesManager : MonoBehaviour
             Destroy(objectToDestroy);
 
             //Remove dictionary stored type.
-            m_storedDict.Remove(type.ConsumableName);
+            consumableList.RemoveAt(consumeIndex);
         }
-        else print($"Consumable {type.ConsumableName} doesn't exist.");
+        else Debug.LogWarning($"Consumable {type.ConsumableName} doesn't exist.") ;
         RefreshUI();
     }
 
+
     /// <summary>
-    /// Retrieves a consumable type from the data pool by its name.
+    /// Takes a consumable and returns the index of it within this managers consumablelist.
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="c"></param>
     /// <returns></returns>
-    public Consumable RetrieveConsumableData(string name)
+    public int RetrieveConsumableIndex(Consumable c)
     {
-        foreach (Consumable c in consumableData)
+        for (int i = 0; i < consumableList.Count; i++)
         {
-            if (c.ConsumableName == name)
+            if (consumableList[i].Consumable.ConsumableName == c.ConsumableName)
             {
-                return c;
+                return i;
             }
         }
-        throw new KeyNotFoundException();
+        return -1;
     }
+
 
     /// <summary>
     /// Retrieves an active UI objects by its given name.
@@ -267,6 +298,16 @@ public class ConsumablesManager : MonoBehaviour
         throw new KeyNotFoundException();
     }
 
+    public void dropItems()
+    {
+        foreach (UIConsumable ui in activeUiElements)
+        {
+            ui.holding = false;
+            ui.clickable = false;
+        }
+    }    
+
+
     /// <summary>
     /// Opens bag or UI equivalent and begins moving items to their assigned UI positions.
     /// </summary>
@@ -282,7 +323,7 @@ public class ConsumablesManager : MonoBehaviour
     /// <summary>
     /// Closes bag or UI equivalent and begins moving items to closed UI position.
     /// </summary>
-    public void CloseUi()
+    public void CloseUI()
     {
         //Only close when opened
         if (state != UiState.Open) return;
@@ -294,5 +335,15 @@ public class ConsumablesManager : MonoBehaviour
 
         state = UiState.Closing;
     }
+
+    public void CheckClickedOn()
+    {
+        var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, consumableLayer, -999999, 999999);
+        if (col != null)
+        {
+            if (col.gameObject == gameObject) toggleBag();
+        }
+    }
+
 
 }

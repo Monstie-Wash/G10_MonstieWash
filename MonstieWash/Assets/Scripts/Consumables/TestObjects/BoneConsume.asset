@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcc2fe512cde9694c961c7ddcc726df5, type: 3}
-  m_Name: PotionConsume
+  m_Name: BoneConsume
   m_EditorClassIdentifier: 
-  consumableName: Potion
-  sprite: {fileID: -7524474028751337766, guid: c7b034936f623384b9f0776595560618, type: 3}
+  consumableName: Bone
+  sprite: {fileID: -7629076001477199492, guid: 6023c200936c91e4083230f2a7fc9897, type: 3}
   diminishingReturns: 0
   craftingRequirements: []
-  craftingQuantities: 
-  maxQuantity: 1
+  maxQuantity: 99
   moodTargets:
-  - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
+  - {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
   moodEffects:
-  - 30
+  - -50
+  moods: []
