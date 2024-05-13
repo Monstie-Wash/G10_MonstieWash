@@ -393,7 +393,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
   - {fileID: 11400000, guid: 5a7db6333fdbab54090e44e3df77eca9, type: 2}
   - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
-  Debug: 0
+  Debug: 1
   Pause: 0
   DebugUi: {fileID: 210014948}
 --- !u!1001 &773685606

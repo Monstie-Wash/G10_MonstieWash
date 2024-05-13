@@ -29,23 +29,33 @@ public class MoodArea : MonoBehaviour
         public float reactionStrength; //How much the mood will change by.
     }
 
-    private void OnEnable()
+    private void Awake()
     {
-        //Assign to Input system.
-        InputManager.Inputs.OnActivate_Held += TestTouch;
 
         m_mb = FindFirstObjectByType<MonsterBrain>();
         m_ph = FindFirstObjectByType<PlayerHand>();
         currentEffectiveness = 100;
     }
 
+    private void OnEnable()
+    {
+        //Assign to Input system.
+        InputManager.Inputs.OnActivate_Held += TestTouch;
+
+    }
+
+    private void OnDisable()
+    {
+        //Unassign from Input system.
+        InputManager.Inputs.OnActivate_Held -= TestTouch;
+    }
 
     private void Update()
     {
         //Restore Effectiveness over time.
-        if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness +( (diminishStrength/2) * Time.deltaTime), 0 , 100);
+        if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness +( (diminishStrength/2f) * Time.deltaTime), 0f , 100f);
         //Reduce Cooldown over time.
-        currentCooldown = Mathf.Clamp(currentCooldown -= Time.deltaTime, 0, areaCooldown);
+        currentCooldown = Mathf.Clamp(currentCooldown -= Time.deltaTime, 0f, areaCooldown);
     }
 
 
@@ -59,12 +69,12 @@ public class MoodArea : MonoBehaviour
             //Affect Moods
             foreach (moodEffect me in moodEffects)
             {
-                m_mb.UpdateMood(me.reactionStrength * (currentEffectiveness/100), me.mt);
+                m_mb.UpdateMood(me.reactionStrength * (currentEffectiveness/100f), me.mt);
                 if (debug) print($"Reaction Strength  {me.reactionStrength}  at effectivness of {currentEffectiveness} for the mood {me.mt.MoodName}");
             }
 
             //Apply diminishing effect if toggled on.
-            if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness -= diminishStrength, 0, 100);
+            if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness -= diminishStrength, 0f, 100f);
 
     }
 
@@ -76,18 +86,20 @@ public class MoodArea : MonoBehaviour
         //Skip test if area still on cooldown;
         if (currentCooldown > 0) return;
 
-        //Check if playerhand is over a mood area and it matches this mood area.
-        var colCheck = Physics2D.OverlapCircle(m_ph.transform.position, 0.1f, layerMask, -999999, 999999);
-        if (colCheck != null)
-        {
-            if (colCheck.gameObject != this.gameObject) return;
-        }
-        else return;
-        
-        //Call On Touch effect
-        OnTouch();
-    }
+        var toolSwitcher = m_ph.GetComponent<ToolSwitcher>();
+        Vector3 toolTipPos = m_ph.transform.position;
 
-    //Request for Cormac! Currently this just tests based on the hands position but would like it to instead use the tip of the tool if selected, just not sure how tool system works to add it.
+        //Get the tool tip as long as you don't have an empty hand
+        if (toolSwitcher.CurrentToolIndex != -1) toolTipPos = toolSwitcher.ToolInstances[toolSwitcher.CurrentToolIndex].transform.GetChild(0).position;
+
+        //Check if playerhand is over a mood area and it matches this mood area.
+        var colCheck = Physics2D.OverlapCircle(toolTipPos, 0.1f, layerMask, -999999, 999999);
+
+        if (colCheck != null && colCheck.gameObject == this.gameObject)
+        {
+            //Call On Touch effect
+            OnTouch();
+        }
+    }
 
 }
