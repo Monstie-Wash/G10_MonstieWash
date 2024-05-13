@@ -219,7 +219,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Mimic_Bite2_0: -3275541242624111653
+      Mimic_Bite2_1: -2234343424439590422
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -106,9 +106,9 @@ public class PlayerHand : MonoBehaviour
         navArrow.OnClicked();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Ouch!");
+        Debug.Log("Touch");
     }
 
 }

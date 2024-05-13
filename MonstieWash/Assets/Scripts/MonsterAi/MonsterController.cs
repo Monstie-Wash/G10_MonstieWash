@@ -30,7 +30,7 @@ public class MonsterController : MonoBehaviour
     }
 
     /// <summary>
-    /// Prepares an attack to be used; chooses one at random, etc. 
+    /// Prepares an attack to be used; chooses one at random.
     /// </summary>
     private void Attack(object sender, EventArgs e)
     {   
@@ -57,8 +57,5 @@ public class MonsterController : MonoBehaviour
         {
             yield return null;
         }
-
-        // === PLACEHOLDER, FIX LATER ===
-        m_myAnimator.Play("Mimic_Idle");
     }
 }
