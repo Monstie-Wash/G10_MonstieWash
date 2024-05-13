@@ -26,5 +26,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Prototype 1/Mouth.unity
     guid: 8b49fecc4bd037a49b50d861bfd33f93
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/SlimeLevel/SlimeStartingScene.unity
+    guid: 69f26f9bceca3d445b1abc3d024b3f3b
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/SlimeLevel/SlimeFront.unity
+    guid: b834cb60e2bbf6844b2fc32b0a8b376d
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
