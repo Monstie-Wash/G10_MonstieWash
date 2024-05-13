@@ -57,6 +57,7 @@ public class UIConsumable : MonoBehaviour
         {
             if (CheckOverPlayer())
             {
+                print("Consuming");
                 consumable.Consume();
             }
             else

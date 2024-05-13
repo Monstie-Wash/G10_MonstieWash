@@ -17,8 +17,6 @@ MonoBehaviour:
   diminishingReturns: 0
   craftingRequirements: []
   maxQuantity: 99
-  moodTargets:
-  - {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
-  moodEffects:
-  - 30
-  moods: []
+  moods:
+  - target: {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
+    effect: 25
