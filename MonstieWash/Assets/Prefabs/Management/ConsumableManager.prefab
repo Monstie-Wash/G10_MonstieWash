@@ -91,8 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiBorderDistance: 150
   uiMoveSpeed: 8
-  openSprite: {fileID: -9194654181630058782, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
-  closedSprite: {fileID: 2333532504608575059, guid: f1504bbb8aa08f54abc22e98c696a94e, type: 3}
+  openSprite: {fileID: 2333532504608575059, guid: f1504bbb8aa08f54abc22e98c696a94e, type: 3}
+  closedSprite: {fileID: -9194654181630058782, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
   activeUiElements: []
   imageHolder: {fileID: 7603753278036010449}
   refObject: {fileID: 7159353656609723325, guid: 1adc1322144855144abf480f216cc4fc, type: 3}
