@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: CupcakeConsume
   m_EditorClassIdentifier: 
   consumableName: 
-  sprite: {fileID: -7323574915270243347, guid: a5a5d212f071d8647b3916e8e8dfba85, type: 3}
+  sprite: {fileID: 21300000, guid: a5a5d212f071d8647b3916e8e8dfba85, type: 3}
   diminishingReturns: 0
   craftingRequirements: []
   maxQuantity: 99
   moods:
-  - target: {fileID: 11400000, guid: 5a7db6333fdbab54090e44e3df77eca9, type: 2}
+  - target: {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
     effect: -25
