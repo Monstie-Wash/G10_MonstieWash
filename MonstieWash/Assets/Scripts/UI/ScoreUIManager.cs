@@ -23,6 +23,7 @@ public class ScoreUIManager : MonoBehaviour
     [SerializeField] private Image m_clipboard;
     [SerializeField] private GameObject m_lineItem;
     [SerializeField] private TextMeshProUGUI m_totalScore;
+    [SerializeField] private GameObject m_strikeOut;
 
     //Probably temporary, may change to calc scale with number of tasks later.
     [SerializeField][Range(0.0f, 5.0f)] private float m_spacing;
@@ -74,10 +75,27 @@ public class ScoreUIManager : MonoBehaviour
 
         TextMeshProUGUI name = null;
         TextMeshProUGUI score = null;
+        GameObject strikeOut = null;
 
         int totalScore = 0;
 
         for (int i = 0; i < m_tasks.Count; i++)
+        {
+            m_LIList.Add(Instantiate(m_lineItem, clipTransform));
+            m_LIList[i].SetActive(false);
+            LITransform = m_LIList[i].GetComponent<RectTransform>();
+            LITransform.anchoredPosition = new Vector2(0, LITransform.rect.height / m_spacing * -i);
+
+            name = m_LIList[i].transform.Find("TaskName").GetComponent<TextMeshProUGUI>();
+            strikeOut = m_LIList[i].transform.Find("StrikeOut").gameObject;
+
+            name.text = m_tasks[i].name;
+
+            m_LIList[i].SetActive(true);
+            strikeOut.SetActive(false);
+        }
+
+        for (int j = 0; j < m_LIList.Count; j++)
         {
             for (float timer = m_secondsWait; timer >= 0; timer -= Time.deltaTime)
             {
@@ -88,28 +106,21 @@ public class ScoreUIManager : MonoBehaviour
                 yield return null;
             }
 
-            m_LIList.Add(Instantiate(m_lineItem, clipTransform));
-            m_LIList[i].SetActive(false);
-            LITransform = m_LIList[i].GetComponent<RectTransform>();
-            LITransform.anchoredPosition = new Vector2(0, LITransform.rect.height / m_spacing * -i);
-
-            name = m_LIList[i].transform.Find("TaskName").GetComponent<TextMeshProUGUI>();
-
-
-            name.text = m_tasks[i].name;
-
             //Put the score in the score.
-            if (m_tasks[i].complete)
+            if (m_tasks[j].complete)
             {
-                score = m_LIList[i].transform.Find("TaskScore").GetComponent<TextMeshProUGUI>();
-                score.text = $"${m_tasks[i].score.ToString()}";
+                score = m_LIList[j].transform.Find("TaskScore").GetComponent<TextMeshProUGUI>();
+                score.text = $"${m_tasks[j].score.ToString()}";
+
+                strikeOut = m_LIList[j].transform.Find("StrikeOut").gameObject;
+                strikeOut.SetActive(true);
 
                 //Add to score total
-                totalScore += m_tasks[i].score;
+                totalScore += m_tasks[j].score;
             }
-
-            m_LIList[i].SetActive(true);
         }
+
+
 
         m_totalScore.text = $"${totalScore.ToString()}";
     }
@@ -119,7 +130,7 @@ public class ScoreUIManager : MonoBehaviour
         m_skip = true;
     }
 
-    public void OnLevelExit()
+    private void OnLevelExit()
     {
         Debug.Log("LEVEL EXIT");
     }    
