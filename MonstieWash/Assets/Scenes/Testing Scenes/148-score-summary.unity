@@ -1152,6 +1152,7 @@ MonoBehaviour:
   m_clipboard: {fileID: 249759}
   m_lineItem: {fileID: 244182174959962256, guid: 080828888d0b0be438c30f5c08d95067, type: 3}
   m_totalScore: {fileID: 972526404}
+  m_strikeOut: {fileID: 0}
   m_spacing: 1.5
   m_LIList: []
   m_secondsWait: 0.6
