@@ -11,6 +11,8 @@ public class MonsterController : MonoBehaviour
     private MonsterBrain m_monsterAI;
     private Animator m_myAnimator;
 
+    private string interruptedAnimation;
+
     [SerializeField] private List<MonsterAttack> attackList;
 
     private void Awake()
@@ -32,6 +34,8 @@ public class MonsterController : MonoBehaviour
     /// <summary>
     /// Prepares an attack to be used; chooses one at random.
     /// </summary>
+    /// <param name="sender"> The object that sent the attack event.</param> 
+    /// <param name="e"> Arguments included in the attack (CURRENTLY UNUSED).</param> 
     private void Attack(object sender, EventArgs e)
     {   
         var numAttacks = attackList.Count;
@@ -43,19 +47,23 @@ public class MonsterController : MonoBehaviour
 
         // Choose which attack to use
         var chosenAttack = UnityEngine.Random.Range(0, numAttacks);
-        Debug.Log($"Chose to use {attackList[chosenAttack].AttackAnimation.name}!");
+        var attack = attackList[chosenAttack];
 
-        // Use the attack
-        StartCoroutine(PerformAttack(attackList[chosenAttack]));
-    }
+        // Get and save the animation that is being interrupted
+        var animatorInfo = this.m_myAnimator.GetCurrentAnimatorClipInfo(0);
+        var currentAnimation = animatorInfo[0].clip.name;
+        interruptedAnimation = currentAnimation;
 
-    private IEnumerator PerformAttack(MonsterAttack attack)
-    {
+        // Play the attack animation
         m_myAnimator.Play(attack.AttackAnimation.name);
-
-        while (m_myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-        {
-            yield return null;
-        }
     }
+
+    /// <summary>
+    /// Returns the animation to what it was before the monster attacked. 
+    /// </summary>
+    public void AttackFinished()
+    {
+        m_myAnimator.Play(interruptedAnimation);
+    }
+
 }

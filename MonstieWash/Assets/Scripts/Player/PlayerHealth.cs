@@ -78,11 +78,4 @@ public class PlayerHealth : MonoBehaviour
         // Reset the camera
         activeCam.transform.position = camStartPos;
     }
-
-    // === TESTING COLLISIONS - DELETE LATER ===
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        Debug.Log("Touch");
-    }
-
 }

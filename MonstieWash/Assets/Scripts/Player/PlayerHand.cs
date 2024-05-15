@@ -105,10 +105,4 @@ public class PlayerHand : MonoBehaviour
         TraversalObject navArrow = results[0].GetComponent<TraversalObject>();
         navArrow.OnClicked();
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Touch");
-    }
-
 }
