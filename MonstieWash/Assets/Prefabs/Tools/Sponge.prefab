@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 312063306794273981}
   - component: {fileID: 6328301067441581968}
+  - component: {fileID: -5845484624964815024}
   m_Layer: 6
   m_Name: Sponge
   m_TagString: Untagged
@@ -134,6 +135,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: 8daa16cb36407fd4fa4e589f78ed8cb9, type: 2}
   drawPosTransform: {fileID: 8245340559071156610}
+--- !u!114 &-5845484624964815024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773855883548905670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aecd85ae3ba4bf4ca38b55d7a13d2fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlesOnUse: {fileID: 6948283868151992189, guid: da7385fa805198a4baef8cc534a00961, type: 3}
 --- !u!1 &8844650258625875270
 GameObject:
   m_ObjectHideFlags: 0
