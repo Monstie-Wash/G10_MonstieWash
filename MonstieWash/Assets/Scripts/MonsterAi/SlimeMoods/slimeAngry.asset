@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: slimeAngry
   m_EditorClassIdentifier: 
   moodName: slimeAngry
-  moodUpperLimit: 70
+  moodUpperLimit: 50
   moodLowerLimit: -50
   moodStartingPoint: 0
   moodNaturalChange: 2
-  moodRestingPoint: 70
-  chaosMultiplier: 0
+  moodRestingPoint: 30
+  chaosMultiplier: 10
   positiveChainReactions: []
   positiveReactionStrength: 0
   negativeChainReactions: []
