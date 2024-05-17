@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: slimeSad
   m_EditorClassIdentifier: 
   moodName: slimeSad
-  moodUpperLimit: 60
-  moodLowerLimit: -50
+  moodUpperLimit: 20
+  moodLowerLimit: 0
   moodStartingPoint: 20
   moodNaturalChange: 2
-  moodRestingPoint: 20
+  moodRestingPoint: 0
   chaosMultiplier: 0
   positiveChainReactions: []
   positiveReactionStrength: 0
