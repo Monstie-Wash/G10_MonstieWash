@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StuckBone
       objectReference: {fileID: 0}
+    - target: {fileID: 4520279438470780351, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: m_TagString
+      value: Pickable
+      objectReference: {fileID: 0}
     - target: {fileID: 9021122546331929797, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -139,5 +143,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4520279438470780351, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9188176711408281038}
   m_SourcePrefab: {fileID: 100100000, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+--- !u!1 &3349159804403607175 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4520279438470780351, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+  m_PrefabInstance: {fileID: 1207484957358027576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9188176711408281038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3349159804403607175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634f91e6124631a42b8f398ce5771121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

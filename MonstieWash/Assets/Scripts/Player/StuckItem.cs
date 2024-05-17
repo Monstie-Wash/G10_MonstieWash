@@ -13,6 +13,8 @@ public class StuckItem : MonoBehaviour
     private Coroutine m_OOBCheckRoutine;
     private float m_initialRotation;
     private Transform m_initialParent;
+    private TaskTracker m_taskTracker;
+    private ITask m_pickingTask;
 
     public bool Stuck { get; private set; } = true;
     public float GrabDistance { get; private set; }
@@ -36,6 +38,8 @@ public class StuckItem : MonoBehaviour
         m_initialWiggleCount = wiggleCount;
         m_initialRotation = transform.rotation.eulerAngles.z;
         m_initialParent = transform.parent;
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_pickingTask = GetComponent<ITask>();
     }
 
     /// <summary>
@@ -65,6 +69,8 @@ public class StuckItem : MonoBehaviour
     /// <returns>Whether this wiggle unstuck the item.</returns>
     public bool Wiggle()
     {
+        m_pickingTask.TaskProgress = 100f*(m_initialWiggleCount - wiggleCount + 1)/m_initialWiggleCount;
+        m_taskTracker.UpdateTaskTracker(m_pickingTask.TaskName, m_pickingTask.NewProgress);
         wiggleCount--;
 
         if (wiggleCount <= 0)
