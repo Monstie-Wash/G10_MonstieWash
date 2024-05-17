@@ -1,13 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TraversalMenu : MonoBehaviour
 {
     [SerializeField] private GameScene targetScene;
-    [SerializeField] private Color highlightColour;
 
     private MenuLoader m_saveObj;
     private string m_targetScene;
-    private SpriteRenderer m_sprite;
+    private Button m_button;
 
     private void Awake()
     {
@@ -15,21 +15,13 @@ public class TraversalMenu : MonoBehaviour
         else m_targetScene = targetScene.SceneName;
 
         m_saveObj = FindFirstObjectByType<MenuLoader>();
-        m_sprite = GetComponent<SpriteRenderer>();
+        m_button = GetComponent<Button>();
+
+        m_button.onClick.AddListener(OnClick);
     }
 
-    private void OnMouseDown()
+    private void OnClick()
     {
         m_saveObj.LoadMonsterScene(m_targetScene);
-    }
-
-    private void OnMouseOver()
-    {
-        m_sprite.color = highlightColour;
-    }
-
-    private void OnMouseExit()
-    {
-        m_sprite.color = Color.white;
     }
 }
