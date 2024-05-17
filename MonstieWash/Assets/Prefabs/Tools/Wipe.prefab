@@ -182,6 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 312063306794273981}
   - component: {fileID: 6328301067441581968}
+  - component: {fileID: 2630524186727272973}
   m_Layer: 6
   m_Name: Wipe
   m_TagString: Untagged
@@ -220,3 +221,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: 00e09ce6ac17a5447a5d26aa269393bf, type: 2}
   drawPosTransform: {fileID: 8245340559071156610}
+--- !u!114 &2630524186727272973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773855883548905670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aecd85ae3ba4bf4ca38b55d7a13d2fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlesOnUse: {fileID: 4340487156504707657, guid: c338e02110672ae4290d2d4e61b7ca7c, type: 3}
