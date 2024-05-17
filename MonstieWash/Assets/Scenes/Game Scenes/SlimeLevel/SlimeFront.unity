@@ -1145,22 +1145,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 856972959}
     m_Modifications:
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Size.x
-      value: 2.1875627
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Size.y
-      value: 0.6473515
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.48278654
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.18172216
-      objectReference: {fileID: 0}
     - target: {fileID: 3248484692189372999, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
       propertyPath: endMaxRotation
       value: 30
@@ -2140,22 +2124,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 856972959}
     m_Modifications:
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Size.x
-      value: 1.664399
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Size.y
-      value: 0.60343826
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.76435155
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.2180658
-      objectReference: {fileID: 0}
     - target: {fileID: 3248484692189372999, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
       propertyPath: endMaxRotation
       value: 30
@@ -2854,22 +2822,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 856972959}
     m_Modifications:
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Size.x
-      value: 2.1995726
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Size.y
-      value: 0.8430822
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.48879194
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004978922614676871, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.16327602
-      objectReference: {fileID: 0}
     - target: {fileID: 3248484692189372999, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
       propertyPath: endMaxRotation
       value: 30
