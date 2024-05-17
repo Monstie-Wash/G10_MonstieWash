@@ -446,6 +446,10 @@ PrefabInstance:
       propertyPath: InitialModule.startLifetime.scalar
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4340487156504707657, guid: c338e02110672ae4290d2d4e61b7ca7c, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7686141256791748459, guid: c338e02110672ae4290d2d4e61b7ca7c, type: 3}
       propertyPath: m_Name
       value: Wipe_PS
