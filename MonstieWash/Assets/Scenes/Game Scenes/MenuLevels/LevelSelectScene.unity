@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 8772848626799382060, guid: af29774e95aa4ad4e860e5d9688a8428, type: 3}
-  m_Color: {r: 0.45882353, g: 0.45882353, b: 0.45882353, a: 1}
+  m_Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -780,11 +780,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8327650954097913703, guid: 87157df3eabab7d4998c7bb5403dbab8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.4023774
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8327650954097913703, guid: 87157df3eabab7d4998c7bb5403dbab8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.07474254
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8327650954097913703, guid: 87157df3eabab7d4998c7bb5403dbab8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -921,7 +921,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level Select
+  m_text: <color="green">Level Select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -930,8 +930,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294506744
+  m_fontColor: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
