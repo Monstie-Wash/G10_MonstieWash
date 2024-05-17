@@ -209,7 +209,11 @@ public class MonsterBrain : MonoBehaviour
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
     private int AccessActiveMoodIndex(string name)
     {
-        return activeMoodNames[name];
+        if (activeMoodNames.ContainsKey(name))
+        {
+            return activeMoodNames[name];
+        }
+        else return -1;
     }
 
     /// <summary>
@@ -218,9 +222,13 @@ public class MonsterBrain : MonoBehaviour
     /// <param name="name"> The name of the desired mood index</param>
     /// <returns></returns>
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
-    private int AccessActiveMoodIndex(MoodType refMT)
+    public int AccessActiveMoodIndex(MoodType refMT)
     {
-        return activeMoodNames[refMT.MoodName];
+        if (activeMoodNames.ContainsKey(refMT.MoodName))
+        {
+            return activeMoodNames[refMT.MoodName];
+        }
+        else return -1;
     }
 
 
@@ -232,6 +240,7 @@ public class MonsterBrain : MonoBehaviour
     public void UpdateMood(float amount, string name)
     {
         var index = AccessActiveMoodIndex(name);
+        if (index == -1) return;
         activeMoods[index] += amount;
         MaintainLimit(index);
     }
@@ -244,6 +253,7 @@ public class MonsterBrain : MonoBehaviour
     public void UpdateMood(float amount, MoodType mt)
     {
         var index = AccessActiveMoodIndex(mt);
+        if (index == -1) return;
         activeMoods[index] += amount;
         MaintainLimit(index);
     }

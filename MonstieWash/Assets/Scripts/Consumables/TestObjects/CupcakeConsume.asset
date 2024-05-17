@@ -20,3 +20,5 @@ MonoBehaviour:
   moods:
   - target: {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
     effect: -25
+  - target: {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
+    effect: -25
