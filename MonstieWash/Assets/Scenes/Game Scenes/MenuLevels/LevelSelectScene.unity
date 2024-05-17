@@ -576,6 +576,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5629407
       objectReference: {fileID: 0}
+    - target: {fileID: 6424650195841546409, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: targetScene
+      value: 
+      objectReference: {fileID: 11400000, guid: ad937325136c45843839adef08801ba2, type: 2}
     - target: {fileID: 7870226496626491692, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_Name
       value: ClientUISlime
