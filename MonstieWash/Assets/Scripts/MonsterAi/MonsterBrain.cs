@@ -222,7 +222,7 @@ public class MonsterBrain : MonoBehaviour
     /// <param name="name"> The name of the desired mood index</param>
     /// <returns></returns>
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
-    private int AccessActiveMoodIndex(MoodType refMT)
+    public int AccessActiveMoodIndex(MoodType refMT)
     {
         if (activeMoodNames.ContainsKey(refMT.MoodName))
         {
