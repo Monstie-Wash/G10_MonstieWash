@@ -22,8 +22,8 @@ TagManager:
   - Pickupable
   - PlayerHand
   - Background
-  - 
-  - 
+  - MoodArea
+  - Monster
   - 
   - 
   - 
