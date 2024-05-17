@@ -62,6 +62,9 @@ TagManager:
   - name: Tools
     uniqueID: 1881744917
     locked: 0
+  - name: Hand
+    uniqueID: 959028455
+    locked: 0
   - name: Particles
     uniqueID: 2049462369
     locked: 0
