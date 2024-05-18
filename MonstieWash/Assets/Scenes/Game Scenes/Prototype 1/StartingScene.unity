@@ -265,7 +265,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: fontSize
-      value: 50
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: clipboard
