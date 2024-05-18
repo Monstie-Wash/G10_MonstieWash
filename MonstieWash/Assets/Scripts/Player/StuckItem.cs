@@ -23,7 +23,7 @@ public class StuckItem : MonoBehaviour
     {
         get
         {
-            return Mathf.Lerp(startMaxRotation, endMaxRotation, (m_initialWiggleCount - wiggleCount + 1) / (float)m_initialWiggleCount);
+            return Mathf.Lerp(startMaxRotation, endMaxRotation, (m_initialWiggleCount - wiggleCount) / (float)m_initialWiggleCount);
         }
     }
     public Rigidbody2D Rb { get { return m_rb; } }
@@ -69,9 +69,9 @@ public class StuckItem : MonoBehaviour
     /// <returns>Whether this wiggle unstuck the item.</returns>
     public bool Wiggle()
     {
-        m_pickingTask.TaskProgress = 100f*(m_initialWiggleCount - wiggleCount + 1)/m_initialWiggleCount;
-        m_taskTracker.UpdateTaskTracker(m_pickingTask.TaskName, m_pickingTask.NewProgress);
         wiggleCount--;
+        m_pickingTask.TaskProgress = 100f*(m_initialWiggleCount - wiggleCount)/m_initialWiggleCount;
+        m_taskTracker.UpdateTaskTracker(m_pickingTask.TaskName, m_pickingTask.NewProgress);
 
         if (wiggleCount <= 0)
         {
