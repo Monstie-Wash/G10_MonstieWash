@@ -3,9 +3,24 @@ using UnityEngine;
 using System;
 using System.Linq;
 
+public class TaskData
+{
+    private string id;
+
+    private float progress;
+    private bool complete;
+    private float threshold;
+
+    private Transform container;
+
+
+}
+
 public class TaskTracker : MonoBehaviour
 {
     //Private
+    private List<TaskData> m_TaskData = new();
+
     private SerializableDictionary<string, float> m_taskProgress = new();
     private List<string> m_taskDictKeys = new();
     //Container object for all the cleaning activities
@@ -37,7 +52,7 @@ public class TaskTracker : MonoBehaviour
         {
             InitialiseTasks(taskContainer, taskContainer.name);
         }
-        m_uiManager.LoadKeys(m_taskDictKeys);
+        //m_uiManager.LoadKeys(m_taskDictKeys);
         m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 

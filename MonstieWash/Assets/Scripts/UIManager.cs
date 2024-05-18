@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -44,7 +43,6 @@ public class UIManager : MonoBehaviour
     }
     private void ToggleUIVisibility()
     {
-        //Clipboard.gameObject.SetActive(!Clipboard.gameObject.activeSelf);
         m_UIVisible = !m_UIVisible;
         CBAnimator.SetBool("Hide", m_UIVisible);
     }
@@ -58,17 +56,9 @@ public class UIManager : MonoBehaviour
         taskKeys = keys;
         foreach (var scene in m_roomSaver.AllScenes)
         {
-            if (scene == "Overview")
-            {
-                m_sceneTasks.Add(scene, taskKeys.FindAll(s => s.Contains("Overall") && s.Count(x => x == '#') <= 1));
-            }
-            else
-            {
-                var sceneKeys = taskKeys.FindAll(s => s.Contains(scene));
-                sceneKeys.Add("Overall");
-                m_sceneTasks.Add(scene, sceneKeys);
-            }
+            m_sceneTasks.Add(scene, taskKeys.FindAll(s => s.Contains("Overall") && s.Count(x => x == '#') <= 1));
         }
+
         InitialiseClipboard(taskContainer, "", 0);
         UpdateClipboardUI(m_roomSaver.AllScenes[0]);
     }
@@ -135,7 +125,9 @@ public class UIManager : MonoBehaviour
         var taskObject = FindTaskObject(taskName);
         var taskText = taskObject.GetComponent<TextMeshProUGUI>();
 
-        taskText.text = $"{taskObject.name}: {Math.Round(taskProgress, 0)}%"; // Rounding up with no decimals makes the display show 100% even with small amounts of dirt remaining
+        if (true)
+            taskText.text = $"{taskObject.name}: {Math.Round(taskProgress, 0)}%"; // Rounding up with no decimals makes the display show 100% even with small amounts of dirt remaining
+
     }
 
 /// <summary>
