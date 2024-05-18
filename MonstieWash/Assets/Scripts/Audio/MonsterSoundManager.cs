@@ -25,6 +25,7 @@ public class MonsterSoundManager : MonoBehaviour
     {
         var index = Random.Range(0, attackSounds.Count - 1);
 
+
         m_soundPlayer.SwitchSound(attackSounds[index]);
         m_soundPlayer.PlaySound(true);
     }
