@@ -4,6 +4,7 @@ using UnityEngine;
 public class SoundPlayer : MonoBehaviour
 {
     [SerializeField] private Sound sound;
+    [SerializeField, Tooltip("Hides the warning that appears when no sound is set.")] private bool hideWarning = false;
 
     private AudioSource m_audioSource;
 
@@ -21,9 +22,9 @@ public class SoundPlayer : MonoBehaviour
     /// </summary>
     private void SetupAudio()
     {
-        if (m_audioSource == null)
+        if (sound == null)
         {
-            Debug.LogWarning($"No sound set for {name}!");
+            if (!hideWarning) Debug.LogWarning($"No sound set for {name}!");
             return;
         }
         m_audioSource.playOnAwake = false;
@@ -42,6 +43,8 @@ public class SoundPlayer : MonoBehaviour
     /// <param name="mutate">Whether or not to make minor modifications to add variety.</param>
     public void PlaySound(bool mutate = false)
     {
+        if (sound == null) return;
+
         if (!mutate) m_audioSource.Play();
         else
         {

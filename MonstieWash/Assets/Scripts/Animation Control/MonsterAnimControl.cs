@@ -8,7 +8,7 @@ public class MonsterAnimControl : MonoBehaviour
     private MonsterBrain m_monsterAI;   
     private Animator m_myAnimator;
 
-    private string m_recentHighestMood;
+    private MoodType m_recentHighestMood;
 
     [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
 
@@ -19,33 +19,33 @@ public class MonsterAnimControl : MonoBehaviour
         public AnimationClip animation;
     }
 
-    private void Start()
+    private void Awake()
     {
         m_monsterAI = FindFirstObjectByType<MonsterBrain>();
         m_myAnimator = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        UpdateAnimations();
+        m_monsterAI.OnMoodChanged += UpdateAnimations;
+    }
+
+    private void OnDisable()
+    {
+        m_monsterAI.OnMoodChanged -= UpdateAnimations;
     }
 
     /// <summary>
-    // Changes the monster's animation (using the Animator component) to fit its current mood
+    /// Changes the monster's animation (using the Animator component) to fit its current mood
     /// </summary>
-    void UpdateAnimations()
+    /// <param name="currentMood">The name of the mood with the highest float value from mimicAI moodData</param>
+    void UpdateAnimations(MoodType currentMood)
     {
-        // Get the name of the mood with the highest float value from mimicAI MoodData
-        var highestMood = m_monsterAI.GetHighestMood();
-
         // If mood hasn't changed from last frame, don't bother updating
-        if (highestMood == m_recentHighestMood)
-        {
-            return;
-        }
+        if (currentMood == m_recentHighestMood) return;
 
         // Update the recent highest mood, then play the exit animation followed by the new animation
-        m_recentHighestMood = highestMood;
+        m_recentHighestMood = currentMood;
         Debug.Log($"Current highest mood was changed to {m_recentHighestMood}");
 
         // Set mood_changed to true in the animator
@@ -54,8 +54,8 @@ public class MonsterAnimControl : MonoBehaviour
 
     public void TransitoryAnimationComplete()
     {
-        var highestMood = m_monsterAI.GetHighestMood();
-        var animToPlay = moodToAnimationMap.Find(obj => obj.mood.MoodName == highestMood).animation;
+        var highestMood = m_monsterAI.HighestMood;
+        var animToPlay = moodToAnimationMap.Find(obj => obj.mood == highestMood).animation;
 
         if (animToPlay == null)
         {

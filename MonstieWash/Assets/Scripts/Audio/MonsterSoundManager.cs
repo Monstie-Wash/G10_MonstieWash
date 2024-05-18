@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SoundPlayer))]
 public class MonsterSoundManager : MonoBehaviour
 {
     [System.Serializable]
@@ -15,10 +16,24 @@ public class MonsterSoundManager : MonoBehaviour
     [SerializeField] private List<Sound> attackSounds = new();
 
     private SoundPlayer m_soundPlayer;
+    private MonsterBrain m_monsterBrain;
+    private MusicManager m_musicManager;
 
     private void Awake()
     {
         m_soundPlayer = GetComponent<SoundPlayer>();
+        m_monsterBrain = GetComponent<MonsterBrain>();
+        m_musicManager = FindFirstObjectByType<MusicManager>();
+    }
+
+    private void OnEnable()
+    {
+        m_monsterBrain.OnMoodChanged += PlayMoodSound;
+    }
+
+    private void OnDisable()
+    {
+        m_monsterBrain.OnMoodChanged -= PlayMoodSound;
     }
 
     public void PlayAttackSound()
@@ -32,10 +47,16 @@ public class MonsterSoundManager : MonoBehaviour
 
     public void PlayMoodSound(MoodType mood)
     {
-        var sound = moodSounds.Find(ms => ms.mood.MoodName == mood.MoodName).sound;
+        var sound = moodSounds.Find(ms => ms.mood == mood).sound;
         if (sound == null) return;
 
         m_soundPlayer.SwitchSound(sound);
         m_soundPlayer.PlaySound(true);
+
+        switch (mood.MoodName)
+        {
+            case "Happy": m_musicManager.SetMusic(MusicManager.MusicType.Background); break;
+            default: m_musicManager.EscalateMusic(); break;
+        }
     }
 }
