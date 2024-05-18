@@ -5,19 +5,18 @@ using System.Linq;
 
 public class TaskTracker : MonoBehaviour
 {
-    //Unity Inspector
-    //These are temporary replacement for UI progress bar
-    [SerializeField] public SerializableDictionary<string, float> m_taskProgress = new();
-
     //Private
+    private SerializableDictionary<string, float> m_taskProgress = new();
     private List<string> m_taskDictKeys = new();
-    //Container object for all the the different areas to clean 
+    //Container object for all the cleaning activities
     private List<Transform> m_taskContainers = new();
     private RoomSaver m_roomSaver;
+    private UIManager m_uiManager;
 
     private void Awake()
     {
         m_roomSaver = GetComponent<RoomSaver>();
+        m_uiManager = GetComponent<UIManager>();
     }
 
     private void OnEnable()
@@ -38,7 +37,7 @@ public class TaskTracker : MonoBehaviour
         {
             InitialiseTasks(taskContainer, taskContainer.name);
         }
-
+        m_uiManager.LoadKeys(m_taskDictKeys);
         m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
@@ -64,8 +63,8 @@ public class TaskTracker : MonoBehaviour
         else
         {
             var newTaskName = "";
-            if (taskContainer == transform) newTaskName = "OverallTask";
-            else if (taskContainer.parent == null) newTaskName = $"OverallTask#{taskContainer.gameObject.scene.name}Container";
+            if (taskContainer == transform) newTaskName = "Overall";
+            else if (taskContainer.parent == null) newTaskName = $"Overall#{taskContainer.gameObject.scene.name}";
             else newTaskName = taskName;
 
             AddTaskGroupTracker(newTaskName);
@@ -122,6 +121,7 @@ public class TaskTracker : MonoBehaviour
         {
             Debug.Log($"{taskName} is not being tracked! Something went wrong!");
         }
+        m_uiManager.UpdateClipboardTask(taskName, m_taskProgress[taskName]);
     }
 
     /// <summary>

@@ -7,7 +7,7 @@ using TMPro;
 public class MonsterBrain : MonoBehaviour
 {
 
-    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] private List<MoodType> moodData; //Scriptable objects holding data about moods.
+    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] protected List<MoodType> moodData; //Scriptable objects holding data about moods.
 
     private Dictionary<int,float> activeMoods; //Current moods status. int refers to id and number of mood in list, float refers to current value of mood on its own scale.
 
@@ -51,7 +51,6 @@ public class MonsterBrain : MonoBehaviour
         NegativeChainReactions();
         //Moods are kept to their upper and lower limits.
         MaintainLimits();
-
 
         //Debug Updates
         if (Debug) UpdateDebugText();
@@ -197,6 +196,8 @@ public class MonsterBrain : MonoBehaviour
         {
             DebugUi.text += $"MoodName: {moodData[i].MoodName} MoodValue: { Mathf.FloorToInt(activeMoods[i]).ToString()}\nMood Lower / Upper Limits: { moodData[i].MoodLowerLimit.ToString()}/{ moodData[i].MoodUpperLimit.ToString()}\n\n";
         }
+        var highestMood = GetHighestMood();
+        DebugUi.text += $"Current Mood: {highestMood}";
     }
 
 
@@ -208,7 +209,11 @@ public class MonsterBrain : MonoBehaviour
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
     private int AccessActiveMoodIndex(string name)
     {
-        return activeMoodNames[name];
+        if (activeMoodNames.ContainsKey(name))
+        {
+            return activeMoodNames[name];
+        }
+        else return -1;
     }
 
     /// <summary>
@@ -217,9 +222,13 @@ public class MonsterBrain : MonoBehaviour
     /// <param name="name"> The name of the desired mood index</param>
     /// <returns></returns>
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
-    private int AccessActiveMoodIndex(MoodType refMT)
+    public int AccessActiveMoodIndex(MoodType refMT)
     {
-        return activeMoodNames[refMT.MoodName];
+        if (activeMoodNames.ContainsKey(refMT.MoodName))
+        {
+            return activeMoodNames[refMT.MoodName];
+        }
+        else return -1;
     }
 
 
@@ -231,6 +240,7 @@ public class MonsterBrain : MonoBehaviour
     public void UpdateMood(float amount, string name)
     {
         var index = AccessActiveMoodIndex(name);
+        if (index == -1) return;
         activeMoods[index] += amount;
         MaintainLimit(index);
     }
@@ -243,6 +253,7 @@ public class MonsterBrain : MonoBehaviour
     public void UpdateMood(float amount, MoodType mt)
     {
         var index = AccessActiveMoodIndex(mt);
+        if (index == -1) return;
         activeMoods[index] += amount;
         MaintainLimit(index);
     }
@@ -257,6 +268,17 @@ public class MonsterBrain : MonoBehaviour
         var index = AccessActiveMoodIndex(mt);
         return activeMoods[index];
     }
+
+    /// <summary>
+    /// Returns the value of a given mood by its ID, useful for other scripts.
+    /// </summary>
+    /// <param id="id"> The desired moodtype's ID</param>
+    /// <returns></returns>
+    public string ReadMood(int id)
+    {
+        return moodData[id].MoodName;
+    }
+
 
     /// <summary>
     /// Returns the value of a given mood by its name, useful for other scripts.
@@ -296,5 +318,27 @@ public class MonsterBrain : MonoBehaviour
         return value;
     }
 
+    /// <summary>
+    /// Returns the ID (as an int) of the Moodtype with the highest value.
+    /// </summary>
+    /// <returns>The name of the mood with the highest float value.</returns>
+    public string GetHighestMood()
+    {
+        var highestVal = float.MinValue;
+        var highestValID = 0;
+
+        foreach(var mood in activeMoods)
+        {
+            if (mood.Value > highestVal) 
+            {
+                highestValID = mood.Key;
+                highestVal = mood.Value;
+            }
+        }
+
+        var highestMoodName = ReadMood(highestValID);
+
+        return highestMoodName;
+    }
 
 }
