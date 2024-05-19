@@ -11,9 +11,9 @@ public class MonsterController : MonoBehaviour
     private MonsterBrain m_monsterAI;
     private Animator m_myAnimator;
 
-    private string interruptedAnimation;
+    private string m_interruptedAnimation;
 
-    [SerializeField] private List<MonsterAttack> attackList;
+    [SerializeField] private List<AnimationClip> attackList;
 
     private void Awake()
     {
@@ -52,18 +52,18 @@ public class MonsterController : MonoBehaviour
         // Get and save the animation that is being interrupted
         var animatorInfo = this.m_myAnimator.GetCurrentAnimatorClipInfo(0);
         var currentAnimation = animatorInfo[0].clip.name;
-        interruptedAnimation = currentAnimation;
+        m_interruptedAnimation = currentAnimation;
 
         // Play the attack animation
-        m_myAnimator.Play(attack.AttackAnimation.name);
+        m_myAnimator.Play(attack.name);
     }
 
     /// <summary>
-    /// Returns the animation to what it was before the monster attacked. 
+    /// Returns the animation to what it was before the monster attacked (via animation event). 
     /// </summary>
     public void AttackFinished()
     {
-        m_myAnimator.Play(interruptedAnimation);
+        m_myAnimator.Play(m_interruptedAnimation);
     }
 
 }

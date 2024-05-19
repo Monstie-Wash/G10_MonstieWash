@@ -693,6 +693,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: -0.010335565
       objectReference: {fileID: 0}
+    - target: {fileID: 8122869584910133115, guid: f5de0aeacbf757f46b0cee4c2a76cd32, type: 3}
+      propertyPath: 'attackList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7400000, guid: e5bd70c7fd75ea44b876c94d6de40d98, type: 2}
     - target: {fileID: 8940359331336791799, guid: f5de0aeacbf757f46b0cee4c2a76cd32, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -722,6 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa232c3db83eade4a89e6713bc1c42ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

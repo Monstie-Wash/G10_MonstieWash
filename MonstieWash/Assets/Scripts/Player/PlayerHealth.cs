@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D))]
 
 public class PlayerHealth : MonoBehaviour 
 {
@@ -14,6 +14,8 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("Damage beyond this value won't affect the intensity of damage animations")][SerializeField] private float damageAnimationCap; // Amount of damage taken scales the damage animation, up to this amount of damage.
     [Tooltip("Duration of the damage animation (in seconds)")][SerializeField] private float damageAnimationDuration;                       // Duration of the "take damage" animation.
     [Tooltip("Animation curve for screen shake upon taking damage")][SerializeField] private AnimationCurve damageShake;                    // An Animation Curve 
+    [Tooltip("How long the player remains invincible after taking damage (in seconds)")][SerializeField] private float invincibilityDuration;       // After taking damage, the player is immune to further damage for this length of time.
+    private bool m_isInvincible = false;
 
     //Other
     private Collider2D m_playerHitbox;
@@ -49,6 +51,10 @@ public class PlayerHealth : MonoBehaviour
     /// <param name="dmgTaken"> The amount of damage to be dealt.</param> 
     public void TakeDamage(float dmgTaken)
     {
+        // Can't take damage if invincible
+        if (m_isInvincible)
+            return;
+
         playerHealth -= dmgTaken;
         // Check if the player is dead - to do when death scene is complete
         StartCoroutine(PlayDamageEffects(dmgTaken));
@@ -66,6 +72,9 @@ public class PlayerHealth : MonoBehaviour
         var elapsedTime = 0f;
         var dmgScale = Mathf.Clamp((dmgTaken / damageAnimationCap) + 1, 1, 2);
 
+        // Enable the player's invincibility
+        StartCoroutine(StartInvincibility());
+
         // Transform the camera's position based on Animation Curve and the amount of damage taken
         while (elapsedTime < damageAnimationDuration)
         {
@@ -77,5 +86,22 @@ public class PlayerHealth : MonoBehaviour
 
         // Reset the camera
         activeCam.transform.position = camStartPos;
+    }
+
+    /// <summary>
+    /// Enables the player's invincibility for the specified amount of time, then disables it. 
+    /// </summary>
+    IEnumerator StartInvincibility()
+    {
+        var elapsedTime = 0f;
+        m_isInvincible = true;
+
+        while (elapsedTime < invincibilityDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        m_isInvincible = false;
     }
 }
