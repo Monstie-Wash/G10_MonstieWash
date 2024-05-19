@@ -13,6 +13,8 @@ public class StuckItem : MonoBehaviour
     private Coroutine m_OOBCheckRoutine;
     private float m_initialRotation;
     private Transform m_initialParent;
+    private TaskTracker m_taskTracker;
+    private ITask m_pickingTask;
 
     public bool Stuck { get; private set; } = true;
     public float GrabDistance { get; private set; }
@@ -21,7 +23,7 @@ public class StuckItem : MonoBehaviour
     {
         get
         {
-            return Mathf.Lerp(startMaxRotation, endMaxRotation, (m_initialWiggleCount - wiggleCount + 1) / (float)m_initialWiggleCount);
+            return Mathf.Lerp(startMaxRotation, endMaxRotation, (m_initialWiggleCount - wiggleCount) / (float)m_initialWiggleCount);
         }
     }
     public Rigidbody2D Rb { get { return m_rb; } }
@@ -36,6 +38,8 @@ public class StuckItem : MonoBehaviour
         m_initialWiggleCount = wiggleCount;
         m_initialRotation = transform.rotation.eulerAngles.z;
         m_initialParent = transform.parent;
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_pickingTask = GetComponent<ITask>();
     }
 
     /// <summary>
@@ -66,6 +70,8 @@ public class StuckItem : MonoBehaviour
     public bool Wiggle()
     {
         wiggleCount--;
+        m_pickingTask.TaskProgress = 100f*(m_initialWiggleCount - wiggleCount)/m_initialWiggleCount;
+        m_taskTracker.UpdateTaskTracker(m_pickingTask.TaskName, m_pickingTask.NewProgress);
 
         if (wiggleCount <= 0)
         {
