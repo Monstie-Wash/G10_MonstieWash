@@ -53,7 +53,7 @@ public class TaskTracker : MonoBehaviour
     /// <param name="taskName">A compound string made up of all parent objects in the hierarchy seperated by '#' eg. "Mimic#Front#Teeth#Dirt1". Used to identify each task and the associated locations.</param>
     private void InitialiseTasks(Transform taskContainer, string taskName)
     {
-        if (taskContainer.tag == "Erasable")
+        if (taskContainer.tag == "Erasable" || taskContainer.tag == "Pickable")
         {
             ITask iTask = taskContainer.GetComponent<ITask>();
             if (iTask != null)

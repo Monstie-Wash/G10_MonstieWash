@@ -10,6 +10,7 @@ TagManager:
   - Right
   - Left
   - Back
+  - Pickable
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - Pickupable
   - PlayerHand
   - Background
-  - 
-  - 
+  - MoodArea
+  - Monster
   - 
   - 
   - 
@@ -61,6 +62,9 @@ TagManager:
     locked: 0
   - name: Tools
     uniqueID: 1881744917
+    locked: 0
+  - name: Hand
+    uniqueID: 959028455
     locked: 0
   - name: Particles
     uniqueID: 2049462369

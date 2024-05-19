@@ -17,6 +17,8 @@ public class ToolSwitcher : MonoBehaviour
 
     public int CurrentToolIndex { get { return m_currentToolIndex; } }
 
+    public List<GameObject> ToolInstances { get { return m_toolInstances; } }
+
     private void Awake()
     {
         m_roomSaver = FindFirstObjectByType<RoomSaver>();
