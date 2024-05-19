@@ -8,6 +8,82 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[1].value
+      value: -0.0026550293
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[2].value
+      value: -0.0026550293
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[0].inSlope
+      value: 0.0017222943
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[1].inSlope
+      value: -3.2105982
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[2].inSlope
+      value: -3.2105982
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[0].outSlope
+      value: 0.0017222943
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[1].inWeight
+      value: 0.1245572
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[1].outSlope
+      value: -3.2105982
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[2].inWeight
+      value: 0.1245572
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[2].outSlope
+      value: -3.2105982
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[0].outWeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[1].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4767844474740141697, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: greenFadeCurve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2637688865119233339, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.611
