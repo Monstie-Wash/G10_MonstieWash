@@ -38,6 +38,9 @@ public class MonsterSoundManager : MonoBehaviour
         m_monsterBrain.OnMoodChanged -= UpdateMusic;
     }
 
+    /// <summary>
+    /// Plays a random attack sound. Will be updated when attacks are implemented.
+    /// </summary>
     public void PlayAttackSound()
     {
         var index = Random.Range(0, attackSounds.Count - 1);
@@ -47,7 +50,11 @@ public class MonsterSoundManager : MonoBehaviour
         m_soundPlayer.PlaySound(true);
     }
 
-    public void PlayMoodSound(MoodType mood)
+    /// <summary>
+    /// Plays the sound corresponding to the new current mood.
+    /// </summary>
+    /// <param name="mood">The mood that is now active.</param>
+    private void PlayMoodSound(MoodType mood)
     {
         var sound = moodSounds.Find(ms => ms.mood == mood).sound;
         if (sound == null) return;
@@ -56,6 +63,10 @@ public class MonsterSoundManager : MonoBehaviour
         m_soundPlayer.PlaySound(true);
     }
 
+    /// <summary>
+    /// Escalates or de-escalates the music based on the new mood.
+    /// </summary>
+    /// <param name="mood">The mood that is now active.</param>
     private void UpdateMusic(MoodType mood)
     {
         switch (mood.MoodName)
