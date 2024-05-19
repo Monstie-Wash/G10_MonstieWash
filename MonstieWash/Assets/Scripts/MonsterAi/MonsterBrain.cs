@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class MonsterBrain : MonoBehaviour
 {
@@ -18,11 +19,20 @@ public class MonsterBrain : MonoBehaviour
     [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] protected List<MoodData> moodData = new(); //Scriptable objects holding data about moods.
     private int m_designerSanityBuff = 10; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
     
-    [Tooltip("Updates the debug window when turned on")] [SerializeField] private bool debug;
-    [Tooltip("Pauses the brain when on.")][SerializeField] private bool pause;
+    [Tooltip("Updates the debug window when turned on")] [SerializeField] private bool debug = false;
+    [Tooltip("Pauses the brain when on.")][SerializeField] private bool pause = false;
     [Tooltip("Attach Text Mesh Pro Box here for displaying debug info")][SerializeField] private TextMeshProUGUI debugUi;
 
     [HideInInspector] public MoodType HighestMood { get; private set; }
+    [HideInInspector] public HashSet<MoodType> Moods { get; private set; } = new();
+
+    private void Awake()
+    {
+        foreach (var data in moodData)
+        {
+            Moods.Add(data.mood);
+        }
+    }
 
     private void Update()
     {
@@ -162,20 +172,6 @@ public class MonsterBrain : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates ui textbox with information useful to debugging.
-    /// </summary>
-    private void UpdateDebugText()
-    {
-        debugUi.text = "";
-        for (int i = 0; i < moodData.Count; i++)
-        {
-            debugUi.text += $"MoodName: {moodData[i].mood.MoodName} MoodValue: {Mathf.FloorToInt(moodData[i].value)}\nMood Lower / Upper Limits: {moodData[i].mood.MoodLowerLimit}/{moodData[i].mood.MoodUpperLimit}\n\n";
-        }
-
-        debugUi.text += $"Current Mood: {HighestMood.MoodName}";
-    }
-
-    /// <summary>
     /// Tool to move a float value towards a target by a certain amount whether negative or positive.
     /// </summary>
     /// <param name="value"> The value to move</param>
@@ -209,11 +205,11 @@ public class MonsterBrain : MonoBehaviour
     {
         var highestMoodData = moodData[0];
 
-        foreach (var currentMoodData in moodData)
+        foreach (var data in moodData)
         {
-            if (currentMoodData.value > highestMoodData.value)
+            if (data.value > highestMoodData.value)
             {
-                highestMoodData = currentMoodData;
+                highestMoodData = data;
             }
         }
 
@@ -221,7 +217,22 @@ public class MonsterBrain : MonoBehaviour
         {
             HighestMood = highestMoodData.mood;
             OnMoodChanged?.Invoke(HighestMood);
+            if (debug) Debug.Log($"Highest mood changed to {HighestMood.MoodName}");
         }
+    }
+
+    /// <summary>
+    /// Updates ui textbox with information useful to debugging.
+    /// </summary>
+    private void UpdateDebugText()
+    {
+        debugUi.text = "";
+        for (int i = 0; i < moodData.Count; i++)
+        {
+            debugUi.text += $"MoodName: {moodData[i].mood.MoodName} MoodValue: {Mathf.FloorToInt(moodData[i].value)}\nMood Lower / Upper Limits: {moodData[i].mood.MoodLowerLimit}/{moodData[i].mood.MoodUpperLimit}\n\n";
+        }
+
+        debugUi.text += $"Current Mood: {HighestMood.MoodName}";
     }
 
     /// <summary>

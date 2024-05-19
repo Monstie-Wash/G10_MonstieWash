@@ -29,11 +29,13 @@ public class MonsterSoundManager : MonoBehaviour
     private void OnEnable()
     {
         m_monsterBrain.OnMoodChanged += PlayMoodSound;
+        m_monsterBrain.OnMoodChanged += UpdateMusic;
     }
 
     private void OnDisable()
     {
         m_monsterBrain.OnMoodChanged -= PlayMoodSound;
+        m_monsterBrain.OnMoodChanged -= UpdateMusic;
     }
 
     public void PlayAttackSound()
@@ -52,7 +54,10 @@ public class MonsterSoundManager : MonoBehaviour
 
         m_soundPlayer.SwitchSound(sound);
         m_soundPlayer.PlaySound(true);
+    }
 
+    private void UpdateMusic(MoodType mood)
+    {
         switch (mood.MoodName)
         {
             case "Happy": m_musicManager.SetMusic(MusicManager.MusicType.Background); break;

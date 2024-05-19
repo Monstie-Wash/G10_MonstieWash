@@ -90,7 +90,7 @@ MonoBehaviour:
   CBAnimator: {fileID: 0}
   taskContainer: {fileID: 0}
   taskTextPrefab: {fileID: 9051000898727591749, guid: 46543417b13805f4e9b01f49812cc32b, type: 3}
-  fontSize: 50
+  fontSize: 42
   fontScaling: 0.8
   paddingScaling: 1.3
   taskKeys: []
@@ -170,15 +170,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2437060506423187022, guid: abc71f86e53d46242a1616b19f87d310, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.23754306
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2437060506423187022, guid: abc71f86e53d46242a1616b19f87d310, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0535605
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2437060506423187022, guid: abc71f86e53d46242a1616b19f87d310, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.9099151
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2437060506423187022, guid: abc71f86e53d46242a1616b19f87d310, type: 3}
       propertyPath: m_LocalRotation.w

@@ -16,5 +16,5 @@ MonoBehaviour:
   mixer: {fileID: -6379261314806015809, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
   volume: 1
   pitch: 1
-  loop: 0
+  loop: 1
   playOnAwake: 1

@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class MonsterAnimControl : MonoBehaviour
 {
+    [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
+    [SerializeField] private bool debug = false;
+
     private MonsterBrain m_monsterAI;   
     private Animator m_myAnimator;
 
     private MoodType m_recentHighestMood;
-
-    [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
 
     [Serializable]
     private struct MoodToAnimation
@@ -46,7 +47,7 @@ public class MonsterAnimControl : MonoBehaviour
 
         // Update the recent highest mood, then play the exit animation followed by the new animation
         m_recentHighestMood = currentMood;
-        Debug.Log($"Current highest mood was changed to {m_recentHighestMood}");
+        if (debug) Debug.Log($"Current highest mood was changed to {m_recentHighestMood}");
 
         // Set mood_changed to true in the animator
         m_myAnimator.SetBool("mood_changed", true); // begins the exit animation (if there is one).
@@ -59,7 +60,7 @@ public class MonsterAnimControl : MonoBehaviour
 
         if (animToPlay == null)
         {
-            Debug.Log($"MoodToAnimationMap for MoodType {highestMood} is missing/incorrect");
+            Debug.LogWarning($"MoodToAnimationMap for MoodType {highestMood} is missing/incorrect");
             return;
         }
 
