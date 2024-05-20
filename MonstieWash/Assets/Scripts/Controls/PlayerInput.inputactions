@@ -25,9 +25,9 @@
                 },
                 {
                     "name": "SwitchTool",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "c4f8f9c9-5084-45cb-a1fd-ce85f2f94cfd",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -36,6 +36,15 @@
                     "name": "Navigate",
                     "type": "Button",
                     "id": "c473e6d4-095f-4d10-a91f-e65111fc81e6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleUI",
+                    "type": "Button",
+                    "id": "0184552f-1d0c-4316-8dde-f5d82f6469a0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -68,7 +77,7 @@
                 {
                     "name": "",
                     "id": "7775d467-062c-4e81-9047-256c16ea19c4",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -136,7 +145,7 @@
                     "id": "f108f390-ac83-4401-97e9-d3741cf7a2c2",
                     "path": "1DAxis",
                     "interactions": "",
-                    "processors": "AxisDeadzone(min=0.8,max=0.8)",
+                    "processors": "",
                     "groups": "",
                     "action": "SwitchTool",
                     "isComposite": true,
@@ -145,9 +154,9 @@
                 {
                     "name": "negative",
                     "id": "daca3370-e1f4-4d6d-8364-a366c30661d3",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
-                    "processors": "AxisDeadzone",
+                    "processors": "",
                     "groups": "",
                     "action": "SwitchTool",
                     "isComposite": false,
@@ -156,7 +165,7 @@
                 {
                     "name": "positive",
                     "id": "69e75680-7a4e-4705-ba79-37c99423c01c",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -167,7 +176,7 @@
                 {
                     "name": "",
                     "id": "a5422ff9-1335-4e29-947c-b68341538458",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -183,6 +192,116 @@
                     "processors": "",
                     "groups": "",
                     "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5cd40825-0c31-4fc6-8c50-d27c20594cf3",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d6e5a4d-3fc3-4388-a4db-14f457db2be4",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "MenuActions",
+            "id": "58e2192e-b6c7-48a8-b028-01f12a3493c9",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "5d56a373-3b3c-47a3-a2b7-d60c08a656cc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "64893faa-c856-47e4-a605-1f9b281073fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AltSelect",
+                    "type": "Button",
+                    "id": "0faa1987-e8f3-4106-9d4d-2f3cb93d9030",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Switch",
+                    "type": "Button",
+                    "id": "e79dfc19-5064-424e-83c5-2a9c93f85dd3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c5cba5ab-fc8d-497b-9a52-d3c39df0137d",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a9e48a2-5a03-40ce-a5b2-2139a192d0a5",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0224b92d-caf0-4695-9639-4e7a95e69401",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AltSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64a1edd4-0176-4e5f-b042-e6b6ca54b9ec",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

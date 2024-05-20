@@ -86,7 +86,6 @@ public class MonsterBrain : MonoBehaviour
         // Check whether an attack should occur
         CalculateAggression();
 
-
         //Debug Updates
         if (Debug) UpdateDebugText();
     }
@@ -231,6 +230,8 @@ public class MonsterBrain : MonoBehaviour
         {
             DebugUi.text += $"MoodName: {moodData[i].mood.MoodName} MoodValue: { Mathf.FloorToInt(m_activeMoods[i]).ToString()}\nMood Lower / Upper Limits: { moodData[i].mood.MoodLowerLimit.ToString()}/{ moodData[i].mood.MoodUpperLimit.ToString()}\n\n";
         }
+        var highestMood = GetHighestMood();
+        DebugUi.text += $"Current Mood: {highestMood}";
     }
 
 
@@ -242,7 +243,11 @@ public class MonsterBrain : MonoBehaviour
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
     private int AccessActiveMoodIndex(string name)
     {
-        return m_activeMoodNames[name];
+        if (m_activeMoodNames.ContainsKey(name))
+        {
+            return m_activeMoodNames[name];
+        }
+        else return -1;
     }
 
     /// <summary>
@@ -251,9 +256,13 @@ public class MonsterBrain : MonoBehaviour
     /// <param name="name"> The name of the desired mood index</param>
     /// <returns></returns>
     /// <exception cref="System.Exception"> When no mood exists with that name </exception>
-    private int AccessActiveMoodIndex(MoodType refMT)
+    public int AccessActiveMoodIndex(MoodType refMT)
     {
-        return m_activeMoodNames[refMT.MoodName];
+        if (m_activeMoodNames.ContainsKey(refMT.MoodName))
+        {
+            return m_activeMoodNames[refMT.MoodName];
+        }
+        else return -1;
     }
 
 
@@ -265,6 +274,7 @@ public class MonsterBrain : MonoBehaviour
     public void UpdateMood(float amount, string name)
     {
         var index = AccessActiveMoodIndex(name);
+        if (index == -1) return;
         m_activeMoods[index] += amount;
         MaintainLimit(index);
     }
@@ -277,6 +287,7 @@ public class MonsterBrain : MonoBehaviour
     public void UpdateMood(float amount, MoodType mt)
     {
         var index = AccessActiveMoodIndex(mt);
+        if (index == -1) return;
         m_activeMoods[index] += amount;
         MaintainLimit(index);
     }
@@ -291,6 +302,17 @@ public class MonsterBrain : MonoBehaviour
         var index = AccessActiveMoodIndex(mt);
         return m_activeMoods[index];
     }
+
+    /// <summary>
+    /// Returns the value of a given mood by its ID, useful for other scripts.
+    /// </summary>
+    /// <param id="id"> The desired moodtype's ID</param>
+    /// <returns></returns>
+    public string ReadMood(int id)
+    {
+        return moodData[id].MoodName;
+    }
+
 
     /// <summary>
     /// Returns the value of a given mood by its name, useful for other scripts.
@@ -357,6 +379,28 @@ public class MonsterBrain : MonoBehaviour
         m_lastAttackTime = 0f;
         m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
         MonsterAttack?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// Returns the ID (as an int) of the Moodtype with the highest value.
+    /// </summary>
+    /// <returns>The name of the mood with the highest float value.</returns>
+    public string GetHighestMood()
+    {
+        var highestVal = float.MinValue;
+        var highestValID = 0;
+
+        foreach(var mood in activeMoods)
+        {
+            if (mood.Value > highestVal) 
+            {
+                highestValID = mood.Key;
+                highestVal = mood.Value;
+            }
+        }
+
+        var highestMoodName = ReadMood(highestValID);
+
+        return highestMoodName;
     }
 
 }

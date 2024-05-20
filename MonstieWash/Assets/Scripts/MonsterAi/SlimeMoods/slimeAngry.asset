@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14fa3bbe3a6cba041997a365ccc6cfd5, type: 3}
+  m_Name: slimeAngry
+  m_EditorClassIdentifier: 
+  moodName: slimeAngry
+  moodUpperLimit: 20
+  moodLowerLimit: 0
+  moodStartingPoint: 0
+  moodNaturalChange: 1
+  moodRestingPoint: 0
+  chaosMultiplier: 0
+  positiveChainReactions: []
+  positiveReactionStrength: 0
+  negativeChainReactions: []
+  negativeReactionStrength: 0

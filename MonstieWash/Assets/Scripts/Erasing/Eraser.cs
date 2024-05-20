@@ -5,13 +5,12 @@ using UnityEngine;
 public class Eraser : MonoBehaviour
 {
     [SerializeField] private Tool tool;
+    [SerializeField] private Transform drawPosTransform;
 
     private List<Erasable> m_erasables = new();
     private PlayerHand m_playerHand;
     private Vector2Int m_drawPos;
-    private Transform m_drawPosTransform;
     private TaskTracker m_taskTracker;
-    private RoomSaver m_roomSaver;
 
     private bool IsErasing = false;
     public event Action OnErasing_Started;
@@ -67,10 +66,7 @@ public class Eraser : MonoBehaviour
     private void Awake()
     {
         m_playerHand = FindFirstObjectByType<PlayerHand>();
-        m_drawPosTransform = transform.GetChild(0);
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
-        m_roomSaver = FindFirstObjectByType<RoomSaver>();
-        m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
     }
 
     private void Start()
@@ -89,14 +85,7 @@ public class Eraser : MonoBehaviour
         InputManager.Inputs.OnActivate_Held -= UseTool;
         InputManager.Inputs.OnActivate_Ended -= StopUseTool;
 
-        OnErasing_Ended?.Invoke();
-        IsErasing = false;
-    }
-
-    private void RoomSaver_OnScenesLoaded()
-    {
-        PopulateErasables();
-        m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
+        StopUseTool();
     }
 
     /// <summary>
@@ -104,7 +93,11 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void UseTool()
     {
-        if (!HandMoved()) return;
+        if (!HandMoved())
+        {
+            StopUseTool();
+            return;
+        }
 
         var wasErasing = IsErasing;
         IsErasing = false;
@@ -140,9 +133,10 @@ public class Eraser : MonoBehaviour
     /// <summary>
     /// Sets up the tool and related variables ready for use.
     /// </summary>
-    private void InitializeTool()
+    public void InitializeTool()
     {
         tool.Initialize();
+        PopulateErasables();
     }
 
     /// <summary>
@@ -187,7 +181,7 @@ public class Eraser : MonoBehaviour
     /// <returns>Whether or not the hand moved since last frame.</returns>
     private bool HandMoved()
     {
-        var drawPointScreenPos = Camera.main.WorldToScreenPoint(m_drawPosTransform.position);
+        var drawPointScreenPos = Camera.main.WorldToScreenPoint(drawPosTransform.position);
         m_drawPos = new Vector2Int(Mathf.RoundToInt(drawPointScreenPos.x), Mathf.RoundToInt(drawPointScreenPos.y));
 
         if (m_playerHand.IsMoving) return true;

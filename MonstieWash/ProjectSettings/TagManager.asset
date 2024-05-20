@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Erasable
   - TaskContainer
+  - Front
+  - Right
+  - Left
+  - Back
+  - Pickable
   layers:
   - Default
   - TransparentFX
@@ -15,11 +20,11 @@ TagManager:
   - UI
   - Tool
   - Navigation
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Pickupable
+  - PlayerHand
+  - Background
+  - MoodArea
+  - Monster
   - 
   - 
   - 
@@ -46,11 +51,20 @@ TagManager:
   - name: Backgrounds
     uniqueID: 3090574103
     locked: 0
+  - name: DirtBack
+    uniqueID: 4246771755
+    locked: 0
   - name: Monsters
     uniqueID: 2983730943
     locked: 0
+  - name: DirtFront
+    uniqueID: 3114074857
+    locked: 0
   - name: Tools
     uniqueID: 1881744917
+    locked: 0
+  - name: Hand
+    uniqueID: 959028455
     locked: 0
   - name: Particles
     uniqueID: 2049462369
