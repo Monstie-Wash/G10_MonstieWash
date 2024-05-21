@@ -19,6 +19,7 @@ public class StuckItem : MonoBehaviour
     private ITask m_pickingTask;
     private SpriteRenderer m_spriteRenderer;
     private Coroutine m_colourFadeRoutine;
+    private SoundPlayer m_soundPlayer;
 
     public bool Stuck { get; private set; } = true;
     public float GrabDistance { get; private set; }
@@ -45,6 +46,7 @@ public class StuckItem : MonoBehaviour
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
         m_pickingTask = GetComponent<ITask>();
         m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_soundPlayer = GetComponent<SoundPlayer>();
     }
 
     /// <summary>
@@ -65,6 +67,7 @@ public class StuckItem : MonoBehaviour
             m_rb.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
             StartCoroutine(CheckOOB());
+            m_soundPlayer.PlaySound(true);
         }
     }
 
