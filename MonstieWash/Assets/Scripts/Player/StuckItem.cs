@@ -7,6 +7,8 @@ public class StuckItem : MonoBehaviour
     [SerializeField] private float endMaxRotation = 90f;
     [SerializeField] private int wiggleCount = 6;
     [SerializeField] private float grabDistanceMultiplier = 1.5f;
+    [SerializeField] private AnimationCurve greenFadeCurve;
+    [SerializeField] private float greenFadeTime = 1f;
 
     private Rigidbody2D m_rb;
     private int m_initialWiggleCount;
@@ -15,6 +17,9 @@ public class StuckItem : MonoBehaviour
     private Transform m_initialParent;
     private TaskTracker m_taskTracker;
     private ITask m_pickingTask;
+    private SpriteRenderer m_spriteRenderer;
+    private Coroutine m_colourFadeRoutine;
+    private SoundPlayer m_soundPlayer;
 
     public bool Stuck { get; private set; } = true;
     public float GrabDistance { get; private set; }
@@ -40,6 +45,8 @@ public class StuckItem : MonoBehaviour
         m_initialParent = transform.parent;
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
         m_pickingTask = GetComponent<ITask>();
+        m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_soundPlayer = GetComponent<SoundPlayer>();
     }
 
     /// <summary>
@@ -60,6 +67,7 @@ public class StuckItem : MonoBehaviour
             m_rb.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
             StartCoroutine(CheckOOB());
+            m_soundPlayer.PlaySound(true);
         }
     }
 
@@ -72,6 +80,9 @@ public class StuckItem : MonoBehaviour
         wiggleCount--;
         m_pickingTask.TaskProgress = 100f*(m_initialWiggleCount - wiggleCount)/m_initialWiggleCount;
         m_taskTracker.UpdateTaskTracker(m_pickingTask.TaskName, m_pickingTask.NewProgress);
+
+        if (m_colourFadeRoutine != null) StopCoroutine(m_colourFadeRoutine);
+        m_colourFadeRoutine = StartCoroutine(FadeColour());
 
         if (wiggleCount <= 0)
         {
@@ -93,5 +104,23 @@ public class StuckItem : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private IEnumerator FadeColour()
+    {
+        var t = greenFadeTime;
+        var currentColor = Color.green;
+
+        while (t > 0f)
+        {
+            currentColor.r = greenFadeCurve.Evaluate(t);
+            currentColor.b = greenFadeCurve.Evaluate(t);
+
+            m_spriteRenderer.color = currentColor;
+
+            t -= Time.deltaTime;
+
+            yield return null;
+        }
     }
 }
