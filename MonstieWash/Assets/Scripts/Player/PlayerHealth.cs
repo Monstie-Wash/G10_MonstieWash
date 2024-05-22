@@ -33,6 +33,10 @@ public class PlayerHealth : MonoBehaviour
     private Collider2D m_playerHurtbox;     // The player's hurtbox (where they can be hit by attacks).
     #endregion
 
+    #region Accessors
+    public Collider2D PlayerHurtbox { get { return m_playerHurtbox;} }
+    #endregion
+
     private void Start()
     {
         m_playerHurtbox = GetComponent<Collider2D>();
