@@ -25,7 +25,8 @@ public class Treat : Consumable
         Debug.Log("Found brain");
         //Loop through mood targets and update them by the effect amount;
         for (var i = 0; i < moods.Count; i++) 
-        {            
+        {
+            if (brain.AccessActiveMoodIndex(moods[i].target) == -1) continue;
             brain.UpdateMood(moods[i].effect, moods[i].target);
             Debug.Log("Updating: " + moods[i].target + " by " + moods[i].effect);
         }
