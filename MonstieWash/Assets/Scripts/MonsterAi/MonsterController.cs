@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterAnimControl : MonoBehaviour
+public class MonsterController : MonoBehaviour
 {
     [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
     [SerializeField] private bool debug = false;
 
-    private MonsterBrain m_monsterAI;   
+    private MonsterBrain m_monsterAI;
     private Animator m_myAnimator;
 
     private MoodType m_recentHighestMood;
@@ -29,18 +29,20 @@ public class MonsterAnimControl : MonoBehaviour
     private void OnEnable()
     {
         m_monsterAI.OnMoodChanged += UpdateAnimations;
+        m_monsterAI.MonsterAttack += Attack;
     }
 
     private void OnDisable()
     {
         m_monsterAI.OnMoodChanged -= UpdateAnimations;
+        m_monsterAI.MonsterAttack -= Attack;
     }
 
     /// <summary>
     /// Changes the monster's animation (using the Animator component) to fit its current mood
     /// </summary>
     /// <param name="currentMood">The name of the mood with the highest float value from mimicAI moodData</param>
-    void UpdateAnimations(MoodType currentMood)
+    private void UpdateAnimations(MoodType currentMood)
     {
         // If mood hasn't changed from last frame, don't bother updating
         if (currentMood == m_recentHighestMood) return;
@@ -65,8 +67,13 @@ public class MonsterAnimControl : MonoBehaviour
         }
 
         // Play the entry animation for the new mood
-        m_myAnimator.Play(animToPlay.name); 
+        m_myAnimator.Play(animToPlay.name);
         // Set mood_changed to false in the animator 
         m_myAnimator.SetBool("mood_changed", false);
+    }
+
+    private void Attack(object sender, EventArgs e)
+    {
+        Debug.Log("Monster attack!");
     }
 }

@@ -4,27 +4,44 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System;
 
 public class MonsterBrain : MonoBehaviour
 {
+    #region Moods
     [System.Serializable]
     protected class MoodData
     {
         public MoodType mood;
+        [Tooltip("Monster won't attack unless mood value is equal or higher than its attack threshold")]public float attackThreshold;
         public float value;
     }
 
     public System.Action<MoodType> OnMoodChanged;
 
-    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] protected List<MoodData> moodData = new(); //Scriptable objects holding data about moods.
+    [Tooltip("Add all moodtype objects intended for this brain here.")][SerializeField] protected List<MoodData> moodData = new(); //Scriptable objects holding data about moods.
+    #endregion
+
+    #region Attacks
+    [Tooltip("Minimum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float minBetweenAttacks; // Creates an attack event between the min and max time, if possible.
+    [Tooltip("Maximum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float maxBetweenAttacks; // Creates an attack event between the min and max time, if possible.
+    private float m_attackTimer;    // Chosen time to wait before the next attack (randomized between min and max after every attack).
+    private float m_lastAttackTime = 0f;    // Time elapsed since the last attack.
+    public event EventHandler MonsterAttack;    // Monster attack event.
+    #endregion
+
+    #region Debug
     private int m_designerSanityBuff = 10; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
-    
-    [Tooltip("Updates the debug window when turned on")] [SerializeField] private bool debug = false;
+
+    [Tooltip("Updates the debug window when turned on")][SerializeField] private bool debug = false;
     [Tooltip("Pauses the brain when on.")][SerializeField] private bool pause = false;
     [Tooltip("Attach Text Mesh Pro Box here for displaying debug info")][SerializeField] private TextMeshProUGUI debugUi;
+    #endregion
 
+    #region Accessors
     [HideInInspector] public MoodType HighestMood { get; private set; }
     [HideInInspector] public HashSet<MoodType> Moods { get; private set; } = new();
+    #endregion
 
     private void Awake()
     {
@@ -32,6 +49,8 @@ public class MonsterBrain : MonoBehaviour
         {
             Moods.Add(data.mood);
         }
+
+        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
     }
 
     private void Update()
@@ -48,8 +67,10 @@ public class MonsterBrain : MonoBehaviour
         NegativeChainReactions();
         //Moods are kept to their upper and lower limits.
         MaintainLimits();
-        //Keep up-to-date on the current mood
+        //Keep up-to-date on the current mood.
         UpdateHighestMood();
+        // Check whether an attack should occur.
+        CalculateAggression();
 
         //Debug Updates
         if (debug) UpdateDebugText();
@@ -67,11 +88,11 @@ public class MonsterBrain : MonoBehaviour
 
             float currentValue = moodData[i].value;
             //Move currentvalue towards resting point by rate of change;
-            currentValue = FloatTowardsTarget(currentValue, moodData[i].mood.MoodNaturalChange * Time.deltaTime , moodData[i].mood.MoodRestingPoint);
+            currentValue = FloatTowardsTarget(currentValue, moodData[i].mood.MoodNaturalChange * Time.deltaTime, moodData[i].mood.MoodRestingPoint);
             //Assign new value to active mood.
             moodData[i].value = currentValue;
 
-            if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " naturally changed to " + currentValue );
+            if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " naturally changed to " + currentValue);
         }
     }
 
@@ -81,13 +102,12 @@ public class MonsterBrain : MonoBehaviour
     private void ChaoticInterference()
     {
         for (int i = 0; i < moodData.Count; i++)
-        {           
+        {
             if (moodData[i].mood.ChaosMultiplier == 0) continue; //Skip chaos values of 0
 
             float currentValue = moodData[i].value;
-            
-			//Determine chaotic value
-            float chaosVal = Random.Range(-moodData[i].mood.ChaosMultiplier, moodData[i].mood.ChaosMultiplier) * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
+            //Determine chaotic value
+            float chaosVal = UnityEngine.Random.Range(-moodData[i].mood.ChaosMultiplier, moodData[i].mood.ChaosMultiplier) * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Changes current value by chaos value;
             moodData[i].value = currentValue + (chaosVal * Time.deltaTime);
@@ -106,7 +126,7 @@ public class MonsterBrain : MonoBehaviour
         for (int i = 0; i < moodData.Count; i++)
         {
             if (moodData[i].mood.PositiveReactionStrength == 0) continue; //Skip if reaction strenght is 0
-            
+
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
             var percentageStrength = ((moodData[i].value - moodData[i].mood.MoodLowerLimit) * 100) / (moodData[i].mood.MoodUpperLimit - moodData[i].mood.MoodLowerLimit);
             float chainAmount = (percentageStrength / 100) * moodData[i].mood.PositiveReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
@@ -136,7 +156,7 @@ public class MonsterBrain : MonoBehaviour
             if (moodData[i].mood.NegativeReactionStrength == 0) continue; //Skip if reaction strenght is 0
 
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
-			var percentageStrength = ((moodData[i].value - moodData[i].mood.MoodLowerLimit) * 100) / (moodData[i].mood.MoodUpperLimit - moodData[i].mood.MoodLowerLimit);
+            var percentageStrength = ((moodData[i].value - moodData[i].mood.MoodLowerLimit) * 100) / (moodData[i].mood.MoodUpperLimit - moodData[i].mood.MoodLowerLimit);
             float chainAmount = (percentageStrength / 100) * moodData[i].mood.NegativeReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of negative reactions in mood.
@@ -161,34 +181,6 @@ public class MonsterBrain : MonoBehaviour
         {
             MaintainLimit(i);
         }
-    }
-
-    /// <summary>
-    /// Check to see if an attack event should be created based on the game state and the values given by the designers.
-    /// </summary>
-    private void CalculateAggression()
-    {
-        // Update time since the last attack.
-        m_lastAttackTime += Time.deltaTime;
-
-        // Check to see if an attack should be performed based on time (creates a cooldown-style effect).
-        if (m_lastAttackTime < m_attackTimer) return;
-
-        // Check to see if an attack should be performed based on mood values.
-        for (int i = 0; i < activeMoods.Count; i++)
-        {
-            if (activeMoods[i] < moodData[i].attackThreshold)   // If the value of a mood is below its attack threshold, an attack is not made. 
-            {
-                m_lastAttackTime = 0f;
-                return;
-            }
-        }
-
-        // Attack is legal, perform an attack
-        m_lastAttackTime = 0f;
-        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
-        MonsterAttack?.Invoke(this, EventArgs.Empty);
-        if (Debug) print("Attack Event made");
     }
 
     /// <summary>
@@ -248,6 +240,33 @@ public class MonsterBrain : MonoBehaviour
             OnMoodChanged?.Invoke(HighestMood);
             if (debug) Debug.Log($"Highest mood changed to {HighestMood.MoodName}");
         }
+    }
+
+    /// <summary>
+    /// Check to see if an attack event should be created based on the game state and the values given by the designers.
+    /// </summary>
+    private void CalculateAggression()
+    {
+        // Update time since the last attack.
+        m_lastAttackTime += Time.deltaTime;
+
+        // Check to see if an attack should be performed based on time (creates a cooldown-style effect).
+        if (m_lastAttackTime < m_attackTimer) return;
+
+        // Check to see if an attack should be performed based on mood values.
+        for (int i = 0; i < moodData.Count; i++)
+        {
+            if (moodData[i].value < moodData[i].attackThreshold)    // If the value of a mood is below its attack threshold, an attack is not made.
+            {
+                m_lastAttackTime = 0f;
+                return;
+            }
+        }
+
+        // Attack is legal, perform the attack.
+        m_lastAttackTime = 0f;
+        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
+        MonsterAttack?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

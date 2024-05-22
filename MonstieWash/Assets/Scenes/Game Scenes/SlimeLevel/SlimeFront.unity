@@ -2894,6 +2894,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: moodToAnimationMap.Array.data[0].animation
       value: 
       objectReference: {fileID: 7400000, guid: f1eed0e68ee572d4fb4c5a79c46beb93, type: 2}
