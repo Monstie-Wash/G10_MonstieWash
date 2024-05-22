@@ -12,18 +12,18 @@ public class MoodArea : MonoBehaviour
 
     [Header("Configurables")]
     [Tooltip("Select the layer of the mood area")] [SerializeField] private LayerMask layerMask;
-    [Tooltip("Add new moods to be affected by this, assign the type of mood and by what value it is affected.")] [SerializeField] private List<moodEffect> moodEffects; //Stores which moods will be changed and by how much.
+    [Tooltip("Add new moods to be affected by this, assign the type of mood and by what value it is affected.")] [SerializeField] private List<MoodEffect> moodEffects; //Stores which moods will be changed and by how much.
     [Tooltip("How frequently the area will react to being touched. (Every 'x' seconds).")] [SerializeField] private float areaCooldown; //How frequently the area will react to being touched.
     [Tooltip("Toggle on to make the area reduce effectiveness over frequent use.")] [SerializeField] private bool diminishingEffectiveness; //When repeatedly touched will reduce its effects momentarily.
     [Tooltip("How fast its effectiveness diminishes if above bool toggled on.")] [SerializeField] private int diminishStrength; //How quickly the effectiveness diminishes.
-    [Tooltip("Produces debug text in console when toggled on.")] [SerializeField] private bool debug;
+    [Tooltip("Produces debug text in console when toggled on.")] [SerializeField] private bool debug = false;
 
     //Internal states
     private float currentCooldown;
     private float currentEffectiveness; //Current effectiveness of area.
 
     [Serializable]
-    public struct moodEffect
+    public struct MoodEffect
     {
         public MoodType mt; //Which mood to target.
         public float reactionStrength; //How much the mood will change by.
@@ -67,7 +67,7 @@ public class MoodArea : MonoBehaviour
             currentCooldown = areaCooldown; //Reset Cooldown
 
             //Affect Moods
-            foreach (moodEffect me in moodEffects)
+            foreach (MoodEffect me in moodEffects)
             {
                 m_mb.UpdateMood(me.reactionStrength * (currentEffectiveness/100f), me.mt);
                 if (debug) print($"Reaction Strength  {me.reactionStrength}  at effectivness of {currentEffectiveness} for the mood {me.mt.MoodName}");
