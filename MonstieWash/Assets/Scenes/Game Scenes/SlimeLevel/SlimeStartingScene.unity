@@ -468,10 +468,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moodData:
-  - {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
-  - {fileID: 11400000, guid: 7c085ae8b7e03fe4f9f1412031a4109e, type: 2}
-  - {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
-  - {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
+  - mood: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
+    attackThreshold: 0
+  - mood: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
+    attackThreshold: 0
+  - mood: {fileID: 11400000, guid: 7c085ae8b7e03fe4f9f1412031a4109e, type: 2}
+    attackThreshold: 0
+  - mood: {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
+    attackThreshold: 0
+  minBetweenAttacks: 4
+  maxBetweenAttacks: 7
   Debug: 0
   Pause: 0
   DebugUi: {fileID: 389218614}
