@@ -280,6 +280,14 @@ PrefabInstance:
       value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: m_clipboard
+      value: 
+      objectReference: {fileID: 1333992974056510849}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: m_CBAnimator
+      value: 
+      objectReference: {fileID: 1333992974056510848}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: taskContainer
       value: 
       objectReference: {fileID: 1333992974056510847}
@@ -291,6 +299,14 @@ PrefabInstance:
       propertyPath: m_TaskContainer
       value: 
       objectReference: {fileID: 1333992974056510847}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: m_taskContainer
+      value: 
+      objectReference: {fileID: 1333992974056510847}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: m_taskTextPrefab
+      value: 
+      objectReference: {fileID: 9051000898727591749, guid: 46543417b13805f4e9b01f49812cc32b, type: 3}
     - target: {fileID: 504427494389466731, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
