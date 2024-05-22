@@ -66,7 +66,7 @@ public class StuckItem : MonoBehaviour
         {
             m_rb.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
-            StartCoroutine(CheckOOB());
+            m_OOBCheckRoutine = StartCoroutine(CheckOOB());
             m_soundPlayer.PlaySound(true);
         }
     }
