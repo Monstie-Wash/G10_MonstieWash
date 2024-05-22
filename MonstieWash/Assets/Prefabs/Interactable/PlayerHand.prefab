@@ -460,7 +460,6 @@ MonoBehaviour:
   playerMaxHealth: 100
   playerHealth: 100
   damageAnimationCap: 25
-  damageAnimationDuration: 0.75
   damageShake:
     serializedVersion: 2
     m_Curve:
@@ -494,6 +493,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  animationDuration: 0.75
   colorShift:
     serializedVersion: 2
     m_Curve:
@@ -527,7 +527,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_spriteRenderers: []
 --- !u!50 &7993864775247175003
 Rigidbody2D:
   serializedVersion: 4

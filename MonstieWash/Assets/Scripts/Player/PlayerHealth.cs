@@ -17,19 +17,19 @@ public class PlayerHealth : MonoBehaviour
     #region Damage Controls
     // Damage controls for designers
     [Tooltip("Animation intensity scales with damage taken up to this amount")][SerializeField] private float damageAnimationCap;   // Amount of damage taken scales the damage animation, up to this amount of damage. 
-    [Tooltip("Duration of the damage animation (in seconds)")][SerializeField][Range(0f, 2f)] private float damageAnimationDuration;   // Duration of the "take damage" animation.
     [Tooltip("Animation curve for the screen shake upon taking damage")][SerializeField] private AnimationCurve damageShake;    // Animation curve that controls damage shake intensity.
     #endregion
 
     #region Effect Controls
     // Effect controls for designers
+    [Tooltip("Duration of the damage / healing animation (in seconds)")][SerializeField][Range(0f, 2f)] private float animationDuration;   // Duration of the "take damage" and "heal" animations.
     [Tooltip("Animation curve for color shift upon taking damage/healing")][SerializeField] private AnimationCurve colorShift;  // Animation curve that controls damage/healing intensity. 
     #endregion
 
     #region Other Variables
     // Other
     private bool m_isInvincible = false;    // Flags whether the player is currently invincible after taking damage.
-    [SerializeField] public Component[] m_spriteRenderers;
+    private Component[] m_spriteRenderers;  // Array of SpriteRenderers from the PlayerHand bone Animation.
     private Collider2D m_playerHurtbox;     // The player's hurtbox (where they can be hit by attacks).
     #endregion
 
@@ -38,14 +38,6 @@ public class PlayerHealth : MonoBehaviour
         m_playerHurtbox = GetComponent<Collider2D>();
         m_spriteRenderers = GetComponentsInChildren<SpriteRenderer>(); 
         playerHealth = playerMaxHealth;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown("space"))
-        {
-            TakeDamage(10f);
-        }
     }
 
     /// <summary>
@@ -63,8 +55,27 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     IEnumerator PlayHealingEffects()
     {
-        // Empty at the moment... add effects here when they're finished, or delete if designers don't need healing effects. 
-        yield return null;
+        var elapsedTime = 0f;
+
+        // Initialize variables needed to shift colors.
+        var currentColor = Color.green;
+
+        while (elapsedTime < animationDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            var overallTime = elapsedTime / animationDuration;
+
+            // Color shifting.
+            currentColor.b = colorShift.Evaluate(overallTime);
+            currentColor.r = colorShift.Evaluate(overallTime);
+            foreach (SpriteRenderer sr in m_spriteRenderers)
+            {
+                sr.color = currentColor;
+            }
+
+            yield return null;
+        }
+
     }
 
     /// <summary>
@@ -87,10 +98,11 @@ public class PlayerHealth : MonoBehaviour
     /// <param name="dmgTaken"> The amount of damage that was dealt. </param>
     IEnumerator PlayDamageEffects(float dmgTaken)
     {
+        var elapsedTime = 0f;
+
         // Initialize variables needed to shake the camera.
         var activeCam = Camera.main;
         var camStartPos = activeCam.transform.position;
-        var elapsedTime = 0f;
         var dmgScale = Mathf.Clamp((dmgTaken / damageAnimationCap) + 1, 1, 2);
 
         // Initialize variables needed to shift colors.
@@ -100,17 +112,18 @@ public class PlayerHealth : MonoBehaviour
         StartCoroutine(StartInvincibility());
 
         // Transform the camera's position based on the Animation Curve and the amount of damage taken.
-        while (elapsedTime < damageAnimationDuration)
+        while (elapsedTime < animationDuration)
         {
-            Debug.Log("Shaking screen");
-            // Screen shake.
             elapsedTime += Time.deltaTime;
-            var strength = damageShake.Evaluate(elapsedTime / damageAnimationDuration);
+            var overallTime = elapsedTime / animationDuration;
+
+            // Screen shake.
+            var strength = damageShake.Evaluate(overallTime);
             activeCam.transform.position = camStartPos + Random.insideUnitSphere * strength * dmgScale;
 
             // Color shifting.
-            currentColor.b = colorShift.Evaluate(elapsedTime / damageAnimationDuration);
-            currentColor.g = colorShift.Evaluate(elapsedTime / damageAnimationDuration);
+            currentColor.b = colorShift.Evaluate(overallTime);
+            currentColor.g = colorShift.Evaluate(overallTime);
             foreach (SpriteRenderer sr in m_spriteRenderers)
             {
                 sr.color = currentColor;
@@ -131,7 +144,7 @@ public class PlayerHealth : MonoBehaviour
         var elapsedTime = 0f;
         m_isInvincible = true;
 
-        while (elapsedTime < damageAnimationDuration)
+        while (elapsedTime < animationDuration)
         {
             elapsedTime += Time.deltaTime;
             yield return null;
