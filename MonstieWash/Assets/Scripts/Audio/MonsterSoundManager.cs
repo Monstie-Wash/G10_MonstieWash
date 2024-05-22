@@ -43,7 +43,7 @@ public class MonsterSoundManager : MonoBehaviour
     /// </summary>
     public void PlayAttackSound()
     {
-        var index = Random.Range(0, attackSounds.Count - 1);
+        var index = Random.Range(0, attackSounds.Count);
 
 
         m_soundPlayer.SwitchSound(attackSounds[index]);
@@ -65,14 +65,11 @@ public class MonsterSoundManager : MonoBehaviour
 
     /// <summary>
     /// Escalates or de-escalates the music based on the new mood.
+    /// NOTE: This is a temporary implementation and will be changed to work properly next semester.
     /// </summary>
     /// <param name="mood">The mood that is now active.</param>
     private void UpdateMusic(MoodType mood)
     {
-        switch (mood.MoodName)
-        {
-            case "Happy": m_musicManager.SetMusic(MusicManager.MusicType.Background); break;
-            default: m_musicManager.EscalateMusic(); break;
-        }
+        
     }
 }
