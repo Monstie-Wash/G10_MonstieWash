@@ -24,7 +24,7 @@ public class Eraser : MonoBehaviour
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
         public byte[] maskPixels;
-        public ErasableTaskWrapper erasableTask;
+        public TaskData erasableTask;
 
         /// <summary>
         /// An erasable object representation.
@@ -35,7 +35,7 @@ public class Eraser : MonoBehaviour
             this.obj = obj;
             sprite = obj.GetComponent<SpriteRenderer>().sprite;
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
-            erasableTask = obj.GetComponent<ErasableTaskWrapper>();
+            erasableTask = obj.GetComponent<TaskData>();
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ public class Eraser : MonoBehaviour
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            erasableTask.Progress = erasedCount/(maskPixels.Length/100f);
-        }
+			erasableTask.Progress = ((float)erasedCount / maskPixels.Length) * 100;
+		}
     }
 
     private void Awake()
@@ -108,7 +108,7 @@ public class Eraser : MonoBehaviour
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                m_taskTracker.UpdateTaskTracker(erasable.erasableTask, erasable.erasableTask.NewProgress);
+                m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
 
                 IsErasing = true;
             }

@@ -34,13 +34,10 @@ public class TaskTracker : MonoBehaviour
         m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
-	public void UpdateTaskTracker(TaskData task, float newProgress)
+	public void UpdateTaskTracker(TaskData task)
 	{
-		if (newProgress == 0f) return;
-
-		if (m_taskData.Contains(task))
+        if (m_taskData.Contains(task))
 		{
-			task.Progress += newProgress;
 
 
 			if (task.Progress >= task.Threshold)
@@ -66,11 +63,4 @@ public class TaskTracker : MonoBehaviour
         }
         Debug.Log("Finished");
     }
-
-    //TODO:
-    //Group scenes. 
-    //Update UI.
-    //Task Complete. Done-ish
-    //
-
 }

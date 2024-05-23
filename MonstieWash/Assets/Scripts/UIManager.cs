@@ -12,8 +12,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject m_taskContainer;
     [SerializeField] private GameObject m_taskTextPrefab;
     [SerializeField] private float m_fontSize = 36f;
-    [SerializeField] [Range(0.6f, 1.0f)] private float m_fontScaling = 0.75f;
-    [SerializeField] [Range(1.0f, 2.0f)] private float m_paddingScaling = 1.2f;
 
     private Dictionary<string, bool> m_taskList = new();
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class TaskData : MonoBehaviour
+public class TaskData : MonoBehaviour
 {
 	[SerializeField] protected string m_id;
 
@@ -12,12 +12,12 @@ public abstract class TaskData : MonoBehaviour
 	[SerializeField] protected Transform m_container;
 
     public string Id { get => m_id; set => m_id = value; }
-    public virtual float Progress { get => m_progress; set => m_progress = value; }
+    public float Progress { get => m_progress; set => m_progress = value; }
     public bool Complete { get => m_complete; set => m_complete = value; }
     public float Threshold { get => m_threshold; set => m_threshold = value; }
     public Transform Container { get => m_container;}
 
-	public void Awake()
+	public void OnEnable()
 	{
         m_container = gameObject.transform;
         m_id = m_container.name;
