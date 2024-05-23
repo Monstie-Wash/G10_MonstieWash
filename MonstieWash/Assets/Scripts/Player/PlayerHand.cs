@@ -3,7 +3,9 @@ using UnityEngine;
 public class PlayerHand : MonoBehaviour
 {
     //Unity Inspector
-    [SerializeField][Range(1.0f, 50.0f)] private float cursorSpeed = 20f;
+    [SerializeField, Range(1.0f, 50.0f)] private float handSpeed = 20f;
+    [SerializeField, Range(0f, 5f)] private float extendBoundsX, extendBoundsY;
+    [SerializeField] private bool showBounds = false;
 
     //Private
     private Vector2 m_movement;
@@ -71,11 +73,11 @@ public class PlayerHand : MonoBehaviour
         {
             case InputManager.PlayerInputDevice.MKB:
                 {
-                    velocityModifer = cursorSpeed * k_mouseSpeedMultiplier;
+                    velocityModifer = handSpeed * k_mouseSpeedMultiplier;
                 } break;
             case InputManager.PlayerInputDevice.Controller:
                 {
-                    velocityModifer = cursorSpeed * Time.deltaTime;
+                    velocityModifer = handSpeed * Time.deltaTime;
                 } break;
         }
 
@@ -85,8 +87,8 @@ public class PlayerHand : MonoBehaviour
         var cameraHeightInWorldUnits = Camera.main.orthographicSize;
 
         //Keep within screen bounds
-        newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits, cameraWidthInWorldUnits);
-        newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits, cameraHeightInWorldUnits);
+        newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits - extendBoundsX, cameraWidthInWorldUnits + extendBoundsX);
+        newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits - extendBoundsY, cameraHeightInWorldUnits + extendBoundsY);
 
         return newPosition;
     }
@@ -101,5 +103,23 @@ public class PlayerHand : MonoBehaviour
         //Navigate
         TraversalObject navArrow = results[0].GetComponent<TraversalObject>();
         navArrow.OnClicked();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!showBounds) return;
+
+        var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
+        var cameraHeightInWorldUnits = Camera.main.orthographicSize;
+
+        var topLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
+        var topRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
+        var bottomLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+        var bottomRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+
+        Debug.DrawLine(topLeft, topRight, Color.green);
+        Debug.DrawLine(topRight, bottomRight, Color.green);
+        Debug.DrawLine(bottomRight, bottomLeft, Color.green);
+        Debug.DrawLine(bottomLeft, topLeft, Color.green);
     }
 }

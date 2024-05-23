@@ -145,4 +145,4 @@ MonoBehaviour:
   areaCooldown: 1
   diminishingEffectiveness: 1
   diminishStrength: 10
-  debug: 1
+  debug: 0

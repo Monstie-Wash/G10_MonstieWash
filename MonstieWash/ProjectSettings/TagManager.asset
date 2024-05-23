@@ -10,6 +10,7 @@ TagManager:
   - Right
   - Left
   - Back
+  - Pickable
   layers:
   - Default
   - TransparentFX

@@ -304,6 +304,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6569485676934061755, guid: 070ad2168a3771e4b80e2709fbe626e2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1160285249}
+    - targetCorrespondingSourceObject: {fileID: 6569485676934061755, guid: 070ad2168a3771e4b80e2709fbe626e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1618143253}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 070ad2168a3771e4b80e2709fbe626e2, type: 3}
 --- !u!4 &184414836 stripped
@@ -880,7 +883,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1618143253}
   m_Layer: 0
-  m_Name: ItemContainer
+  m_Name: Bones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -894,7 +897,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618143252}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -903,7 +906,7 @@ Transform:
   - {fileID: 219275432}
   - {fileID: 1902438811}
   - {fileID: 1936638644}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 184414836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1902438810
 PrefabInstance:
@@ -1212,5 +1215,4 @@ SceneRoots:
   - {fileID: 483492758}
   - {fileID: 1077128141}
   - {fileID: 184414835}
-  - {fileID: 1618143253}
   - {fileID: 1278214514}

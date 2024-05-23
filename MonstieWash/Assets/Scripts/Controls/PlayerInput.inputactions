@@ -176,7 +176,7 @@
                 {
                     "name": "",
                     "id": "a5422ff9-1335-4e29-947c-b68341538458",
-                    "path": "<Keyboard>/f",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -214,6 +214,94 @@
                     "processors": "",
                     "groups": "",
                     "action": "ToggleUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "MenuActions",
+            "id": "58e2192e-b6c7-48a8-b028-01f12a3493c9",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "5d56a373-3b3c-47a3-a2b7-d60c08a656cc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "64893faa-c856-47e4-a605-1f9b281073fd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AltSelect",
+                    "type": "Button",
+                    "id": "0faa1987-e8f3-4106-9d4d-2f3cb93d9030",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Switch",
+                    "type": "Button",
+                    "id": "e79dfc19-5064-424e-83c5-2a9c93f85dd3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c5cba5ab-fc8d-497b-9a52-d3c39df0137d",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a9e48a2-5a03-40ce-a5b2-2139a192d0a5",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0224b92d-caf0-4695-9639-4e7a95e69401",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AltSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64a1edd4-0176-4e5f-b042-e6b6ca54b9ec",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

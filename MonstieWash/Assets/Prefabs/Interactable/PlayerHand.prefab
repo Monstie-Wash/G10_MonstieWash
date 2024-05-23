@@ -127,7 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7847184bfdd0c9248a57ecaf61510a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorSpeed: 10
+  handSpeed: 20
+  extendBoundsX: 3
+  extendBoundsY: 3
+  showBounds: 1
 --- !u!114 &8624381380993330181
 MonoBehaviour:
   m_ObjectHideFlags: 0
