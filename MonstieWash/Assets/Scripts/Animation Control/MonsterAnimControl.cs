@@ -40,7 +40,7 @@ public class MonsterAnimControl : MonoBehaviour
     /// Changes the monster's animation (using the Animator component) to fit its current mood
     /// </summary>
     /// <param name="currentMood">The name of the mood with the highest float value from mimicAI moodData</param>
-    void UpdateAnimations(MoodType currentMood)
+    private void UpdateAnimations(MoodType currentMood)
     {
         // If mood hasn't changed from last frame, don't bother updating
         if (currentMood == m_recentHighestMood) return;
