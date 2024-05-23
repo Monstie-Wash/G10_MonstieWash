@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7157311b40187444f83ae7aec34f0a5c
+guid: a711af30e0a176c47b2af443f8dd621e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1583438247537315272
-    second: penline_0
+      213: 5813688883339565151
+    second: tick_003_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Windows Store Apps
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: penline_0
+      name: tick_003_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 129
-        width: 946
-        height: 16
+        x: 0
+        y: 0
+        width: 1066
+        height: 600
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8cd8a3c52b089f510800000000000000
-      internalID: 1583438247537315272
+      spriteID: f589716bc3f5ea050800000000000000
+      internalID: 5813688883339565151
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      penline_0: 1583438247537315272
+      tick_003_0: 5813688883339565151
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

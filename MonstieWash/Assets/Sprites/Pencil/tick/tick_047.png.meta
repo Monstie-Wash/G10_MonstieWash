@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7157311b40187444f83ae7aec34f0a5c
+guid: 939887a910cd2cd4e888017a40925e49
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1583438247537315272
-    second: penline_0
+      213: 1224718394758860626
+    second: tick_047_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,39 +96,26 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: penline_0
+      name: tick_047_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 129
-        width: 946
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 466
+        y: 161
+        width: 100
+        height: 71
+      alignment: 9
+      pivot: {x: 0.059428405, y: 0.3294467}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8cd8a3c52b089f510800000000000000
-      internalID: 1583438247537315272
+      spriteID: 25f0d7524e21ff010800000000000000
+      internalID: 1224718394758860626
       vertices: []
       indices: 
       edges: []
@@ -136,7 +123,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 672dd0a61a35ba741ba660239dd9e05f
     internalID: 0
     vertices: []
     indices: 
@@ -144,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      penline_0: 1583438247537315272
+      tick_047_0: 1224718394758860626
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
