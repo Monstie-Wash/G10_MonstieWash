@@ -528,6 +528,14 @@ PrefabInstance:
       value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: m_clipboard
+      value: 
+      objectReference: {fileID: 784061516}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: m_CBAnimator
+      value: 
+      objectReference: {fileID: 784061515}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: taskContainer
       value: 
       objectReference: {fileID: 461648322}
@@ -535,6 +543,14 @@ PrefabInstance:
       propertyPath: paddingScaling
       value: 1.1
       objectReference: {fileID: 0}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: m_taskContainer
+      value: 
+      objectReference: {fileID: 461648322}
+    - target: {fileID: -334859519322762873, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: m_taskTextPrefab
+      value: 
+      objectReference: {fileID: 9051000898727591749, guid: 46543417b13805f4e9b01f49812cc32b, type: 3}
     - target: {fileID: 504427494389466731, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -621,12 +637,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allScenes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allScenes.Array.data[0]'
       value: 
+      objectReference: {fileID: 11400000, guid: cb33503f0ce38d5408718754c8f4e11f, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'allScenes.Array.data[1]'
+      value: 
       objectReference: {fileID: 11400000, guid: bbb0d5b26faec8d4bba58bde3a476a74, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'allScenes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 50d96a6f4c3e07a4d8400e08ae1b54b4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -884,6 +908,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7575682151688121040, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6112002346400558340, guid: 28b81e2d1c620e94b8ca91cab755af6c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
