@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
+
 public class MonsterController : MonoBehaviour
 {
     [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
@@ -10,6 +12,9 @@ public class MonsterController : MonoBehaviour
 
     private MonsterBrain m_monsterAI;
     private Animator m_myAnimator;
+
+    private AnimationClip m_interruptedAnimation = null;
+    [Tooltip("Place each of the monster attack animations here.")][SerializeField] private List<AnimationClip> attackList;  // List of monster attack animations to be chosen from randomly when an attack is made. 
 
     private MoodType m_recentHighestMood;
 
@@ -47,12 +52,47 @@ public class MonsterController : MonoBehaviour
         // If mood hasn't changed from last frame, don't bother updating
         if (currentMood == m_recentHighestMood) return;
 
+        // If currently performing an attack, should NOT update
+        if (m_interruptedAnimation != null) return;
+
         // Update the recent highest mood, then play the exit animation followed by the new animation
         m_recentHighestMood = currentMood;
         if (debug) Debug.Log($"Current highest mood was changed to {m_recentHighestMood}");
 
         // Set mood_changed to true in the animator
         m_myAnimator.SetBool("mood_changed", true); // begins the exit animation (if there is one).
+    }
+
+    /// <summary>
+    ///  Prepares an attack to be used: chooses one at random.
+    /// </summary>
+    /// <param name="sender"> The object that sent the attack event.</param>
+    /// <param name="e"> Arguments included in the attack event (CURRENTLY UNUSED).</param>
+    private void Attack(object sender, EventArgs e)
+    {
+        if (m_interruptedAnimation != null)        // Another attack is already in progress
+        {
+            if (debug) Debug.Log("Interrupted animation not null");
+            return;
+        }
+        var numAttacks = attackList.Count;
+
+        if (numAttacks == 0)   // No attacks to use!
+        {
+            if (debug) Debug.LogWarning("Tried to attack but there was no attack to use");
+            return;
+        }
+
+        // Randomly choose which attack to use
+        var chosenAttack = UnityEngine.Random.Range(0, numAttacks);
+        var attack = attackList[chosenAttack];
+
+        // Get and save the animation that's being interrupted
+        var animatorInfo = this.m_myAnimator.GetCurrentAnimatorClipInfo(0);
+        m_interruptedAnimation = animatorInfo[0].clip;
+
+        // Play the attack animation
+        m_myAnimator.Play(attack.name);
     }
 
     public void TransitoryAnimationComplete()
@@ -62,7 +102,7 @@ public class MonsterController : MonoBehaviour
 
         if (animToPlay == null)
         {
-            Debug.LogWarning($"MoodToAnimationMap for MoodType {highestMood} is missing/incorrect");
+            if (debug) Debug.LogWarning($"MoodToAnimationMap for MoodType {highestMood} is missing/incorrect");
             return;
         }
 
@@ -72,8 +112,10 @@ public class MonsterController : MonoBehaviour
         m_myAnimator.SetBool("mood_changed", false);
     }
 
-    private void Attack(object sender, EventArgs e)
+    public void AttackAnimationComplete()
     {
-        Debug.Log("Monster attack!");
+        // Return to the animation that was playing previously
+        m_myAnimator.Play(m_interruptedAnimation.name);
+        m_interruptedAnimation = null;
     }
 }

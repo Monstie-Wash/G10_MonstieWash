@@ -576,12 +576,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2177371479938978720, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177371479938978720, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: debugUi
+      value: 
+      objectReference: {fileID: 1903816591}
+    - target: {fileID: 2177371479938978720, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: maxBetweenAttacks
-      value: 8
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2177371479938978720, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: minBetweenAttacks
-      value: 5
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2177371479938978720, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: moodData.Array.size
@@ -605,7 +613,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
     - target: {fileID: 2177371479938978720, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: moodData.Array.data[0].attackThreshold
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: m_Name
@@ -773,6 +781,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc71f86e53d46242a1616b19f87d310, type: 3}
+--- !u!114 &1903816591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1801075961970723756, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+  m_PrefabInstance: {fileID: 2146444609}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2146444609
 PrefabInstance:
   m_ObjectHideFlags: 0

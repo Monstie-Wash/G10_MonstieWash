@@ -332,7 +332,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Slime@atk
+  m_Name: Slime@atk_en
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -393,10 +393,10 @@ AnimatorStateMachine:
     m_Position: {x: 90, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -740540022843899597}
-    m_Position: {x: 520, y: -40, z: 0}
+    m_Position: {x: 0, y: 470, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2628974754670822014}
-    m_Position: {x: 780, y: -40, z: 0}
+    m_Position: {x: 260, y: 470, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

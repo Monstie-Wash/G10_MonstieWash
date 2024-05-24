@@ -19,6 +19,8 @@ public class AttackHitbox : MonoBehaviour
         m_playerHealth = m_playerHand.GetComponentInChildren<PlayerHealth>();
     }
 
+    // Note: OnTriggerStay2D method only damages the player if the hand is moving, assumedly because the Physics System currently isn't running while the hand is stationary. Look into possible solutions when polishing 
+
     /// <summary>
     /// If the colliding object is the PlayerHealth hitbox, deal damage to the player.
     /// </summary>

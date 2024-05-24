@@ -2894,34 +2894,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
-      propertyPath: m_Enabled
+      propertyPath: attackList.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
-      propertyPath: moodToAnimationMap.Array.data[0].animation
+      propertyPath: 'attackList.Array.data[0]'
       value: 
-      objectReference: {fileID: 7400000, guid: f1eed0e68ee572d4fb4c5a79c46beb93, type: 2}
+      objectReference: {fileID: 7400000, guid: 3419eb33094ab9a4db72bfaccca975b2, type: 2}
     - target: {fileID: 6174601992942811934, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: m_Name
       value: Slime_body&eyes
       objectReference: {fileID: 0}
-    - target: {fileID: 7025138398951839190, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
-      propertyPath: m_SortingLayer
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7025138398951839190, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7025138398951839190, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1180892439
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 6793149257861410724, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
-    - {fileID: 6721876564328170904, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
-    - {fileID: 6143638795254890808, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}

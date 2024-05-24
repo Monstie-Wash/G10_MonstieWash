@@ -280,7 +280,9 @@ public class MonsterBrain : MonoBehaviour
             debugUi.text += $"MoodName: {moodData[i].mood.MoodName} MoodValue: {Mathf.FloorToInt(moodData[i].value)}\nMood Lower / Upper Limits: {moodData[i].mood.MoodLowerLimit}/{moodData[i].mood.MoodUpperLimit}\n\n";
         }
 
-        debugUi.text += $"Current Mood: {HighestMood.MoodName}";
+        debugUi.text += $"Current Mood: {HighestMood.MoodName}\n\n";
+
+        debugUi.text += $"Time to next attack attempt: {m_attackTimer - m_lastAttackTime}";
     }
 
     /// <summary>
