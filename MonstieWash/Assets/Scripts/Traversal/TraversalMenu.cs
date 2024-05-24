@@ -4,8 +4,18 @@ using UnityEngine.UI;
 public class TraversalMenu : MonoBehaviour
 {
     [SerializeField] private GameScene targetScene;
+    [SerializeField] private LoadBehaviour loadBehaviour;
+    private enum LoadBehaviour
+    {
+        Add,
+        Single,
+        Move
+    }
 
-    private MenuLoader m_saveObj;
+
+
+    private MenuLoader m_menuObj;
+    private RoomSaver m_saveObj;
     private string m_targetScene;
     private Button m_button;
 
@@ -14,14 +24,27 @@ public class TraversalMenu : MonoBehaviour
         if (targetScene == null) Debug.LogError($"Target scene not assigned for {name}!");
         else m_targetScene = targetScene.SceneName;
 
-        m_saveObj = FindFirstObjectByType<MenuLoader>();
+        m_menuObj = FindFirstObjectByType<MenuLoader>();
+        m_saveObj = FindFirstObjectByType<RoomSaver>();
         m_button = GetComponent<Button>();
 
-        m_button.onClick.AddListener(OnClick);
+        m_button.onClick.AddListener(OnClicked);
     }
 
-    private void OnClick()
+    private void OnClicked()
     {
-        m_saveObj.LoadMonsterScene(m_targetScene);
+        switch(loadBehaviour)
+        {
+            case LoadBehaviour.Add:
+                m_menuObj.LoadSceneAdditive(m_targetScene);
+                break;
+            case LoadBehaviour.Single:
+                m_menuObj.LoadSceneSingle(m_targetScene);
+                break;
+            case LoadBehaviour.Move:
+                m_saveObj.MoveToScene(m_targetScene);
+                break;
+        }
+        
     }
 }
