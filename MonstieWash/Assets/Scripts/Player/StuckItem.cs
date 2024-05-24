@@ -64,6 +64,8 @@ public class StuckItem : MonoBehaviour
         }
         else
         {
+            m_spriteRenderer.sortingLayerName = "Tools";
+            m_spriteRenderer.sortingOrder = 0;
             m_rb.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
             m_OOBCheckRoutine = StartCoroutine(CheckOOB());
