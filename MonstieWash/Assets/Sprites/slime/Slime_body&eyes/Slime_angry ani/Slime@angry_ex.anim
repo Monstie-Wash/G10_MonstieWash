@@ -204,7 +204,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.7916667
-    functionName: TransitoryAnimationComplete
+    functionName: AttackAnimationComplete
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: slimeHappy
   m_EditorClassIdentifier: 
   moodName: slimeHappy
-  moodUpperLimit: 20
+  moodUpperLimit: 30
   moodLowerLimit: 0
   moodStartingPoint: 0
   moodNaturalChange: 1
