@@ -566,6 +566,7 @@ GameObject:
   - component: {fileID: 1065892198}
   - component: {fileID: 1065892197}
   - component: {fileID: 1065892196}
+  - component: {fileID: 1065892199}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -636,19 +637,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1065892197}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1314431382}
-        m_TargetAssemblyTypeName: ScoreUIManager, Assembly-CSharp
-        m_MethodName: OnLevelExit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1065892197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,6 +676,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065892194}
   m_CullTransparentMesh: 1
+--- !u!114 &1065892199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065892194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996384be10af89946a0f302d7d2d5cbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
 --- !u!1 &1149029988
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,7 +970,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1314431384}
-  - component: {fileID: 1314431383}
   - component: {fileID: 1314431382}
   m_Layer: 0
   m_Name: MenuGameManager
@@ -995,18 +996,6 @@ MonoBehaviour:
   m_spacing: 2
   m_LIList: []
   m_secondsWait: 0.5
---- !u!114 &1314431383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1314431381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6382260951fc570428d3619ebf23fea6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1314431384
 Transform:
   m_ObjectHideFlags: 0

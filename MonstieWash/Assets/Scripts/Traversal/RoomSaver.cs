@@ -39,9 +39,9 @@ public class RoomSaver : MonoBehaviour
         //Load the loading screen scene first
         await LoadScene(m_allScenes[0]);
 
-        var tasks = new Task[m_allScenes.Count - 1];
+        var tasks = new Task[m_allScenes.Count - 2];
 
-        for (int i = 1; i < m_allScenes.Count; i++)
+        for (int i = 1; i < m_allScenes.Count - 1; i++)
         {
             tasks[i-1] = LoadScene(m_allScenes[i]);
         }
@@ -50,7 +50,7 @@ public class RoomSaver : MonoBehaviour
 
         OnScenesLoaded?.Invoke();
 
-        for (int i = 1; i < m_allScenes.Count; i++)
+        for (int i = 1; i < m_allScenes.Count - 1; i++)
         {
             SetSceneActive(m_allScenes[i], false);
         }
@@ -98,5 +98,11 @@ public class RoomSaver : MonoBehaviour
         }
 
         if (active) m_currentScene = currentScene;
+    }
+
+    public void MoveToEndScreen()
+    {
+        SetSceneActive(m_currentScene.name, false);
+        SetSceneActive(m_allScenes[m_allScenes.Count - 1], true);
     }
 }

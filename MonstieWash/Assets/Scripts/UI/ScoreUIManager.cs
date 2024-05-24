@@ -122,10 +122,5 @@ public class ScoreUIManager : MonoBehaviour
     private void Inputs_OnAlt_Select()
     {
         m_skip = true;
-    }
-
-    private void OnLevelExit()
-    {
-        Debug.Log("LEVEL EXIT");
-    }    
+    }   
 }
