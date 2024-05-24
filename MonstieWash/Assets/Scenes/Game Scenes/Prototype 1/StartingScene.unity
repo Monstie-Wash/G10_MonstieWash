@@ -381,30 +381,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allScenes.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allScenes.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 0738885445f55d842a6622c34db16991, type: 2}
+      objectReference: {fileID: 11400000, guid: cb33503f0ce38d5408718754c8f4e11f, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allScenes.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: b0c92342399a695458d82ea10ef3f8d6, type: 2}
+      objectReference: {fileID: 11400000, guid: 0738885445f55d842a6622c34db16991, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allScenes.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 24d1c85b41478b04fbf238f820f4baff, type: 2}
+      objectReference: {fileID: 11400000, guid: b0c92342399a695458d82ea10ef3f8d6, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allScenes.Array.data[3]'
       value: 
-      objectReference: {fileID: 11400000, guid: 0b18b108c7e151f4499e12cc75d0b9c3, type: 2}
+      objectReference: {fileID: 11400000, guid: 24d1c85b41478b04fbf238f820f4baff, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allScenes.Array.data[4]'
       value: 
-      objectReference: {fileID: 11400000, guid: ef3f9a570dbff8840a51fbb1fea3c7e9, type: 2}
+      objectReference: {fileID: 11400000, guid: 0b18b108c7e151f4499e12cc75d0b9c3, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allScenes.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ef3f9a570dbff8840a51fbb1fea3c7e9, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'allScenes.Array.data[6]'
       value: 
       objectReference: {fileID: 11400000, guid: 10780f6b9ba09244b96aa06679ecc181, type: 2}
     m_RemovedComponents: []
