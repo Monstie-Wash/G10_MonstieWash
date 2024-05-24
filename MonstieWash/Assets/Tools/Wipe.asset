@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Wipe
   m_EditorClassIdentifier: 
   mask: {fileID: 21300000, guid: c26f584e2a3ccbd43baa0472155dc9c6, type: 3}
-  size: 2
-  inputStrength: 20
-  strength: 2.515315
+  size: 1
+  inputStrength: 65.9
+  strength: 20.890648

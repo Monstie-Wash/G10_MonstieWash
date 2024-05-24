@@ -8,13 +8,14 @@ using UnityEngine.SceneManagement;
 public class RoomSaver : MonoBehaviour
 {
     public event Action OnScenesLoaded;
-    public event Action OnSceneChanged;
+    public event Action<string> OnSceneChanged;
 
     [SerializeField] private List<GameScene> allScenes = new();
 
     private List<string> m_allScenes = new();
     private Scene m_currentScene;
 
+    public List<string> AllScenes { get { return m_allScenes; } }
 
     private void Awake()
     {
@@ -31,7 +32,7 @@ public class RoomSaver : MonoBehaviour
     }
 
     /// <summary>
-    /// Asynchronously oads all the scenes in the m_allScenes list.
+    /// Asynchronously loads all the scenes in the m_allScenes list.
     /// </summary>
     private async void LoadScenes()
     {
@@ -73,7 +74,7 @@ public class RoomSaver : MonoBehaviour
         SetSceneActive(m_currentScene.name, false);
         SetSceneActive(target, true);
 
-        OnSceneChanged?.Invoke();
+        OnSceneChanged?.Invoke(target);
     }
 
     /// <summary>

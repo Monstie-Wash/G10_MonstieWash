@@ -3,43 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class MonsterBrain : MonoBehaviour
 {
+    [System.Serializable]
+    protected class MoodData
+    {
+        public MoodType mood;
+        public float value;
+    }
 
-    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] private List<MoodType> moodData; //Scriptable objects holding data about moods.
+    public System.Action<MoodType> OnMoodChanged;
 
-    private Dictionary<int,float> activeMoods; //Current moods status. int refers to id and number of mood in list, float refers to current value of mood on its own scale.
+    [Tooltip("Add all moodtype objects intended for this brain here.")] [SerializeField] protected List<MoodData> moodData = new(); //Scriptable objects holding data about moods.
+    private int m_designerSanityBuff = 10; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
+    
+    [Tooltip("Updates the debug window when turned on")] [SerializeField] private bool debug = false;
+    [Tooltip("Pauses the brain when on.")][SerializeField] private bool pause = false;
+    [Tooltip("Attach Text Mesh Pro Box here for displaying debug info")][SerializeField] private TextMeshProUGUI debugUi;
 
-    private Dictionary<string, int> activeMoodNames; // Current moods and their names. int refers to id and number of mood in list, string refers to name.
-
-    [Tooltip("Updates the debug window when turned on")] [SerializeField] public bool Debug;
-
-
-    [Tooltip("Pauses the brain when on.")][SerializeField] public bool Pause;
-
-    private int m_designerSanityBuff; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
-
-
-    [Tooltip("Attach Text Mesh Pro Box here for displaying debug info")][SerializeField] public TextMeshProUGUI DebugUi;
-
-    [HideInInspector] public Dictionary<int, float> ActiveMoods { get { return activeMoods; } }
-    [HideInInspector] public List<MoodType> MoodData { get { return moodData; } }
-
+    [HideInInspector] public MoodType HighestMood { get; private set; }
+    [HideInInspector] public HashSet<MoodType> Moods { get; private set; } = new();
 
     private void Awake()
     {
-        m_designerSanityBuff = 10;
-        activeMoods = new Dictionary<int, float>();
-        activeMoodNames = new Dictionary<string, int>();
-
-        LoadMoods();
+        foreach (var data in moodData)
+        {
+            Moods.Add(data.mood);
+        }
     }
-
 
     private void Update()
     {
-        if (Pause) return;
+        if (pause) return;
 
         //Moods move by their natural change value to their resting point value.
         NaturalChange();
@@ -51,30 +48,30 @@ public class MonsterBrain : MonoBehaviour
         NegativeChainReactions();
         //Moods are kept to their upper and lower limits.
         MaintainLimits();
-
+        //Keep up-to-date on the current mood
+        UpdateHighestMood();
 
         //Debug Updates
-        if (Debug) UpdateDebugText();
+        if (debug) UpdateDebugText();
     }
-
 
     /// <summary>
     /// Accesses the Moods resting point and natural rate of change, then moves mood towards its resting point by its rate of change.
     /// </summary>
     private void NaturalChange()
     {
-        for (int i = 0; i < activeMoods.Count; i++)
+        for (int i = 0; i < moodData.Count; i++)
         {
             //Skip if doesn't naturally update.
-            if (moodData[i].MoodNaturalChange == 0) continue;
+            if (moodData[i].mood.MoodNaturalChange == 0) continue;
 
-            float currentValue = activeMoods[i];
+            float currentValue = moodData[i].value;
             //Move currentvalue towards resting point by rate of change;
-            currentValue = FloatTowardsTarget(currentValue, moodData[i].MoodNaturalChange * Time.deltaTime , moodData[i].MoodRestingPoint);
+            currentValue = FloatTowardsTarget(currentValue, moodData[i].mood.MoodNaturalChange * Time.deltaTime , moodData[i].mood.MoodRestingPoint);
             //Assign new value to active mood.
-            activeMoods[i] = currentValue;
+            moodData[i].value = currentValue;
 
-            if (Debug) print("Active Mood: " + moodData[i].MoodName + " naturally changed to " + currentValue );
+            if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " naturally changed to " + currentValue );
         }
     }
 
@@ -83,18 +80,18 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     private void ChaoticInterference()
     {
-        for (int i = 0; i < activeMoods.Count; i++)
+        for (int i = 0; i < moodData.Count; i++)
         {           
-            if (MoodData[i].ChaosMultiplier == 0) continue; //Skip chaos values of 0
+            if (moodData[i].mood.ChaosMultiplier == 0) continue; //Skip chaos values of 0
 
-            float currentValue = activeMoods[i];
+            float currentValue = moodData[i].value;
             //Determine chaotic value
-            float chaosVal = Random.Range(-moodData[i].ChaosMultiplier, moodData[i].ChaosMultiplier) * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
+            float chaosVal = Random.Range(-moodData[i].mood.ChaosMultiplier, moodData[i].mood.ChaosMultiplier) * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Changes current value by chaos value;
-            activeMoods[i] = currentValue + (chaosVal * Time.deltaTime);
+            moodData[i].value = currentValue + (chaosVal * Time.deltaTime);
 
-            if (Debug) print("Active Mood: " + moodData[i].MoodName + " chaotically changed by " + chaosVal * Time.deltaTime);
+            if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " chaotically changed by " + chaosVal * Time.deltaTime);
         }
     }
 
@@ -105,23 +102,23 @@ public class MonsterBrain : MonoBehaviour
     private void PositiveChainReactions()
     {
         //Loop through active moods.
-        for (int i = 0; i < activeMoods.Count; i++)
+        for (int i = 0; i < moodData.Count; i++)
         {
-            if (MoodData[i].PositiveReactionStrength == 0) continue; //Skip if reaction strenght is 0
+            if (moodData[i].mood.PositiveReactionStrength == 0) continue; //Skip if reaction strenght is 0
             
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
-            var percentageStrength = ((activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
-            float chainAmount = (percentageStrength / 100) * MoodData[i].PositiveReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
+            var percentageStrength = ((moodData[i].value - moodData[i].mood.MoodLowerLimit) * 100) / (moodData[i].mood.MoodUpperLimit - moodData[i].mood.MoodLowerLimit);
+            float chainAmount = (percentageStrength / 100) * moodData[i].mood.PositiveReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of positive reactions in mood.
-            for (int j = 0; j < moodData[i].PositiveChainReactions.Count; j++)
+            for (int j = 0; j < moodData[i].mood.PositiveChainReactions.Count; j++)
             {
-                int targetMood = AccessActiveMoodIndex(moodData[i].PositiveChainReactions[j]);
+                var targetMoodData = moodData.Find(item => item.mood == moodData[i].mood.PositiveChainReactions[j]);
 
                 //Apply positive chain amount to each active mood that is in the list of positive reactions.
-                activeMoods[targetMood] += chainAmount * Time.deltaTime;
+                targetMoodData.value += chainAmount * Time.deltaTime;
 
-                if (Debug) print("Active Mood: " + moodData[i].MoodName + " positively influenced " + moodData[targetMood].MoodName + "by amount " + chainAmount * Time.deltaTime);
+                if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " positively influenced " + targetMoodData.mood.MoodName + "by amount " + chainAmount * Time.deltaTime);
             }
         }
     }
@@ -133,23 +130,23 @@ public class MonsterBrain : MonoBehaviour
     private void NegativeChainReactions()
     {
         //Loop through active moods.
-        for (int i = 0; i < activeMoods.Count; i++)
+        for (int i = 0; i < moodData.Count; i++)
         {
-            if (MoodData[i].NegativeReactionStrength == 0) continue; //Skip if reaction strenght is 0
+            if (moodData[i].mood.NegativeReactionStrength == 0) continue; //Skip if reaction strenght is 0
 
             //Determine positive strength of current mood. (How far it is between its lower and upper limit)
-            var percentageStrength = ((activeMoods[i] - moodData[i].MoodLowerLimit) * 100) / (moodData[i].MoodUpperLimit - moodData[i].MoodLowerLimit);
-            float chainAmount = (percentageStrength / 100) * MoodData[i].NegativeReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
+            var percentageStrength = ((moodData[i].value - moodData[i].mood.MoodLowerLimit) * 100) / (moodData[i].mood.MoodUpperLimit - moodData[i].mood.MoodLowerLimit);
+            float chainAmount = (percentageStrength / 100) * moodData[i].mood.NegativeReactionStrength * m_designerSanityBuff; //numbers are incredibly small *10 makes it more reasonable for designers.
 
             //Loop through list of negative reactions in mood.
-            for (int j = 0; j < moodData[i].NegativeChainReactions.Count; j++)
+            for (int j = 0; j < moodData[i].mood.NegativeChainReactions.Count; j++)
             {
-                int targetMood = AccessActiveMoodIndex(moodData[i].NegativeChainReactions[j]);
+                var targetMoodData = moodData.Find(item => item.mood == moodData[i].mood.NegativeChainReactions[j]);
 
                 //Apply negative chain amount to each active mood that is in the list of negative reactions.
-                activeMoods[targetMood] -= chainAmount * Time.deltaTime;
+                targetMoodData.value -= chainAmount * Time.deltaTime;
 
-                if (Debug) print("Active Mood: " + moodData[i].MoodName + " negatively influenced " + moodData[targetMood].MoodName + " by amount " + chainAmount * Time.deltaTime);
+                if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " negatively influenced " + targetMoodData.mood.MoodName + " by amount " + chainAmount * Time.deltaTime);
             }
         }
     }
@@ -159,7 +156,7 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     private void MaintainLimits()
     {
-        for (int i = 0; i < activeMoods.Count; i++)
+        for (int i = 0; i < moodData.Count; i++)
         {
             MaintainLimit(i);
         }
@@ -171,102 +168,7 @@ public class MonsterBrain : MonoBehaviour
     /// <param name="moodInt"> Given index of desired mood in active moods.</param> 
     private void MaintainLimit(int moodInt)
     {
-        activeMoods[moodInt] = Mathf.Clamp(activeMoods[moodInt], moodData[moodInt].MoodLowerLimit, moodData[moodInt].MoodUpperLimit);
-    }
-
-    /// <summary>
-    /// Takes all moodtypes and stores them in activeMood dictionary, where first value is their index in moodtypes list and the second is their current value;
-    /// </summary>
-    private void LoadMoods()
-    {
-        for(int i = 0; i < moodData.Count; i++)
-        {
-            activeMoods.Add(i, moodData[i].MoodStartingPoint);
-            activeMoodNames.Add(moodData[i].MoodName,i);
-        }
-    }
-
-
-    /// <summary>
-    /// Updates ui textbox with information useful to debugging.
-    /// </summary>
-    private void UpdateDebugText()
-    {
-        DebugUi.text = "";
-        for (int i = 0; i < activeMoods.Count; i++)
-        {
-            DebugUi.text += $"MoodName: {moodData[i].MoodName} MoodValue: { Mathf.FloorToInt(activeMoods[i]).ToString()}\nMood Lower / Upper Limits: { moodData[i].MoodLowerLimit.ToString()}/{ moodData[i].MoodUpperLimit.ToString()}\n\n";
-        }
-    }
-
-
-    /// <summary>
-    /// Returns the index of a moodtype within active moods by its string name.
-    /// </summary>
-    /// <param name="name"> The name of the desired mood index</param>
-    /// <returns></returns>
-    /// <exception cref="System.Exception"> When no mood exists with that name </exception>
-    private int AccessActiveMoodIndex(string name)
-    {
-        return activeMoodNames[name];
-    }
-
-    /// <summary>
-    /// Returns the index of a moodtype within active moods by a scriptable object reference.
-    /// </summary>
-    /// <param name="name"> The name of the desired mood index</param>
-    /// <returns></returns>
-    /// <exception cref="System.Exception"> When no mood exists with that name </exception>
-    private int AccessActiveMoodIndex(MoodType refMT)
-    {
-        return activeMoodNames[refMT.MoodName];
-    }
-
-
-    /// <summary>
-    /// Updates a mood with the given name by the amount given, useful for other scripts to interact with this.
-    /// </summary>
-    /// <param name="amount"> The float amount to change the mood by.</param>
-    /// <param name="name"> The name of the mood desired to change.</param>
-    public void UpdateMood(float amount, string name)
-    {
-        var index = AccessActiveMoodIndex(name);
-        activeMoods[index] += amount;
-        MaintainLimit(index);
-    }
-
-    /// <summary>
-    /// Updates a mood with the given moodtype object by the amount given, useful for other scripts to interact with this.
-    /// </summary>
-    /// <param name="amount"></param>
-    /// <param name="mt"></param>
-    public void UpdateMood(float amount, MoodType mt)
-    {
-        var index = AccessActiveMoodIndex(mt);
-        activeMoods[index] += amount;
-        MaintainLimit(index);
-    }
-
-    /// <summary>
-    /// Returns the value of a given moodtype, useful for other scripts.
-    /// </summary>
-    /// <param name="mt"> A moodtype object.</param>
-    /// <returns></returns>
-    public float ReadMood(MoodType mt)
-    {
-        var index = AccessActiveMoodIndex(mt);
-        return activeMoods[index];
-    }
-
-    /// <summary>
-    /// Returns the value of a given mood by its name, useful for other scripts.
-    /// </summary>
-    /// <param name="name"> The desired moodtype</param>
-    /// <returns></returns>
-    public float ReadMood(string name)
-    {
-        var index = AccessActiveMoodIndex(name);
-        return activeMoods[index];
+        moodData[moodInt].value = Mathf.Clamp(moodData[moodInt].value, moodData[moodInt].mood.MoodLowerLimit, moodData[moodInt].mood.MoodUpperLimit);
     }
 
     /// <summary>
@@ -296,5 +198,96 @@ public class MonsterBrain : MonoBehaviour
         return value;
     }
 
+    /// <summary>
+    /// Updates HighestMood with the new highest-value mood, triggering the OnMoodChanged event.
+    /// </summary>
+    private void UpdateHighestMood()
+    {
+        var highestMoodData = moodData[0];
 
+        foreach (var data in moodData)
+        {
+            if (data.value > highestMoodData.value)
+            {
+                highestMoodData = data;
+            }
+        }
+
+        if (HighestMood != highestMoodData.mood)
+        {
+            HighestMood = highestMoodData.mood;
+            OnMoodChanged?.Invoke(HighestMood);
+            if (debug) Debug.Log($"Highest mood changed to {HighestMood.MoodName}");
+        }
+    }
+
+    /// <summary>
+    /// Updates ui textbox with information useful to debugging.
+    /// </summary>
+    private void UpdateDebugText()
+    {
+        debugUi.text = "";
+        for (int i = 0; i < moodData.Count; i++)
+        {
+            debugUi.text += $"MoodName: {moodData[i].mood.MoodName} MoodValue: {Mathf.FloorToInt(moodData[i].value)}\nMood Lower / Upper Limits: {moodData[i].mood.MoodLowerLimit}/{moodData[i].mood.MoodUpperLimit}\n\n";
+        }
+
+        debugUi.text += $"Current Mood: {HighestMood.MoodName}";
+    }
+
+    /// <summary>
+    /// Updates a mood with the given name by the amount given, useful for other scripts to interact with this.
+    /// </summary>
+    /// <param name="amount"> The float amount to change the mood by.</param>
+    /// <param name="name"> The name of the mood desired to change.</param>
+    public void UpdateMood(float amount, string name)
+    {
+        var index = moodData.FindIndex(item => item.mood.name == name);
+        moodData[index].value += amount;
+        MaintainLimit(index);
+    }
+
+    /// <summary>
+    /// Updates a mood with the given moodtype object by the amount given, useful for other scripts to interact with this.
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="mt"></param>
+    public void UpdateMood(float amount, MoodType mt)
+    {
+        var index = moodData.FindIndex(item => item.mood == mt);
+        moodData[index].value += amount;
+        MaintainLimit(index);
+    }
+
+    /// <summary>
+    /// Returns the value of a given moodtype, useful for other scripts.
+    /// </summary>
+    /// <param name="mt"> A moodtype object.</param>
+    /// <returns>The value of the mood.</returns>
+    public float ReadMood(MoodType mt)
+    {
+        var index = moodData.FindIndex(item => item.mood == mt);
+        return moodData[index].value;
+    }
+
+    /// <summary>
+    /// Returns the value of a given mood by its ID, useful for other scripts.
+    /// </summary>
+    /// <param id="id"> The desired moodtype's ID</param>
+    /// <returns>The value of the mood.</returns>
+    public float ReadMood(int id)
+    {
+        return moodData[id].value;
+    }
+
+    /// <summary>
+    /// Returns the value of a given mood by its name, useful for other scripts.
+    /// </summary>
+    /// <param name="name"> The desired moodtype</param>
+    /// <returns>The value of the mood.</returns>
+    public float ReadMood(string name)
+    {
+        var data = moodData.Find(item => item.mood.MoodName == name);
+        return data.value;
+    }
 }

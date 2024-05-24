@@ -3,11 +3,12 @@ using UnityEngine;
 public class PlayerHand : MonoBehaviour
 {
     //Unity Inspector
-    [SerializeField][Range(1.0f, 50.0f)] private float cursorSpeed = 20f;
+    [SerializeField, Range(1.0f, 50.0f)] private float handSpeed = 20f;
+    [SerializeField, Range(0f, 5f)] private float extendBoundsX, extendBoundsY;
+    [SerializeField] private bool showBounds = false;
 
     //Private
-    private float m_moveHorizontal;
-    private float m_moveVertical;
+    private Vector2 m_movement;
     private float m_moveThreshold = 0.01f;
     private const float k_mouseSpeedMultiplier = 0.001f;
 
@@ -16,8 +17,9 @@ public class PlayerHand : MonoBehaviour
 
     public bool IsMoving
     {
-        get { return Mathf.Abs(m_moveHorizontal) > m_moveThreshold || Mathf.Abs(m_moveVertical) > m_moveThreshold; }
+        get { return m_movement.magnitude > m_moveThreshold; }
     }
+    public Vector2 Velocity { get { return m_movement; } }
 
     private void OnEnable()
     {
@@ -47,14 +49,12 @@ public class PlayerHand : MonoBehaviour
 
     public void Inputs_MovePerformed(Vector2 movementInput)
     {
-        m_moveHorizontal = movementInput.x;
-        m_moveVertical = movementInput.y;
+        m_movement = movementInput;
     }
 
     public void Inputs_MoveEnded()
     {
-        m_moveHorizontal = 0f;
-        m_moveVertical = 0f;
+        m_movement = Vector2.zero;
     }
 
     private void Inputs_OnNavigate()
@@ -73,22 +73,22 @@ public class PlayerHand : MonoBehaviour
         {
             case InputManager.PlayerInputDevice.MKB:
                 {
-                    velocityModifer = cursorSpeed * k_mouseSpeedMultiplier;
+                    velocityModifer = handSpeed * k_mouseSpeedMultiplier;
                 } break;
             case InputManager.PlayerInputDevice.Controller:
                 {
-                    velocityModifer = cursorSpeed * Time.deltaTime;
+                    velocityModifer = handSpeed * Time.deltaTime;
                 } break;
         }
 
-        var newVelocity = new Vector3(m_moveHorizontal * velocityModifer, m_moveVertical * velocityModifer, 0f);
+        var newVelocity = new Vector3(m_movement.x * velocityModifer, m_movement.y * velocityModifer, 0f);
         var newPosition = transform.position + newVelocity;
         var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
         var cameraHeightInWorldUnits = Camera.main.orthographicSize;
 
         //Keep within screen bounds
-        newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits, cameraWidthInWorldUnits);
-        newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits, cameraHeightInWorldUnits);
+        newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits - extendBoundsX, cameraWidthInWorldUnits + extendBoundsX);
+        newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits - extendBoundsY, cameraHeightInWorldUnits + extendBoundsY);
 
         return newPosition;
     }
@@ -103,5 +103,23 @@ public class PlayerHand : MonoBehaviour
         //Navigate
         TraversalObject navArrow = results[0].GetComponent<TraversalObject>();
         navArrow.OnClicked();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!showBounds) return;
+
+        var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
+        var cameraHeightInWorldUnits = Camera.main.orthographicSize;
+
+        var topLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
+        var topRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
+        var bottomLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+        var bottomRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+
+        Debug.DrawLine(topLeft, topRight, Color.green);
+        Debug.DrawLine(topRight, bottomRight, Color.green);
+        Debug.DrawLine(bottomRight, bottomLeft, Color.green);
+        Debug.DrawLine(bottomLeft, topLeft, Color.green);
     }
 }
