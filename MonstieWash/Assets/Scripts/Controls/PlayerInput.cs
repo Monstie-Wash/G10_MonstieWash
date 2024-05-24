@@ -198,7 +198,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a5422ff9-1335-4e29-947c-b68341538458"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -264,7 +264,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Alt Select"",
+                    ""name"": ""AltSelect"",
                     ""type"": ""Button"",
                     ""id"": ""0faa1987-e8f3-4106-9d4d-2f3cb93d9030"",
                     ""expectedControlType"": ""Button"",
@@ -312,7 +312,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Alt Select"",
+                    ""action"": ""AltSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -349,7 +349,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MenuActions = asset.FindActionMap("MenuActions", throwIfNotFound: true);
         m_MenuActions_Select = m_MenuActions.FindAction("Select", throwIfNotFound: true);
         m_MenuActions_Back = m_MenuActions.FindAction("Back", throwIfNotFound: true);
-        m_MenuActions_AltSelect = m_MenuActions.FindAction("Alt Select", throwIfNotFound: true);
+        m_MenuActions_AltSelect = m_MenuActions.FindAction("AltSelect", throwIfNotFound: true);
         m_MenuActions_Switch = m_MenuActions.FindAction("Switch", throwIfNotFound: true);
     }
 

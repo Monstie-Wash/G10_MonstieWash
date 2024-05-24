@@ -32,7 +32,7 @@ public class RoomSaver : MonoBehaviour
     }
 
     /// <summary>
-    /// Asynchronously oads all the scenes in the m_allScenes list.
+    /// Asynchronously loads all the scenes in the m_allScenes list.
     /// </summary>
     private async void LoadScenes()
     {
