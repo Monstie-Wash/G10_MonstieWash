@@ -308,7 +308,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Quit
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &387920924
 MonoBehaviour:
   m_ObjectHideFlags: 0
