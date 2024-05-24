@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/Prototype 1/StartingScene.unity
     guid: aa33355a735657949b555275e662b643
   - enabled: 1
+    path: Assets/Scenes/Game Scenes/MenuLevels/Loading.unity
+    guid: b273c6310ed12a54ba8fd6fa011a269f
+  - enabled: 1
     path: Assets/Scenes/Game Scenes/Prototype 1/Overview.unity
     guid: 5f12d0f1c93aed941b27a58233e9fd0e
   - enabled: 1
