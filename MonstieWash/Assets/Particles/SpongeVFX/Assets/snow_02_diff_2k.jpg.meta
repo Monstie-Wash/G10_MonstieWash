@@ -195,7 +195,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      snow_02_diff_2k_0: 465645725321981157
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

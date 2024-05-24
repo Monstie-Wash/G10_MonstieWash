@@ -195,7 +195,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      snow_02_rough_2k_0: 2980339801476115005
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
