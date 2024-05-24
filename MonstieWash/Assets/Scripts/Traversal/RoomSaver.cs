@@ -36,23 +36,27 @@ public class RoomSaver : MonoBehaviour
     /// </summary>
     private async void LoadScenes()
     {
-        var tasks = new Task[m_allScenes.Count];
+        //Load the loading screen scene first
+        await LoadScene(m_allScenes[0]);
 
-        for (int i = 0; i < m_allScenes.Count; i++)
+        var tasks = new Task[m_allScenes.Count - 1];
+
+        for (int i = 1; i < m_allScenes.Count; i++)
         {
-            tasks[i] = LoadScene(m_allScenes[i]);
+            tasks[i-1] = LoadScene(m_allScenes[i]);
         }
 
         await Task.WhenAll(tasks);
 
         OnScenesLoaded?.Invoke();
 
-        for (int i = 0; i < m_allScenes.Count; i++)
+        for (int i = 1; i < m_allScenes.Count; i++)
         {
             SetSceneActive(m_allScenes[i], false);
         }
 
-        SetSceneActive(m_allScenes[0], true);
+        SetSceneActive(m_allScenes[0], false);
+        SetSceneActive(m_allScenes[1], true);
     }
 
     /// <summary>
