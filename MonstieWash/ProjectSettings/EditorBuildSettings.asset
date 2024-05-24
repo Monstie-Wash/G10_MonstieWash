@@ -38,10 +38,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/MenuLevels/LevelSelectScene.unity
     guid: 901b889d8c9db7c47b3ebbf220ebdabf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Testing Scenes/SlimeDeathFront.unity
     guid: c7f26c7f0d4a5054c83787d9554c9552
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Testing Scenes/SlimeDeathTest.unity
     guid: 911f25d4aafc4f649b7aa90915578094
   m_configObjects: {}

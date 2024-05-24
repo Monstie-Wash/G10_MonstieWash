@@ -625,12 +625,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allScenes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allScenes.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: bbb0d5b26faec8d4bba58bde3a476a74, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'allScenes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 50d96a6f4c3e07a4d8400e08ae1b54b4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
