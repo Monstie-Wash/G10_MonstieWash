@@ -17,7 +17,7 @@ public class TaskData : MonoBehaviour
     public float Threshold { get => m_threshold; set => m_threshold = value; }
     public Transform Container { get => m_container;}
 
-	public void OnEnable()
+	private void OnAwake()
 	{
         m_container = gameObject.transform;
         m_id = m_container.name;
