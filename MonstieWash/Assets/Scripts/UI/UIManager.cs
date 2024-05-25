@@ -15,12 +15,12 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, bool> m_taskList = new();
 
-    private RoomSaver m_roomSaver;
+    private GameSceneManager m_roomSaver;
     private bool m_UIVisible = true;
 
     private void Awake()
     {
-        m_roomSaver = GetComponent<RoomSaver>();
+        m_roomSaver = FindFirstObjectByType<GameSceneManager>();
     }
 
     private void OnEnable()

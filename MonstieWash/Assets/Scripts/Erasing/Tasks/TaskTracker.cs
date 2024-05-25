@@ -3,8 +3,6 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-[RequireComponent(typeof(RoomSaver))]
-[RequireComponent(typeof(UIManager))]
 [RequireComponent(typeof(SoundPlayer))]
 public class TaskTracker : MonoBehaviour
 {
@@ -16,22 +14,27 @@ public class TaskTracker : MonoBehaviour
     private Dictionary<string, float> m_areaProgress = new();
     private Dictionary<string, bool> m_scenesCompleted = new();
 
-    private RoomSaver m_roomSaver;
+    private GameSceneManager m_roomSaver;
     private UIManager m_uiManager;
     private SoundPlayer m_soundPlayer;
     private MusicManager m_musicManager;
 
 	private void Awake()
     {
-        m_roomSaver = GetComponent<RoomSaver>();
-        m_uiManager = GetComponent<UIManager>();
+        m_roomSaver = FindFirstObjectByType<GameSceneManager>();
+        m_uiManager = FindFirstObjectByType<UIManager>();
         m_soundPlayer = GetComponent<SoundPlayer>();
-        m_musicManager = GetComponentInChildren<MusicManager>();
+        m_musicManager = FindFirstObjectByType<MusicManager>();
     }
 
     private void OnEnable()
     {
         m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
+    }
+
+    private void OnDisable()
+    {
+        m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
     private void RoomSaver_OnScenesLoaded()
@@ -103,5 +106,6 @@ public class TaskTracker : MonoBehaviour
         OnLevelCompleted?.Invoke();
 
         m_musicManager.SetMusic(MusicManager.MusicType.Victory);
+        m_roomSaver.LevelComplete();
     }
 }

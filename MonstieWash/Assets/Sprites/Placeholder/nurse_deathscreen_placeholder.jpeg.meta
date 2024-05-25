@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      nurse_deathscreen_placeholder_0: -3744443695437240654
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

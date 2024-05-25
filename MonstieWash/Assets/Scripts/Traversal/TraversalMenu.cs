@@ -1,31 +1,27 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TraversalMenu : MonoBehaviour
 {
-    [SerializeField] private GameScene targetScene;
-    [SerializeField] private LoadBehaviour loadBehaviour;
-    private enum LoadBehaviour
-    {
-        Add,
-        Single,
-        Move
-    }
+    [SerializeField] private MenuAction action;
+    [SerializeField] private GameSceneManager.Level level;
 
-
-
-    private MenuLoader m_menuObj;
-    private RoomSaver m_saveObj;
-    private string m_targetScene;
+    private GameSceneManager m_sceneManager;
     private Button m_button;
+
+    public enum MenuAction
+    {
+        StartNewLevel,
+        Continue,
+        Restart,
+        MainMenu,
+        Quit
+    }
 
     private void Awake()
     {
-        if (targetScene == null) Debug.LogError($"Target scene not assigned for {name}!");
-        else m_targetScene = targetScene.SceneName;
-
-        m_menuObj = FindFirstObjectByType<MenuLoader>();
-        m_saveObj = FindFirstObjectByType<RoomSaver>();
+        m_sceneManager = FindFirstObjectByType<GameSceneManager>();
         m_button = GetComponent<Button>();
 
         m_button.onClick.AddListener(OnClicked);
@@ -33,18 +29,64 @@ public class TraversalMenu : MonoBehaviour
 
     private void OnClicked()
     {
-        switch(loadBehaviour)
+        switch (action)
         {
-            case LoadBehaviour.Add:
-                m_menuObj.LoadSceneAdditive(m_targetScene);
+            case MenuAction.StartNewLevel:
+                {
+                    m_sceneManager.StartNewLevel(level);
+                }
                 break;
-            case LoadBehaviour.Single:
-                m_menuObj.LoadSceneSingle(m_targetScene);
+            case MenuAction.Continue:
+                {
+                    m_sceneManager.ContinueLevel();
+                }
                 break;
-            case LoadBehaviour.Move:
-                m_saveObj.MoveToScene(m_targetScene);
+            case MenuAction.Restart:
+                {
+                    m_sceneManager.RestartLevel();
+                }
+                break;
+            case MenuAction.MainMenu:
+                {
+                    m_sceneManager.GoToMainMenu();
+                }
+                break;
+            case MenuAction.Quit:
+                {
+                    m_sceneManager.QuitGame();
+                }
                 break;
         }
-        
     }
 }
+
+#region Custom Editor
+#if UNITY_EDITOR
+[CustomEditor(typeof(TraversalMenu))]
+public class TraversalMenuInspector : Editor
+{
+    SerializedProperty action;
+    SerializedProperty level;
+
+    private void OnEnable()
+    {
+        action = serializedObject.FindProperty("action");
+        level = serializedObject.FindProperty("level");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+
+        EditorGUILayout.PropertyField(action);
+
+        if (action.enumValueIndex == (int)TraversalMenu.MenuAction.StartNewLevel)
+        {
+            EditorGUILayout.PropertyField(level);
+        }
+
+        serializedObject.ApplyModifiedProperties();
+    }
+}
+#endif
+#endregion

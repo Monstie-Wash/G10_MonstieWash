@@ -17,7 +17,7 @@ public struct PHTask
 
 public class ScoreUIManager : MonoBehaviour
 {
-    [SerializeField] private Image m_clipboard;
+    [SerializeField] private Transform m_clipboard;
     [SerializeField] private GameObject m_lineItem;
     [SerializeField] private TextMeshProUGUI m_totalScore;
 
@@ -36,8 +36,8 @@ public class ScoreUIManager : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
-        MenuInputManager.Inputs.OnAltSelect += Inputs_OnAlt_Select;
-
+        //MenuInputManager.Inputs.OnAltSelect += Inputs_OnAlt_Select;
+        
         m_tasks = PlaceholderTaskFill();
 
         StartCoroutine(LineItemSetActive());
@@ -45,7 +45,7 @@ public class ScoreUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        MenuInputManager.Inputs.OnAltSelect -= Inputs_OnAlt_Select;
+        //MenuInputManager.Inputs.OnAltSelect -= Inputs_OnAlt_Select;
     }
 
     /// <summary>
@@ -66,7 +66,6 @@ public class ScoreUIManager : MonoBehaviour
 
     private IEnumerator LineItemSetActive()
     {
-        Transform clipTransform = m_clipboard.transform;
         RectTransform LITransform;
 
         TextMeshProUGUI name = null;
@@ -77,7 +76,7 @@ public class ScoreUIManager : MonoBehaviour
 
         for (var i = 0; i < m_tasks.Count; i++)
         {
-            m_LIList.Add(Instantiate(m_lineItem, clipTransform));
+            m_LIList.Add(Instantiate(m_lineItem, m_clipboard));
             m_LIList[i].SetActive(false);
             LITransform = m_LIList[i].GetComponent<RectTransform>();
             LITransform.anchoredPosition = new Vector2(0, LITransform.rect.height / m_spacing * -i);
