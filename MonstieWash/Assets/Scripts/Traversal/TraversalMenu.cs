@@ -16,6 +16,7 @@ public class TraversalMenu : MonoBehaviour
         Continue,
         Restart,
         MainMenu,
+        UpgradeMenu,
         Quit
     }
 
@@ -49,6 +50,11 @@ public class TraversalMenu : MonoBehaviour
             case MenuAction.MainMenu:
                 {
                     m_sceneManager.GoToMainMenu();
+                }
+                break;
+            case MenuAction.UpgradeMenu:
+                {
+                    m_sceneManager.GoToUpgradeMenu();
                 }
                 break;
             case MenuAction.Quit:

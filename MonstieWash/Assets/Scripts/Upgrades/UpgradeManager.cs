@@ -11,7 +11,13 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreUI;
 
     private int m_currentScore = 0;
-    
+
+    private void Awake()
+    {
+        m_currentScore += 150;
+        UpdateScoreUI();
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -25,12 +31,6 @@ public class UpgradeManager : MonoBehaviour
 
             upgradeScript.SetTool(tool);
         }
-    }
-
-    private void OnEnable()
-    {
-        m_currentScore += 150;
-        UpdateScoreUI();
     }
 
     private void UpdateScoreUI()

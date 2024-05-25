@@ -12,6 +12,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameScene levelSelectScene;
     [SerializeField] private GameScene loadingScene;
     [SerializeField] private GameScene scoreSummaryScene;
+    [SerializeField] private GameScene upgradeScene;
     [SerializeField] private GameScene deathScene;
     [SerializeField] private List<LevelScenes> allLevelScenes = new();
 
@@ -222,6 +223,18 @@ public class GameSceneManager : MonoBehaviour
 
         InputManager.Inputs.SetCursorMode(false);
         MoveToScene(deathScene.SceneName);
+    }
+
+    public async void GoToUpgradeMenu()
+    {
+        MoveToScene(loadingScene.SceneName);
+
+        SetSceneActive(scoreSummaryScene.SceneName, false);
+        await LoadScene(upgradeScene.SceneName);
+        m_activeScenes.Add(upgradeScene.SceneName);
+
+        InputManager.Inputs.SetCursorMode(false);
+        MoveToScene(upgradeScene.SceneName);
     }
 
     /// <summary>
