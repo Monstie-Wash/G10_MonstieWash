@@ -108,7 +108,7 @@ public class Eraser : MonoBehaviour
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
+                //m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
 
                 IsErasing = true;
             }
