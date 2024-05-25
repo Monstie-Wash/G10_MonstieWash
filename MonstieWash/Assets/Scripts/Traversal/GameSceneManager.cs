@@ -66,6 +66,10 @@ public class GameSceneManager : MonoBehaviour
         m_currentScene = SceneManager.GetSceneByName(levelSelectScene.SceneName);
     }
 
+    /// <summary>
+    /// Unloads all currently active level scenes.
+    /// </summary>
+    /// <returns></returns>
     private async Task UnloadActiveLevelScenes()
     {
         var tasks = new Task[m_activeScenes.Count];
@@ -121,6 +125,10 @@ public class GameSceneManager : MonoBehaviour
     #endregion
 
     #region Public
+    /// <summary>
+    /// Loads all the scenes of the given level and moves there.
+    /// </summary>
+    /// <param name="level">The level to load.</param>
     private async void LoadMonsterScene(Level level)
     {
         //Load the monster scenes
@@ -167,6 +175,10 @@ public class GameSceneManager : MonoBehaviour
         OnSceneChanged?.Invoke(target);
     }
 
+    /// <summary>
+    /// Starts a level from the beginning. Intended to be run from the level select scene.
+    /// </summary>
+    /// <param name="level"></param>
     public async void StartNewLevel(Level level)
     {
         MoveToScene(loadingScene.SceneName);
@@ -178,6 +190,9 @@ public class GameSceneManager : MonoBehaviour
         LoadMonsterScene(level);
     }
 
+    /// <summary>
+    /// Loads the score summary scene.
+    /// </summary>
     public async void LevelComplete()
     {
         await Task.Delay(3000);
@@ -192,6 +207,9 @@ public class GameSceneManager : MonoBehaviour
         MoveToScene(scoreSummaryScene.SceneName);
     }
 
+    /// <summary>
+    /// Loads the death screen.
+    /// </summary>
     public async void PlayerDied()
     {
         await Task.Delay(3000);
@@ -206,6 +224,9 @@ public class GameSceneManager : MonoBehaviour
         MoveToScene(deathScene.SceneName);
     }
 
+    /// <summary>
+    /// Loads the main menu.
+    /// </summary>
     public async void GoToMainMenu()
     {
         MoveToScene(loadingScene.SceneName);
@@ -217,6 +238,9 @@ public class GameSceneManager : MonoBehaviour
         MoveToScene(levelSelectScene.SceneName);
     }
 
+    /// <summary>
+    /// Sets the current scene back to the first scene of the current level.
+    /// </summary>
     public async void ContinueLevel()
     {
         await UnloadScene(deathScene.SceneName);
@@ -228,6 +252,9 @@ public class GameSceneManager : MonoBehaviour
         SetSceneActive(m_activeScenes[1], true);
     }
 
+    /// <summary>
+    /// Restarts the current level.
+    /// </summary>
     public async void RestartLevel()
     {
         MoveToScene(loadingScene.SceneName);
@@ -239,6 +266,9 @@ public class GameSceneManager : MonoBehaviour
         LoadMonsterScene(m_currentLevelScenes.level);
     }
 
+    /// <summary>
+    /// Quits the game.
+    /// </summary>
     public void QuitGame()
     {
         Debug.Log("Quitting...");

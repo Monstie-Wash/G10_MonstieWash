@@ -55,6 +55,10 @@ public class TaskTracker : MonoBehaviour
         m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
+    /// <summary>
+    /// Checks if the given task is complete.
+    /// </summary>
+    /// <param name="task">The task to check.</param>
 	public void UpdateTaskTracker(TaskData task)
 	{
         if (!m_taskData.Contains(task))
@@ -74,6 +78,10 @@ public class TaskTracker : MonoBehaviour
         SceneCompletionCheck(task.gameObject.scene.name);
 	}
 
+    /// <summary>
+    /// Check if the current scene (task) has been completed.
+    /// </summary>
+    /// <param name="scene"></param>
     private void SceneCompletionCheck(string scene)
     {
         if (m_scenesCompleted[scene]) return; // Exit early if scene is already noted as complete
@@ -94,6 +102,9 @@ public class TaskTracker : MonoBehaviour
         LevelCompletionCheck();
     }
 
+    /// <summary>
+    /// Check if the entire level has been completed.
+    /// </summary>
 	private void LevelCompletionCheck()
     {
         foreach (var task in m_taskData)
