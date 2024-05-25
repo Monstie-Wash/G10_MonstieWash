@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-
+[RequireComponent(typeof(RoomSaver))]
+[RequireComponent(typeof(UIManager))]
+[RequireComponent(typeof(SoundPlayer))]
 public class TaskTracker : MonoBehaviour
 {
     public event Action OnSceneCompleted;
