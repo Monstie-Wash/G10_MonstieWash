@@ -41,11 +41,15 @@ public class SoundPlayer : MonoBehaviour
     /// Plays the sound.
     /// </summary>
     /// <param name="mutate">Whether or not to make minor modifications to add variety.</param>
-    public void PlaySound(bool mutate = false)
+    public void PlaySound(bool mutate = false, bool canStack = false)
     {
-        if (sound == null) return;
-
-        if (!mutate) m_audioSource.Play();
+		if (sound == null) return;
+		
+        if (!mutate)
+        {
+            if (canStack) m_audioSource.PlayOneShot(m_audioSource.clip);
+            else m_audioSource.Play();
+        }
         else
         {
             var prevVolume = sound.Volume;
@@ -54,7 +58,8 @@ public class SoundPlayer : MonoBehaviour
             sound.Volume *= Random.Range(0.9f, 1.1f);
             sound.Pitch *= Random.Range(0.9f, 1.1f);
 
-            m_audioSource.Play();
+            if (canStack) m_audioSource.PlayOneShot(m_audioSource.clip);
+            else m_audioSource.Play();
 
             sound.Volume = prevVolume;
             sound.Pitch = prevPitch;

@@ -82,14 +82,8 @@ public class UIManager : MonoBehaviour
 /// </summary>
 /// <param name="taskName">String identifier of the task to update.</param>
 /// <param name="taskProgress">Progress of the task to be displayed on the clipboard.</param>
-    public void UpdateClipboardTask(List<TaskData> taskData, string scene)
+    public void UpdateClipboardTask(string scene)
     {
-        foreach (var task in taskData.Where(task => task.gameObject.scene.name == scene))
-        {
-            if (!task.Complete)
-                return;
-        }
-
         m_taskContainer.transform.Find(scene).GetComponent<TextMeshProUGUI>().text = $"<s>{scene}</s>";
     }
 }
