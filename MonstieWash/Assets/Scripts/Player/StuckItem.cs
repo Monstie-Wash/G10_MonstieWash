@@ -16,7 +16,7 @@ public class StuckItem : MonoBehaviour
     private float m_initialRotation;
     private Transform m_initialParent;
     private TaskTracker m_taskTracker;
-    private ITask m_pickingTask;
+    private TaskData m_pickingTask;
     private SpriteRenderer m_spriteRenderer;
     private Coroutine m_colourFadeRoutine;
     private SoundPlayer m_soundPlayer;
@@ -44,7 +44,7 @@ public class StuckItem : MonoBehaviour
         m_initialRotation = transform.rotation.eulerAngles.z;
         m_initialParent = transform.parent;
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
-        m_pickingTask = GetComponent<ITask>();
+        m_pickingTask = GetComponent<TaskData>();
         m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_soundPlayer = GetComponent<SoundPlayer>();
     }
@@ -64,9 +64,11 @@ public class StuckItem : MonoBehaviour
         }
         else
         {
+            m_spriteRenderer.sortingLayerName = "Tools";
+            m_spriteRenderer.sortingOrder = 0;
             m_rb.bodyType = RigidbodyType2D.Dynamic;
             transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, transform.localScale.z);
-            StartCoroutine(CheckOOB());
+            m_OOBCheckRoutine = StartCoroutine(CheckOOB());
             m_soundPlayer.PlaySound(true);
         }
     }
@@ -78,8 +80,8 @@ public class StuckItem : MonoBehaviour
     public bool Wiggle()
     {
         wiggleCount--;
-        m_pickingTask.TaskProgress = 100f*(m_initialWiggleCount - wiggleCount)/m_initialWiggleCount;
-        m_taskTracker.UpdateTaskTracker(m_pickingTask.TaskName, m_pickingTask.NewProgress);
+        m_pickingTask.Progress = 100f*(m_initialWiggleCount - wiggleCount)/m_initialWiggleCount;
+        m_taskTracker.UpdateTaskTracker(m_pickingTask);
 
         if (m_colourFadeRoutine != null) StopCoroutine(m_colourFadeRoutine);
         m_colourFadeRoutine = StartCoroutine(FadeColour());
@@ -103,7 +105,7 @@ public class StuckItem : MonoBehaviour
             yield return null;
         }
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     private IEnumerator FadeColour()

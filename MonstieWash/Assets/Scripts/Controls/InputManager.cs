@@ -46,8 +46,7 @@ public class InputManager : MonoBehaviour
 
         m_playerInput = new PlayerInput();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        SetCursorMode(false);
     }
 
     private void OnEnable()
@@ -201,4 +200,18 @@ public class InputManager : MonoBehaviour
         OnToggleUI?.Invoke();
     }
     #endregion
+
+    public void SetCursorMode(bool locked)
+    {
+        if (locked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
 }
