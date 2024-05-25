@@ -157,11 +157,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: moodData.Array.data[0].value
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: moodData.Array.data[1].value
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: moodData.Array.data[0].attackThreshold
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5291749803512059139, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: sound
@@ -574,6 +578,10 @@ PrefabInstance:
     - target: {fileID: 43558335491855684, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
       propertyPath: m_Name
       value: CBCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801075961970723756, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4695030007197572884, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
       propertyPath: m_Pivot.x
