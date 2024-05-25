@@ -10,7 +10,7 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Tool[] upgradableTools;
     [SerializeField] private TextMeshProUGUI scoreUI;
 
-    private int m_currentScore = 150;
+    private int m_currentScore = 0;
     
     // Start is called before the first frame update
     private void Start()
