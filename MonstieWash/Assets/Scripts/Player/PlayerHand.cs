@@ -109,17 +109,27 @@ public class PlayerHand : MonoBehaviour
     {
         if (!showBounds) return;
 
-        var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
-        var cameraHeightInWorldUnits = Camera.main.orthographicSize;
+        var cameraWidthInWorldUnits = 5f * 16f / 9f;
+        var cameraHeightInWorldUnits = 5f;
 
-        var topLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
-        var topRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
-        var bottomLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
-        var bottomRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+        var viewTopLeft = new Vector2(-cameraWidthInWorldUnits, cameraHeightInWorldUnits);
+        var viewTopRight = new Vector2(cameraWidthInWorldUnits, cameraHeightInWorldUnits);
+        var viewBottomLeft = new Vector2(-cameraWidthInWorldUnits, -cameraHeightInWorldUnits);
+        var viewBottomRight = new Vector2(cameraWidthInWorldUnits, -cameraHeightInWorldUnits);
 
-        Debug.DrawLine(topLeft, topRight, Color.green);
-        Debug.DrawLine(topRight, bottomRight, Color.green);
-        Debug.DrawLine(bottomRight, bottomLeft, Color.green);
-        Debug.DrawLine(bottomLeft, topLeft, Color.green);
+        Debug.DrawLine(viewTopLeft, viewTopRight, Color.white);
+        Debug.DrawLine(viewTopRight, viewBottomRight, Color.white);
+        Debug.DrawLine(viewBottomRight, viewBottomLeft, Color.white);
+        Debug.DrawLine(viewBottomLeft, viewTopLeft, Color.white);
+
+        var boundsTopLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
+        var boundsTopRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
+        var boundsBottomLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+        var boundsBottomRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+
+        Debug.DrawLine(boundsTopLeft, boundsTopRight, Color.green);
+        Debug.DrawLine(boundsTopRight, boundsBottomRight, Color.green);
+        Debug.DrawLine(boundsBottomRight, boundsBottomLeft, Color.green);
+        Debug.DrawLine(boundsBottomLeft, boundsTopLeft, Color.green);
     }
 }
