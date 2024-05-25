@@ -61,21 +61,15 @@ MonoBehaviour:
   levelSelectScene: {fileID: 11400000, guid: fb80091d0bb36f94c95c2e8aeb405432, type: 2}
   loadingScene: {fileID: 11400000, guid: cb33503f0ce38d5408718754c8f4e11f, type: 2}
   scoreSummaryScene: {fileID: 11400000, guid: 497a01c1053314f489f97cdbb5b3ca04, type: 2}
+  upgradeScene: {fileID: 11400000, guid: 60381fa7d5c2d11488b6581a378ae663, type: 2}
   deathScene: {fileID: 11400000, guid: 50d96a6f4c3e07a4d8400e08ae1b54b4, type: 2}
   allLevelScenes:
   - level: 0
-    scenes:
-    - {fileID: 11400000, guid: ad937325136c45843839adef08801ba2, type: 2}
-    - {fileID: 11400000, guid: bbb0d5b26faec8d4bba58bde3a476a74, type: 2}
+    startingScene: {fileID: 0}
+    gameScenes: []
   - level: 1
-    scenes:
-    - {fileID: 11400000, guid: 27b2c379a9f55e3448786e4c8159cc3d, type: 2}
-    - {fileID: 11400000, guid: 0738885445f55d842a6622c34db16991, type: 2}
-    - {fileID: 11400000, guid: b0c92342399a695458d82ea10ef3f8d6, type: 2}
-    - {fileID: 11400000, guid: 0b18b108c7e151f4499e12cc75d0b9c3, type: 2}
-    - {fileID: 11400000, guid: 24d1c85b41478b04fbf238f820f4baff, type: 2}
-    - {fileID: 11400000, guid: ef3f9a570dbff8840a51fbb1fea3c7e9, type: 2}
-    - {fileID: 11400000, guid: 10780f6b9ba09244b96aa06679ecc181, type: 2}
+    startingScene: {fileID: 0}
+    gameScenes: []
 --- !u!1001 &8797697719091902416
 PrefabInstance:
   m_ObjectHideFlags: 0

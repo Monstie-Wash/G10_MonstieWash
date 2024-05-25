@@ -8,6 +8,7 @@ public class Tool : ScriptableObject
     [SerializeField][Range(1f, 100f)] private float inputStrength = 100f;
 
     public byte[] maskPixels { get; private set; }
+    public float InputStrength { get; set; }
     [HideInInspector] public float strength;
 
     /// <summary>
