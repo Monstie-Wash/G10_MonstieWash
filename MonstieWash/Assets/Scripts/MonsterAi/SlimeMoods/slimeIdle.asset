@@ -19,7 +19,8 @@ MonoBehaviour:
   moodNaturalChange: 1
   moodRestingPoint: 5
   chaosMultiplier: 0
-  positiveChainReactions: []
-  positiveReactionStrength: 0
+  positiveChainReactions:
+  - {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
+  positiveReactionStrength: 1
   negativeChainReactions: []
-  negativeReactionStrength: 0
+  negativeReactionStrength: 0.5
