@@ -16,7 +16,7 @@ MonoBehaviour:
   moodUpperLimit: 30
   moodLowerLimit: 0
   moodStartingPoint: 0
-  moodNaturalChange: 0.5
+  moodNaturalChange: 1
   moodRestingPoint: 0
   chaosMultiplier: 0
   positiveChainReactions: []
