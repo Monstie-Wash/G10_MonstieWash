@@ -128,6 +128,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: maxBetweenAttacks
       value: 15
       objectReference: {fileID: 0}
@@ -165,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: moodData.Array.data[0].attackThreshold
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5291749803512059139, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: sound
@@ -230,38 +234,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8168637763214906077, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 165354735}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
---- !u!1 &165354734 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8168637763214906077, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
-  m_PrefabInstance: {fileID: 165354733}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &165354735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165354734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52816bc74c750ba48b320de9008b415c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tools:
-  - {fileID: 11400000, guid: e7fc82490f269a042ac45ac4db2bc7f6, type: 2}
-  - {fileID: 11400000, guid: fa4a9c7ea3b6eeb47ab74dc140ab1839, type: 2}
-  - {fileID: 11400000, guid: 8daa16cb36407fd4fa4e589f78ed8cb9, type: 2}
-  - {fileID: 11400000, guid: 00e09ce6ac17a5447a5d26aa269393bf, type: 2}
-  originalTools:
-  - {fileID: 11400000, guid: 294a2f6b46fdc034d8408758ac24c86d, type: 2}
-  - {fileID: 11400000, guid: a6f51c1a137ff1042b58d2571a42bcef, type: 2}
-  - {fileID: 11400000, guid: 77a74ecd1086bf94c9d3e5af99c0a5ce, type: 2}
-  - {fileID: 11400000, guid: 17829b2c2cb823b4a9c9c05b49760c50, type: 2}
 --- !u!1001 &1307418497
 PrefabInstance:
   m_ObjectHideFlags: 0
