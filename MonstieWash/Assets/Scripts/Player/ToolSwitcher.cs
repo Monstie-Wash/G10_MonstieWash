@@ -8,7 +8,7 @@ public class ToolSwitcher : MonoBehaviour
     [SerializeField] private Transform toolHolder;
 
     private List<GameObject> m_toolInstances = new();
-    private RoomSaver m_roomSaver;
+    private GameSceneManager m_roomSaver;
 
     /// <summary>
     /// The current index in the m_toolInstances list. -1 represents an empty hand.
@@ -21,7 +21,7 @@ public class ToolSwitcher : MonoBehaviour
 
     private void Awake()
     {
-        m_roomSaver = FindFirstObjectByType<RoomSaver>();
+        m_roomSaver = FindFirstObjectByType<GameSceneManager>();
 
         foreach (var tool in tools)
         {
@@ -32,13 +32,14 @@ public class ToolSwitcher : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnSwitchTool += Inputs_OnSwitchTool;
+        InputManager.Instance.OnSwitchTool += Inputs_OnSwitchTool;
         m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnSwitchTool -= Inputs_OnSwitchTool;
+        InputManager.Instance.OnSwitchTool -= Inputs_OnSwitchTool;
+        m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
     private void RoomSaver_OnScenesLoaded()

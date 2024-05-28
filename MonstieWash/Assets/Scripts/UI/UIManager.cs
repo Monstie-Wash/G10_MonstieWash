@@ -15,22 +15,22 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, bool> m_taskList = new();
 
-    private RoomSaver m_roomSaver;
+    private GameSceneManager m_roomSaver;
     private bool m_UIVisible = true;
 
     private void Awake()
     {
-        m_roomSaver = GetComponent<RoomSaver>();
+        m_roomSaver = FindFirstObjectByType<GameSceneManager>();
     }
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnToggleUI += Inputs_OnToggleUI;
+        InputManager.Instance.OnToggleUI += Inputs_OnToggleUI;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnToggleUI -= Inputs_OnToggleUI;
+        InputManager.Instance.OnToggleUI -= Inputs_OnToggleUI;
     }
 
     private void Inputs_OnToggleUI()
@@ -82,14 +82,8 @@ public class UIManager : MonoBehaviour
 /// </summary>
 /// <param name="taskName">String identifier of the task to update.</param>
 /// <param name="taskProgress">Progress of the task to be displayed on the clipboard.</param>
-    public void UpdateClipboardTask(List<TaskData> taskData, string scene)
+    public void UpdateClipboardTask(string scene)
     {
-        foreach (var task in taskData.Where(task => task.gameObject.scene.name == scene))
-        {
-            if (!task.Complete)
-                return;
-        }
-
         m_taskContainer.transform.Find(scene).GetComponent<TextMeshProUGUI>().text = $"<s>{scene}</s>";
     }
 }

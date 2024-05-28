@@ -17,7 +17,7 @@ public struct PHTask
 
 public class ScoreUIManager : MonoBehaviour
 {
-    [SerializeField] private Image m_clipboard;
+    [SerializeField] private Transform m_clipboard;
     [SerializeField] private GameObject m_lineItem;
     [SerializeField] private TextMeshProUGUI m_totalScore;
 
@@ -33,19 +33,21 @@ public class ScoreUIManager : MonoBehaviour
     [SerializeField][Range(0.0f, 2.0f)] private float m_secondsWait = 1.0f;
     private bool m_skip = false;
 
-    // Start is called before the first frame update
-    private void OnEnable()
+    private void Awake()
     {
-        MenuInputManager.Inputs.OnAltSelect += Inputs_OnAlt_Select;
-
         m_tasks = PlaceholderTaskFill();
 
         StartCoroutine(LineItemSetActive());
     }
 
+    private void OnEnable()
+    {
+        InputManager.Instance.OnAltSelect += Inputs_OnAlt_Select;
+    }
+
     private void OnDisable()
     {
-        MenuInputManager.Inputs.OnAltSelect -= Inputs_OnAlt_Select;
+        InputManager.Instance.OnAltSelect -= Inputs_OnAlt_Select;
     }
 
     /// <summary>
@@ -66,7 +68,6 @@ public class ScoreUIManager : MonoBehaviour
 
     private IEnumerator LineItemSetActive()
     {
-        Transform clipTransform = m_clipboard.transform;
         RectTransform LITransform;
 
         TextMeshProUGUI name = null;
@@ -77,7 +78,7 @@ public class ScoreUIManager : MonoBehaviour
 
         for (var i = 0; i < m_tasks.Count; i++)
         {
-            m_LIList.Add(Instantiate(m_lineItem, clipTransform));
+            m_LIList.Add(Instantiate(m_lineItem, m_clipboard));
             m_LIList[i].SetActive(false);
             LITransform = m_LIList[i].GetComponent<RectTransform>();
             LITransform.anchoredPosition = new Vector2(0, LITransform.rect.height / m_spacing * -i);
@@ -122,10 +123,5 @@ public class ScoreUIManager : MonoBehaviour
     private void Inputs_OnAlt_Select()
     {
         m_skip = true;
-    }
-
-    private void OnLevelExit()
-    {
-        Debug.Log("LEVEL EXIT");
-    }    
+    }   
 }

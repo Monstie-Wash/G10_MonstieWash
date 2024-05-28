@@ -20,16 +20,16 @@ public class ToolFX : MonoBehaviour
     {
         m_eraser.OnErasing_Started += Eraser_OnErasing;
         m_eraser.OnErasing_Ended += Eraser_OnErasing_Ended;
-        InputManager.Inputs.OnActivate += Inputs_OnActivate;
-        InputManager.Inputs.OnActivate_Ended += Inputs_OnActivate_Ended;
+        InputManager.Instance.OnActivate += Inputs_OnActivate;
+        InputManager.Instance.OnActivate_Ended += Inputs_OnActivate_Ended;
     }
 
     private void OnDisable()
     {
         m_eraser.OnErasing_Started -= Eraser_OnErasing;
         m_eraser.OnErasing_Ended -= Eraser_OnErasing_Ended;
-        InputManager.Inputs.OnActivate -= Inputs_OnActivate;
-        InputManager.Inputs.OnActivate_Ended -= Inputs_OnActivate_Ended;
+        InputManager.Instance.OnActivate -= Inputs_OnActivate;
+        InputManager.Instance.OnActivate_Ended -= Inputs_OnActivate_Ended;
     }
 
     private void Start()
