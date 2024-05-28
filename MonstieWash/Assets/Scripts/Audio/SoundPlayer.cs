@@ -4,6 +4,7 @@ using UnityEngine;
 public class SoundPlayer : MonoBehaviour
 {
     [SerializeField] private Sound sound;
+    [SerializeField, Tooltip("Hides the warning that appears when no sound is set.")] private bool hideWarning = false;
 
     private AudioSource m_audioSource;
 
@@ -21,9 +22,9 @@ public class SoundPlayer : MonoBehaviour
     /// </summary>
     private void SetupAudio()
     {
-        if (m_audioSource == null)
+        if (sound == null)
         {
-            Debug.LogWarning($"No sound set for {name}!");
+            if (!hideWarning) Debug.LogWarning($"No sound set for {name}!");
             return;
         }
         m_audioSource.playOnAwake = false;
@@ -40,9 +41,15 @@ public class SoundPlayer : MonoBehaviour
     /// Plays the sound.
     /// </summary>
     /// <param name="mutate">Whether or not to make minor modifications to add variety.</param>
-    public void PlaySound(bool mutate = false)
+    public void PlaySound(bool mutate = false, bool canStack = false)
     {
-        if (!mutate) m_audioSource.Play();
+		if (sound == null) return;
+		
+        if (!mutate)
+        {
+            if (canStack) m_audioSource.PlayOneShot(m_audioSource.clip);
+            else m_audioSource.Play();
+        }
         else
         {
             var prevVolume = sound.Volume;
@@ -51,7 +58,8 @@ public class SoundPlayer : MonoBehaviour
             sound.Volume *= Random.Range(0.9f, 1.1f);
             sound.Pitch *= Random.Range(0.9f, 1.1f);
 
-            m_audioSource.Play();
+            if (canStack) m_audioSource.PlayOneShot(m_audioSource.clip);
+            else m_audioSource.Play();
 
             sound.Volume = prevVolume;
             sound.Pitch = prevPitch;
@@ -72,6 +80,8 @@ public class SoundPlayer : MonoBehaviour
     /// <param name="newSound">The new sound to replace the old one with.</param>
     public void SwitchSound(Sound newSound)
     {
+        if (newSound == sound) return;
+
         StopSound();
         sound = newSound;
         SetupAudio();

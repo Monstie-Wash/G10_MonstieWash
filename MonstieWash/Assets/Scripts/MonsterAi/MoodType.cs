@@ -42,4 +42,29 @@ public class MoodType : ScriptableObject
     [HideInInspector] public List<MoodType> NegativeChainReactions { get { return negativeChainReactions; } }
     [HideInInspector] public float NegativeReactionStrength { get { return negativeReactionStrength; } }
 
+    #region Equality
+    public override bool Equals(object other)
+    {
+        if (other is MoodType otherMoodType) return moodName.Equals(otherMoodType.MoodName);
+
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return moodName.GetHashCode();
+    }
+
+    public static bool operator ==(MoodType lhs, MoodType rhs)
+    {
+        if (lhs is null || rhs is null) return false;
+
+        return lhs.Equals(rhs);
+    }
+
+    public static bool operator !=(MoodType lhs, MoodType rhs)
+    {
+        return !(lhs == rhs);
+    }
+    #endregion
 }

@@ -3,7 +3,9 @@ using UnityEngine;
 public class PlayerHand : MonoBehaviour
 {
     //Unity Inspector
-    [SerializeField][Range(1.0f, 50.0f)] private float cursorSpeed = 20f;
+    [SerializeField, Range(1.0f, 50.0f)] private float handSpeed = 20f;
+    [SerializeField, Range(0f, 5f)] private float extendBoundsX, extendBoundsY;
+    [SerializeField] private bool showBounds = false;
 
     //Private
     private Vector2 m_movement;
@@ -21,16 +23,16 @@ public class PlayerHand : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnMove += Inputs_MovePerformed;
-        InputManager.Inputs.OnMove_Ended += Inputs_MoveEnded;
-        InputManager.Inputs.OnNavigate += Inputs_OnNavigate;
+        InputManager.Instance.OnMove += Inputs_MovePerformed;
+        InputManager.Instance.OnMove_Ended += Inputs_MoveEnded;
+        InputManager.Instance.OnNavigate += Inputs_OnNavigate;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnMove -= Inputs_MovePerformed;
-        InputManager.Inputs.OnMove_Ended -= Inputs_MoveEnded;
-        InputManager.Inputs.OnNavigate -= Inputs_OnNavigate;
+        InputManager.Instance.OnMove -= Inputs_MovePerformed;
+        InputManager.Instance.OnMove_Ended -= Inputs_MoveEnded;
+        InputManager.Instance.OnNavigate -= Inputs_OnNavigate;
     }
 
     private void Awake()
@@ -67,15 +69,15 @@ public class PlayerHand : MonoBehaviour
     {
         var velocityModifer = 1f;
 
-        switch (InputManager.Inputs.InputDevice)
+        switch (InputManager.Instance.InputDevice)
         {
             case InputManager.PlayerInputDevice.MKB:
                 {
-                    velocityModifer = cursorSpeed * k_mouseSpeedMultiplier;
+                    velocityModifer = handSpeed * k_mouseSpeedMultiplier;
                 } break;
             case InputManager.PlayerInputDevice.Controller:
                 {
-                    velocityModifer = cursorSpeed * Time.deltaTime;
+                    velocityModifer = handSpeed * Time.deltaTime;
                 } break;
         }
 
@@ -85,8 +87,8 @@ public class PlayerHand : MonoBehaviour
         var cameraHeightInWorldUnits = Camera.main.orthographicSize;
 
         //Keep within screen bounds
-        newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits, cameraWidthInWorldUnits);
-        newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits, cameraHeightInWorldUnits);
+        newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits - extendBoundsX, cameraWidthInWorldUnits + extendBoundsX);
+        newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits - extendBoundsY, cameraHeightInWorldUnits + extendBoundsY);
 
         return newPosition;
     }
@@ -101,5 +103,33 @@ public class PlayerHand : MonoBehaviour
         //Navigate
         TraversalObject navArrow = results[0].GetComponent<TraversalObject>();
         navArrow.OnClicked();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!showBounds) return;
+
+        var cameraWidthInWorldUnits = 5f * 16f / 9f;
+        var cameraHeightInWorldUnits = 5f;
+
+        var viewTopLeft = new Vector2(-cameraWidthInWorldUnits, cameraHeightInWorldUnits);
+        var viewTopRight = new Vector2(cameraWidthInWorldUnits, cameraHeightInWorldUnits);
+        var viewBottomLeft = new Vector2(-cameraWidthInWorldUnits, -cameraHeightInWorldUnits);
+        var viewBottomRight = new Vector2(cameraWidthInWorldUnits, -cameraHeightInWorldUnits);
+
+        Debug.DrawLine(viewTopLeft, viewTopRight, Color.white);
+        Debug.DrawLine(viewTopRight, viewBottomRight, Color.white);
+        Debug.DrawLine(viewBottomRight, viewBottomLeft, Color.white);
+        Debug.DrawLine(viewBottomLeft, viewTopLeft, Color.white);
+
+        var boundsTopLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
+        var boundsTopRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, cameraHeightInWorldUnits + extendBoundsY);
+        var boundsBottomLeft = new Vector2(-cameraWidthInWorldUnits - extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+        var boundsBottomRight = new Vector2(cameraWidthInWorldUnits + extendBoundsX, -cameraHeightInWorldUnits - extendBoundsY);
+
+        Debug.DrawLine(boundsTopLeft, boundsTopRight, Color.green);
+        Debug.DrawLine(boundsTopRight, boundsBottomRight, Color.green);
+        Debug.DrawLine(boundsBottomRight, boundsBottomLeft, Color.green);
+        Debug.DrawLine(boundsBottomLeft, boundsTopLeft, Color.green);
     }
 }
