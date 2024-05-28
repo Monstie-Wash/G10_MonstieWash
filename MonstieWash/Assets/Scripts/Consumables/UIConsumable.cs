@@ -24,12 +24,12 @@ public class UIConsumable : MonoBehaviour
 
     public void OnEnable()
     {
-        InputManager.Inputs.OnActivate += CheckClickedOn;
+        InputManager.Instance.OnActivate += CheckClickedOn;
     }
 
     public void OnDisable()
     {
-        InputManager.Inputs.OnActivate -= CheckClickedOn;
+        InputManager.Instance.OnActivate -= CheckClickedOn;
     }
 
     public void Awake()

@@ -24,7 +24,7 @@ public class Eraser : MonoBehaviour
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
         public byte[] maskPixels;
-        public ErasableTaskWrapper erasableTask;
+        public TaskData erasableTask;
 
         /// <summary>
         /// An erasable object representation.
@@ -35,7 +35,7 @@ public class Eraser : MonoBehaviour
             this.obj = obj;
             sprite = obj.GetComponent<SpriteRenderer>().sprite;
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
-            erasableTask = obj.GetComponent<ErasableTaskWrapper>();
+            erasableTask = obj.GetComponent<TaskData>();
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ public class Eraser : MonoBehaviour
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
-            erasableTask.TaskProgress = erasedCount/(maskPixels.Length/100f);
-        }
+			erasableTask.Progress = ((float)erasedCount / maskPixels.Length) * 100;
+		}
     }
 
     private void Awake()
@@ -76,14 +76,14 @@ public class Eraser : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnActivate_Held += UseTool;
-        InputManager.Inputs.OnActivate_Ended += StopUseTool;
+        InputManager.Instance.OnActivate_Held += UseTool;
+        InputManager.Instance.OnActivate_Ended += StopUseTool;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnActivate_Held -= UseTool;
-        InputManager.Inputs.OnActivate_Ended -= StopUseTool;
+        InputManager.Instance.OnActivate_Held -= UseTool;
+        InputManager.Instance.OnActivate_Ended -= StopUseTool;
 
         StopUseTool();
     }
@@ -108,7 +108,7 @@ public class Eraser : MonoBehaviour
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                m_taskTracker.UpdateTaskTracker(erasable.erasableTask.TaskName, erasable.erasableTask.NewProgress);
+                m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
 
                 IsErasing = true;
             }
@@ -208,14 +208,14 @@ public class Eraser : MonoBehaviour
 
         var erased = false;
 
-        for (var i = 0; i < tool.maskPixels.Length; i++)
+        for (var i = 0; i < tool.MaskPixels.Length; i++)
         {
-            if (tool.maskPixels[i] == 0) continue;
+            if (tool.MaskPixels[i] == 0) continue;
 
             var currentPixelOnBrush = GetPixelCoordinatesOnTexture(tool.mask.texture, i);
             var pixels = GetPixelsOnTexture(currentPixelOnBrush, mouseDistFromErasableCentre, halfErasableSize, halfToolSize);
 
-            erased |= ApplyPixels(tool.maskPixels[i], erasable.maskPixels, pixels);
+            erased |= ApplyPixels(tool.MaskPixels[i], erasable.maskPixels, pixels);
         }
 
         return erased;
@@ -290,7 +290,7 @@ public class Eraser : MonoBehaviour
     /// <returns>Whether a change was made to the erasable mask.</returns>
     private bool ApplyPixels(byte toolMaskPixelAlpha, byte[] erasableMaskPixels, int[] drawingPixels)
     {
-        var pixelStrength = toolMaskPixelAlpha * (tool.strength / 100f);
+        var pixelStrength = toolMaskPixelAlpha * (tool.Strength / 100f);
         var erased = false;
 
         foreach (var pixel in drawingPixels)
