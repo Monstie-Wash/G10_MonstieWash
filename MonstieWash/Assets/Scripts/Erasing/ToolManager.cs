@@ -6,9 +6,9 @@ public class ToolManager : MonoBehaviour
 {
     [SerializeField] private List<Tool> tools = new();
 
-    private List<Tool> m_originalTools;
+    private List<Tool> m_originalTools = new();
 
-    public List<Tool> Tools { get; private set; }
+    [HideInInspector] public List<Tool> Tools { get; private set; }
 
     private void Awake()
     {

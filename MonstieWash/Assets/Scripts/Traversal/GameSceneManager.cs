@@ -66,6 +66,7 @@ public class GameSceneManager : MonoBehaviour
         SetSceneActive(upgradeScene.SceneName, false);
         SetSceneActive(loadingScene.SceneName, false);
 
+        InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         m_currentScene = SceneManager.GetSceneByName(levelSelectScene.SceneName);
     }

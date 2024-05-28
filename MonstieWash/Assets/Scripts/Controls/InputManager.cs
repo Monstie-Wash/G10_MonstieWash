@@ -77,7 +77,8 @@ public class InputManager : MonoBehaviour
 
         m_playerInput = new PlayerInput();
 
-        SetCursorMode(false);
+        SetCursorMode(true);
+        SetControlScheme(ControlScheme.PlayerActions);
     }
 
     private void OnEnable()
