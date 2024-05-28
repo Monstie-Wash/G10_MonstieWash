@@ -346,7 +346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5df9cd3904642041b9464ccbf2cb451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 11400000, guid: bbba2914d429f5943942bf29edcee34a, type: 2}
+  sound: {fileID: 11400000, guid: e04406eed9110d64b9eb90bb51651ba3, type: 2}
+  hideWarning: 0
 --- !u!1001 &983495908431496276
 PrefabInstance:
   m_ObjectHideFlags: 0
