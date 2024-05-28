@@ -76,14 +76,14 @@ public class Eraser : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnActivate_Held += UseTool;
-        InputManager.Inputs.OnActivate_Ended += StopUseTool;
+        InputManager.Instance.OnActivate_Held += UseTool;
+        InputManager.Instance.OnActivate_Ended += StopUseTool;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnActivate_Held -= UseTool;
-        InputManager.Inputs.OnActivate_Ended -= StopUseTool;
+        InputManager.Instance.OnActivate_Held -= UseTool;
+        InputManager.Instance.OnActivate_Ended -= StopUseTool;
 
         StopUseTool();
     }
@@ -208,14 +208,14 @@ public class Eraser : MonoBehaviour
 
         var erased = false;
 
-        for (var i = 0; i < tool.maskPixels.Length; i++)
+        for (var i = 0; i < tool.MaskPixels.Length; i++)
         {
-            if (tool.maskPixels[i] == 0) continue;
+            if (tool.MaskPixels[i] == 0) continue;
 
             var currentPixelOnBrush = GetPixelCoordinatesOnTexture(tool.mask.texture, i);
             var pixels = GetPixelsOnTexture(currentPixelOnBrush, mouseDistFromErasableCentre, halfErasableSize, halfToolSize);
 
-            erased |= ApplyPixels(tool.maskPixels[i], erasable.maskPixels, pixels);
+            erased |= ApplyPixels(tool.MaskPixels[i], erasable.maskPixels, pixels);
         }
 
         return erased;
@@ -290,7 +290,7 @@ public class Eraser : MonoBehaviour
     /// <returns>Whether a change was made to the erasable mask.</returns>
     private bool ApplyPixels(byte toolMaskPixelAlpha, byte[] erasableMaskPixels, int[] drawingPixels)
     {
-        var pixelStrength = toolMaskPixelAlpha * (tool.strength / 100f);
+        var pixelStrength = toolMaskPixelAlpha * (tool.Strength / 100f);
         var erased = false;
 
         foreach (var pixel in drawingPixels)

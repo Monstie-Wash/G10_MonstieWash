@@ -40,14 +40,14 @@ public class MoodArea : MonoBehaviour
     private void OnEnable()
     {
         //Assign to Input system.
-        InputManager.Inputs.OnActivate_Held += TestTouch;
+        InputManager.Instance.OnActivate_Held += TestTouch;
 
     }
 
     private void OnDisable()
     {
         //Unassign from Input system.
-        InputManager.Inputs.OnActivate_Held -= TestTouch;
+        InputManager.Instance.OnActivate_Held -= TestTouch;
     }
 
     private void Update()

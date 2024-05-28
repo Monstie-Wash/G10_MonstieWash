@@ -29,9 +29,8 @@ public class ToolUpgrade : MonoBehaviour
 
     public void SetTool(Tool tool)
     {
-        Debug.Log(tool.name);
         m_tool = tool;
-        m_toolName.text = m_tool.name;
+        m_toolName.text = m_tool.toolName;
         m_toolMask.sprite = m_tool.mask;
         m_toolPrice.text = $"${m_upgradeCost.ToString()}";
     }
@@ -49,10 +48,9 @@ public class ToolUpgrade : MonoBehaviour
         if (m_tool != null)
         {
             m_tool.size += 1;
-            //m_tool.InputStrength += 5f;
+            m_tool.InputStrength += 5f;
             m_upgradeCost += 25;
             m_toolPrice.text = $"${m_upgradeCost.ToString()}";
-            Debug.Log($"Upgrading {m_tool.name}.");
         }
         else
         {

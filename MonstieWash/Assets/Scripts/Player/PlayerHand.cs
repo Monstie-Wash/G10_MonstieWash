@@ -23,16 +23,16 @@ public class PlayerHand : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnMove += Inputs_MovePerformed;
-        InputManager.Inputs.OnMove_Ended += Inputs_MoveEnded;
-        InputManager.Inputs.OnNavigate += Inputs_OnNavigate;
+        InputManager.Instance.OnMove += Inputs_MovePerformed;
+        InputManager.Instance.OnMove_Ended += Inputs_MoveEnded;
+        InputManager.Instance.OnNavigate += Inputs_OnNavigate;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnMove -= Inputs_MovePerformed;
-        InputManager.Inputs.OnMove_Ended -= Inputs_MoveEnded;
-        InputManager.Inputs.OnNavigate -= Inputs_OnNavigate;
+        InputManager.Instance.OnMove -= Inputs_MovePerformed;
+        InputManager.Instance.OnMove_Ended -= Inputs_MoveEnded;
+        InputManager.Instance.OnNavigate -= Inputs_OnNavigate;
     }
 
     private void Awake()
@@ -69,7 +69,7 @@ public class PlayerHand : MonoBehaviour
     {
         var velocityModifer = 1f;
 
-        switch (InputManager.Inputs.InputDevice)
+        switch (InputManager.Instance.InputDevice)
         {
             case InputManager.PlayerInputDevice.MKB:
                 {

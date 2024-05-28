@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using System.Linq;
 using System;
 
 public class MonsterBrain : MonoBehaviour
@@ -27,7 +25,8 @@ public class MonsterBrain : MonoBehaviour
     [Tooltip("Maximum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float maxBetweenAttacks; // Creates an attack event between the min and max time, if possible.
     private float m_attackTimer;    // Chosen time to wait before the next attack (randomized between min and max after every attack).
     private float m_lastAttackTime = 0f;    // Time elapsed since the last attack.
-    public event EventHandler MonsterAttack;    // Monster attack event.
+
+    public event Action MonsterAttack;    // Monster attack event.
     #endregion
 
     #region Debug
@@ -266,7 +265,7 @@ public class MonsterBrain : MonoBehaviour
         // Attack is legal, perform the attack.
         m_lastAttackTime = 0f;
         m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
-        MonsterAttack?.Invoke(this, EventArgs.Empty);
+        MonsterAttack?.Invoke();
     }
 
     /// <summary>

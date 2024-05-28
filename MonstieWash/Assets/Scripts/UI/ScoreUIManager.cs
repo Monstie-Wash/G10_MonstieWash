@@ -33,19 +33,21 @@ public class ScoreUIManager : MonoBehaviour
     [SerializeField][Range(0.0f, 2.0f)] private float m_secondsWait = 1.0f;
     private bool m_skip = false;
 
-    // Start is called before the first frame update
-    private void OnEnable()
+    private void Awake()
     {
-        //MenuInputManager.Inputs.OnAltSelect += Inputs_OnAlt_Select;
-        
         m_tasks = PlaceholderTaskFill();
 
         StartCoroutine(LineItemSetActive());
     }
 
+    private void OnEnable()
+    {
+        InputManager.Instance.OnAltSelect += Inputs_OnAlt_Select;
+    }
+
     private void OnDisable()
     {
-        //MenuInputManager.Inputs.OnAltSelect -= Inputs_OnAlt_Select;
+        InputManager.Instance.OnAltSelect -= Inputs_OnAlt_Select;
     }
 
     /// <summary>

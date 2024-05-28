@@ -32,13 +32,13 @@ public class ToolSwitcher : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnSwitchTool += Inputs_OnSwitchTool;
+        InputManager.Instance.OnSwitchTool += Inputs_OnSwitchTool;
         m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnSwitchTool -= Inputs_OnSwitchTool;
+        InputManager.Instance.OnSwitchTool -= Inputs_OnSwitchTool;
         m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 

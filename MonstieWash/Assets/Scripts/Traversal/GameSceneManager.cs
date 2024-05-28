@@ -61,9 +61,12 @@ public class GameSceneManager : MonoBehaviour
     {
         await LoadScene(loadingScene.SceneName);
         await LoadScene(levelSelectScene.SceneName);
+        await LoadScene(upgradeScene.SceneName);
 
+        SetSceneActive(upgradeScene.SceneName, false);
         SetSceneActive(loadingScene.SceneName, false);
 
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         m_currentScene = SceneManager.GetSceneByName(levelSelectScene.SceneName);
     }
 
@@ -187,7 +190,8 @@ public class GameSceneManager : MonoBehaviour
         SetSceneActive(levelSelectScene.SceneName, false);
         await UnloadActiveLevelScenes();
 
-        InputManager.Inputs.SetCursorMode(true);
+        InputManager.Instance.SetCursorMode(true);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         LoadMonsterScene(level);
     }
 
@@ -204,7 +208,8 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(scoreSummaryScene.SceneName);
         m_activeScenes.Add(scoreSummaryScene.SceneName);
 
-        InputManager.Inputs.SetCursorMode(false);
+        InputManager.Instance.SetCursorMode(false);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(scoreSummaryScene.SceneName);
     }
 
@@ -221,7 +226,8 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(deathScene.SceneName);
         m_activeScenes.Add(deathScene.SceneName);
 
-        InputManager.Inputs.SetCursorMode(false);
+        InputManager.Instance.SetCursorMode(false);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(deathScene.SceneName);
     }
 
@@ -230,10 +236,9 @@ public class GameSceneManager : MonoBehaviour
         MoveToScene(loadingScene.SceneName);
 
         SetSceneActive(scoreSummaryScene.SceneName, false);
-        await LoadScene(upgradeScene.SceneName);
-        m_activeScenes.Add(upgradeScene.SceneName);
 
-        InputManager.Inputs.SetCursorMode(false);
+        InputManager.Instance.SetCursorMode(false);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(upgradeScene.SceneName);
     }
 
@@ -247,7 +252,8 @@ public class GameSceneManager : MonoBehaviour
         await UnloadActiveLevelScenes();
 
         GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Background);
-        InputManager.Inputs.SetCursorMode(false);
+        InputManager.Instance.SetCursorMode(false);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(levelSelectScene.SceneName);
     }
 
@@ -260,7 +266,8 @@ public class GameSceneManager : MonoBehaviour
         m_activeScenes.RemoveAt(m_activeScenes.IndexOf(deathScene.SceneName));
 
         GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Background);
-        InputManager.Inputs.SetCursorMode(true);
+        InputManager.Instance.SetCursorMode(true);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, true);
         SetSceneActive(m_activeScenes[1], true);
     }
@@ -275,7 +282,8 @@ public class GameSceneManager : MonoBehaviour
         await UnloadActiveLevelScenes();
 
         GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Background);
-        InputManager.Inputs.SetCursorMode(true);
+        InputManager.Instance.SetCursorMode(true);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         LoadMonsterScene(m_currentLevelScenes.level);
     }
 

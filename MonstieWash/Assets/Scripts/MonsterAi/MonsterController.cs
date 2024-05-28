@@ -68,7 +68,7 @@ public class MonsterController : MonoBehaviour
     /// </summary>
     /// <param name="sender"> The object that sent the attack event.</param>
     /// <param name="e"> Arguments included in the attack event (CURRENTLY UNUSED).</param>
-    private void Attack(object sender, EventArgs e)
+    private void Attack()
     {
         if (m_interruptedAnimation != null)        // Another attack is already in progress
         {

@@ -7,27 +7,25 @@ public class UpgradeManager : MonoBehaviour
 {
     [SerializeField] private GameObject toolUpgradePrefab;
     [SerializeField] private Transform upgradeContainer;
-    [SerializeField] private Tool[] upgradableTools;
     [SerializeField] private TextMeshProUGUI scoreUI;
 
+    private ToolManager m_toolManager;
     private int m_currentScore = 0;
 
     private void Awake()
     {
+        m_toolManager = FindFirstObjectByType<ToolManager>();
+
         m_currentScore += 150;
         UpdateScoreUI();
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
-        foreach (var tool in upgradableTools)
+        foreach (var tool in m_toolManager.Tools)
         {
             var upgradeObject = Instantiate(toolUpgradePrefab, upgradeContainer);
             var upgradeScript = upgradeObject.GetComponent<ToolUpgrade>();
-
-            Debug.Log(upgradeObject.name);
-            Debug.Log(tool.name);
 
             upgradeScript.SetTool(tool);
         }

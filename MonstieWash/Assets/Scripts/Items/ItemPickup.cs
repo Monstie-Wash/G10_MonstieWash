@@ -28,16 +28,16 @@ public class ItemPickup : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnActivate += Inputs_OnActivate;
-        InputManager.Inputs.OnSwitchTool += Inputs_OnSwitchTool;
-        InputManager.Inputs.OnNavigate += Inputs_OnNavigate;
+        InputManager.Instance.OnActivate += Inputs_OnActivate;
+        InputManager.Instance.OnSwitchTool += Inputs_OnSwitchTool;
+        InputManager.Instance.OnNavigate += Inputs_OnNavigate;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnActivate -= Inputs_OnActivate;
-        InputManager.Inputs.OnSwitchTool -= Inputs_OnSwitchTool;
-        InputManager.Inputs.OnNavigate -= Inputs_OnNavigate;
+        InputManager.Instance.OnActivate -= Inputs_OnActivate;
+        InputManager.Instance.OnSwitchTool -= Inputs_OnSwitchTool;
+        InputManager.Instance.OnNavigate -= Inputs_OnNavigate;
     }
 
     private void Inputs_OnActivate()

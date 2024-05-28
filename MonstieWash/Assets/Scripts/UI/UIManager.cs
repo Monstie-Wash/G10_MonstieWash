@@ -25,12 +25,12 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Inputs.OnToggleUI += Inputs_OnToggleUI;
+        InputManager.Instance.OnToggleUI += Inputs_OnToggleUI;
     }
 
     private void OnDisable()
     {
-        InputManager.Inputs.OnToggleUI -= Inputs_OnToggleUI;
+        InputManager.Instance.OnToggleUI -= Inputs_OnToggleUI;
     }
 
     private void Inputs_OnToggleUI()
