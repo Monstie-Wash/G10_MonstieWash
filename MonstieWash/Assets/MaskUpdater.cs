@@ -5,24 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteMask))]
 public class MaskUpdater : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
-    private SpriteMask mask;
-    private Sprite currentSprite;
+    private SpriteRenderer m_spriteRenderer;
+    private SpriteMask m_mask;
+    private Sprite m_currentSprite;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        mask = GetComponent<SpriteMask>();
-        currentSprite = spriteRenderer.sprite;
-        mask.sprite = currentSprite;
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_mask = GetComponent<SpriteMask>();
+        m_currentSprite = m_spriteRenderer.sprite;
+        m_mask.sprite = m_currentSprite;
     }
 
     private void LateUpdate()
     {
-        if (currentSprite.GetHashCode() != spriteRenderer.sprite.GetHashCode())
+        if (m_currentSprite.GetHashCode() != m_spriteRenderer.sprite.GetHashCode())
         {
-            currentSprite = spriteRenderer.sprite;
-            mask.sprite = currentSprite;
+            m_currentSprite = m_spriteRenderer.sprite;
+            m_mask.sprite = m_currentSprite;
         }
     }
 }
