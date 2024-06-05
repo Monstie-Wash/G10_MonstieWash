@@ -21,7 +21,7 @@ public class Eraser : MonoBehaviour
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
     /// </summary>
-    private struct Erasable
+    private class Erasable
     {
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
@@ -232,10 +232,12 @@ public class Eraser : MonoBehaviour
             var centrePixelX = localDrawPos.x;
             var centrePixelY = localDrawPos.y * erasableTextureSize.x;
             var centrePixel = centrePixelX + centrePixelY;
+            var expansionAmountX = Mathf.CeilToInt(tool.size / erasableTransform.localScale.x);
+            var expansionAmountY = Mathf.CeilToInt(tool.size / erasableTransform.localScale.y);
 
-            for (var xCount = 1; xCount <= tool.size; xCount++)
+            for (var xCount = 1; xCount <= expansionAmountX; xCount++)
             {
-                for (var yCount = 1; yCount <= tool.size; yCount++)
+                for (var yCount = 1; yCount <= expansionAmountY; yCount++)
                 {
                     xOffset = xCount - 1;
                     yOffset = erasableTextureSize.x * (yCount - 1);
