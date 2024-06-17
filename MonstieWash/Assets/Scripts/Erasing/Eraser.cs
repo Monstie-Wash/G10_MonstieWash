@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class Eraser : MonoBehaviour
 {
@@ -9,7 +12,6 @@ public class Eraser : MonoBehaviour
 
     private List<Erasable> m_erasables = new();
     private PlayerHand m_playerHand;
-    private Vector2Int m_drawPos;
     private TaskTracker m_taskTracker;
 
     private bool IsErasing = false;
@@ -19,7 +21,7 @@ public class Eraser : MonoBehaviour
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
     /// </summary>
-    private struct Erasable
+    private class Erasable
     {
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
@@ -93,7 +95,7 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void UseTool()
     {
-        if (!HandMoved())
+        if (!m_playerHand.IsMoving)
         {
             StopUseTool();
             return;
@@ -173,49 +175,83 @@ public class Eraser : MonoBehaviour
         spriteCopy.name = $"{sprite.name} Sprite Duplicate";
 
         return spriteCopy;
-    }
+    }      
 
     /// <summary>
-    /// Checks if the hand moved since last frame, updating the last position if it did.
+    /// Attempts to apply tool erasure.
     /// </summary>
-    /// <returns>Whether or not the hand moved since last frame.</returns>
-    private bool HandMoved()
-    {
-        var drawPointScreenPos = Camera.main.WorldToScreenPoint(drawPosTransform.position);
-        m_drawPos = new Vector2Int(Mathf.RoundToInt(drawPointScreenPos.x), Mathf.RoundToInt(drawPointScreenPos.y));
-
-        if (m_playerHand.IsMoving) return true;
-        return false;
-    }
-
-    /// <summary>
-    /// Updates the mask for the given erasable.
-    /// </summary>
-    /// <param name="erasable">The erasable whose mask to update.</param>
-    /// <returns>Whether or not the mask was changed.</returns>
+    /// <param name="erasable">The erasable to update.</param>
+    /// <returns>Whether the erasable mask was modified.</returns>
     private bool UpdateErasableMask(Erasable erasable)
     {
-        var erasableScreenPos = Camera.main.WorldToScreenPoint(erasable.obj.transform.position);
-        var erasableCentrePixel = new Vector2Int(Mathf.RoundToInt(erasableScreenPos.x), Mathf.RoundToInt(erasableScreenPos.y));
-        var mouseDistFromErasableCentre = m_drawPos - erasableCentrePixel;
-        var halfErasableSize = new Vector2Int(erasable.sprite.texture.width / 2, erasable.sprite.texture.height / 2);
-        var halfToolSize = new Vector2Int(tool.mask.texture.width / 2, tool.mask.texture.height / 2);
+        //Cache reused values and setup variables
+        var toolMaskTexture = tool.mask.texture;
+        var toolMaskPpu = tool.mask.pixelsPerUnit;
+        var toolMaskTextureSize = new Vector2Int(toolMaskTexture.width, toolMaskTexture.height);
+        var halfToolMaskTextureSize = new Vector2Int(toolMaskTextureSize.x / 2, toolMaskTextureSize.y / 2);
 
-        //Stop if brush is not on mask
-        var outOfBoundsX = Math.Abs(mouseDistFromErasableCentre.x) - (halfToolSize.x * tool.size) >= halfErasableSize.x;
-        var outOfBoundsY = Math.Abs(mouseDistFromErasableCentre.y) - (halfToolSize.y * tool.size) >= halfErasableSize.y;
-        if (outOfBoundsX || outOfBoundsY) return false;
+        var erasableTexture = erasable.sprite.texture;
+        var erasablePpu = erasable.sprite.pixelsPerUnit;
+        var erasableTextureSize = new Vector2Int(erasableTexture.width, erasableTexture.height);
+        var erasableTransform = erasable.obj.transform;
 
+        var scalePixels = new List<int>();
         var erased = false;
 
+        // Check if the tool is touching the erasable
+        {
+            var toolBoundsSize = new Vector2(toolMaskTextureSize.x / toolMaskPpu * tool.size, toolMaskTextureSize.y / toolMaskPpu * tool.size);
+            var erasableBoundsSize = new Vector2(erasableTextureSize.x / erasablePpu * erasableTransform.localScale.x, erasableTextureSize.y / erasablePpu * erasableTransform.localScale.y);
+            Bounds toolBounds = new Bounds(drawPosTransform.position, toolBoundsSize);
+            Bounds erasableBounds = new Bounds(erasableTransform.position, erasableBoundsSize);
+
+            // Exit early if not touching
+            var closestPoint = (Vector2)toolBounds.ClosestPoint(erasableTransform.position);
+            var relativeClosestPointVector = RotateVector(closestPoint - (Vector2)erasableTransform.position, -erasableTransform.rotation.eulerAngles.z);
+            var outOfBoundsX = erasableBounds.extents.x - Mathf.Abs(relativeClosestPointVector.x) < 0f;
+            var outOfBoundsY = erasableBounds.extents.y - Mathf.Abs(relativeClosestPointVector.y) < 0f;
+            if (outOfBoundsX || outOfBoundsY) return false;
+        }
+
+        //Apply each pixel of the tool mask to the erasable texture mask
         for (var i = 0; i < tool.MaskPixels.Length; i++)
         {
             if (tool.MaskPixels[i] == 0) continue;
 
-            var currentPixelOnBrush = GetPixelCoordinatesOnTexture(tool.mask.texture, i);
-            var pixels = GetPixelsOnTexture(currentPixelOnBrush, mouseDistFromErasableCentre, halfErasableSize, halfToolSize);
+            // Translate the current pixel position to the erasable's local position
+            var currentPixelOnBrush = GetPixelCoordinatesOnTexture(toolMaskTexture, i);
+            var scaledCurrentPixelOnBrush = new Vector2((currentPixelOnBrush.x - halfToolMaskTextureSize.x) * tool.size, (currentPixelOnBrush.y - halfToolMaskTextureSize.y) * tool.size);
+            var currentPixelInWorld = drawPosTransform.TransformPoint(scaledCurrentPixelOnBrush / toolMaskPpu);
+            var localDrawPosFloat = ((Vector2)erasableTransform.InverseTransformPoint(currentPixelInWorld) * erasablePpu) + erasable.sprite.pivot;
+            var localDrawPos = new Vector2Int(Mathf.RoundToInt(localDrawPosFloat.x), Mathf.RoundToInt(localDrawPosFloat.y));
 
-            erased |= ApplyPixels(tool.MaskPixels[i], erasable.maskPixels, pixels);
+            // Get all pixels affected due to brush size scaling
+            scalePixels.Clear();
+            int xOffset, yOffset;
+            bool outOfBoundsX, outOfBoundsY;
+            var centrePixelX = localDrawPos.x;
+            var centrePixelY = localDrawPos.y * erasableTextureSize.x;
+            var centrePixel = centrePixelX + centrePixelY;
+            var expansionAmountX = Mathf.CeilToInt(tool.size / erasableTransform.localScale.x);
+            var expansionAmountY = Mathf.CeilToInt(tool.size / erasableTransform.localScale.y);
+
+            for (var xCount = 1; xCount <= expansionAmountX; xCount++)
+            {
+                for (var yCount = 1; yCount <= expansionAmountY; yCount++)
+                {
+                    xOffset = xCount - 1;
+                    yOffset = erasableTextureSize.x * (yCount - 1);
+
+                    //Check if the current pixel is not on the sprite
+                    outOfBoundsX = centrePixelX + xOffset < 0 || centrePixelX + xOffset >= erasableTextureSize.x;
+                    outOfBoundsY = centrePixelY + yOffset < 0 || localDrawPos.y + yCount - 1 >= erasableTextureSize.y;
+                    if (outOfBoundsX || outOfBoundsY) continue;
+
+                    scalePixels.Add(centrePixel + xOffset + yOffset);
+                }
+            }
+
+            erased |= ApplyPixels(tool.MaskPixels[i], erasable.maskPixels, scalePixels.ToArray());
         }
 
         return erased;
@@ -236,52 +272,6 @@ public class Eraser : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets the pixels affected due to scaling of the brush based on the given pixel.
-    /// </summary>
-    /// <param name="currentPixelOnBrush">The pixel to start from, in x/y coordinates</param>
-    /// <param name="mouseDistFromErasableCentre">Vector representing the mouse distance from the centre of the erasable in pixels.</param>
-    /// <param name="halfErasableSize">Vector representing half the size of the erasable in pixels.</param>
-    /// <param name="halfToolSize">Vector representing half the size of the tool in pixels.</param>
-    /// <returns>The array of pixels affected by the given pixel.</returns>
-    private int[] GetPixelsOnTexture(Vector2Int currentPixelOnBrush, Vector2Int mouseDistFromErasableCentre, Vector2Int halfErasableSize, Vector2Int halfToolSize)
-    {
-        //Get the position of this pixel on the erasable texture
-        var xDist = (currentPixelOnBrush.x - halfToolSize.x) * tool.size;
-        var yDist = (currentPixelOnBrush.y - halfToolSize.y) * tool.size;
-        var distFromToolCentre = new Vector2Int(xDist, yDist);
-        var pixelPosFromCentre = mouseDistFromErasableCentre + distFromToolCentre;
-
-        //Convert coordinates to pixel in erasable texture
-        var erasableTextureWidth = halfErasableSize.x * 2;
-        var erasableTextureHeight = halfErasableSize.y * 2;
-        var centrePixelX = halfErasableSize.x + pixelPosFromCentre.x;
-        var centrePixelY = (halfErasableSize.y + pixelPosFromCentre.y) * erasableTextureWidth;
-        var centrePixel = centrePixelX + centrePixelY;
-
-        //Get all pixels affected due to brush size scaling
-        var scalePixels = new List<int>();
-        int xOffset, yOffset;
-        bool outOfBoundsX, outOfBoundsY;
-
-        for (var xCount = 1; xCount <= tool.size; xCount++)
-        {
-            for (var yCount = 1; yCount <= tool.size; yCount++)
-            {
-                xOffset = xCount - 1;
-                yOffset = erasableTextureWidth * (yCount - 1);
-
-                outOfBoundsX = centrePixelX + xOffset < 0 || centrePixelX + xOffset >= erasableTextureWidth;
-                outOfBoundsY = centrePixelY + yOffset < 0 || halfErasableSize.y + pixelPosFromCentre.y + yCount - 1 >= erasableTextureHeight;
-                if (outOfBoundsX || outOfBoundsY) continue;
-
-                scalePixels.Add(centrePixel + xOffset + yOffset);
-            }
-        }
-
-        return scalePixels.ToArray();
-    }
-
-    /// <summary>
     /// Set the given erasable mask.
     /// </summary>
     /// <param name="toolMaskPixelAlpha">The alpha of the tool pixel to use.</param>
@@ -295,7 +285,7 @@ public class Eraser : MonoBehaviour
 
         foreach (var pixel in drawingPixels)
         {
-            var newAlpha = Mathf.Clamp(erasableMaskPixels[pixel] + pixelStrength, 0f, 255f);
+            var newAlpha = Mathf.Clamp(erasableMaskPixels[pixel] + (pixelStrength * 255f), 0f, 255f);
             var newValue = (byte)Mathf.FloorToInt(newAlpha);
 
             if (erasableMaskPixels[pixel] != newValue)
@@ -306,5 +296,22 @@ public class Eraser : MonoBehaviour
         }
 
         return erased;
+    }
+
+    /// <summary>
+    /// Rotates a vector.
+    /// </summary>
+    /// <param name="vector">The vector to rotate.</param>
+    /// <param name="angle">The angle in degrees to rotate by.</param>
+    /// <returns></returns>
+    private Vector2 RotateVector(Vector2 vector, float angle)
+    {
+        var angleRadians = angle * Mathf.Deg2Rad;
+        var cos = Mathf.Cos(angleRadians);
+        var sin = Mathf.Sin(angleRadians);
+        var a = new Vector2(cos, sin);
+        var b = new Vector2(-sin, cos);
+
+        return vector.x * a + vector.y * b;
     }
 }
