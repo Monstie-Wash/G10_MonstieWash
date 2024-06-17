@@ -110,7 +110,7 @@ public class Eraser : MonoBehaviour
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
-                //m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
+                m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
 
                 IsErasing = true;
             }
