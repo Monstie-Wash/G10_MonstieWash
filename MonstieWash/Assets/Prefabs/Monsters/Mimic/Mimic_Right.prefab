@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6751848231219191472}
   - component: {fileID: -4850747262108209868}
   - component: {fileID: 7471794663172716338}
+  - component: {fileID: -5433392770667775389}
+  - component: {fileID: 4161132667818383266}
   m_Layer: 12
   m_Name: Mimic_Right
   m_TagString: Right
@@ -132,6 +134,8 @@ MonoBehaviour:
     animation: {fileID: 7400000, guid: 07062cd3ee79f264c8c1296ab6023ca8, type: 2}
   - mood: {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
     animation: {fileID: 7400000, guid: 8ce0c9d00bab3fa449b33ecff005729e, type: 2}
+  debug: 0
+  attackList: []
 --- !u!61 &7471794663172716338
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -178,3 +182,69 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 11.111111, y: 10}
   m_EdgeRadius: 0
+--- !u!331 &-5433392770667775389
+SpriteMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381096203401150910}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_MaskAlphaCutoff: 0.2
+  m_FrontSortingLayerID: 0
+  m_BackSortingLayerID: 0
+  m_FrontSortingLayer: 0
+  m_BackSortingLayer: 0
+  m_FrontSortingOrder: 0
+  m_BackSortingOrder: 0
+  m_IsCustomRangeActive: 0
+  m_SpriteSortPoint: 0
+  m_MaskSource: 0
+--- !u!114 &4161132667818383266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381096203401150910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0c241781f50cf4a80b13d2d5cf4adc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
