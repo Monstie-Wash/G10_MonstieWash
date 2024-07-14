@@ -191,6 +191,7 @@ public class GameSceneManager : MonoBehaviour
         SetSceneActive(levelSelectScene.SceneName, false);
         await UnloadActiveLevelScenes();
 
+        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Background);
         InputManager.Instance.SetCursorMode(true);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         LoadMonsterScene(level);
@@ -219,7 +220,7 @@ public class GameSceneManager : MonoBehaviour
     /// </summary>
     public async void PlayerDied()
     {
-        await Task.Delay(3000);
+        await Task.Delay(6700);
 
         MoveToScene(loadingScene.SceneName);
 
@@ -227,6 +228,7 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(deathScene.SceneName);
         m_activeScenes.Add(deathScene.SceneName);
 
+        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Nurse);
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(deathScene.SceneName);
@@ -238,6 +240,7 @@ public class GameSceneManager : MonoBehaviour
 
         SetSceneActive(scoreSummaryScene.SceneName, false);
 
+        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Evening);
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(upgradeScene.SceneName);
@@ -252,7 +255,7 @@ public class GameSceneManager : MonoBehaviour
 
         await UnloadActiveLevelScenes();
 
-        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Background);
+        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Morning);
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(levelSelectScene.SceneName);

@@ -5,9 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(SoundPlayer))]
 public class MusicManager : MonoBehaviour
 {
+    [SerializeField] private Sound menuMusic;
+    [SerializeField] private Sound morningMusic;
+    [SerializeField] private Sound eveningMusic;
     [SerializeField] private List<Sound> backgroundMusic;
     [SerializeField] private Sound deathMusic;
     [SerializeField] private Sound victoryMusic;
+    [SerializeField] private Sound nurseSting;
+    [SerializeField] private Sound upgradeSting;
 
     private SoundPlayer m_soundPlayer;
     private Sound m_currentMusic;
@@ -15,16 +20,21 @@ public class MusicManager : MonoBehaviour
 
     public enum MusicType
     {
+        Menu,
+        Morning,
+        Evening,
         Background,
         Death,
-        Victory
+        Victory,
+        Nurse,
+        ToolUpgrade
     }
 
     private void Awake()
     {
         m_soundPlayer = GetComponent<SoundPlayer>();
         m_currentMusic = m_soundPlayer.Sound;
-        m_currentMusicType = MusicType.Background;
+        m_currentMusicType = MusicType.Morning;
     }
 
     /// <summary>
@@ -73,6 +83,24 @@ public class MusicManager : MonoBehaviour
     {
         switch (type)
         {
+            case MusicType.Menu:
+                {                    
+                    ChangeMusic(menuMusic);
+                    m_currentMusicType = MusicType.Menu;
+                }
+                break;
+            case MusicType.Morning:
+                {
+                    ChangeMusic(morningMusic);
+                    m_currentMusicType = MusicType.Morning;
+                }
+                break;
+            case MusicType.Evening:
+                {
+                    ChangeMusic(eveningMusic);
+                    m_currentMusicType = MusicType.Evening;
+                }
+                break;
             case MusicType.Background:
                 {
                     ChangeMusic(backgroundMusic[0]);
@@ -89,6 +117,18 @@ public class MusicManager : MonoBehaviour
                 {
                     ChangeMusic(victoryMusic);
                     m_currentMusicType = MusicType.Victory;
+                }
+                break;
+            case MusicType.Nurse:
+                {
+                    ChangeMusic(nurseSting);
+                    m_currentMusicType = MusicType.Nurse;
+                }
+                break;
+            case MusicType.ToolUpgrade:
+                {
+                    ChangeMusic(upgradeSting);
+                    m_currentMusicType = MusicType.ToolUpgrade;
                 }
                 break;
         }
