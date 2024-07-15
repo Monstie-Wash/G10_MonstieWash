@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61afbadc8a49190409832e82cab2b189, type: 3}
-  m_Name: VictoryMusic
+  m_Name: Sfx@task_finish
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: a1d3096708250b14688b32f8e494479f, type: 3}
   mixer: {fileID: -6379261314806015809, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
