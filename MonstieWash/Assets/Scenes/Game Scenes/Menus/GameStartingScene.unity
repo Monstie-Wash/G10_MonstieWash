@@ -371,7 +371,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 27b2c379a9f55e3448786e4c8159cc3d, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allLevelScenes.Array.data[0].gameScenes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allLevelScenes.Array.data[1].gameScenes.Array.size
@@ -381,6 +381,10 @@ PrefabInstance:
       propertyPath: 'allLevelScenes.Array.data[0].gameScenes.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: bbb0d5b26faec8d4bba58bde3a476a74, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'allLevelScenes.Array.data[0].gameScenes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ba9e60331dec58f45a5f72f4fb194fad, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'allLevelScenes.Array.data[1].gameScenes.Array.data[0]'
       value: 
