@@ -228,7 +228,6 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(deathScene.SceneName);
         m_activeScenes.Add(deathScene.SceneName);
 
-        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Nurse);
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(deathScene.SceneName);

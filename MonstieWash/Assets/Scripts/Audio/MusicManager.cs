@@ -11,8 +11,6 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private List<Sound> backgroundMusic;
     [SerializeField] private Sound deathMusic;
     [SerializeField] private Sound victoryMusic;
-    [SerializeField] private Sound nurseSting;
-    [SerializeField] private Sound upgradeSting;
 
     private SoundPlayer m_soundPlayer;
     private Sound m_currentMusic;
@@ -26,8 +24,6 @@ public class MusicManager : MonoBehaviour
         Background,
         Death,
         Victory,
-        Nurse,
-        ToolUpgrade
     }
 
     private void Awake()
@@ -117,18 +113,6 @@ public class MusicManager : MonoBehaviour
                 {
                     ChangeMusic(victoryMusic);
                     m_currentMusicType = MusicType.Victory;
-                }
-                break;
-            case MusicType.Nurse:
-                {
-                    ChangeMusic(nurseSting);
-                    m_currentMusicType = MusicType.Nurse;
-                }
-                break;
-            case MusicType.ToolUpgrade:
-                {
-                    ChangeMusic(upgradeSting);
-                    m_currentMusicType = MusicType.ToolUpgrade;
                 }
                 break;
         }
