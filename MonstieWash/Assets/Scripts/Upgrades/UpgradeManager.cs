@@ -8,13 +8,16 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private GameObject toolUpgradePrefab;
     [SerializeField] private Transform upgradeContainer;
     [SerializeField] private TextMeshProUGUI scoreUI;
+    [SerializeField] private Sound upgradeSound;
 
     private ToolManager m_toolManager;
+    private SoundPlayer m_soundPlayer;
     private int m_currentScore = 0;
 
     private void Awake()
     {
         m_toolManager = FindFirstObjectByType<ToolManager>();
+        m_soundPlayer = GetComponent<SoundPlayer>();
 
         m_currentScore += 150;
         UpdateScoreUI();
@@ -29,6 +32,7 @@ public class UpgradeManager : MonoBehaviour
 
             upgradeScript.SetTool(tool);
         }
+        m_soundPlayer.SwitchSound(upgradeSound);
     }
 
     private void UpdateScoreUI()
@@ -39,11 +43,12 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    public bool SpendScore(int score)
+    public bool TryUpgrade(int score)
     {
         var result = false;
         if (score <= m_currentScore)
         {
+            m_soundPlayer.PlaySound();
             m_currentScore -= score;
             UpdateScoreUI();
             result = true;
