@@ -220,7 +220,7 @@ public class GameSceneManager : MonoBehaviour
     /// </summary>
     public async void PlayerDied()
     {
-        await Task.Delay(6700);
+        await Task.Delay(7000);
 
         MoveToScene(loadingScene.SceneName);
 

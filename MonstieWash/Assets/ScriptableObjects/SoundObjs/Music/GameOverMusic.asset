@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameOverMusic
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 3cbafbd4ecf48cf4dacf8195ea4a7b67, type: 3}
-  mixer: {fileID: -6379261314806015809, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
+  mixer: {fileID: 4831419169139161055, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
   volume: 1
   pitch: 1
   loop: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Sfx@tool_upgrade
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: dc0f063a0fbb8074693d542f14a19f94, type: 3}
-  mixer: {fileID: -6379261314806015809, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
-  volume: 1
+  mixer: {fileID: 4831419169139161055, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
+  volume: 0.6
   pitch: 1
   loop: 0
-  playOnAwake: 1
+  playOnAwake: 0

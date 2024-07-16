@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Sfx@nurse_room
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: e659b1913fcecb548a1509240e832bec, type: 3}
-  mixer: {fileID: -6379261314806015809, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
-  volume: 1
+  mixer: {fileID: 4831419169139161055, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
+  volume: 0.6
   pitch: 1
   loop: 0
   playOnAwake: 1
