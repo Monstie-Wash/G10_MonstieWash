@@ -23,7 +23,7 @@ public class MusicManager : MonoBehaviour
         Evening,
         Background,
         Death,
-        Victory,
+        Victory
     }
 
     private void Awake()
