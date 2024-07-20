@@ -1,33 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public struct PHTask
-{
-    public string name;
-    public bool complete;
-    public int score;
-
-    public PHTask(string name, bool complete, int score)
-    {  this.name = name; this.complete = complete; this.score = score; }
-}
-
 public class ScoreUIManager : MonoBehaviour
 {
-    [SerializeField] private Transform m_clipboard;
+	[SerializeField] private Transform m_clipboard;
     [SerializeField] private GameObject m_lineItem;
     [SerializeField] private TextMeshProUGUI m_totalScore;
+    
+    private TaskTracker m_tracker;
 
-    //Probably temporary, may change to calc scale with number of tasks later.
-    [SerializeField][Range(0.0f, 5.0f)] private float m_spacing;
+	//Probably temporary, may change to calc scale with number of tasks later.
+	[SerializeField][Range(0.0f, 5.0f)] private float m_spacing;
 
     /// <summary>
     /// Placeholder. Suggest Json to player prefs.
     /// </summary>
-    [SerializeField] private List<PHTask> m_tasks = new();
+    private Dictionary<string, float> m_tasks = new();
     [SerializeField] private List<GameObject> m_LIList = new();
 
     [SerializeField][Range(0.0f, 2.0f)] private float m_secondsWait = 1.0f;
@@ -35,10 +28,15 @@ public class ScoreUIManager : MonoBehaviour
 
     private void Awake()
     {
-        m_tasks = PlaceholderTaskFill();
+		m_tracker = FindFirstObjectByType<TaskTracker>(FindObjectsInactive.Include);
+
+        Debug.Log(m_tracker == null);
+
+		m_skip = false;
+        LoadOverallTasks();
 
         StartCoroutine(LineItemSetActive());
-    }
+	}
 
     private void OnEnable()
     {
@@ -50,23 +48,27 @@ public class ScoreUIManager : MonoBehaviour
         InputManager.Instance.OnAltSelect -= Inputs_OnAlt_Select;
     }
 
-    /// <summary>
-    /// Fills the task list and returns it.
-    /// </summary>
-    /// <returns>List of tasks with score multiplier</returns>
-    private List<PHTask> PlaceholderTaskFill()
-    {
-        List<PHTask> ph_tasks = new List<PHTask>();
+	/// <summary>
+	/// Gathers the task list from the game manager.
+	/// </summary>
+	/// <returns>A list of TaskData objects</returns>
+	public void LoadOverallTasks()
+	{
+		foreach (var task in m_tracker.TaskData)
+		{
+			if (!m_tasks.ContainsKey(task.gameObject.scene.name))
+			{
+				m_tasks.Add(task.gameObject.scene.name, task.Score);
+                Debug.Log($"{task.gameObject}, {task.Score}");
+			}
+			else
+			{
+				m_tasks[task.gameObject.scene.name] += task.Score;
+			}
+		}
+	}
 
-        for (int i = 0; i < 8; i++)
-        {
-            ph_tasks.Add(new PHTask("Task Name Here", true, 10));
-        }
-
-        return ph_tasks;
-    }
-
-    private IEnumerator LineItemSetActive()
+	private IEnumerator LineItemSetActive()
     {
         RectTransform LITransform;
 
@@ -74,7 +76,7 @@ public class ScoreUIManager : MonoBehaviour
         TextMeshProUGUI score = null;
         GameObject strikeOut = null;
 
-        int totalScore = 0;
+        float totalScore = 0f;
 
         for (var i = 0; i < m_tasks.Count; i++)
         {
@@ -86,7 +88,7 @@ public class ScoreUIManager : MonoBehaviour
             name = m_LIList[i].transform.Find("TaskName").GetComponent<TextMeshProUGUI>();
             strikeOut = m_LIList[i].transform.Find("StrikeOut").gameObject;
 
-            name.text = m_tasks[i].name;
+            name.text = m_tasks.ElementAt(i).Key;
 
             m_LIList[i].SetActive(true);
             strikeOut.SetActive(false);
@@ -104,24 +106,23 @@ public class ScoreUIManager : MonoBehaviour
             }
 
             //Put the score in the score.
-            if (m_tasks[i].complete)
-            {
-                score = m_LIList[i].transform.Find("TaskScore").GetComponent<TextMeshProUGUI>();
-                score.text = $"${m_tasks[i].score.ToString()}";
+            score = m_LIList[i].transform.Find("TaskScore").GetComponent<TextMeshProUGUI>();
+            //score.text = $"${m_tasks[i].ToString()}";
 
-                strikeOut = m_LIList[i].transform.Find("StrikeOut").gameObject;
-                strikeOut.SetActive(true);
-
-                //Add to score total
-                totalScore += m_tasks[i].score;
-            }
+            strikeOut = m_LIList[i].transform.Find("StrikeOut").gameObject;
+            strikeOut.SetActive(true);
+            
+            //Add to score total
+            totalScore += m_tasks.ElementAt(i).Value;
         }
+
+        //totalScore = MathF.Round(totalScore, 2);
 
         m_totalScore.text = $"${totalScore.ToString()}";
     }
 
-    private void Inputs_OnAlt_Select()
+	private void Inputs_OnAlt_Select()
     {
         m_skip = true;
-    }   
+    }
 }
