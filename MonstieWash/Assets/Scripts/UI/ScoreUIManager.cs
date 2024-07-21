@@ -11,15 +11,14 @@ public class ScoreUIManager : MonoBehaviour
 	[SerializeField] private Transform m_clipboard;
     [SerializeField] private GameObject m_lineItem;
     [SerializeField] private TextMeshProUGUI m_totalScore;
+    [SerializeField] private Image m_polaroid;
+    [SerializeField] private List<Sprite> m_sprites;
     
     private TaskTracker m_tracker;
 
 	//Probably temporary, may change to calc scale with number of tasks later.
 	[SerializeField][Range(0.0f, 5.0f)] private float m_spacing;
 
-    /// <summary>
-    /// Placeholder. Suggest Json to player prefs.
-    /// </summary>
     private Dictionary<string, float> m_tasks = new();
     [SerializeField] private List<GameObject> m_LIList = new();
 
@@ -29,8 +28,9 @@ public class ScoreUIManager : MonoBehaviour
     private void Awake()
     {
 		m_tracker = FindFirstObjectByType<TaskTracker>(FindObjectsInactive.Include);
+        GameSceneManager gSM = FindFirstObjectByType<GameSceneManager>(FindObjectsInactive.Include);
 
-        Debug.Log(m_tracker == null);
+        m_polaroid.sprite = m_sprites[((int)gSM.CurrentLevel)];
 
 		m_skip = false;
         LoadOverallTasks();
