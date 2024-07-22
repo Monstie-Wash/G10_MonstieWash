@@ -30,7 +30,10 @@ public class ScoreUIManager : MonoBehaviour
 		m_tracker = FindFirstObjectByType<TaskTracker>(FindObjectsInactive.Include);
         GameSceneManager gSM = FindFirstObjectByType<GameSceneManager>(FindObjectsInactive.Include);
 
-        m_polaroid.sprite = m_sprites[((int)gSM.CurrentLevel)];
+        if (m_sprites.Count >= (int)gSM.CurrentLevel)
+            m_polaroid.sprite = m_sprites[((int)gSM.CurrentLevel)];
+        else
+            Debug.LogError("Invalid level. No polaroid sprite available.");
 
 		m_skip = false;
         LoadOverallTasks();
@@ -59,7 +62,7 @@ public class ScoreUIManager : MonoBehaviour
 			if (!m_tasks.ContainsKey(task.gameObject.scene.name))
 			{
 				m_tasks.Add(task.gameObject.scene.name, task.Score);
-                Debug.Log($"{task.gameObject}, {task.Score}");
+                //Debug.Log($"{task.gameObject}, {task.Score}");
 			}
 			else
 			{
