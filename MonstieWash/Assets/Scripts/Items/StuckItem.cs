@@ -1,7 +1,9 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class StuckItem : MonoBehaviour
+public class StuckItem : MonoBehaviour, ITaskScript
 {
     [SerializeField] private float startMaxRotation = 20f;
     [SerializeField] private float endMaxRotation = 90f;
@@ -38,6 +40,7 @@ public class StuckItem : MonoBehaviour
 
     private void Awake()
     {
+        if (transform.lossyScale.x < 0f) Debug.LogWarning($"{name} has a negative X-scale! This will break it! Make sure it is positive and use the 'Mirror' button to flip it.");
         m_rb = GetComponent<Rigidbody2D>();
         GrabDistance = grabDistanceMultiplier * transform.lossyScale.x;
         m_initialWiggleCount = wiggleCount;
@@ -125,4 +128,53 @@ public class StuckItem : MonoBehaviour
             yield return null;
         }
     }
+    public List<object> SaveData()
+    {
+        List<object> data = new();
+
+        data.Add(Stuck);
+        data.Add(wiggleCount);
+
+        return data;
+    }
+
+    public void LoadData(List<object> data)
+    {
+        Stuck = (bool)data[0];
+        wiggleCount = (int)data[1];
+
+        m_pickingTask.Progress = 100f*(m_initialWiggleCount - wiggleCount)/m_initialWiggleCount;
+        m_taskTracker.UpdateTaskTracker(m_pickingTask);
+        return;
+    }
 }
+
+#region Custom Editor
+#if UNITY_EDITOR
+[CustomEditor(typeof(StuckItem))]
+public class StuckItemEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        serializedObject.Update();
+
+        EditorGUILayout.Space(10f);
+
+        StuckItem item = (StuckItem)target;
+        if (GUILayout.Button("Mirror"))
+        {
+            item.transform.rotation = Quaternion.Euler(0f, 0f, GetFlippedDir(item.transform.rotation.eulerAngles.z));
+            item.transform.position = new Vector3(-item.transform.position.x, item.transform.position.y, item.transform.position.z);
+        }
+
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    private float GetFlippedDir(float dir)
+    {
+        return 90f - (dir - 90f);
+    }
+}
+#endif
+#endregion
