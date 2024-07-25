@@ -7,7 +7,9 @@ using UnityEngine.SceneManagement;
 public class GameSceneManager : MonoBehaviour
 {
     public event Action OnScenesLoaded;
-    public event Action<string> OnSceneChanged;
+    public event Action OnSceneSwitch;
+    public event Action OnSceneChanged;
+    public event Action OnLevelEnd;
 
     [SerializeField] private GameScene levelSelectScene;
     [SerializeField] private GameScene loadingScene;
@@ -174,10 +176,12 @@ public class GameSceneManager : MonoBehaviour
     /// <param name="target">The scene to move to.</param>
     public void MoveToScene(string target)
     {
+        OnSceneSwitch?.Invoke();
+
         SetSceneActive(m_currentScene.name, false);
         SetSceneActive(target, true);
 
-        OnSceneChanged?.Invoke(target);
+        OnSceneChanged?.Invoke();
     }
 
     /// <summary>
@@ -202,6 +206,7 @@ public class GameSceneManager : MonoBehaviour
     public async void LevelComplete()
     {
         await Task.Delay(3000);
+        OnLevelEnd?.Invoke();
 
         MoveToScene(loadingScene.SceneName);
 
@@ -220,6 +225,7 @@ public class GameSceneManager : MonoBehaviour
     public async void PlayerDied()
     {
         await Task.Delay(3000);
+        OnLevelEnd?.Invoke();
 
         MoveToScene(loadingScene.SceneName);
 
