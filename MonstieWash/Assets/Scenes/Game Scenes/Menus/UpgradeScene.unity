@@ -872,6 +872,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1331165602}
     - target: {fileID: 4944138896146903184, guid: 175adce4ea93d614dbd7c4de829425c8, type: 3}
+      propertyPath: upgradeSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 776629040aaa60749bb07049442f2081, type: 2}
+    - target: {fileID: 4944138896146903184, guid: 175adce4ea93d614dbd7c4de829425c8, type: 3}
       propertyPath: upgradeContainer
       value: 
       objectReference: {fileID: 431169419}
