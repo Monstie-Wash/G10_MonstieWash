@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(SoundPlayer))]
 public class MusicManager : MonoBehaviour
 {
+    [SerializeField] private Sound menuMusic;
+    [SerializeField] private Sound morningMusic;
+    [SerializeField] private Sound eveningMusic;
     [SerializeField] private List<Sound> backgroundMusic;
     [SerializeField] private Sound deathMusic;
     [SerializeField] private Sound victoryMusic;
@@ -15,6 +18,9 @@ public class MusicManager : MonoBehaviour
 
     public enum MusicType
     {
+        Menu,
+        Morning,
+        Evening,
         Background,
         Death,
         Victory
@@ -24,7 +30,7 @@ public class MusicManager : MonoBehaviour
     {
         m_soundPlayer = GetComponent<SoundPlayer>();
         m_currentMusic = m_soundPlayer.Sound;
-        m_currentMusicType = MusicType.Background;
+        m_currentMusicType = MusicType.Morning;
     }
 
     /// <summary>
@@ -73,6 +79,24 @@ public class MusicManager : MonoBehaviour
     {
         switch (type)
         {
+            case MusicType.Menu:
+                {                    
+                    ChangeMusic(menuMusic);
+                    m_currentMusicType = MusicType.Menu;
+                }
+                break;
+            case MusicType.Morning:
+                {
+                    ChangeMusic(morningMusic);
+                    m_currentMusicType = MusicType.Morning;
+                }
+                break;
+            case MusicType.Evening:
+                {
+                    ChangeMusic(eveningMusic);
+                    m_currentMusicType = MusicType.Evening;
+                }
+                break;
             case MusicType.Background:
                 {
                     ChangeMusic(backgroundMusic[0]);
