@@ -62,13 +62,15 @@ public class GameSceneManager : MonoBehaviour
     private async void LoadMenuScenes()
     {
         await LoadScene(loadingScene.SceneName);
-        await LoadScene(levelSelectScene.SceneName);
+        
         await LoadScene(upgradeScene.SceneName);
 
         SetSceneActive(upgradeScene.SceneName, false);
-        SetSceneActive(loadingScene.SceneName, false);
 
-        InputManager.Instance.SetCursorMode(false);
+		await LoadScene(levelSelectScene.SceneName);
+		SetSceneActive(loadingScene.SceneName, false);
+
+		InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         m_currentScene = SceneManager.GetSceneByName(levelSelectScene.SceneName);
     }

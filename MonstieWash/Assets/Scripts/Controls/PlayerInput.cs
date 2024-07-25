@@ -280,6 +280,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""0df51fc8-f0d7-42ea-9b74-0427a7ff0c36"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -370,6 +379,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4d625e0-4fc5-4866-9693-9aa041a6548c"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -395,6 +415,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MenuActions_Back = m_MenuActions.FindAction("Back", throwIfNotFound: true);
         m_MenuActions_AltSelect = m_MenuActions.FindAction("AltSelect", throwIfNotFound: true);
         m_MenuActions_Switch = m_MenuActions.FindAction("Switch", throwIfNotFound: true);
+        m_MenuActions_Move = m_MenuActions.FindAction("Move", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -538,6 +559,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuActions_Back;
     private readonly InputAction m_MenuActions_AltSelect;
     private readonly InputAction m_MenuActions_Switch;
+    private readonly InputAction m_MenuActions_Move;
     public struct MenuActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -546,6 +568,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Back => m_Wrapper.m_MenuActions_Back;
         public InputAction @AltSelect => m_Wrapper.m_MenuActions_AltSelect;
         public InputAction @Switch => m_Wrapper.m_MenuActions_Switch;
+        public InputAction @Move => m_Wrapper.m_MenuActions_Move;
         public InputActionMap Get() { return m_Wrapper.m_MenuActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -567,6 +590,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Switch.started += instance.OnSwitch;
             @Switch.performed += instance.OnSwitch;
             @Switch.canceled += instance.OnSwitch;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         private void UnregisterCallbacks(IMenuActionsActions instance)
@@ -583,6 +609,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Switch.started -= instance.OnSwitch;
             @Switch.performed -= instance.OnSwitch;
             @Switch.canceled -= instance.OnSwitch;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         public void RemoveCallbacks(IMenuActionsActions instance)
@@ -623,5 +652,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnBack(InputAction.CallbackContext context);
         void OnAltSelect(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
 }
