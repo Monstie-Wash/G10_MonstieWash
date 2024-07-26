@@ -19,13 +19,15 @@ public class GameSceneManager : MonoBehaviour
     private Scene m_currentScene;
     private LevelScenes m_currentLevelScenes;
     private List<string> m_activeScenes = new();
+    private Level m_currentLevel;
 
     public List<string> AllLevelScenes { get; private set; } = new();
+    public Level CurrentLevel;
 
     public enum Level
     {
         Slime,
-        Mimic
+        Mimic,
     }
 
     [Serializable]
@@ -60,13 +62,15 @@ public class GameSceneManager : MonoBehaviour
     private async void LoadMenuScenes()
     {
         await LoadScene(loadingScene.SceneName);
-        await LoadScene(levelSelectScene.SceneName);
+        
         await LoadScene(upgradeScene.SceneName);
 
         SetSceneActive(upgradeScene.SceneName, false);
-        SetSceneActive(loadingScene.SceneName, false);
 
-        InputManager.Instance.SetCursorMode(false);
+		await LoadScene(levelSelectScene.SceneName);
+		SetSceneActive(loadingScene.SceneName, false);
+
+		InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         m_currentScene = SceneManager.GetSceneByName(levelSelectScene.SceneName);
     }
@@ -136,6 +140,8 @@ public class GameSceneManager : MonoBehaviour
     /// <param name="level">The level to load.</param>
     private async void LoadMonsterScene(Level level)
     {
+        m_currentLevel = level;
+
         //Load the monster scenes
         m_currentLevelScenes = allLevelScenes.Find(levelScene => levelScene.level == level);
         var monsterScenes = m_currentLevelScenes.gameScenes;

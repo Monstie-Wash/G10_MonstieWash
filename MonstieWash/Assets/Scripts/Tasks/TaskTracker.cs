@@ -11,13 +11,14 @@ public class TaskTracker : MonoBehaviour
 
     //Private
     [SerializeField] private List<TaskData> m_taskData = new();
-    private Dictionary<string, float> m_areaProgress = new();
     private Dictionary<string, bool> m_scenesCompleted = new();
 
     private GameSceneManager m_roomSaver;
     private UIManager m_uiManager;
     private SoundPlayer m_soundPlayer;
     private MusicManager m_musicManager;
+
+	public List<TaskData> TaskData { get => m_taskData; }
 
 	private void Awake()
     {
