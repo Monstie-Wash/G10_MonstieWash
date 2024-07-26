@@ -6,14 +6,17 @@ public class ItemLinker : MonoBehaviour
 {
     [SerializeField] private LinkMethod link;
     [SerializeField] private LinkedItem linkObject;
+    
     private GameSceneManager m_gameSceneManager;
     private TaskTracker m_taskTracker;
     private List<ITaskScript> m_taskScript = new();
+
     private enum LinkMethod
     {
         Group,
         Single
     }
+
     private void Awake()
     {
         m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
@@ -47,6 +50,25 @@ public class ItemLinker : MonoBehaviour
                 Debug.LogError($"ItemLinker on {name} is setup incorrectly. Could not find a task script on {name}!");
             }
         }
+    }
+
+        private void OnEnable()
+    {
+        m_gameSceneManager.OnSceneSwitch += SaveItem;
+        m_gameSceneManager.OnSceneChanged += LoadItem;
+        m_gameSceneManager.OnLevelEnd += CleanUp;
+    }
+
+    private void OnDisable()
+    {
+        m_gameSceneManager.OnSceneSwitch -= SaveItem;
+        m_gameSceneManager.OnSceneChanged -= LoadItem;
+        m_gameSceneManager.OnLevelEnd -= CleanUp;
+    }
+
+    private void OnApplicationQuit()
+    {
+        CleanUp();
     }
 
 /// <summary>
@@ -97,25 +119,6 @@ public class ItemLinker : MonoBehaviour
             }
             linkObject.loadOnEnable = false;
         }
-    }
-
-    private void OnEnable()
-    {
-        m_gameSceneManager.OnSceneSwitch += SaveItem;
-        m_gameSceneManager.OnSceneChanged += LoadItem;
-        m_gameSceneManager.OnLevelEnd += CleanUp;
-    }
-
-    private void OnDisable()
-    {
-        m_gameSceneManager.OnSceneSwitch -= SaveItem;
-        m_gameSceneManager.OnSceneChanged -= LoadItem;
-        m_gameSceneManager.OnLevelEnd -= CleanUp;
-    }
-
-    private void OnApplicationQuit()
-    {
-        CleanUp();
     }
 
     //If a scene with linked objects loads incorrectly it's probably because a previous scene was exited/closed without CleanUp being run, leaving bad data in the link scriptableObj
