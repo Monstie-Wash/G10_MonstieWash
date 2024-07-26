@@ -10,7 +10,9 @@ public class GameSceneManager : MonoBehaviour
     public event Action OnSceneSwitch;
     public event Action OnSceneChanged;
     public event Action OnLevelEnd;
+    public event Action OnRestartGame;
 
+    [SerializeField] private GameScene gameStartingScene;
     [SerializeField] private GameScene levelSelectScene;
     [SerializeField] private GameScene loadingScene;
     [SerializeField] private GameScene scoreSummaryScene;
@@ -300,6 +302,14 @@ public class GameSceneManager : MonoBehaviour
         InputManager.Instance.SetCursorMode(true);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         LoadMonsterScene(m_currentLevelScenes.level);
+    }
+
+    public async void RestartGame()
+    {
+        OnRestartGame?.Invoke();
+        MoveToScene(loadingScene.SceneName);
+
+        SceneManager.LoadSceneAsync(gameStartingScene.SceneName);
     }
 
     /// <summary>

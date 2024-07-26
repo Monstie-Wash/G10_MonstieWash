@@ -29,6 +29,11 @@ public class InputManager : MonoBehaviour
     public event Action OnToggleUI_Started;
     public event Action OnToggleUI;
     public event Action OnToggleUI_Ended;
+
+    public event Action OnDebugReset_Started;
+    public event Action OnDebugReset;
+    public event Action OnDebugReset_Confirmed;
+    public event Action OnDebugReset_Ended;
     #endregion
 
     #region MenuActions
@@ -66,7 +71,8 @@ public class InputManager : MonoBehaviour
     {
         None,
         PlayerActions,
-        MenuActions
+        MenuActions,
+        DebugActions
     }
 
     private void Awake()
@@ -122,6 +128,12 @@ public class InputManager : MonoBehaviour
         m_playerInput.MenuActions.Switch.performed += Switch_performed;
         m_playerInput.MenuActions.Switch.canceled += Switch_canceled;
         #endregion
+
+        #region DebugActions Subscription
+        m_playerInput.DebugActions.DebugReset.started += DebugReset_started;
+        m_playerInput.DebugActions.DebugReset.performed += DebugReset_performed;
+        m_playerInput.DebugActions.DebugReset.canceled += DebugReset_canceled;
+        #endregion
     }
 
     private void OnDisable()
@@ -164,6 +176,12 @@ public class InputManager : MonoBehaviour
         m_playerInput.MenuActions.Switch.started -= Switch_started;
         m_playerInput.MenuActions.Switch.performed -= Switch_performed;
         m_playerInput.MenuActions.Switch.canceled -= Switch_canceled;
+        #endregion
+
+        #region DebugActions Subscription
+        m_playerInput.DebugActions.DebugReset.started -= DebugReset_started;
+        m_playerInput.DebugActions.DebugReset.performed -= DebugReset_performed;
+        m_playerInput.DebugActions.DebugReset.canceled -= DebugReset_canceled;
         #endregion
     }
 
@@ -369,6 +387,36 @@ public class InputManager : MonoBehaviour
     }
     #endregion
     #endregion
+
+    #region DebugInput
+    #region DebugReset
+    private void DebugReset_started(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnDebugReset_Started?.Invoke();
+        m_activeRoutine = StartCoroutine(DebugResetTimer());
+    }
+
+    private void DebugReset_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnDebugReset?.Invoke();
+    }
+
+    private void DebugReset_canceled(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnDebugReset_Ended?.Invoke();
+        StopCoroutine(m_activeRoutine);
+    }
+    
+    private IEnumerator DebugResetTimer()
+    {
+        yield return new WaitForSeconds(3f);
+        OnDebugReset_Confirmed?.Invoke();
+    }
+    #endregion
+    #endregion
     #endregion
 
     public void SetCursorMode(bool locked)
@@ -393,18 +441,21 @@ public class InputManager : MonoBehaviour
                 {
                     m_playerInput.PlayerActions.Disable();
                     m_playerInput.MenuActions.Disable();
+                    m_playerInput.DebugActions.Enable();
                 }
                 break;
             case ControlScheme.PlayerActions:
                 {
                     m_playerInput.MenuActions.Disable();
                     m_playerInput.PlayerActions.Enable();
+                    m_playerInput.DebugActions.Enable();
                 }
                 break;
             case ControlScheme.MenuActions:
                 {
                     m_playerInput.PlayerActions.Disable();
                     m_playerInput.MenuActions.Enable();
+                    m_playerInput.DebugActions.Enable();
                 }
                 break;
         }

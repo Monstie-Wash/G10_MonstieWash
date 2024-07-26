@@ -370,6 +370,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "DebugActions",
+            "id": "1cb85c75-0a21-4aa0-830d-0ff17d6b675b",
+            "actions": [
+                {
+                    "name": "DebugReset",
+                    "type": "Button",
+                    "id": "d96a4c75-f75b-46b4-91f4-c8ba12f611e7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2e7fcc4c-deae-4be5-9e67-ad73581a01dc",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugReset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "608d33d2-228d-48b6-abc4-0bec60ed231d",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugReset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

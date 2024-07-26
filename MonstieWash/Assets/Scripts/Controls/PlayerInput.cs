@@ -392,6 +392,45 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DebugActions"",
+            ""id"": ""1cb85c75-0a21-4aa0-830d-0ff17d6b675b"",
+            ""actions"": [
+                {
+                    ""name"": ""DebugReset"",
+                    ""type"": ""Button"",
+                    ""id"": ""d96a4c75-f75b-46b4-91f4-c8ba12f611e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2e7fcc4c-deae-4be5-9e67-ad73581a01dc"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""608d33d2-228d-48b6-abc4-0bec60ed231d"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -416,6 +455,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MenuActions_AltSelect = m_MenuActions.FindAction("AltSelect", throwIfNotFound: true);
         m_MenuActions_Switch = m_MenuActions.FindAction("Switch", throwIfNotFound: true);
         m_MenuActions_Move = m_MenuActions.FindAction("Move", throwIfNotFound: true);
+        // DebugActions
+        m_DebugActions = asset.FindActionMap("DebugActions", throwIfNotFound: true);
+        m_DebugActions_DebugReset = m_DebugActions.FindAction("DebugReset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -629,6 +671,52 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public MenuActionsActions @MenuActions => new MenuActionsActions(this);
+
+    // DebugActions
+    private readonly InputActionMap m_DebugActions;
+    private List<IDebugActionsActions> m_DebugActionsActionsCallbackInterfaces = new List<IDebugActionsActions>();
+    private readonly InputAction m_DebugActions_DebugReset;
+    public struct DebugActionsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DebugActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DebugReset => m_Wrapper.m_DebugActions_DebugReset;
+        public InputActionMap Get() { return m_Wrapper.m_DebugActions; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActionsActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugActionsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugActionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugActionsActionsCallbackInterfaces.Add(instance);
+            @DebugReset.started += instance.OnDebugReset;
+            @DebugReset.performed += instance.OnDebugReset;
+            @DebugReset.canceled += instance.OnDebugReset;
+        }
+
+        private void UnregisterCallbacks(IDebugActionsActions instance)
+        {
+            @DebugReset.started -= instance.OnDebugReset;
+            @DebugReset.performed -= instance.OnDebugReset;
+            @DebugReset.canceled -= instance.OnDebugReset;
+        }
+
+        public void RemoveCallbacks(IDebugActionsActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugActionsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugActionsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugActionsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugActionsActions @DebugActions => new DebugActionsActions(this);
     private int m_DefaultSchemeIndex = -1;
     public InputControlScheme DefaultScheme
     {
@@ -653,5 +741,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnAltSelect(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+    }
+    public interface IDebugActionsActions
+    {
+        void OnDebugReset(InputAction.CallbackContext context);
     }
 }

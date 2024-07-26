@@ -57,6 +57,7 @@ public class ItemLinker : MonoBehaviour
         m_gameSceneManager.OnSceneSwitch += SaveItem;
         m_gameSceneManager.OnSceneChanged += LoadItem;
         m_gameSceneManager.OnLevelEnd += CleanUp;
+        m_gameSceneManager.OnRestartGame += CleanUp;
     }
 
     private void OnDisable()
@@ -64,6 +65,7 @@ public class ItemLinker : MonoBehaviour
         m_gameSceneManager.OnSceneSwitch -= SaveItem;
         m_gameSceneManager.OnSceneChanged -= LoadItem;
         m_gameSceneManager.OnLevelEnd -= CleanUp;
+        m_gameSceneManager.OnRestartGame -= CleanUp;
     }
 
     private void OnApplicationQuit()
