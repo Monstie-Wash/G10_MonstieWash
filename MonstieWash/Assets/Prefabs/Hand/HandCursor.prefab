@@ -45,6 +45,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 824686724975395819}
+  - component: {fileID: 4674174450708763408}
   - component: {fileID: 2038302579520054737}
   m_Layer: 5
   m_Name: HandCursor
@@ -73,6 +74,19 @@ RectTransform:
   m_AnchoredPosition: {x: -960, y: -540}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4674174450708763408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314618692966551884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6050e910c9029604b854dd756453b7f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasRectTransform: {fileID: 0}
 --- !u!114 &2038302579520054737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +179,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: 4693467534810839488, guid: 2f168172fa76a4841b78a15f181e2d5f, type: 3}
   m_BackButtonAction:
     m_UseReference: 1
     m_Action:
@@ -177,7 +191,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: -4727518390068817407, guid: 2f168172fa76a4841b78a15f181e2d5f, type: 3}
   m_ScrollWheelAction:
     m_UseReference: 1
     m_Action:

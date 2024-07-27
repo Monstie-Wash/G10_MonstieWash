@@ -289,6 +289,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dummy1"",
+                    ""type"": ""Button"",
+                    ""id"": ""9636542f-7251-4999-9041-c52f2a263409"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dummy2"",
+                    ""type"": ""Button"",
+                    ""id"": ""b93ac0b6-9441-4c31-9d60-85a335d2b559"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -390,6 +408,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ec2e59a-8ceb-47a9-babc-530f23432c44"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dummy2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""947c9c2e-384e-423a-a90d-67a92ae257d7"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dummy1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -455,6 +495,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MenuActions_AltSelect = m_MenuActions.FindAction("AltSelect", throwIfNotFound: true);
         m_MenuActions_Switch = m_MenuActions.FindAction("Switch", throwIfNotFound: true);
         m_MenuActions_Move = m_MenuActions.FindAction("Move", throwIfNotFound: true);
+        m_MenuActions_Dummy1 = m_MenuActions.FindAction("Dummy1", throwIfNotFound: true);
+        m_MenuActions_Dummy2 = m_MenuActions.FindAction("Dummy2", throwIfNotFound: true);
         // DebugActions
         m_DebugActions = asset.FindActionMap("DebugActions", throwIfNotFound: true);
         m_DebugActions_DebugReset = m_DebugActions.FindAction("DebugReset", throwIfNotFound: true);
@@ -602,6 +644,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuActions_AltSelect;
     private readonly InputAction m_MenuActions_Switch;
     private readonly InputAction m_MenuActions_Move;
+    private readonly InputAction m_MenuActions_Dummy1;
+    private readonly InputAction m_MenuActions_Dummy2;
     public struct MenuActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -611,6 +655,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @AltSelect => m_Wrapper.m_MenuActions_AltSelect;
         public InputAction @Switch => m_Wrapper.m_MenuActions_Switch;
         public InputAction @Move => m_Wrapper.m_MenuActions_Move;
+        public InputAction @Dummy1 => m_Wrapper.m_MenuActions_Dummy1;
+        public InputAction @Dummy2 => m_Wrapper.m_MenuActions_Dummy2;
         public InputActionMap Get() { return m_Wrapper.m_MenuActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -635,6 +681,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Dummy1.started += instance.OnDummy1;
+            @Dummy1.performed += instance.OnDummy1;
+            @Dummy1.canceled += instance.OnDummy1;
+            @Dummy2.started += instance.OnDummy2;
+            @Dummy2.performed += instance.OnDummy2;
+            @Dummy2.canceled += instance.OnDummy2;
         }
 
         private void UnregisterCallbacks(IMenuActionsActions instance)
@@ -654,6 +706,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Dummy1.started -= instance.OnDummy1;
+            @Dummy1.performed -= instance.OnDummy1;
+            @Dummy1.canceled -= instance.OnDummy1;
+            @Dummy2.started -= instance.OnDummy2;
+            @Dummy2.performed -= instance.OnDummy2;
+            @Dummy2.canceled -= instance.OnDummy2;
         }
 
         public void RemoveCallbacks(IMenuActionsActions instance)
@@ -741,6 +799,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnAltSelect(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnDummy1(InputAction.CallbackContext context);
+        void OnDummy2(InputAction.CallbackContext context);
     }
     public interface IDebugActionsActions
     {
