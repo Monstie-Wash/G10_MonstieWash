@@ -34,6 +34,7 @@ public class GameSceneManager : MonoBehaviour
 
     [HideInInspector] public List<string> AllLevelScenes { get; private set; } = new();
     [HideInInspector] public Level CurrentLevel;
+    [HideInInspector] public Scene CurrentScene { get { return m_currentScene; } }
 
     public enum Level
     {
