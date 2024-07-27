@@ -691,6 +691,10 @@ PrefabInstance:
       value: PlayerHand
       objectReference: {fileID: 0}
     - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: handSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211790447339308997, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: extendBoundsX
       value: 2.5
       objectReference: {fileID: 0}
