@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2787953857554938795}
   - component: {fileID: 8437575934485402516}
   - component: {fileID: 1086796710868375111}
+  - component: {fileID: 2799373908209300269}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -59,6 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc18eeac230b4643ac3c3354d0e2b56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStartingScene: {fileID: 11400000, guid: 841e467afd1ac524eb9d20e387b0da28, type: 2}
+  initialScene: {fileID: 0}
+  bedroomScenes: []
   levelSelectScene: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
   loadingScene: {fileID: 11400000, guid: cb33503f0ce38d5408718754c8f4e11f, type: 2}
   scoreSummaryScene: {fileID: 11400000, guid: 497a01c1053314f489f97cdbb5b3ca04, type: 2}
@@ -71,6 +75,9 @@ MonoBehaviour:
   - level: 1
     startingScene: {fileID: 0}
     gameScenes: []
+  mainMenuCanvas: {fileID: 0}
+  startButton: {fileID: 0}
+  CurrentLevel: 0
 --- !u!114 &1086796710868375111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +91,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tools: []
+--- !u!114 &2799373908209300269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059618893801588742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439972c17f97e11449011aab6450759b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8797697719091902416
 PrefabInstance:
   m_ObjectHideFlags: 0
