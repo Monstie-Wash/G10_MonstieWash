@@ -3,6 +3,7 @@ using UnityEngine;
 public class TraversalObject : MonoBehaviour
 {
     [SerializeField] private GameScene targetScene;
+    [SerializeField] private bool targetIsUI;
 
     private GameSceneManager m_saveObj;
     private string m_targetScene;
@@ -17,6 +18,6 @@ public class TraversalObject : MonoBehaviour
 
     public void OnClicked()
     {
-        m_saveObj.MoveToScene(m_targetScene);
+        m_saveObj.MoveToScene(m_targetScene, targetIsUI);
     }
 }

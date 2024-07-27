@@ -899,6 +899,14 @@ PrefabInstance:
       propertyPath: 'upgradableTools.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 00e09ce6ac17a5447a5d26aa269393bf, type: 2}
+    - target: {fileID: 5096954100391497389, guid: 175adce4ea93d614dbd7c4de829425c8, type: 3}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5096954100391497389, guid: 175adce4ea93d614dbd7c4de829425c8, type: 3}
+      propertyPath: hideWarning
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7567634535807300441, guid: 175adce4ea93d614dbd7c4de829425c8, type: 3}
       propertyPath: m_Name
       value: UpgradeManager
