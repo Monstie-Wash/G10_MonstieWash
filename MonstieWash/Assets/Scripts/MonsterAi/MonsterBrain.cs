@@ -42,14 +42,30 @@ public class MonsterBrain : MonoBehaviour
     [HideInInspector] public HashSet<MoodType> Moods { get; private set; } = new();
     #endregion
 
+    #region References
+    private TaskTracker m_taskTracker;
+    #endregion
+
     private void Awake()
     {
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
+
         foreach (var data in moodData)
         {
             Moods.Add(data.mood);
         }
 
         m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
+    }
+
+    private void OnEnable()
+    {
+        m_taskTracker.OnSceneCompleted += UpdateMoodOnSceneComplete;
+    }
+
+    private void OnDisable()
+    {
+        m_taskTracker.OnSceneCompleted -= UpdateMoodOnSceneComplete;
     }
 
     private void Update()
@@ -338,5 +354,17 @@ public class MonsterBrain : MonoBehaviour
     {
         var data = moodData.Find(item => item.mood.MoodName == name);
         return data.value;
+    }
+
+    private void UpdateMoodOnSceneComplete()
+    {
+        for (int i = 0; i < moodData.Count; i++)
+        {
+            if (moodData[i].mood.SceneEffectOnMood == 0) continue;  // Skip if scene completion doesn't affect this mood
+
+            // Modify the mood by its sceneEffectOnMood value
+            UpdateMood(moodData[i].mood.SceneEffectOnMood, moodData[i].mood);
+            if (debug) print($"Mood {moodData[i].mood.name} was changed by {moodData[i].mood.SceneEffectOnMood} after scene completion");
+        }
     }
 }
