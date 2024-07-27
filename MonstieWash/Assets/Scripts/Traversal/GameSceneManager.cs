@@ -202,6 +202,8 @@ public class GameSceneManager : MonoBehaviour
     /// <param name="target">The scene to move to.</param>
     public void MoveToScene(string target, bool targetIsUI)
     {
+        OnSceneSwitch?.Invoke();
+
         SetSceneActive(m_currentScene.name, false);
         SetSceneActive(target, true);
 
@@ -216,7 +218,7 @@ public class GameSceneManager : MonoBehaviour
             InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         }
 
-        OnSceneChanged?.Invoke(target);
+        OnSceneChanged?.Invoke();
     }
 
     /// <summary>
