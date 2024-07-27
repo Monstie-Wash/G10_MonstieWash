@@ -362,6 +362,34 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: initialScene
+      value: 
+      objectReference: {fileID: 11400000, guid: f27043940161ff747aa1bb4da3c508ed, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: bedroomScenes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'bedroomScenes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 055eb2ef65e83b24ca61d262d2b5797a, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'bedroomScenes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ac1808ce6417924a8cd357852ec8180, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'bedroomScenes.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: eaca197ad5fd59b4dbf4dfc9602176cb, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'bedroomScenes.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f9eeba21126643141a5fb34e7a1bdc4d, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'bedroomScenes.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0faa2be7a975bc54da460eee84266969, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allLevelScenes.Array.data[0].startingScene
       value: 
       objectReference: {fileID: 11400000, guid: ad937325136c45843839adef08801ba2, type: 2}
