@@ -61,6 +61,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStartingScene: {fileID: 11400000, guid: 841e467afd1ac524eb9d20e387b0da28, type: 2}
+  initialScene: {fileID: 0}
+  bedroomScenes: []
   levelSelectScene: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
   loadingScene: {fileID: 11400000, guid: cb33503f0ce38d5408718754c8f4e11f, type: 2}
   scoreSummaryScene: {fileID: 11400000, guid: 497a01c1053314f489f97cdbb5b3ca04, type: 2}
@@ -73,6 +75,8 @@ MonoBehaviour:
   - level: 1
     startingScene: {fileID: 0}
     gameScenes: []
+  mainMenuCanvas: {fileID: 0}
+  startButton: {fileID: 0}
   CurrentLevel: 0
 --- !u!114 &1086796710868375111
 MonoBehaviour:

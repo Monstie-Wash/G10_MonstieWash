@@ -30,7 +30,7 @@ public class MusicManager : MonoBehaviour
     {
         m_soundPlayer = GetComponent<SoundPlayer>();
         m_currentMusic = m_soundPlayer.Sound;
-        m_currentMusicType = MusicType.Morning;
+        m_currentMusicType = MusicType.Menu;
     }
 
     /// <summary>

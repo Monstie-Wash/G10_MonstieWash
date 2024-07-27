@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5df9cd3904642041b9464ccbf2cb451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 11400000, guid: 83fefb0fe5af445488724b128476bdf8, type: 2}
+  sound: {fileID: 11400000, guid: b4d9066b8c8417f4eb17c26a00e74790, type: 2}
   hideWarning: 0
 --- !u!114 &3135068703916220569
 MonoBehaviour:
@@ -165,5 +165,3 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f6646f4e0f276d44a04bbda1eca7158, type: 2}
   deathMusic: {fileID: 11400000, guid: 5395e77ce274cb14593637761cb21fc0, type: 2}
   victoryMusic: {fileID: 11400000, guid: c33cc930cce0a2d4f83e8a2e8ad22833, type: 2}
-  nurseSting: {fileID: 11400000, guid: c9fb608519c73414fa579a27f7ac00a2, type: 2}
-  upgradeSting: {fileID: 11400000, guid: 776629040aaa60749bb07049442f2081, type: 2}

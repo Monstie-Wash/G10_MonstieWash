@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
@@ -21,11 +22,14 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameScene upgradeScene;
     [SerializeField] private GameScene deathScene;
     [SerializeField] private List<LevelScenes> allLevelScenes = new();
+    [SerializeField] private GameObject mainMenuCanvas;
+    [SerializeField] private Button startButton;
 
     private Scene m_currentScene;
     private LevelScenes m_currentLevelScenes;
     private List<string> m_activeScenes = new();
     private Level m_currentLevel;
+    private MusicManager m_musicManager;
 
     public List<string> AllLevelScenes { get; private set; } = new();
     public Level CurrentLevel;
@@ -46,6 +50,7 @@ public class GameSceneManager : MonoBehaviour
     
     private void Awake()
     {
+        m_musicManager = GetComponentInChildren<MusicManager>();
         foreach (var level in allLevelScenes)
         {
             foreach (var gameScene in level.gameScenes)
@@ -58,7 +63,8 @@ public class GameSceneManager : MonoBehaviour
 
     private void Start()
     {
-        LoadMenuScenes();
+        InputManager.Instance.SetCursorMode(false);
+        startButton.onClick.AddListener(LoadMenuScenes);
     }
 
     #region Private
@@ -67,7 +73,9 @@ public class GameSceneManager : MonoBehaviour
     /// </summary>
     private async void LoadMenuScenes()
     {
+        
         await LoadScene(loadingScene.SceneName);
+        mainMenuCanvas.SetActive(false);
         await LoadScene(initialScene.SceneName);
         foreach (GameScene scene in bedroomScenes)
         {
@@ -79,6 +87,7 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(upgradeScene.SceneName);
         SetSceneActive(upgradeScene.SceneName, false);
         SetSceneActive(loadingScene.SceneName, false);
+        m_musicManager.SetMusic(MusicManager.MusicType.Morning);
 
         InputManager.Instance.SetCursorMode(true);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
@@ -234,7 +243,7 @@ public class GameSceneManager : MonoBehaviour
         SetSceneActive(levelSelectScene.SceneName, false);
         await UnloadActiveLevelScenes();
 
-        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Background);
+        m_musicManager.SetMusic(MusicManager.MusicType.Background);
         InputManager.Instance.SetCursorMode(true);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         LoadMonsterScene(level);
@@ -284,7 +293,7 @@ public class GameSceneManager : MonoBehaviour
 
         SetSceneActive(scoreSummaryScene.SceneName, false);
 
-        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Evening);
+        m_musicManager.SetMusic(MusicManager.MusicType.Evening);
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(upgradeScene.SceneName);
@@ -299,7 +308,7 @@ public class GameSceneManager : MonoBehaviour
 
         await UnloadActiveLevelScenes();
 
-        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Morning);
+        m_musicManager.SetMusic(MusicManager.MusicType.Morning);
         InputManager.Instance.SetCursorMode(true);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         MoveToScene(initialScene.SceneName);
@@ -313,7 +322,7 @@ public class GameSceneManager : MonoBehaviour
         await UnloadScene(deathScene.SceneName);
         m_activeScenes.RemoveAt(m_activeScenes.IndexOf(deathScene.SceneName));
 
-        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Background);
+        m_musicManager.SetMusic(MusicManager.MusicType.Background);
         InputManager.Instance.SetCursorMode(true);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, true);
@@ -329,7 +338,7 @@ public class GameSceneManager : MonoBehaviour
 
         await UnloadActiveLevelScenes();
 
-        GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Background);
+        m_musicManager.SetMusic(MusicManager.MusicType.Background);
         InputManager.Instance.SetCursorMode(true);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
         LoadMonsterScene(m_currentLevelScenes.level);
