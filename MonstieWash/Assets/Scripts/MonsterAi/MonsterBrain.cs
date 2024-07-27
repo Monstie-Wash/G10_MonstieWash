@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class MonsterBrain : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class MonsterBrain : MonoBehaviour
     public System.Action<MoodType> OnMoodChanged;
 
     [Tooltip("Add all moodtype objects intended for this brain here.")][SerializeField] protected List<MoodData> moodData = new(); //Scriptable objects holding data about moods.
+    #endregion
+
+    #region FX
+    [Tooltip("The X and Y coordinates that mood particles originate from")][SerializeField] private Vector2 moodParticleOrigin = Vector2.zero; // Determines where particle systems are placed when calling PlayMoodParticles
     #endregion
 
     #region Attacks
@@ -43,11 +48,13 @@ public class MonsterBrain : MonoBehaviour
     #endregion
 
     #region References
+    private GameSceneManager m_gameSceneManager;
     private TaskTracker m_taskTracker;
     #endregion
 
     private void Awake()
     {
+        m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
 
         foreach (var data in moodData)
@@ -356,6 +363,9 @@ public class MonsterBrain : MonoBehaviour
         return data.value;
     }
 
+    /// <summary>
+    /// Updates each mood when a scene is completed. 
+    /// </summary>
     private void UpdateMoodOnSceneComplete()
     {
         for (int i = 0; i < moodData.Count; i++)
@@ -364,7 +374,39 @@ public class MonsterBrain : MonoBehaviour
 
             // Modify the mood by its sceneEffectOnMood value
             UpdateMood(moodData[i].mood.SceneEffectOnMood, moodData[i].mood);
+            // Play the mood's particle system
+            StartCoroutine(PlayMoodParticles(moodData[i].mood));
+            // Debug
             if (debug) print($"Mood {moodData[i].mood.name} was changed by {moodData[i].mood.SceneEffectOnMood} after scene completion");
+        }
+    }
+
+    /// <summary>
+    /// Plays the particle system associated with the mood.
+    /// </summary>
+    /// <param name="mood"> Which mood's particle system to use</param>
+    /// <param name="time"> How long to play for (default 1.5 seconds)</param>
+    IEnumerator PlayMoodParticles(MoodType mood, float time = 1.5f)
+    {
+        if (mood.MoodParticle != null)
+        {
+            /*
+            * NOTE: Creating and destroying particles sytems might not be the most performative, but consider that these particles need to exist across multiple
+            * scenes (each angle of the monster). Consider asking designers how frequently particles will play to determine if a better solution is required. 
+            */
+            var elapsedTime = 0f;
+            var tempParticles = Instantiate(mood.MoodParticle, moodParticleOrigin, Quaternion.identity); // The mood's ParticleSystem
+            SceneManager.MoveGameObjectToScene(tempParticles.gameObject, m_gameSceneManager.CurrentScene);
+            tempParticles.Play();
+
+            yield return new WaitForSeconds(time);
+
+            tempParticles.Stop();
+            Destroy(tempParticles);
+        }
+        else
+        {
+            if (debug) print($"Moodtype {mood.name} doesn't have a particle system attached");
         }
     }
 }

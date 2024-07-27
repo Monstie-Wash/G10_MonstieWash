@@ -23,6 +23,8 @@ public class GameSceneManager : MonoBehaviour
     private List<string> m_activeScenes = new();
     private Level m_currentLevel;
 
+    [HideInInspector] public Scene CurrentScene { get { return m_currentScene; } }
+
     public List<string> AllLevelScenes { get; private set; } = new();
     public Level CurrentLevel;
 
