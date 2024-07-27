@@ -23,3 +23,4 @@ MonoBehaviour:
   positiveReactionStrength: 0
   negativeChainReactions: []
   negativeReactionStrength: 0.1
+  sceneEffectOnMood: -4

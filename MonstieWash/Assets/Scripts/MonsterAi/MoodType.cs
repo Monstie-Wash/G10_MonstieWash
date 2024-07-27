@@ -30,6 +30,10 @@ public class MoodType : ScriptableObject
 
     [Tooltip("How strongly the negative effect is on other moods")][SerializeField] private float negativeReactionStrength; //How strong negative chain reactions will be.
 
+    [Tooltip("An optional particle system that portrays the moood to the player")][SerializeField] private ParticleSystem moodParticle; // Particle system associated with the mood (e.g. hearts for happiness)
+
+    [Tooltip("How much the mood changes by when a scene is completed")][SerializeField] private float sceneEffectOnMood; // The value by which the mood changes when the OnSceneCompleted event is called.
+
     [HideInInspector] public string MoodName { get { return moodName; } }
     [HideInInspector] public float MoodUpperLimit { get { return moodUpperLimit; } }
     [HideInInspector] public float MoodLowerLimit { get { return moodLowerLimit; } }
@@ -41,6 +45,8 @@ public class MoodType : ScriptableObject
     [HideInInspector] public float PositiveReactionStrength { get { return positiveReactionStrength; } }
     [HideInInspector] public List<MoodType> NegativeChainReactions { get { return negativeChainReactions; } }
     [HideInInspector] public float NegativeReactionStrength { get { return negativeReactionStrength; } }
+    [HideInInspector] public ParticleSystem MoodParticle { get { return moodParticle; } }
+    [HideInInspector] public float SceneEffectOnMood { get { return sceneEffectOnMood; } }
 
     #region Equality
     public override bool Equals(object other)
