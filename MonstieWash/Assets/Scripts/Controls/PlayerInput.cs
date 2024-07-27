@@ -403,7 +403,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""d96a4c75-f75b-46b4-91f4-c8ba12f611e7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=3)"",
                     ""initialStateCheck"": false
                 }
             ],

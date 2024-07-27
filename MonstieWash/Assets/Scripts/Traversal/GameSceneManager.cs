@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -31,8 +32,8 @@ public class GameSceneManager : MonoBehaviour
     private Level m_currentLevel;
     private MusicManager m_musicManager;
 
-    public List<string> AllLevelScenes { get; private set; } = new();
-    public Level CurrentLevel;
+    [HideInInspector] public List<string> AllLevelScenes { get; private set; } = new();
+    [HideInInspector] public Level CurrentLevel;
 
     public enum Level
     {
@@ -64,7 +65,9 @@ public class GameSceneManager : MonoBehaviour
     private void Start()
     {
         InputManager.Instance.SetCursorMode(false);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         startButton.onClick.AddListener(LoadMenuScenes);
+        InputManager.Instance.OnSelect += LoadMenuScenes;
     }
 
     #region Private
@@ -73,7 +76,8 @@ public class GameSceneManager : MonoBehaviour
     /// </summary>
     private async void LoadMenuScenes()
     {
-        
+        InputManager.Instance.OnSelect -= LoadMenuScenes;
+
         await LoadScene(loadingScene.SceneName);
         mainMenuCanvas.SetActive(false);
         await LoadScene(initialScene.SceneName);

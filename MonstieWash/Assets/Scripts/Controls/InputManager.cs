@@ -29,11 +29,6 @@ public class InputManager : MonoBehaviour
     public event Action OnToggleUI_Started;
     public event Action OnToggleUI;
     public event Action OnToggleUI_Ended;
-
-    public event Action OnDebugReset_Started;
-    public event Action OnDebugReset;
-    public event Action OnDebugReset_Confirmed;
-    public event Action OnDebugReset_Ended;
     #endregion
 
     #region MenuActions
@@ -53,7 +48,15 @@ public class InputManager : MonoBehaviour
     public event Action OnSwitch;
     public event Action OnSwitch_Ended;
     #endregion
+
+    #region DebugActions
+    public event Action OnDebugReset_Started;
+    public event Action OnDebugReset;
+    public event Action OnDebugReset_Ended;
     #endregion
+    #endregion
+
+
 
     private PlayerInput m_playerInput;
     private Coroutine m_activeRoutine;
@@ -394,7 +397,6 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnDebugReset_Started?.Invoke();
-        m_activeRoutine = StartCoroutine(DebugResetTimer());
     }
 
     private void DebugReset_performed(InputAction.CallbackContext context)
@@ -407,13 +409,6 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnDebugReset_Ended?.Invoke();
-        StopCoroutine(m_activeRoutine);
-    }
-    
-    private IEnumerator DebugResetTimer()
-    {
-        yield return new WaitForSeconds(3f);
-        OnDebugReset_Confirmed?.Invoke();
     }
     #endregion
     #endregion
