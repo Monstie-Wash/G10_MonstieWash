@@ -11,6 +11,8 @@ public class GameSceneManager : MonoBehaviour
     public event Action OnSceneChanged;
     public event Action OnLevelEnd;
 
+    [SerializeField] private GameScene initialScene;
+    [SerializeField] private List<GameScene> bedroomScenes;
     [SerializeField] private GameScene levelSelectScene;
     [SerializeField] private GameScene loadingScene;
     [SerializeField] private GameScene scoreSummaryScene;
@@ -64,17 +66,21 @@ public class GameSceneManager : MonoBehaviour
     private async void LoadMenuScenes()
     {
         await LoadScene(loadingScene.SceneName);
-        
+        await LoadScene(initialScene.SceneName);
+        foreach (GameScene scene in bedroomScenes)
+        {
+            await LoadScene(scene.SceneName);
+            SetSceneActive(scene.SceneName, false);
+        }
+        await LoadScene(levelSelectScene.SceneName);
+        SetSceneActive(levelSelectScene.SceneName, false);
         await LoadScene(upgradeScene.SceneName);
-
         SetSceneActive(upgradeScene.SceneName, false);
+        SetSceneActive(loadingScene.SceneName, false);
 
-		await LoadScene(levelSelectScene.SceneName);
-		SetSceneActive(loadingScene.SceneName, false);
-
-		InputManager.Instance.SetCursorMode(false);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        m_currentScene = SceneManager.GetSceneByName(levelSelectScene.SceneName);
+        InputManager.Instance.SetCursorMode(true);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+        m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
     }
 
     /// <summary>
@@ -191,6 +197,29 @@ public class GameSceneManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Swaps the current active scene to a new scene
+    /// </summary>
+    /// <param name="target">The scene to move to.</param>
+    public void MoveToScene(string target, bool targetIsUI)
+    {
+        SetSceneActive(m_currentScene.name, false);
+        SetSceneActive(target, true);
+
+        if (targetIsUI)
+        {
+            InputManager.Instance.SetCursorMode(false);
+            InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
+        }
+        else
+        {
+            InputManager.Instance.SetCursorMode(true);
+            InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+        }
+
+        OnSceneChanged?.Invoke(target);
+    }
+
+    /// <summary>
     /// Starts a level from the beginning. Intended to be run from the level select scene.
     /// </summary>
     /// <param name="level"></param>
@@ -245,7 +274,7 @@ public class GameSceneManager : MonoBehaviour
         MoveToScene(deathScene.SceneName);
     }
 
-    public async void GoToUpgradeMenu()
+    public void GoToUpgradeMenu()
     {
         MoveToScene(loadingScene.SceneName);
 
@@ -267,9 +296,9 @@ public class GameSceneManager : MonoBehaviour
         await UnloadActiveLevelScenes();
 
         GetComponentInChildren<MusicManager>().SetMusic(MusicManager.MusicType.Morning);
-        InputManager.Instance.SetCursorMode(false);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        MoveToScene(levelSelectScene.SceneName);
+        InputManager.Instance.SetCursorMode(true);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+        MoveToScene(initialScene.SceneName);
     }
 
     /// <summary>

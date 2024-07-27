@@ -16,7 +16,9 @@ public class ToolManager : MonoBehaviour
         
         foreach (var tool in tools)
         {
-            m_originalTools.Add(new Tool(tool));
+            var newTool = ScriptableObject.CreateInstance<Tool>();
+            newTool.SetValues(tool);
+            m_originalTools.Add(newTool);
         }    
     }
 
