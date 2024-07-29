@@ -66,7 +66,6 @@ public class GameSceneManager : MonoBehaviour
     private void Start()
     {
         InputManager.Instance.SetCursorMode(false);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         startButton.onClick.AddListener(LoadMenuScenes);
         InputManager.Instance.OnSelect += LoadMenuScenes;
     }
@@ -268,9 +267,9 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(scoreSummaryScene.SceneName);
         m_activeScenes.Add(scoreSummaryScene.SceneName);
 
-        InputManager.Instance.SetCursorMode(false);
+        if (InputManager.Instance.InputDevice == InputManager.PlayerInputDevice.MKB) InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        MoveToScene(scoreSummaryScene.SceneName);
+        MoveToScene(scoreSummaryScene.SceneName, true);
     }
 
     /// <summary>
@@ -289,7 +288,7 @@ public class GameSceneManager : MonoBehaviour
 
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        MoveToScene(deathScene.SceneName);
+        MoveToScene(deathScene.SceneName, true);
     }
 
     public void GoToUpgradeMenu()
@@ -301,7 +300,7 @@ public class GameSceneManager : MonoBehaviour
         m_musicManager.SetMusic(MusicManager.MusicType.Evening);
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        MoveToScene(upgradeScene.SceneName);
+        MoveToScene(upgradeScene.SceneName, true);
     }
 
     /// <summary>

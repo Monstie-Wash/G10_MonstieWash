@@ -439,6 +439,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandCursor
       objectReference: {fileID: 0}
+    - target: {fileID: 4674174450708763408, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: canvasRectTransform
+      value: 
+      objectReference: {fileID: 1867411220}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
