@@ -37,7 +37,7 @@ public class ToolUpgrade : MonoBehaviour
 
     private void RequestUpgrade()
     {
-        if (m_upgradeManager.SpendScore(m_upgradeCost))
+        if (m_upgradeManager.TryUpgrade(m_upgradeCost))
         {
             UpgradeTool();
         }

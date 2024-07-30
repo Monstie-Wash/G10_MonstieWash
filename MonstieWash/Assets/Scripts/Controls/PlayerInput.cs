@@ -209,7 +209,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""760fdebc-5747-4764-8802-3c6104e7f727"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -276,6 +276,33 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Switch"",
                     ""type"": ""Button"",
                     ""id"": ""e79dfc19-5064-424e-83c5-2a9c93f85dd3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""0df51fc8-f0d7-42ea-9b74-0427a7ff0c36"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dummy1"",
+                    ""type"": ""Button"",
+                    ""id"": ""9636542f-7251-4999-9041-c52f2a263409"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dummy2"",
+                    ""type"": ""Button"",
+                    ""id"": ""b93ac0b6-9441-4c31-9d60-85a335d2b559"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -370,6 +397,78 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4d625e0-4fc5-4866-9693-9aa041a6548c"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ec2e59a-8ceb-47a9-babc-530f23432c44"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dummy2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""947c9c2e-384e-423a-a90d-67a92ae257d7"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dummy1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""DebugActions"",
+            ""id"": ""1cb85c75-0a21-4aa0-830d-0ff17d6b675b"",
+            ""actions"": [
+                {
+                    ""name"": ""DebugReset"",
+                    ""type"": ""Button"",
+                    ""id"": ""d96a4c75-f75b-46b4-91f4-c8ba12f611e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=3)"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2e7fcc4c-deae-4be5-9e67-ad73581a01dc"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""608d33d2-228d-48b6-abc4-0bec60ed231d"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -395,6 +494,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MenuActions_Back = m_MenuActions.FindAction("Back", throwIfNotFound: true);
         m_MenuActions_AltSelect = m_MenuActions.FindAction("AltSelect", throwIfNotFound: true);
         m_MenuActions_Switch = m_MenuActions.FindAction("Switch", throwIfNotFound: true);
+        m_MenuActions_Move = m_MenuActions.FindAction("Move", throwIfNotFound: true);
+        m_MenuActions_Dummy1 = m_MenuActions.FindAction("Dummy1", throwIfNotFound: true);
+        m_MenuActions_Dummy2 = m_MenuActions.FindAction("Dummy2", throwIfNotFound: true);
+        // DebugActions
+        m_DebugActions = asset.FindActionMap("DebugActions", throwIfNotFound: true);
+        m_DebugActions_DebugReset = m_DebugActions.FindAction("DebugReset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -538,6 +643,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuActions_Back;
     private readonly InputAction m_MenuActions_AltSelect;
     private readonly InputAction m_MenuActions_Switch;
+    private readonly InputAction m_MenuActions_Move;
+    private readonly InputAction m_MenuActions_Dummy1;
+    private readonly InputAction m_MenuActions_Dummy2;
     public struct MenuActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -546,6 +654,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Back => m_Wrapper.m_MenuActions_Back;
         public InputAction @AltSelect => m_Wrapper.m_MenuActions_AltSelect;
         public InputAction @Switch => m_Wrapper.m_MenuActions_Switch;
+        public InputAction @Move => m_Wrapper.m_MenuActions_Move;
+        public InputAction @Dummy1 => m_Wrapper.m_MenuActions_Dummy1;
+        public InputAction @Dummy2 => m_Wrapper.m_MenuActions_Dummy2;
         public InputActionMap Get() { return m_Wrapper.m_MenuActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -567,6 +678,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Switch.started += instance.OnSwitch;
             @Switch.performed += instance.OnSwitch;
             @Switch.canceled += instance.OnSwitch;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Dummy1.started += instance.OnDummy1;
+            @Dummy1.performed += instance.OnDummy1;
+            @Dummy1.canceled += instance.OnDummy1;
+            @Dummy2.started += instance.OnDummy2;
+            @Dummy2.performed += instance.OnDummy2;
+            @Dummy2.canceled += instance.OnDummy2;
         }
 
         private void UnregisterCallbacks(IMenuActionsActions instance)
@@ -583,6 +703,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Switch.started -= instance.OnSwitch;
             @Switch.performed -= instance.OnSwitch;
             @Switch.canceled -= instance.OnSwitch;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Dummy1.started -= instance.OnDummy1;
+            @Dummy1.performed -= instance.OnDummy1;
+            @Dummy1.canceled -= instance.OnDummy1;
+            @Dummy2.started -= instance.OnDummy2;
+            @Dummy2.performed -= instance.OnDummy2;
+            @Dummy2.canceled -= instance.OnDummy2;
         }
 
         public void RemoveCallbacks(IMenuActionsActions instance)
@@ -600,6 +729,52 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public MenuActionsActions @MenuActions => new MenuActionsActions(this);
+
+    // DebugActions
+    private readonly InputActionMap m_DebugActions;
+    private List<IDebugActionsActions> m_DebugActionsActionsCallbackInterfaces = new List<IDebugActionsActions>();
+    private readonly InputAction m_DebugActions_DebugReset;
+    public struct DebugActionsActions
+    {
+        private @PlayerInput m_Wrapper;
+        public DebugActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DebugReset => m_Wrapper.m_DebugActions_DebugReset;
+        public InputActionMap Get() { return m_Wrapper.m_DebugActions; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActionsActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugActionsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugActionsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugActionsActionsCallbackInterfaces.Add(instance);
+            @DebugReset.started += instance.OnDebugReset;
+            @DebugReset.performed += instance.OnDebugReset;
+            @DebugReset.canceled += instance.OnDebugReset;
+        }
+
+        private void UnregisterCallbacks(IDebugActionsActions instance)
+        {
+            @DebugReset.started -= instance.OnDebugReset;
+            @DebugReset.performed -= instance.OnDebugReset;
+            @DebugReset.canceled -= instance.OnDebugReset;
+        }
+
+        public void RemoveCallbacks(IDebugActionsActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugActionsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugActionsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugActionsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugActionsActions @DebugActions => new DebugActionsActions(this);
     private int m_DefaultSchemeIndex = -1;
     public InputControlScheme DefaultScheme
     {
@@ -623,5 +798,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnBack(InputAction.CallbackContext context);
         void OnAltSelect(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
+        void OnDummy1(InputAction.CallbackContext context);
+        void OnDummy2(InputAction.CallbackContext context);
+    }
+    public interface IDebugActionsActions
+    {
+        void OnDebugReset(InputAction.CallbackContext context);
     }
 }

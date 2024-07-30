@@ -209,16 +209,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_text
-      value: The travelling companion of an apprentice witch. It may be surprisingly
-        cute but watch out for it's sharp teeth!
+      value: "\u201CLet me just say that I\u2019m expecting my Mimic to be pristine
+        when next I see it, alright, honey? Right now, it\u2019s extremely filthy
+        as it holds all of my important ingredients so I have to bring around it
+        with me as I travel. It gets very aggressive when dealing with strangers,
+        I taught it well, so make sure you\u2019re careful and considerate when cleaning.\u201D\r\n\r\nThe
+        travelling companion of an apprentice witch. You find it surprisingly cute
+        but also recall the witch\u2019s warnings; be careful and considerate, and
+        watch out for its sharp teeth!"
       objectReference: {fileID: 0}
     - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_fontSize
-      value: 31.2
+      value: 18.85
       objectReference: {fileID: 0}
     - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_fontSizeBase
       value: 31.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_VerticalAlignment
@@ -228,9 +238,13 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3785224175162429668, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 5249953933377530749, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_text
-      value: "Difficulty\t\t\t      XXX"
+      value: "Difficulty\t\t\t             XXX"
       objectReference: {fileID: 0}
     - target: {fileID: 5712698652197464900, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_SizeDelta.x
@@ -280,13 +294,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClientUIMimic
       objectReference: {fileID: 0}
+    - target: {fileID: 8098358847642554629, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 557.814
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098358847642554629, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098358847642554629, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098358847642554629, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -377
+      objectReference: {fileID: 0}
     - target: {fileID: 8529550516625367839, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_text
-      value: Mimic - Witch
+      value: The Witch's Mimic
       objectReference: {fileID: 0}
     - target: {fileID: 8868837895562600938, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_text
-      value: "Reward\t\t\t       $$$"
+      value: "Reward\t\t\t             $$$"
       objectReference: {fileID: 0}
     - target: {fileID: 9120049332773518578, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -478,8 +508,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_text
+      value: "\u201CMy Slime got a bit excited yesterday! It rolled and jumped through
+        all my nursing equipment while I was making its food! It shouldn\u2019t be
+        too difficult to clean it well and don\u2019t worry, I\u2019ll compensate
+        you!\u201D\r\n\r\nYour roommate, the Nurse\u2019s pet slime. She brought
+        it in because it got overly excited and dirty, but you think she might also
+        be testing your creature cleaning skills\u2026"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3353566016534235800, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_VerticalAlignment
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3785224175162429668, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5249953933377530749, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_text
+      value: "Difficulty\t\t\t\t        X"
       objectReference: {fileID: 0}
     - target: {fileID: 5712698652197464900, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_SizeDelta.x
@@ -509,9 +564,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: ClientUISlime
       objectReference: {fileID: 0}
+    - target: {fileID: 8098358847642554629, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 557.814
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098358847642554629, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098358847642554629, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098358847642554629, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -377
+      objectReference: {fileID: 0}
+    - target: {fileID: 8529550516625367839, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
+      propertyPath: m_text
+      value: The Nurse's Slime
+      objectReference: {fileID: 0}
     - target: {fileID: 8868837895562600938, guid: 0cf19290682e34a4e8abbea6c9343d8c, type: 3}
       propertyPath: m_text
-      value: "Reward\t\t\t         $$"
+      value: "Reward\t\t\t                  $"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -558,6 +633,7 @@ RectTransform:
   - {fileID: 1971242294}
   - {fileID: 1626141864}
   - {fileID: 840333597}
+  - {fileID: 8009395225144644676}
   m_Father: {fileID: 1970580313}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -594,10 +670,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -829,6 +905,120 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971242293}
   m_CullTransparentMesh: 1
+--- !u!1001 &6725264558624304871
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1915768562}
+    m_Modifications:
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -960
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -540
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314618692966551884, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_Name
+      value: HandCursor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2038302579520054737, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_BackButtonAction.m_Reference
+      value: 
+      objectReference: {fileID: -4727518390068817407, guid: 2f168172fa76a4841b78a15f181e2d5f, type: 3}
+    - target: {fileID: 2038302579520054737, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: m_ForwardButtonAction.m_Reference
+      value: 
+      objectReference: {fileID: 4693467534810839488, guid: 2f168172fa76a4841b78a15f181e2d5f, type: 3}
+    - target: {fileID: 4674174450708763408, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+      propertyPath: canvasRectTransform
+      value: 
+      objectReference: {fileID: 1915768562}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+--- !u!224 &8009395225144644676 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 824686724975395819, guid: 4221094e49bc17f468fd03bfee3c7a14, type: 3}
+  m_PrefabInstance: {fileID: 6725264558624304871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

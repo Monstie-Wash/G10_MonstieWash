@@ -143,7 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5df9cd3904642041b9464ccbf2cb451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 11400000, guid: 555c454f1ab422b49a1300bbb571b68f, type: 2}
+  sound: {fileID: 11400000, guid: b4d9066b8c8417f4eb17c26a00e74790, type: 2}
+  hideWarning: 0
 --- !u!114 &3135068703916220569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,9 +157,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8fc46a4e2261ef438803eb933c7d966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuMusic: {fileID: 11400000, guid: b4d9066b8c8417f4eb17c26a00e74790, type: 2}
+  morningMusic: {fileID: 11400000, guid: 83fefb0fe5af445488724b128476bdf8, type: 2}
+  eveningMusic: {fileID: 11400000, guid: 7a5338209b206e04c815ee1ca9a675cd, type: 2}
   backgroundMusic:
-  - {fileID: 11400000, guid: 555c454f1ab422b49a1300bbb571b68f, type: 2}
-  - {fileID: 11400000, guid: e179199a051ebcc4b9e8584949f97def, type: 2}
-  - {fileID: 11400000, guid: e5a4639b3874945499c48e53a320d565, type: 2}
+  - {fileID: 11400000, guid: 53c3cd4a8d4d0f24c9f907d8701d4ef0, type: 2}
+  - {fileID: 11400000, guid: 4f6646f4e0f276d44a04bbda1eca7158, type: 2}
   deathMusic: {fileID: 11400000, guid: 5395e77ce274cb14593637761cb21fc0, type: 2}
   victoryMusic: {fileID: 11400000, guid: c33cc930cce0a2d4f83e8a2e8ad22833, type: 2}

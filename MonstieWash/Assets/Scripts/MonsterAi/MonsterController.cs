@@ -114,8 +114,11 @@ public class MonsterController : MonoBehaviour
 
     public void AttackAnimationComplete()
     {
-        // Return to the animation that was playing previously
-        m_myAnimator.Play(m_interruptedAnimation.name);
-        m_interruptedAnimation = null;
+        if (m_interruptedAnimation != null) 
+        {
+            // Return to the animation that was playing previously
+            m_myAnimator.Play(m_interruptedAnimation.name);
+            m_interruptedAnimation = null;
+        }
     }
 }
