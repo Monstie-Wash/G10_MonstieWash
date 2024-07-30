@@ -14,8 +14,8 @@ public class CompendiumEntry : MonoBehaviour, IPointerEnterHandler
     public bool Completed { get; set; }
 
     [SerializeField] private string name;
-    [SerializeField] private string temperament;
-    [SerializeField] private string description;
+    [SerializeField] [TextAreaAttribute] private string temperament;
+    [SerializeField] [TextAreaAttribute] private string description;
     [SerializeField] private Image imageOriginal;
     [SerializeField] private Image imageCleared;
 

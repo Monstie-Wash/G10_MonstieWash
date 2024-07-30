@@ -560,7 +560,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387668785813117679, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Name
-      value: RowMonster (2)
+      value: MonsterEntry (2)
       objectReference: {fileID: 0}
     - target: {fileID: 1943319934299296942, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: name
@@ -1540,7 +1540,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387668785813117679, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Name
-      value: RowMonster (1)
+      value: MonsterEntry (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5425437543099472995, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Pivot.x
@@ -1647,7 +1647,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387668785813117679, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Name
-      value: RowMonster
+      value: MonsterEntry
       objectReference: {fileID: 0}
     - target: {fileID: 5425437543099472995, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Pivot.x
@@ -1749,7 +1749,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387668785813117679, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Name
-      value: RowMonster (1)
+      value: MonsterEntry (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5425437543099472995, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Pivot.x
@@ -1985,7 +1985,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387668785813117679, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Name
-      value: RowMonster (1)
+      value: MonsterEntry (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5425437543099472995, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Pivot.x
@@ -2396,7 +2396,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387668785813117679, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Name
-      value: RowMonster
+      value: MonsterEntry
       objectReference: {fileID: 0}
     - target: {fileID: 5425437543099472995, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Pivot.x
@@ -2498,7 +2498,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 387668785813117679, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: m_Name
-      value: RowMonster
+      value: MonsterEntry
       objectReference: {fileID: 0}
     - target: {fileID: 1943319934299296942, guid: e5c31320ac99946409da92d860b699c0, type: 3}
       propertyPath: name
