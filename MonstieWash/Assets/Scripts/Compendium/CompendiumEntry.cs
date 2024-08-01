@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CompendiumEntry : MonoBehaviour, IPointerEnterHandler
+public class CompendiumEntry : MonoBehaviour
 {
     public string Name { get; private set; }
     public string Temperament { get; private set; }
@@ -33,8 +33,8 @@ public class CompendiumEntry : MonoBehaviour, IPointerEnterHandler
         m_compendiumManager = FindFirstObjectByType<CompendiumManager>();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         m_compendiumManager.DisplayEntry(this);
-    }
+    } 
 }
