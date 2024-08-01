@@ -33,10 +33,11 @@ public class CompendiumManager : MonoBehaviour
         }
 
         textTitle.text = entry.Name;
-        imageOriginal = entry.ImageOriginal;
+        imageOriginal.sprite = entry.ImageOriginal;
+        imageCleared.sprite = entry.ImageCleared;
         textTemperament.text = entry.Temperament;
         textDescription.text = entry.Description;
 
-        if (entry.Completed) imageCleared = entry.ImageCleared;
+        imageCleared.enabled = entry.Completed;
     }
 }

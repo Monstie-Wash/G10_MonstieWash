@@ -9,26 +9,27 @@ public class CompendiumEntry : MonoBehaviour
     public string Name { get; private set; }
     public string Temperament { get; private set; }
     public string Description { get; private set; }
-    public Image ImageOriginal { get; private set; }
-    public Image ImageCleared { get; private set; }
-    public bool Completed { get; set; }
+    public Sprite ImageOriginal { get; private set; }
+    public Sprite ImageCleared { get; private set; }
+    public bool Completed { get; private set; }
 
     [SerializeField] private string name;
     [SerializeField] [TextAreaAttribute] private string temperament;
     [SerializeField] [TextAreaAttribute] private string description;
-    [SerializeField] private Image imageOriginal;
-    [SerializeField] private Image imageCleared;
+    [SerializeField] private Sprite imageOriginal;
+    [SerializeField] private Sprite imageCleared;
+    [SerializeField] private bool completed;
 
-    private CompendiumManager m_compendiumManager;
+    [SerializeField] private CompendiumManager m_compendiumManager;
 
     private void Start()
     {
         Name = name;
         Temperament = temperament;
         Description = description;
-        ImageOriginal = ImageOriginal;
-        ImageCleared = ImageCleared;
-        Completed = false;
+        ImageOriginal = imageOriginal;
+        ImageCleared = imageCleared;
+        Completed = completed;
 
         m_compendiumManager = FindFirstObjectByType<CompendiumManager>();
     }
