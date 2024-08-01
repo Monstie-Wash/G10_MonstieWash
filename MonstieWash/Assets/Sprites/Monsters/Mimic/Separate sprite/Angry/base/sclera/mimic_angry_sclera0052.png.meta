@@ -55,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -195,14 +195,18 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      mimic_angry_sclera0052_0: 5167896585552845317
+      mimic_angry_sclera0052_1: -5063969228215811337
+      mimic_angry_sclera0052_2: -6000361166401755588
+      mimic_angry_sclera0052_3: 3689972140160987082
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
