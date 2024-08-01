@@ -81,21 +81,21 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(loadingScene.SceneName);
         mainMenuCanvas.SetActive(false);
         await LoadScene(initialScene.SceneName);
+        SetSceneActive(initialScene.SceneName, false);
         foreach (GameScene scene in bedroomScenes)
         {
             await LoadScene(scene.SceneName);
             SetSceneActive(scene.SceneName, false);
         }
         await LoadScene(levelSelectScene.SceneName);
-        SetSceneActive(levelSelectScene.SceneName, false);
         await LoadScene(upgradeScene.SceneName);
         SetSceneActive(upgradeScene.SceneName, false);
         SetSceneActive(loadingScene.SceneName, false);
         m_musicManager.SetMusic(MusicManager.MusicType.Morning);
 
-        InputManager.Instance.SetCursorMode(true);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
-        m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
+        InputManager.Instance.SetCursorMode(false);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
+        m_currentScene = SceneManager.GetSceneByName(levelSelectScene.SceneName);
     }
 
     /// <summary>
