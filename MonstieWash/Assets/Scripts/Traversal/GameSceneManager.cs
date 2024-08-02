@@ -2,34 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
 public class GameSceneManager : MonoBehaviour
 {
-    public event Action OnScenesLoaded;
+    /// <summary>Event that fires when all monster scenes have been loaded, but before they are set to inactive.</summary>
+    public event Action OnMonsterScenesLoaded;
+    /// <summary>Event that fires right before switching to another scene.</summary>
     public event Action OnSceneSwitch;
+    /// <summary>Event that fires right after switching to another scene.</summary>
     public event Action OnSceneChanged;
+    /// <summary>Event that fires when the level ends, before moving to another scene.</summary>
     public event Action OnLevelEnd;
+    /// <summary>Event that fires right before the game is reset.</summary>
     public event Action OnRestartGame;
 
     [SerializeField] private GameScene gameStartingScene;
+    [SerializeField] private GameScene loadingScene;
     [SerializeField] private GameScene initialScene;
     [SerializeField] private List<GameScene> bedroomScenes;
-    [SerializeField] private GameScene levelSelectScene;
-    [SerializeField] private GameScene loadingScene;
     [SerializeField] private GameScene scoreSummaryScene;
-    [SerializeField] private GameScene upgradeScene;
     [SerializeField] private GameScene deathScene;
     [SerializeField] private List<LevelScenes> allLevelScenes = new();
-    [SerializeField] private GameObject mainMenuCanvas;
-    [SerializeField] private Button startButton;
 
+    private Level m_currentLevel;
     private Scene m_currentScene;
     private LevelScenes m_currentLevelScenes;
-    private List<string> m_activeScenes = new();
-    private Level m_currentLevel;
+    private List<string> m_loadedScenes = new();
     private MusicManager m_musicManager;
 
     [HideInInspector] public List<string> AllLevelScenes { get; private set; } = new();
@@ -53,6 +52,7 @@ public class GameSceneManager : MonoBehaviour
     private void Awake()
     {
         m_musicManager = GetComponentInChildren<MusicManager>();
+
         foreach (var level in allLevelScenes)
         {
             foreach (var gameScene in level.gameScenes)
@@ -63,87 +63,51 @@ public class GameSceneManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    /// <summary>
+    /// A function run from the main menu to start the game.
+    /// </summary>
+    public async void StartGame()
     {
-        InputManager.Instance.SetCursorMode(false);
-        startButton.onClick.AddListener(LoadMenuScenes);
-        InputManager.Instance.OnSelect += LoadMenuScenes;
+        await LoadScene(loadingScene.SceneName, false);
+
+        await LoadBedroomScenes();
+
+        m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
+        InputManager.Instance.SetCursorMode(true);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+        m_musicManager.SetMusic(MusicManager.MusicType.Morning);
+        SetSceneActive(loadingScene.SceneName, false);
     }
 
     #region Private
     /// <summary>
-    /// Asynchronously loads all the scenes in the m_allScenes list.
-    /// </summary>
-    private async void LoadMenuScenes()
-    {
-        InputManager.Instance.OnSelect -= LoadMenuScenes;
-
-        await LoadScene(loadingScene.SceneName);
-        mainMenuCanvas.SetActive(false);
-        await LoadScene(initialScene.SceneName);
-        foreach (GameScene scene in bedroomScenes)
-        {
-            await LoadScene(scene.SceneName);
-            SetSceneActive(scene.SceneName, false);
-        }
-        await LoadScene(levelSelectScene.SceneName);
-        SetSceneActive(levelSelectScene.SceneName, false);
-        await LoadScene(upgradeScene.SceneName);
-        SetSceneActive(upgradeScene.SceneName, false);
-        SetSceneActive(loadingScene.SceneName, false);
-        m_musicManager.SetMusic(MusicManager.MusicType.Morning);
-
-        InputManager.Instance.SetCursorMode(true);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
-        m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
-    }
-
-    /// <summary>
-    /// Unloads all currently active level scenes.
-    /// </summary>
-    /// <returns></returns>
-    private async Task UnloadActiveLevelScenes()
-    {
-        var tasks = new Task[m_activeScenes.Count];
-
-        for (int i = 0; i < tasks.Length; i++)
-        {
-            tasks[i] = UnloadScene(m_activeScenes[i]);
-        }
-
-        m_activeScenes.Clear();
-
-        await Task.WhenAll(tasks);
-    }
-
-    /// <summary>
-    /// Loads a scene.
+    /// Loads a scene and adds it to the list of loaded scenes.
     /// </summary>
     /// <param name="scene">The scene to load.</param>
-    /// <returns></returns>
-    private async Task LoadScene(string scene)
+    private async Task LoadScene(string scene, bool addToList = true)
     {
         await SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+        if (addToList) m_loadedScenes.Add(scene);
     }
 
     /// <summary>
-    /// Unloads a scene.
+    /// Unloads a scene and adds it to the list of loaded scenes.
     /// </summary>
     /// <param name="scene">The scene to unload.</param>
-    /// <returns></returns>
     private async Task UnloadScene(string scene)
     {
         await SceneManager.UnloadSceneAsync(scene);
+        m_loadedScenes.Remove(scene);
     }
 
     /// <summary>
-    /// Disables all gameobjects within a scene.
+    /// Enables/disables all gameobjects within a scene, setting currentScene to the newly active scene.
     /// </summary>
     /// <param name="scene">The scene to disable.</param>
     private void SetSceneActive(string scene, bool active)
     {
         var currentScene = SceneManager.GetSceneByName(scene);
-        if (currentScene.name == null) Debug.LogError($"{scene} is not a scene!");
+        if (currentScene.name == null) Debug.LogError($"{scene} is not a loaded scene!");
 
         var gameObjs = currentScene.GetRootGameObjects();
 
@@ -154,68 +118,61 @@ public class GameSceneManager : MonoBehaviour
 
         if (active) m_currentScene = currentScene;
     }
+
+    /// <summary>
+    /// Unloads all currently active level scenes.
+    /// </summary>
+    private async Task UnloadActiveLevelScenes()
+    {
+        var tasks = new Task[m_currentLevelScenes.gameScenes.Count + 1];
+
+        for (int i = 0; i < tasks.Length - 1; i++)
+        {
+            tasks[i] = UnloadScene(m_currentLevelScenes.gameScenes[i].SceneName);
+        }
+
+        tasks[tasks.Length - 1] = UnloadScene(m_currentLevelScenes.startingScene.SceneName);
+
+        await Task.WhenAll(tasks);
+    }
+
+    /// <summary>
+    /// Unloads all currently loaded scenes. (Except for GameStartingScene and LoadingScene)
+    /// </summary>
+    /// <returns></returns>
+    private async Task UnloadAllScenes()
+    {
+        var tasks = new Task[m_loadedScenes.Count];
+
+        for (int i = 0; i < tasks.Length; i++)
+        {
+            tasks[i] = UnloadScene(m_loadedScenes[i]);
+        }
+
+        await Task.WhenAll(tasks);
+    }
+
+    /// <summary>
+    /// Loads all the bedroom scenes.
+    /// </summary>
+    private async Task LoadBedroomScenes()
+    {
+        await LoadScene(initialScene.SceneName);
+        foreach (GameScene scene in bedroomScenes)
+        {
+            await LoadScene(scene.SceneName);
+            SetSceneActive(scene.SceneName, false);
+        }
+    }
     #endregion
 
     #region Public
     /// <summary>
-    /// Loads all the scenes of the given level and moves there.
-    /// </summary>
-    /// <param name="level">The level to load.</param>
-    private async void LoadMonsterScene(Level level)
-    {
-        m_currentLevel = level;
-
-        //Load the monster scenes
-        m_currentLevelScenes = allLevelScenes.Find(levelScene => levelScene.level == level);
-        var monsterScenes = m_currentLevelScenes.gameScenes;
-
-        //Load the starting scene first (to manage dependencies)
-        await LoadScene(m_currentLevelScenes.startingScene.SceneName);
-        m_activeScenes.Add(m_currentLevelScenes.startingScene.SceneName);
-
-        //Load the rest of the scenes
-        var tasks = new Task[monsterScenes.Count];
-
-        for (int i = 0; i < tasks.Length; i++)
-        {
-            var sceneName = monsterScenes[i].SceneName;
-            tasks[i] = LoadScene(sceneName);
-            m_activeScenes.Add(sceneName);
-        }
-
-        await Task.WhenAll(tasks);
-
-        OnScenesLoaded?.Invoke();
-
-        //Set all as inactive
-        for (int i = 0; i < monsterScenes.Count; i++)
-        {
-            SetSceneActive(monsterScenes[i].SceneName, false);
-        }
-
-        //Remove loading screen and activate first level
-        MoveToScene(monsterScenes[0].SceneName);
-    }
-
-    /// <summary>
-    /// Swaps the current active scene to a new scene
+    /// Swaps the current active scene to a new scene. Will fail if the target scene is not loaded.
     /// </summary>
     /// <param name="target">The scene to move to.</param>
-    public void MoveToScene(string target)
-    {
-        OnSceneSwitch?.Invoke();
-
-        SetSceneActive(m_currentScene.name, false);
-        SetSceneActive(target, true);
-
-        OnSceneChanged?.Invoke();
-    }
-
-    /// <summary>
-    /// Swaps the current active scene to a new scene
-    /// </summary>
-    /// <param name="target">The scene to move to.</param>
-    public void MoveToScene(string target, bool targetIsUI)
+    /// <param name="targetIsUI">Whether the target scene requires UI interaction.</param>
+    public void MoveToScene(string target, bool targetIsUI = false)
     {
         OnSceneSwitch?.Invoke();
 
@@ -237,6 +194,43 @@ public class GameSceneManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Loads all the scenes of the given level and moves there.
+    /// </summary>
+    /// <param name="level">The level to load.</param>
+    private async void LoadMonsterScene(Level level)
+    {
+        m_currentLevel = level;
+
+        //Load the monster scenes
+        m_currentLevelScenes = allLevelScenes.Find(levelScene => levelScene.level == level);
+        var monsterScenes = m_currentLevelScenes.gameScenes;
+
+        //Load the starting scene first (to manage dependencies)
+        await LoadScene(m_currentLevelScenes.startingScene.SceneName);
+
+        //Load the rest of the scenes
+        var tasks = new Task[monsterScenes.Count];
+
+        for (int i = 0; i < tasks.Length; i++)
+        {
+            tasks[i] = LoadScene(monsterScenes[i].SceneName);
+        }
+
+        await Task.WhenAll(tasks);
+
+        OnMonsterScenesLoaded?.Invoke();
+
+        //Set all as inactive
+        for (int i = 0; i < monsterScenes.Count; i++)
+        {
+            SetSceneActive(monsterScenes[i].SceneName, false);
+        }
+
+        //Remove loading screen and activate first level
+        MoveToScene(monsterScenes[0].SceneName);
+    }
+
+    /// <summary>
     /// Starts a level from the beginning. Intended to be run from the level select scene.
     /// </summary>
     /// <param name="level"></param>
@@ -244,31 +238,25 @@ public class GameSceneManager : MonoBehaviour
     {
         MoveToScene(loadingScene.SceneName);
 
-        SetSceneActive(levelSelectScene.SceneName, false);
-        await UnloadActiveLevelScenes();
+        await UnloadAllScenes();
 
         m_musicManager.SetMusic(MusicManager.MusicType.Background);
-        InputManager.Instance.SetCursorMode(true);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+
         LoadMonsterScene(level);
     }
 
     /// <summary>
     /// Loads the score summary scene.
     /// </summary>
-    public async void LevelComplete()
+    public async void FinishLevel()
     {
-        await Task.Delay(3000);
         OnLevelEnd?.Invoke();
 
         MoveToScene(loadingScene.SceneName);
 
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, false);
         await LoadScene(scoreSummaryScene.SceneName);
-        m_activeScenes.Add(scoreSummaryScene.SceneName);
 
-        if (InputManager.Instance.InputDevice == InputManager.PlayerInputDevice.MKB) InputManager.Instance.SetCursorMode(false);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(scoreSummaryScene.SceneName, true);
     }
 
@@ -284,38 +272,41 @@ public class GameSceneManager : MonoBehaviour
 
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, false);
         await LoadScene(deathScene.SceneName);
-        m_activeScenes.Add(deathScene.SceneName);
 
-        InputManager.Instance.SetCursorMode(false);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         MoveToScene(deathScene.SceneName, true);
     }
 
-    public void GoToUpgradeMenu()
+    /// <summary>
+    /// Moves to a bedroom scene, loading the bedroom if necessary.
+    /// </summary>
+    /// <param name="target">The bedroom scene to move to.</param>
+    /// <param name="targetIsUI">Whether the target scene requires UI interaction.</param>
+    public async Task GoToBedroomScene(string target, bool targetIsUI)
     {
+        var lastActiveScene = m_currentScene.name;
         MoveToScene(loadingScene.SceneName);
 
-        SetSceneActive(scoreSummaryScene.SceneName, false);
+        if (!bedroomScenes.Exists(scene => scene.SceneName.Equals(lastActiveScene)))
+        {
+            await UnloadActiveLevelScenes();
+            await UnloadScene(lastActiveScene);
+            await LoadBedroomScenes();
+        }
 
-        m_musicManager.SetMusic(MusicManager.MusicType.Evening);
-        InputManager.Instance.SetCursorMode(false);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        MoveToScene(upgradeScene.SceneName, true);
+        MoveToScene(target, targetIsUI);
     }
 
     /// <summary>
-    /// Loads the main menu.
+    /// Moves to a bedroom scene while also setting the music, loading the bedroom if necessary.
     /// </summary>
-    public async void GoToMainMenu()
+    /// <param name="target">The bedroom scene to move to.</param>
+    /// <param name="targetIsUI">Whether the target scene requires UI interaction.</param>
+    /// <param name="music">The music to begin playing.</param>
+    public async Task GoToBedroomScene(string target, bool targetIsUI, MusicManager.MusicType music)
     {
-        MoveToScene(loadingScene.SceneName);
+        await GoToBedroomScene(target, targetIsUI);
 
-        await UnloadActiveLevelScenes();
-
-        m_musicManager.SetMusic(MusicManager.MusicType.Morning);
-        InputManager.Instance.SetCursorMode(true);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
-        MoveToScene(initialScene.SceneName);
+        m_musicManager.SetMusic(music);
     }
 
     /// <summary>
@@ -324,13 +315,12 @@ public class GameSceneManager : MonoBehaviour
     public async void ContinueLevel()
     {
         await UnloadScene(deathScene.SceneName);
-        m_activeScenes.RemoveAt(m_activeScenes.IndexOf(deathScene.SceneName));
+        m_loadedScenes.RemoveAt(m_loadedScenes.IndexOf(deathScene.SceneName));
 
         m_musicManager.SetMusic(MusicManager.MusicType.Background);
-        InputManager.Instance.SetCursorMode(true);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, true);
-        SetSceneActive(m_activeScenes[1], true);
+        SetSceneActive(m_currentLevelScenes.gameScenes[0].SceneName, true);
     }
 
     /// <summary>
@@ -343,17 +333,20 @@ public class GameSceneManager : MonoBehaviour
         await UnloadActiveLevelScenes();
 
         m_musicManager.SetMusic(MusicManager.MusicType.Background);
-        InputManager.Instance.SetCursorMode(true);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+
         LoadMonsterScene(m_currentLevelScenes.level);
     }
 
-    public void RestartGame()
+    /// <summary>
+    /// Restarts the entire game.
+    /// </summary>
+    public async void RestartGame()
     {
         OnRestartGame?.Invoke();
+
         MoveToScene(loadingScene.SceneName);
 
-        SceneManager.LoadSceneAsync(gameStartingScene.SceneName);
+        await SceneManager.LoadSceneAsync(gameStartingScene.SceneName);
     }
 
     /// <summary>
