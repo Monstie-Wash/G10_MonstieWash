@@ -30,12 +30,12 @@ public class TaskTracker : MonoBehaviour
 
     private void OnEnable()
     {
-        m_roomSaver.OnScenesLoaded += RoomSaver_OnScenesLoaded;
+        m_roomSaver.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
     }
 
     private void OnDisable()
     {
-        m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
+        m_roomSaver.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
     private void RoomSaver_OnScenesLoaded()
@@ -53,7 +53,7 @@ public class TaskTracker : MonoBehaviour
             if (!m_scenesCompleted.ContainsKey(taskScene)) m_scenesCompleted.Add(taskScene, false);
         }
 
-        m_roomSaver.OnScenesLoaded -= RoomSaver_OnScenesLoaded;
+        m_roomSaver.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
     /// <summary>

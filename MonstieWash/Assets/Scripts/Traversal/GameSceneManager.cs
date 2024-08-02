@@ -2,16 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
 public class GameSceneManager : MonoBehaviour
 {
-    public event Action OnScenesLoaded;
+    /// <summary>Event that fires when all monster scenes have been loaded, but before they are set to inactive.</summary>
+    public event Action OnMonsterScenesLoaded;
+    /// <summary>Event that fires right before switching to another scene.</summary>
     public event Action OnSceneSwitch;
+    /// <summary>Event that fires right after switching to another scene.</summary>
     public event Action OnSceneChanged;
+    /// <summary>Event that fires when the level ends, before moving to another scene.</summary>
     public event Action OnLevelEnd;
+    /// <summary>Event that fires right before the game is reset.</summary>
     public event Action OnRestartGame;
 
     [SerializeField] private GameScene gameStartingScene;
@@ -22,10 +25,10 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameScene deathScene;
     [SerializeField] private List<LevelScenes> allLevelScenes = new();
 
+    private Level m_currentLevel;
     private Scene m_currentScene;
     private LevelScenes m_currentLevelScenes;
     private List<string> m_loadedScenes = new();
-    private Level m_currentLevel;
     private MusicManager m_musicManager;
 
     [HideInInspector] public List<string> AllLevelScenes { get; private set; } = new();
@@ -78,10 +81,9 @@ public class GameSceneManager : MonoBehaviour
 
     #region Private
     /// <summary>
-    /// Loads a scene.
+    /// Loads a scene and adds it to the list of loaded scenes.
     /// </summary>
     /// <param name="scene">The scene to load.</param>
-    /// <returns></returns>
     private async Task LoadScene(string scene, bool addToList = true)
     {
         await SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
@@ -89,10 +91,9 @@ public class GameSceneManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Unloads a scene.
+    /// Unloads a scene and adds it to the list of loaded scenes.
     /// </summary>
     /// <param name="scene">The scene to unload.</param>
-    /// <returns></returns>
     private async Task UnloadScene(string scene)
     {
         await SceneManager.UnloadSceneAsync(scene);
@@ -100,7 +101,7 @@ public class GameSceneManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Disables all gameobjects within a scene.
+    /// Enables/disables all gameobjects within a scene, setting currentScene to the newly active scene.
     /// </summary>
     /// <param name="scene">The scene to disable.</param>
     private void SetSceneActive(string scene, bool active)
@@ -121,7 +122,6 @@ public class GameSceneManager : MonoBehaviour
     /// <summary>
     /// Unloads all currently active level scenes.
     /// </summary>
-    /// <returns></returns>
     private async Task UnloadActiveLevelScenes()
     {
         var tasks = new Task[m_currentLevelScenes.gameScenes.Count + 1];
@@ -136,6 +136,10 @@ public class GameSceneManager : MonoBehaviour
         await Task.WhenAll(tasks);
     }
 
+    /// <summary>
+    /// Unloads all currently loaded scenes. (Except for GameStartingScene and LoadingScene)
+    /// </summary>
+    /// <returns></returns>
     private async Task UnloadAllScenes()
     {
         var tasks = new Task[m_loadedScenes.Count];
@@ -149,7 +153,7 @@ public class GameSceneManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Asynchronously loads all the bedroom scenes.
+    /// Loads all the bedroom scenes.
     /// </summary>
     private async Task LoadBedroomScenes()
     {
@@ -164,7 +168,7 @@ public class GameSceneManager : MonoBehaviour
 
     #region Public
     /// <summary>
-    /// Swaps the current active scene to a new scene, loading it if necessary.
+    /// Swaps the current active scene to a new scene. Will fail if the target scene is not loaded.
     /// </summary>
     /// <param name="target">The scene to move to.</param>
     /// <param name="targetIsUI">Whether the target scene requires UI interaction.</param>
@@ -214,7 +218,7 @@ public class GameSceneManager : MonoBehaviour
 
         await Task.WhenAll(tasks);
 
-        OnScenesLoaded?.Invoke();
+        OnMonsterScenesLoaded?.Invoke();
 
         //Set all as inactive
         for (int i = 0; i < monsterScenes.Count; i++)
@@ -272,6 +276,11 @@ public class GameSceneManager : MonoBehaviour
         MoveToScene(deathScene.SceneName, true);
     }
 
+    /// <summary>
+    /// Moves to a bedroom scene, loading the bedroom if necessary.
+    /// </summary>
+    /// <param name="target">The bedroom scene to move to.</param>
+    /// <param name="targetIsUI">Whether the target scene requires UI interaction.</param>
     public async Task GoToBedroomScene(string target, bool targetIsUI)
     {
         var lastActiveScene = m_currentScene.name;
@@ -287,6 +296,12 @@ public class GameSceneManager : MonoBehaviour
         MoveToScene(target, targetIsUI);
     }
 
+    /// <summary>
+    /// Moves to a bedroom scene while also setting the music, loading the bedroom if necessary.
+    /// </summary>
+    /// <param name="target">The bedroom scene to move to.</param>
+    /// <param name="targetIsUI">Whether the target scene requires UI interaction.</param>
+    /// <param name="music">The music to begin playing.</param>
     public async Task GoToBedroomScene(string target, bool targetIsUI, MusicManager.MusicType music)
     {
         await GoToBedroomScene(target, targetIsUI);
@@ -322,6 +337,9 @@ public class GameSceneManager : MonoBehaviour
         LoadMonsterScene(m_currentLevelScenes.level);
     }
 
+    /// <summary>
+    /// Restarts the entire game.
+    /// </summary>
     public async void RestartGame()
     {
         OnRestartGame?.Invoke();
