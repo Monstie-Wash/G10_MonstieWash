@@ -69,7 +69,6 @@ public class GameSceneManager : MonoBehaviour
     public async void StartGame()
     {
         await LoadScene(loadingScene.SceneName, false);
-
         await LoadBedroomScenes();
 
         m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
