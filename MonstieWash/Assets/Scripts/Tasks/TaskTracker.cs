@@ -118,6 +118,5 @@ public class TaskTracker : MonoBehaviour
         OnLevelCompleted?.Invoke();
 
         m_musicManager.SetMusic(MusicManager.MusicType.Victory);
-        m_roomSaver.FinishLevel();
     }
 }

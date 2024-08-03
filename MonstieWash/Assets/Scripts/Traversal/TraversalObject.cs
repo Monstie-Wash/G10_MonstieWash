@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class TraversalObject : MonoBehaviour
+public class TraversalObject : MonoBehaviour, INavigator
 {
     [SerializeField] private GameScene targetScene;
     [SerializeField] private bool targetIsUI;
 
-    private GameSceneManager m_saveObj;
+    private GameSceneManager m_gameSceneManager;
     private string m_targetScene;
 
     public void Awake()
@@ -13,11 +13,11 @@ public class TraversalObject : MonoBehaviour
         if (targetScene == null) Debug.LogError($"Target scene not assigned for {name}!");
         else m_targetScene = targetScene.SceneName;
 
-        m_saveObj = FindFirstObjectByType<GameSceneManager>();
+        m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
     }
 
     public void OnClicked()
     {
-        m_saveObj.MoveToScene(m_targetScene, targetIsUI);
+        m_gameSceneManager.MoveToScene(m_targetScene, targetIsUI);
     }
 }
