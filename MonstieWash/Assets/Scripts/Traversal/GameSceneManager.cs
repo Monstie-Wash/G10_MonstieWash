@@ -71,9 +71,11 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(loadingScene.SceneName, false);
         await LoadBedroomScenes();
 
+        SetSceneActive(initialScene.SceneName, true);
+
         m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
-        InputManager.Instance.SetCursorMode(true);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+        InputManager.Instance.SetCursorMode(false);
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         m_musicManager.SetMusic(MusicManager.MusicType.Morning);
         SetSceneActive(loadingScene.SceneName, false);
     }
@@ -156,7 +158,6 @@ public class GameSceneManager : MonoBehaviour
     /// </summary>
     private async Task LoadBedroomScenes()
     {
-        await LoadScene(initialScene.SceneName);
         foreach (GameScene scene in bedroomScenes)
         {
             await LoadScene(scene.SceneName);
