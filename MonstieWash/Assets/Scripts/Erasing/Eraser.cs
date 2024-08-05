@@ -15,8 +15,8 @@ public class Eraser : MonoBehaviour
     private TaskTracker m_taskTracker;
 
     private bool IsErasing = false;
-    public event Action OnErasing_Started;
-    public event Action OnErasing_Ended;
+    public event Action<bool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
+    public event Action<bool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
@@ -116,8 +116,11 @@ public class Eraser : MonoBehaviour
             }
         }
 
-        if (!wasErasing && IsErasing) OnErasing_Started?.Invoke();
-        if (wasErasing && !IsErasing) OnErasing_Ended?.Invoke();
+        var completedScene = m_taskTracker.IsThisSceneComplete();
+
+        if (completedScene) OnErasing_Started?.Invoke(true);
+        if (!wasErasing && IsErasing && !completedScene) OnErasing_Started?.Invoke(false);
+        if (wasErasing && !IsErasing && !completedScene) OnErasing_Ended?.Invoke(false);
     }
 
     /// <summary>
@@ -125,10 +128,16 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void StopUseTool() 
     {
-        if (IsErasing)
+        var completedScene = m_taskTracker.IsThisSceneComplete();
+
+        if (IsErasing && !completedScene)
         {
-            OnErasing_Ended?.Invoke();
+            OnErasing_Ended?.Invoke(false);
             IsErasing = false;
+        }
+        if (completedScene)
+        {
+            OnErasing_Ended?.Invoke(true);
         }
     }
 

@@ -1156,6 +1156,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Front
       objectReference: {fileID: 0}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: completionParticles
+      value: 
+      objectReference: {fileID: 7105375229832933360, guid: 23141edc3a8763b4d8577e2b243e4ee5, type: 3}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: completionParticleSpread
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: numberCompletionParticles
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 9094874810309194301, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: m_SortingOrder
       value: 1

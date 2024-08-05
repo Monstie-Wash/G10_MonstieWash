@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting.Dependencies.NCalc;
 
 public class MonsterBrain : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class MonsterBrain : MonoBehaviour
 
     #region FX
     [Tooltip("The X and Y coordinates that mood particles originate from")][SerializeField] private Vector2 moodParticleOrigin = Vector2.zero; // Determines where particle systems are placed when calling PlayMoodParticles
+    [Tooltip("Particle System played when completing a scene")][SerializeField] private ParticleSystem completionParticles;
+    [Tooltip("Size of random completion particle spread")][SerializeField][Range(0f, 5f)] private float completionParticleSpread;
+
+    public event Action<Scene> SceneCompleted;
     #endregion
 
     #region Attacks
@@ -368,6 +373,8 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     private void UpdateMoodOnSceneComplete()
     {
+        SceneCompleted?.Invoke(m_gameSceneManager.CurrentScene);
+
         for (int i = 0; i < moodData.Count; i++)
         {
             if (moodData[i].mood.SceneEffectOnMood == 0) continue;  // Skip if scene completion doesn't affect this mood
@@ -379,6 +386,8 @@ public class MonsterBrain : MonoBehaviour
             // Debug
             if (debug) print($"Mood {moodData[i].mood.name} was changed by {moodData[i].mood.SceneEffectOnMood} after scene completion");
         }
+
+        StartCoroutine(PlayCompletionParticles());
     }
 
     /// <summary>
@@ -394,7 +403,6 @@ public class MonsterBrain : MonoBehaviour
             * NOTE: Creating and destroying particles sytems might not be the most performative, but consider that these particles need to exist across multiple
             * scenes (each angle of the monster). Consider asking designers how frequently particles will play to determine if a better solution is required. 
             */
-            var elapsedTime = 0f;
             var tempParticles = Instantiate(mood.MoodParticle, moodParticleOrigin, Quaternion.identity); // The mood's ParticleSystem
             SceneManager.MoveGameObjectToScene(tempParticles.gameObject, m_gameSceneManager.CurrentScene);
             tempParticles.Play();
@@ -407,6 +415,34 @@ public class MonsterBrain : MonoBehaviour
         else
         {
             if (debug) print($"Moodtype {mood.name} doesn't have a particle system attached");
+        }
+    }
+
+    IEnumerator PlayCompletionParticles()
+    {
+        if (completionParticles != null)
+        {
+            var numParticles = 3;
+            Vector2[] spawnPositions = new Vector2[numParticles];
+            var CPS = completionParticleSpread;
+
+            // Populate array with random spawn points
+            for (var i = 0; i < numParticles; i++)
+            {
+                spawnPositions[i] = new Vector2(UnityEngine.Random.Range(-CPS, CPS), UnityEngine.Random.Range(-CPS, CPS));
+            }
+
+            // Play particle system at each spawn point
+            for (var i = 0; i < numParticles; i++)
+            {
+                var particleSys = Instantiate(completionParticles, spawnPositions[i], Quaternion.identity);
+                SceneManager.MoveGameObjectToScene(particleSys.gameObject, m_gameSceneManager.CurrentScene);
+                particleSys.Play();
+
+                yield return new WaitForSeconds(0.27f);
+            }
+
+            // Cleanup
         }
     }
 }

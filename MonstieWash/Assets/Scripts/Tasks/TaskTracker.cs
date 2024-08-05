@@ -104,6 +104,20 @@ public class TaskTracker : MonoBehaviour
     }
 
     /// <summary>
+    /// Return whether a scene exists in the dict of completed scenes, without requiring knowledge of other scenes.
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <returns></returns>
+    public bool IsThisSceneComplete()
+    {
+        if (m_scenesCompleted.ContainsKey(m_roomSaver.CurrentScene.name))   // If the scene exists in dict
+        {
+            return m_scenesCompleted[m_roomSaver.CurrentScene.name];    // Return the value of the scene
+        }
+        return false;    // Scene is one that has no tasks (title screen, etc.) - return false by default
+    }
+
+    /// <summary>
     /// Check if the entire level has been completed.
     /// </summary>
 	private void LevelCompletionCheck()
