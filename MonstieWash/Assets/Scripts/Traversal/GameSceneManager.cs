@@ -33,7 +33,7 @@ public class GameSceneManager : MonoBehaviour
     private MusicManager m_musicManager;
 
     [HideInInspector] public List<string> AllLevelScenes { get; private set; } = new();
-    [HideInInspector] public Level CurrentLevel;
+    [HideInInspector] public Level CurrentLevel { get { return m_currentLevel; } }
     [HideInInspector] public Scene CurrentScene { get { return m_currentScene; } }
 
     public enum Level
