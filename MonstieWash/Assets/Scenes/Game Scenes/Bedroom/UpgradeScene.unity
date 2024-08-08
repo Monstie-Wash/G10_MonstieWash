@@ -288,6 +288,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 3
   level: 0
+  targetScene: {fileID: 11400000, guid: f27043940161ff747aa1bb4da3c508ed, type: 2}
+  setMusic: 1
+  music: 1
 --- !u!114 &705431448
 MonoBehaviour:
   m_ObjectHideFlags: 0
