@@ -2,10 +2,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TraversalMenu : MonoBehaviour
+public class TraversalMenu : MonoBehaviour, INavigator
 {
     [SerializeField] private MenuAction action;
     [SerializeField] private GameSceneManager.Level level;
+    [SerializeField] private GameScene targetScene;
+    [SerializeField] private bool targetIsUI;
+    [SerializeField] private bool setMusic;
+    [SerializeField] private MusicManager.MusicType music;
 
     private GameSceneManager m_sceneManager;
     private Button m_button;
@@ -15,8 +19,7 @@ public class TraversalMenu : MonoBehaviour
         StartNewLevel,
         Continue,
         Restart,
-        MainMenu,
-        UpgradeMenu,
+        GoToBedroomScene,
         Quit
     }
 
@@ -28,7 +31,7 @@ public class TraversalMenu : MonoBehaviour
         m_button.onClick.AddListener(OnClicked);
     }
 
-    private void OnClicked()
+    public void OnClicked()
     {
         switch (action)
         {
@@ -47,14 +50,10 @@ public class TraversalMenu : MonoBehaviour
                     m_sceneManager.RestartLevel();
                 }
                 break;
-            case MenuAction.MainMenu:
+            case MenuAction.GoToBedroomScene:
                 {
-                    m_sceneManager.GoToMainMenu();
-                }
-                break;
-            case MenuAction.UpgradeMenu:
-                {
-                    m_sceneManager.GoToUpgradeMenu();
+                    if (setMusic) _ = m_sceneManager.GoToBedroomScene(targetScene.SceneName, targetIsUI, music);
+                    else _ = m_sceneManager.GoToBedroomScene(targetScene.SceneName, targetIsUI);
                 }
                 break;
             case MenuAction.Quit:
@@ -71,13 +70,16 @@ public class TraversalMenu : MonoBehaviour
 [CustomEditor(typeof(TraversalMenu))]
 public class TraversalMenuInspector : Editor
 {
-    SerializedProperty action;
-    SerializedProperty level;
+    SerializedProperty action, level, targetScene, targetIsUI, setMusic, music;
 
     private void OnEnable()
     {
         action = serializedObject.FindProperty("action");
         level = serializedObject.FindProperty("level");
+        targetScene = serializedObject.FindProperty("targetScene");
+        targetIsUI = serializedObject.FindProperty("targetIsUI");
+        setMusic = serializedObject.FindProperty("setMusic");
+        music = serializedObject.FindProperty("music");
     }
 
     public override void OnInspectorGUI()
@@ -89,6 +91,14 @@ public class TraversalMenuInspector : Editor
         if (action.enumValueIndex == (int)TraversalMenu.MenuAction.StartNewLevel)
         {
             EditorGUILayout.PropertyField(level);
+        }
+
+        if (action.enumValueIndex == (int)TraversalMenu.MenuAction.GoToBedroomScene)
+        {
+            EditorGUILayout.PropertyField(targetScene);
+            EditorGUILayout.PropertyField(targetIsUI);
+            EditorGUILayout.PropertyField(setMusic);
+            if (setMusic.boolValue) EditorGUILayout.PropertyField(music);
         }
 
         serializedObject.ApplyModifiedProperties();
