@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TraversalMenu : MonoBehaviour
+public class TraversalMenu : MonoBehaviour, INavigator
 {
     [SerializeField] private MenuAction action;
     [SerializeField] private GameSceneManager.Level level;
@@ -31,7 +31,7 @@ public class TraversalMenu : MonoBehaviour
         m_button.onClick.AddListener(OnClicked);
     }
 
-    private void OnClicked()
+    public void OnClicked()
     {
         switch (action)
         {
