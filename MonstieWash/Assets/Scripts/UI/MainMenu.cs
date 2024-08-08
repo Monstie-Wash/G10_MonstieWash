@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button startButton;
-    private GameSceneManager gameSceneManager;
+    private GameSceneManager m_gameSceneManager;
 
     private void Start()
     {
-        gameSceneManager = FindFirstObjectByType<GameSceneManager>();
+        m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
         startButton.onClick.AddListener(OnStartGame);
         InputManager.Instance.OnSelect += OnStartGame;
     }
@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     public void OnStartGame()
     {
         InputManager.Instance.OnSelect -= OnStartGame;
-        gameSceneManager.StartGame();
+        m_gameSceneManager.StartGame();
         gameObject.SetActive(false);
     }
 }

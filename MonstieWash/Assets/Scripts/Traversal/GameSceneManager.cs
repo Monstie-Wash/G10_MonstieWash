@@ -92,7 +92,7 @@ public class GameSceneManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Unloads a scene and adds it to the list of loaded scenes.
+    /// Unloads a scene and removes it from the list of loaded scenes.
     /// </summary>
     /// <param name="scene">The scene to unload.</param>
     private async Task UnloadScene(string scene)
