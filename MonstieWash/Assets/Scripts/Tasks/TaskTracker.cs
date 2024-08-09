@@ -17,6 +17,7 @@ public class TaskTracker : MonoBehaviour
     private UIManager m_uiManager;
     private SoundPlayer m_soundPlayer;
     private MusicManager m_musicManager;
+    private ProgressBarUI m_progressBarUI;
 
 	public List<TaskData> TaskData { get => m_taskData; }
 
@@ -26,6 +27,7 @@ public class TaskTracker : MonoBehaviour
         m_uiManager = FindFirstObjectByType<UIManager>();
         m_soundPlayer = GetComponent<SoundPlayer>();
         m_musicManager = FindFirstObjectByType<MusicManager>();
+        m_progressBarUI = FindFirstObjectByType<ProgressBarUI>();
     }
 
     private void OnEnable()
@@ -71,7 +73,11 @@ public class TaskTracker : MonoBehaviour
         if (task.Progress < task.Threshold) return;
 
         // Task over threshold; complete!
-		task.Complete = true;
+        if (!task.Complete)
+        {
+            m_progressBarUI.AddCompletion();
+            task.Complete = true;
+        }
 
         // Needed to comment out the below line to keep bone picking tasks working. Will figure out a way to make dirt disappear later.
         //task.gameObject.SetActive(false); // Remove task here?
