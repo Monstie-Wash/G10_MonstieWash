@@ -123,21 +123,31 @@ public class ConsumablesManager : MonoBehaviour
         {
             if (itemData.ItemData.ContainsTag(Inventory.ItemTags.Consumable))
             {
-                print("FoundItemTag");
                 //Check if consumable already has Ui object and skip
                 var matched = false;
+                int consumableToRemoveIndex = -1;
+
                 foreach (UIConsumable uiConsumable in activeUiElements)
                 {
                     if (itemData.ItemData.ItemName == uiConsumable.consumable.ConsumableName) matched = true;
-                    print(itemData.ItemData.ItemName);
-                    print(uiConsumable.consumable.ConsumableName);
+                    if (matched) //If an item already exists then update its number and remove it if it has been reduced to 0;
+                    {
+                        print(itemData.ItemData.ItemName + ":" + itemData.Quantity);
+                        if (itemData.Quantity <= 0)
+                        {
+                            print("Item quantity found to be 0");
+                            consumableToRemoveIndex = activeUiElements.IndexOf(uiConsumable);
+                            print("Item quantity found to be 0" + ": Index to remove from is: " + consumableToRemoveIndex);
+                            Destroy(uiConsumable.gameObject);
+                        }
+                        else uiConsumable.quantityText.text = itemData.Quantity.ToString();
+                        break;
+                    }
                 }
+                if (consumableToRemoveIndex != -1) activeUiElements.RemoveAt(consumableToRemoveIndex);
                 if (matched) continue;
-
-                CreateUiElement(itemData);
-
+                else CreateUiElement(itemData);
             }
-
         }
 
         //Assign Ui positions.

@@ -59,6 +59,8 @@ public class Inventory : MonoBehaviour
         {
             storedItemsList[index].Quantity = Mathf.Clamp(storedItemsList[index].Quantity + change, 0, type.MaxQuantity);
             if (storedItemsList[index].Quantity == 0) RemoveItem(type);
+            //Update consumable ui when changing storage amount of them;
+            if ((type is Consumable)) RefreshConsumableUI();
         }
         else Debug.LogWarning($"Consumable {type.ItemName} doesn't exist."); ;
     }
@@ -75,6 +77,9 @@ public class Inventory : MonoBehaviour
         {
             storedItemsList[index].Quantity = Mathf.Clamp(amount, 0, type.MaxQuantity);
             if (storedItemsList[index].Quantity == 0) RemoveItem(type);
+
+            //Update consumable ui when changing storage amount of them;
+            if ((type is Consumable)) RefreshConsumableUI();
         }
         else Debug.LogWarning($"Consumable {type.ItemName} doesn't exist."); ;
     }
@@ -91,7 +96,13 @@ public class Inventory : MonoBehaviour
         {
             Debug.LogWarning($"Item {type.ItemName} already exists.");
         }
-        else storedItemsList.Add(new InventoryEntry(type, amount));
+        else
+        {
+            storedItemsList.Add(new InventoryEntry(type, amount));
+
+            //Update consumable ui when changing storage amount of them;
+            if ((type is Consumable)) RefreshConsumableUI();
+        }
 
     }
 
@@ -104,6 +115,8 @@ public class Inventory : MonoBehaviour
         var itemIndex = RetrieveItemIndex(type);
         if (itemIndex != -1)
         {
+            //Update consumable ui when changing storage amount of them;
+            if ((type is Consumable)) RefreshConsumableUI();
             //Remove dictionary stored type.
             storedItemsList.RemoveAt(itemIndex);
         }
@@ -126,6 +139,20 @@ public class Inventory : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    /// <summary>
+    /// Updates the Bag ui at the bottom of the screen when called;
+    /// </summary>
+    /// <param name="type"></param>
+    public void RefreshConsumableUI()
+    {
+            ConsumablesManager cm;
+            if (cm = FindFirstObjectByType<ConsumablesManager>())
+            {
+            print("refreshing consumable ui from inv");
+                cm.RefreshUI();
+            }
     }
 
     /// <summary>
