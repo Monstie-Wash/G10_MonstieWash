@@ -31,4 +31,20 @@ public class InventoryItem : ScriptableObject
         [Tooltip("Craftingmaterial type needed to craft")] public CraftingMaterial material;
         [Tooltip("Amount needed")] public int quantity;
     }
+
+    /// <summary>
+    /// Checks whether this item contains a given tag
+    /// </summary>
+    /// <param name="tag">Tag to check for</param>
+    /// <returns></returns>
+    public bool ContainsTag(Inventory.ItemTags tag)
+    {
+        var returnVal = false;
+        foreach (Inventory.ItemTags IT in sortingTags)
+        {
+            if (IT == tag) returnVal = true;
+        }
+
+        return returnVal;
+    }
 }

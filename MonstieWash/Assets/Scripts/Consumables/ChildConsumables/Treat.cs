@@ -32,6 +32,6 @@ public class Treat : Consumable
         }
 
         //Remove one of this consumable type from the manager.
-        FindFirstObjectByType<ConsumablesManager>().UpdateStorageAmount(this,-1);
+        FindFirstObjectByType<Inventory>().UpdateStorageAmount(this,-1);
     }
 }
