@@ -216,6 +216,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: clipboard
+      value: 
+      objectReference: {fileID: 2074756618}
+    - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: CBAnimator
+      value: 
+      objectReference: {fileID: 2074756617}
+    - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: m_clipboard
       value: 
       objectReference: {fileID: 2074756618}
@@ -224,9 +232,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2074756617}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: taskContainer
+      value: 
+      objectReference: {fileID: 2074756615}
+    - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: taskTextPrefab
+      value: 
+      objectReference: {fileID: 9051000898727591749, guid: 46543417b13805f4e9b01f49812cc32b, type: 3}
+    - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: m_taskContainer
       value: 
       objectReference: {fileID: 2074756615}
+    - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: finishLevelButton
+      value: 
+      objectReference: {fileID: 1909728570}
     - target: {fileID: 8168637763214906077, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: m_Name
       value: LevelManager
@@ -439,6 +459,72 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+--- !u!1001 &1909728569
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.08131792
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684039482537819662, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_Name
+      value: FinishLevelButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684039482537819662, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+--- !u!1 &1909728570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4684039482537819662, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
+  m_PrefabInstance: {fileID: 1909728569}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1984160772
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,3 +813,4 @@ SceneRoots:
   - {fileID: 2074756614}
   - {fileID: 1475573996}
   - {fileID: 165354733}
+  - {fileID: 1909728569}

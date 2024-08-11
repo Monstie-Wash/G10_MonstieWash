@@ -101,7 +101,7 @@ public class PlayerHand : MonoBehaviour
         if (results[0] == null) return;
         
         //Navigate
-        TraversalObject navArrow = results[0].GetComponent<TraversalObject>();
+        INavigator navArrow = results[0].GetComponent<INavigator>();
         navArrow.OnClicked();
     }
 

@@ -395,6 +395,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 4
   level: 0
+  targetScene: {fileID: 0}
+  setMusic: 0
+  music: 0
 --- !u!1 &496367502
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,6 +808,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 2
   level: 0
+  targetScene: {fileID: 0}
+  setMusic: 0
+  music: 0
 --- !u!1 &874049950
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,6 +947,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 3
   level: 0
+  targetScene: {fileID: 11400000, guid: f27043940161ff747aa1bb4da3c508ed, type: 2}
+  setMusic: 1
+  music: 1
 --- !u!1 &1250478709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,6 +1330,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 1
   level: 0
+  targetScene: {fileID: 0}
+  setMusic: 0
+  music: 0
 --- !u!1 &1950087278
 GameObject:
   m_ObjectHideFlags: 0
