@@ -15,7 +15,8 @@ public class ConsumablesManager : MonoBehaviour
     [Tooltip("Gameobject new Ui consumable items will be parented under")] [SerializeField] private GameObject imageHolder; //Empty Gameobject in Ui to hold images; (I tried changing to transform as per feedback but doesn't seem to work with rect transform in ui)
     [Tooltip("A template obj requiring, image, UIconsumableScript, button linked to the scripts onclick")] [SerializeField] private GameObject refObject; //blank object for instantiate to reference; Needs a button, UIConsumableScript, Image.
     [Tooltip("Layer that checks player mouse is over monster collider")] [SerializeField] private LayerMask monsterLayer; //Layer of monster hitbox;
-    [Tooltip("Layer that checks player mouse is over consumable collider")] [SerializeField] public LayerMask consumableLayer; //Layer of consumables hitbox;
+    [Tooltip("Layer that checks player mouse is over bag to open its contents")] [SerializeField] public LayerMask bagLayer; //Layer of consumables hitbox;
+    [Tooltip("Layer that checks player mouse is over consumable collider")] [SerializeField] public LayerMask itemConsumableLayer; //Layer of consumables hitbox;
 
     [SerializeField] private Inventory m_inventory; //Reference to Inventory;
 
@@ -39,12 +40,12 @@ public class ConsumablesManager : MonoBehaviour
 
     public void OnEnable()
     {
-        InputManager.Instance.OnActivate += CheckClickedOn;
+        //InputManager.Instance.OnActivate += CheckClickedOn;
     }
 
     public void OnDisable()
     {
-        InputManager.Instance.OnActivate -= CheckClickedOn;
+        //InputManager.Instance.OnActivate -= CheckClickedOn;
     }
 
     private void Awake()
@@ -59,6 +60,10 @@ public class ConsumablesManager : MonoBehaviour
 
     private void Update()
     {
+        //Open or close bag when hovered over;
+        CheckHovered();
+
+
         //State Transitions
         switch (state)
         {
@@ -132,12 +137,9 @@ public class ConsumablesManager : MonoBehaviour
                     if (itemData.ItemData.ItemName == uiConsumable.consumable.ConsumableName) matched = true;
                     if (matched) //If an item already exists then update its number and remove it if it has been reduced to 0;
                     {
-                        print(itemData.ItemData.ItemName + ":" + itemData.Quantity);
                         if (itemData.Quantity <= 0)
                         {
-                            print("Item quantity found to be 0");
                             consumableToRemoveIndex = activeUiElements.IndexOf(uiConsumable);
-                            print("Item quantity found to be 0" + ": Index to remove from is: " + consumableToRemoveIndex);
                             Destroy(uiConsumable.gameObject);
                         }
                         else uiConsumable.quantityText.text = itemData.Quantity.ToString();
@@ -216,8 +218,9 @@ public class ConsumablesManager : MonoBehaviour
     /// </summary>
     public void OpenUI()
     {
-        //Only open when closed;
+        //Only open when closed and dont interupt it already opening;
         if (state != UiState.Closed) return;
+        if (state == UiState.Opening) return;
 
         state = UiState.Opening;
         m_managerimage.sprite = openSprite;
@@ -228,10 +231,11 @@ public class ConsumablesManager : MonoBehaviour
     /// </summary>
     public void CloseUI()
     {
-        //Only close when opened
+        //Only close when opened and dont interupt it already closing;
         if (state != UiState.Open) return;
+        if (state == UiState.Closing) return;
 
-        foreach(UIConsumable c in activeUiElements)
+        foreach (UIConsumable c in activeUiElements)
         {
             c.holding = false;     
         }
@@ -239,13 +243,14 @@ public class ConsumablesManager : MonoBehaviour
         state = UiState.Closing;
     }
 
-    public void CheckClickedOn()
+    public void CheckHovered()
     {
-        var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, consumableLayer, -999999, 999999);
+        var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, bagLayer, -999999, 999999);
         if (col != null)
         {
-            if (col.gameObject == gameObject) toggleBag();
+            if ((col.gameObject == gameObject) && state != UiState.Open) OpenUI();
         }
+        else if (state != UiState.Closed && !holdingConsumable) CloseUI();
     }
 
 

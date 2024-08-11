@@ -12,8 +12,8 @@ public class UIConsumable : MonoBehaviour
     [HideInInspector] public Vector3 extendedPos;
     [HideInInspector] public Vector3 closedPos;
 
-    [HideInInspector] public bool clickable;
-    [HideInInspector] public bool holding;
+    [SerializeField] public bool clickable;
+    [SerializeField] public bool holding;
 
     private float m_distToPoint;
 
@@ -45,6 +45,7 @@ public class UIConsumable : MonoBehaviour
 
     public void ClickedOn()
     {
+        print("Clicked on");
         //Return if bag isnt in an open state.
         if (manager.state != ConsumablesManager.UiState.Open) return;
 
@@ -113,7 +114,7 @@ public class UIConsumable : MonoBehaviour
 
     public void CheckClickedOn()
     {
-        var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, manager.consumableLayer,-999999,999999);
+        var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, manager.itemConsumableLayer);
         if (col != null)
         {
             if (col.gameObject == gameObject) ClickedOn();
