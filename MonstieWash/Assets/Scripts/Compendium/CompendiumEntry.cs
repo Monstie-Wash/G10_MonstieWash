@@ -6,31 +6,24 @@ using UnityEngine.EventSystems;
 
 public class CompendiumEntry : MonoBehaviour
 {
-    public string Name { get; private set; }
-    public string Temperament { get; private set; }
-    public string Description { get; private set; }
-    public Sprite ImageOriginal { get; private set; }
-    public Sprite ImageCleared { get; private set; }
-    public bool Completed { get; private set; }
+    public string MonsterName { get => monsterName;}
+    public string Temperament { get => temperament; }
+    public string Description { get => description;}
+    public Sprite ImageOriginal { get => imageOriginal; }
+    public Sprite ImageCleared { get => imageCleared; }
+    public bool Completed { get => completed;}
 
-    [SerializeField] private string name;
+    [SerializeField] private string monsterName;
     [SerializeField] [TextAreaAttribute] private string temperament;
     [SerializeField] [TextAreaAttribute] private string description;
     [SerializeField] private Sprite imageOriginal;
     [SerializeField] private Sprite imageCleared;
     [SerializeField] private bool completed;
 
-    [SerializeField] private CompendiumManager m_compendiumManager;
+    private CompendiumManager m_compendiumManager;
 
     private void Start()
     {
-        Name = name;
-        Temperament = temperament;
-        Description = description;
-        ImageOriginal = imageOriginal;
-        ImageCleared = imageCleared;
-        Completed = completed;
-
         m_compendiumManager = FindFirstObjectByType<CompendiumManager>();
     }
 

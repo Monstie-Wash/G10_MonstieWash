@@ -32,7 +32,7 @@ public class CompendiumManager : MonoBehaviour
             }
         }
 
-        textTitle.text = entry.Name;
+        textTitle.text = entry.MonsterName;
         imageOriginal.sprite = entry.ImageOriginal;
         imageCleared.sprite = entry.ImageCleared;
         textTemperament.text = entry.Temperament;
