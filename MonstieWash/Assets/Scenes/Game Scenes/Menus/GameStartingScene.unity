@@ -894,7 +894,7 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: 7512082f8c59b844eb338c70137bdf5a, type: 2}
     quantity: 4
   - itemData: {fileID: 11400000, guid: bebaeab5dd6ab8d4b9df9524c282826b, type: 2}
-    quantity: 150
+    quantity: 100
 --- !u!1 &1909861987
 GameObject:
   m_ObjectHideFlags: 0

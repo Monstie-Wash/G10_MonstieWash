@@ -38,6 +38,10 @@ public class Inventory : MonoBehaviour
     [SerializeField] private List<InventoryEntry> storedItemsList;
     public List<InventoryEntry> StoredItemsList { get { return storedItemsList;  } }
 
+    //Used as a simple storage to pass the last score earned from the score UI manager to the upgrade manager so it can accurately reflect money earned.
+    [SerializeField] private int lastEarnedScore;
+    public int LastEarnedScore { get { return lastEarnedScore; } set { lastEarnedScore = value; } }
+
     private void Awake()
     {
         //Ensure there is only one class of this existing and that it persists.
@@ -139,6 +143,31 @@ public class Inventory : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    /// <summary>
+    /// Simple function for other scripts to read the quanity of a given item;
+    /// </summary>
+    /// <param name="item">Item type to check for in inventory</param>
+    /// <returns></returns>
+    public int ReadQuantity(InventoryItem item)
+    {
+        var itemIndex = RetrieveItemIndex(item);
+        if (itemIndex == -1) return 0;
+        else return storedItemsList[itemIndex].Quantity;
+
+    }
+
+    /// <summary>
+    /// Simple function to check if inventory contains an item;
+    /// </summary>
+    /// <param name="item">Item type to check for in inventory</param>
+    /// <returns></returns>
+    public bool ContainsItem(InventoryItem item)
+    {
+        var itemIndex = RetrieveItemIndex(item);
+        if (itemIndex == -1) return false;
+        else return true;
     }
 
     /// <summary>
