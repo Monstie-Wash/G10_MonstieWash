@@ -420,7 +420,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8619922187048541168, guid: 2003c3e2ab537554f9ed1dc19214ee7e, type: 3}
       propertyPath: m_Name
-      value: ProgressBar
+      value: ProgressBarView
       objectReference: {fileID: 0}
     - target: {fileID: 9010701047070544365, guid: 2003c3e2ab537554f9ed1dc19214ee7e, type: 3}
       propertyPath: m_Pivot.x
