@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class ProgressBarUI : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class ProgressBarUI : MonoBehaviour
     private RectMask2D m_progressMask;
     private RectTransform m_maskTransform;
     private List<TaskData> m_taskData;
-    private int m_taskCompletedCount = 0;
+    private float m_sceneProgress = 0;
     private int m_taskCount = 0;
 
     private void Awake()
@@ -30,26 +31,17 @@ public class ProgressBarUI : MonoBehaviour
         m_gameSceneManager.OnSceneChanged -= CheckCompletion;
     }
 
-    public void AddCompletion()
-    {
-        m_taskCompletedCount++;
-        UpdateUI();
-    }
-
 /// <summary>
 /// Recalculates tasks completed and total tasks for the current active scene
 /// </summary>
-    private void CheckCompletion()
+    public void CheckCompletion()
     {
-        m_taskCompletedCount = 0;
+        m_sceneProgress = 0f;
         m_taskCount = 0;
-        foreach (var task in m_taskData)
+        foreach (var task in m_taskData.Where(t => t.gameObject.scene == m_gameSceneManager.CurrentScene))
         {
-            if (task.gameObject.scene == m_gameSceneManager.CurrentScene)
-            {
-                m_taskCount++;
-                if (task.Complete) m_taskCompletedCount++;
-            }
+            m_taskCount++;
+            m_sceneProgress += task.Progress;
         }
         UpdateUI();
     }
@@ -59,6 +51,6 @@ public class ProgressBarUI : MonoBehaviour
 /// </summary>
     private void UpdateUI()
     {
-        m_progressMask.padding = new Vector4 (0, 0, m_maskTransform.rect.width - (m_maskTransform.rect.width * ((float) m_taskCompletedCount / (float) m_taskCount)), 0);
+        m_progressMask.padding = new Vector4 (0, 0, m_maskTransform.rect.width - Mathf.CeilToInt(m_maskTransform.rect.width * ( m_sceneProgress / 100f / m_taskCount)), 0);
     }
 }
