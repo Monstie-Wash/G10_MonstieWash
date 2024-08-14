@@ -71,6 +71,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scan"",
+                    ""type"": ""Button"",
+                    ""id"": ""2116ca0f-2d8f-4c3c-a0de-fcba93beeed4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -236,6 +245,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ToggleUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4044e25-f269-4dc1-a685-efdabed9103e"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scan"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c413217d-2c6d-491b-bffa-07c564cfd38d"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scan"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -488,6 +519,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions_SwitchTool = m_PlayerActions.FindAction("SwitchTool", throwIfNotFound: true);
         m_PlayerActions_Navigate = m_PlayerActions.FindAction("Navigate", throwIfNotFound: true);
         m_PlayerActions_ToggleUI = m_PlayerActions.FindAction("ToggleUI", throwIfNotFound: true);
+        m_PlayerActions_Scan = m_PlayerActions.FindAction("Scan", throwIfNotFound: true);
         // MenuActions
         m_MenuActions = asset.FindActionMap("MenuActions", throwIfNotFound: true);
         m_MenuActions_Select = m_MenuActions.FindAction("Select", throwIfNotFound: true);
@@ -566,6 +598,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_SwitchTool;
     private readonly InputAction m_PlayerActions_Navigate;
     private readonly InputAction m_PlayerActions_ToggleUI;
+    private readonly InputAction m_PlayerActions_Scan;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -575,6 +608,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @SwitchTool => m_Wrapper.m_PlayerActions_SwitchTool;
         public InputAction @Navigate => m_Wrapper.m_PlayerActions_Navigate;
         public InputAction @ToggleUI => m_Wrapper.m_PlayerActions_ToggleUI;
+        public InputAction @Scan => m_Wrapper.m_PlayerActions_Scan;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -599,6 +633,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ToggleUI.started += instance.OnToggleUI;
             @ToggleUI.performed += instance.OnToggleUI;
             @ToggleUI.canceled += instance.OnToggleUI;
+            @Scan.started += instance.OnScan;
+            @Scan.performed += instance.OnScan;
+            @Scan.canceled += instance.OnScan;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -618,6 +655,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ToggleUI.started -= instance.OnToggleUI;
             @ToggleUI.performed -= instance.OnToggleUI;
             @ToggleUI.canceled -= instance.OnToggleUI;
+            @Scan.started -= instance.OnScan;
+            @Scan.performed -= instance.OnScan;
+            @Scan.canceled -= instance.OnScan;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -791,6 +831,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSwitchTool(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
         void OnToggleUI(InputAction.CallbackContext context);
+        void OnScan(InputAction.CallbackContext context);
     }
     public interface IMenuActionsActions
     {

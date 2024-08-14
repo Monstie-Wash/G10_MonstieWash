@@ -114,12 +114,11 @@ public class StuckItem : MonoBehaviour, ITaskScript
     private IEnumerator FadeColour()
     {
         var t = greenFadeTime;
-        var currentColor = Color.green;
+        var currentColor = m_spriteRenderer.color;
 
         while (t > 0f)
         {
-            currentColor.r = greenFadeCurve.Evaluate(t);
-            currentColor.b = greenFadeCurve.Evaluate(t);
+            currentColor.a = greenFadeCurve.Evaluate(t);
 
             m_spriteRenderer.color = currentColor;
 
@@ -128,6 +127,7 @@ public class StuckItem : MonoBehaviour, ITaskScript
             yield return null;
         }
     }
+
     public List<object> SaveData()
     {
         List<object> data = new();
