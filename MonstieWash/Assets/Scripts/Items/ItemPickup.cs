@@ -28,19 +28,19 @@ public class ItemPickup : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Instance.OnActivate += Inputs_OnActivate;
+        InputManager.Instance.OnActivate_Held += Inputs_OnActivate_Held;
         InputManager.Instance.OnSwitchTool += Inputs_OnSwitchTool;
-        InputManager.Instance.OnNavigate += Inputs_OnNavigate;
+        InputManager.Instance.OnActivate_Ended += Inputs_OnActivate_Ended;
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.OnActivate -= Inputs_OnActivate;
+        InputManager.Instance.OnActivate_Held -= Inputs_OnActivate_Held;
         InputManager.Instance.OnSwitchTool -= Inputs_OnSwitchTool;
-        InputManager.Instance.OnNavigate -= Inputs_OnNavigate;
+        InputManager.Instance.OnActivate_Ended -= Inputs_OnActivate_Ended;
     }
 
-    private void Inputs_OnActivate()
+    private void Inputs_OnActivate_Held()
     {
         if (m_toolSwitcher.CurrentToolIndex == -1) //Empty hand
         {
@@ -59,7 +59,7 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
-    private void Inputs_OnNavigate()
+    private void Inputs_OnActivate_Ended()
     {
         if (m_holding)
         {
