@@ -123,6 +123,11 @@ public class TaskTracker : MonoBehaviour
         m_musicManager.SetMusic(MusicManager.MusicType.Victory);
     }
 
+    /// <summary>
+    /// Calculates how much of a given scene's tasks have been completed.
+    /// </summary>
+    /// <param name="scene">The scene in which to check for completion.</param>
+    /// <returns>The overall completion percentage.</returns>
     private float CalculateCompletionPercentage(string scene)
     {
         var numOfTasks = 0;
