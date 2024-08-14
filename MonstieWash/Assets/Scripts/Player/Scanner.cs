@@ -29,15 +29,18 @@ public class Scanner : MonoBehaviour
 
     private async void Instance_OnScan()
     {
+        //Only scan when previous scan is finished
         if (!m_scannerReady) return;
         m_scannerReady = false;
 
+        //Get all active task sprite renderers
         List<SpriteRenderer> spriteRenderers = new();
         foreach (var task in m_taskTracker.TaskData)
         {
             if (task.gameObject.activeInHierarchy && !task.Complete) spriteRenderers.Add(task.GetComponentInChildren<SpriteRenderer>());
         }
 
+        //Fade from the flash colour to normal sprite
         Task[] fadeTasks = new Task[spriteRenderers.Count];
         for (int i = 0; i < fadeTasks.Length; i++)
         {
@@ -48,6 +51,10 @@ public class Scanner : MonoBehaviour
         m_scannerReady = true;
     }
 
+    /// <summary>
+    /// Fades from the colour of the sprite renderer to the original sprite over time.
+    /// </summary>
+    /// <param name="sr">The sprite renderer whose colour is changed.</param>
     private async Task FadeColour(SpriteRenderer sr)
     {
         var t = greenFadeTime;
