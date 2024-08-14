@@ -18,12 +18,14 @@ public class UIManager : MonoBehaviour
 
     private GameSceneManager m_roomSaver;
     private TaskTracker m_taskTracker;
+    private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
     private bool m_UIVisible = true;
 
     private void Awake()
     {
         m_roomSaver = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_progressBars = FindObjectsByType<ProgressBarUI>(FindObjectsSortMode.None);
     }
 
     private void OnEnable()
@@ -90,6 +92,14 @@ public class UIManager : MonoBehaviour
     public void UpdateClipboardTask(string scene)
     {
         taskContainer.transform.Find(scene).GetComponent<TextMeshProUGUI>().text = $"<s>{scene}</s>";
+    }
+
+    public void UpdateProgressBar()
+    {
+        foreach(var progressBar in m_progressBars)
+        {
+            progressBar.CheckCompletion();
+        }
     }
 
     private void OnLevelCompleted()
