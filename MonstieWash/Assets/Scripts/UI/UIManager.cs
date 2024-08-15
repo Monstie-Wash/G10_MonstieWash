@@ -98,11 +98,11 @@ public class UIManager : MonoBehaviour
 	/// <summary>
 	/// Updates the progress bar based on completion percentage.
 	/// </summary>
-    public void UpdateProgressBar()
+    public void UpdateProgressBar(float overallCompletion)
     {
         foreach(var progressBar in m_progressBars)
         {
-            progressBar.CheckCompletion();
+            progressBar.UpdateUI(overallCompletion);
         }
 	}
 	
@@ -112,7 +112,7 @@ public class UIManager : MonoBehaviour
     /// <param name="overallCompletion">The overall completion to display.</param>
     public void UpdateCompletion(float overallCompletion)
     {
-        completionText.text = $"{Mathf.CeilToInt(overallCompletion)}%";
+        completionText.text = $"{Mathf.CeilToInt(overallCompletion * 100f)}%";
     }
 
     private void OnLevelCompleted()
