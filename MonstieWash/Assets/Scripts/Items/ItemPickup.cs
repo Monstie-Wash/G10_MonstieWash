@@ -92,6 +92,11 @@ public class ItemPickup : MonoBehaviour
                 SetupHoldingStuckItem();                
                 SetHandPosition();
             }
+            else if (!m_heldItem.Stuck)
+            {
+                LetGoItem();
+            }
+
             else PickupItem();
         }
         else
