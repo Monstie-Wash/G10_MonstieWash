@@ -1034,6 +1034,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: allLevelScenes.Array.data[0].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: allLevelScenes.Array.data[1].level
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allLevelScenes.Array.data[0].startingScene
       value: 
       objectReference: {fileID: 11400000, guid: ad937325136c45843839adef08801ba2, type: 2}
