@@ -68,6 +68,9 @@ public class TaskTracker : MonoBehaviour
             return;
         }
 
+        var overallCompletion = CalculateCompletionPercentage(task.gameObject.scene.name);
+        m_uiManager.UpdateCompletion(overallCompletion);
+
         if (task.Progress < task.Threshold) return;
 
         // Task over threshold; complete!
@@ -87,7 +90,7 @@ public class TaskTracker : MonoBehaviour
     {
         if (m_scenesCompleted[scene]) return; // Exit early if scene is already noted as complete
 
-        foreach (var task in m_taskData.Where(task => task.gameObject.scene.name == scene))
+        foreach (var task in m_taskData.Where(task => task.gameObject.scene.name.Equals(scene)))
         {
             if (!task.Complete)
                 return;
@@ -118,5 +121,24 @@ public class TaskTracker : MonoBehaviour
         OnLevelCompleted?.Invoke();
 
         m_musicManager.SetMusic(MusicManager.MusicType.Victory);
+    }
+
+    /// <summary>
+    /// Calculates how much of a given scene's tasks have been completed.
+    /// </summary>
+    /// <param name="scene">The scene in which to check for completion.</param>
+    /// <returns>The overall completion percentage.</returns>
+    private float CalculateCompletionPercentage(string scene)
+    {
+        var numOfTasks = 0;
+        var sumOfTasks = 0f;
+
+        foreach (var sceneTask in m_taskData.Where(t => t.gameObject.scene.name.Equals(scene)))
+        {
+            numOfTasks++;
+            sumOfTasks += sceneTask.Progress;
+        }
+
+        return sumOfTasks / numOfTasks;
     }
 }
