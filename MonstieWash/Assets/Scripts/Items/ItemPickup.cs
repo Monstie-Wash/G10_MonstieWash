@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
@@ -28,19 +26,21 @@ public class ItemPickup : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Instance.OnActivate += Inputs_OnActivate;
+        InputManager.Instance.OnActivate_Started += Inputs_OnActivate_Started;
+        InputManager.Instance.OnActivate_Ended += Instance_OnActivate_Ended;
         InputManager.Instance.OnSwitchTool += Inputs_OnSwitchTool;
         InputManager.Instance.OnNavigate += Inputs_OnNavigate;
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.OnActivate -= Inputs_OnActivate;
+        InputManager.Instance.OnActivate_Started -= Inputs_OnActivate_Started;
+        InputManager.Instance.OnActivate_Ended -= Instance_OnActivate_Ended;
         InputManager.Instance.OnSwitchTool -= Inputs_OnSwitchTool;
         InputManager.Instance.OnNavigate -= Inputs_OnNavigate;
     }
 
-    private void Inputs_OnActivate()
+    private void Inputs_OnActivate_Started()
     {
         if (m_toolSwitcher.CurrentToolIndex == -1) //Empty hand
         {
@@ -48,24 +48,21 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
+    private void Instance_OnActivate_Ended()
+    {
+        TryDropItem();
+    }
+
     private void Inputs_OnSwitchTool(int dirInput)
     {
         if (dirInput == 0) return;
 
-        if (m_holding)
-        {
-            if (m_heldItem.Stuck) LetGoItem();
-            else DropItem();
-        }
+        TryDropItem();
     }
 
     private void Inputs_OnNavigate()
     {
-        if (m_holding)
-        {
-            if (m_heldItem.Stuck) LetGoItem();
-            else DropItem();
-        }
+        TryDropItem();
     }
 
     private void LateUpdate()
@@ -74,6 +71,15 @@ public class ItemPickup : MonoBehaviour
 
         if (m_heldItem.Stuck) SetHandPosition();
         else m_heldItem.transform.position = transform.position;
+    }
+
+    private void TryDropItem()
+    {
+        if (m_holding)
+        {
+            if (m_heldItem.Stuck) LetGoItem();
+            else DropItem();
+        }
     }
 
     /// <summary>
@@ -89,7 +95,7 @@ public class ItemPickup : MonoBehaviour
 
             if (m_heldItem.Stuck)
             {
-                SetupHoldingStuckItem();                
+                SetupHoldingStuckItem();
                 SetHandPosition();
             }
             else PickupItem();
