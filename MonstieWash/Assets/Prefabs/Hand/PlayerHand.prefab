@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8211790447339308997}
   - component: {fileID: 8624381380993330181}
   - component: {fileID: 910600158149282078}
+  - component: {fileID: 8404390746904849410}
   m_Layer: 9
   m_Name: PlayerHand
   m_TagString: Untagged
@@ -160,6 +161,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heldItemsTransform: {fileID: 4106818671195916241}
   throwSpeedMultiplier: 15
+--- !u!114 &8404390746904849410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3635255560880722609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e809416a1434be48818bb5342853e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenFadeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.0017222943
+      outSlope: 0.0017222943
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: -0.0026550293
+      inSlope: -3.2105982
+      outSlope: -3.2105982
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1245572
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  greenFadeTime: 1.5
 --- !u!1 &8487065927594770960
 GameObject:
   m_ObjectHideFlags: 0
