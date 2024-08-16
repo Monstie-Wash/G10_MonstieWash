@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Animator CBAnimator;
     [SerializeField] private GameObject taskContainer;
     [SerializeField] private GameObject taskTextPrefab;
+    [SerializeField] private TextMeshProUGUI completionText;
     [SerializeField] private float fontSize = 36f;
     [Space(20), SerializeField] private GameObject finishLevelButton;
 
@@ -18,12 +19,14 @@ public class UIManager : MonoBehaviour
 
     private GameSceneManager m_roomSaver;
     private TaskTracker m_taskTracker;
+    private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
     private bool m_UIVisible = true;
 
     private void Awake()
     {
         m_roomSaver = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_progressBars = FindObjectsByType<ProgressBarUI>(FindObjectsSortMode.None);
     }
 
     private void OnEnable()
@@ -90,6 +93,26 @@ public class UIManager : MonoBehaviour
     public void UpdateClipboardTask(string scene)
     {
         taskContainer.transform.Find(scene).GetComponent<TextMeshProUGUI>().text = $"<s>{scene}</s>";
+    }
+
+	/// <summary>
+	/// Updates the progress bar based on completion percentage.
+	/// </summary>
+    public void UpdateProgressBar(float overallCompletion)
+    {
+        foreach(var progressBar in m_progressBars)
+        {
+            progressBar.UpdateUI(overallCompletion);
+        }
+	}
+	
+    /// <summary>
+    /// Updates the completion percentage on the clipboard for the current scene.
+    /// </summary>
+    /// <param name="overallCompletion">The overall completion to display.</param>
+    public void UpdateCompletion(float overallCompletion)
+    {
+        completionText.text = $"{Mathf.CeilToInt(overallCompletion * 100f)}%";
     }
 
     private void OnLevelCompleted()

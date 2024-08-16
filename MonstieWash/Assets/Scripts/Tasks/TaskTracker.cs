@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(SoundPlayer))]
 public class TaskTracker : MonoBehaviour
@@ -11,7 +12,7 @@ public class TaskTracker : MonoBehaviour
 
     //Private
     [SerializeField] private List<TaskData> m_taskData = new();
-    private Dictionary<string, bool> m_scenesCompleted = new();
+    private Dictionary<Scene, bool> m_scenesCompleted = new();
 
     private GameSceneManager m_roomSaver;
     private UIManager m_uiManager;
@@ -31,11 +32,18 @@ public class TaskTracker : MonoBehaviour
     private void OnEnable()
     {
         m_roomSaver.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
+        m_roomSaver.OnSceneChanged += RoomSaver_OnSceneChanged; ;
+    }
+
+    private void RoomSaver_OnSceneChanged()
+    {
+        if (m_roomSaver.CurrentLevel != GameSceneManager.Level.None) UpdateUI();
     }
 
     private void OnDisable()
     {
         m_roomSaver.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
+        m_roomSaver.OnSceneChanged -= RoomSaver_OnSceneChanged;
     }
 
     private void RoomSaver_OnScenesLoaded()
@@ -49,7 +57,7 @@ public class TaskTracker : MonoBehaviour
 
         foreach (var task in m_taskData)
         {
-            var taskScene = task.gameObject.scene.name;
+            var taskScene = task.gameObject.scene;
             if (!m_scenesCompleted.ContainsKey(taskScene)) m_scenesCompleted.Add(taskScene, false);
         }
 
@@ -68,26 +76,28 @@ public class TaskTracker : MonoBehaviour
             return;
         }
 
+        UpdateUI();
+
         if (task.Progress < task.Threshold) return;
 
         // Task over threshold; complete!
-		task.Complete = true;
+        task.Complete = true;
 
         // Needed to comment out the below line to keep bone picking tasks working. Will figure out a way to make dirt disappear later.
         //task.gameObject.SetActive(false); // Remove task here?
 
-        SceneCompletionCheck(task.gameObject.scene.name);
+        SceneCompletionCheck(task.gameObject.scene);
 	}
 
     /// <summary>
     /// Check if the current scene (task) has been completed.
     /// </summary>
     /// <param name="scene"></param>
-    private void SceneCompletionCheck(string scene)
+    private void SceneCompletionCheck(Scene scene)
     {
         if (m_scenesCompleted[scene]) return; // Exit early if scene is already noted as complete
 
-        foreach (var task in m_taskData.Where(task => task.gameObject.scene.name == scene))
+        foreach (var task in m_taskData.Where(task => task.gameObject.scene == scene))
         {
             if (!task.Complete)
                 return;
@@ -97,7 +107,7 @@ public class TaskTracker : MonoBehaviour
         OnSceneCompleted?.Invoke();
 
         m_scenesCompleted[scene] = true;
-        m_uiManager.UpdateClipboardTask(scene);
+        m_uiManager.UpdateClipboardTask(scene.name);
         m_soundPlayer.PlaySound(true, true);
 
         LevelCompletionCheck();
@@ -118,5 +128,34 @@ public class TaskTracker : MonoBehaviour
         OnLevelCompleted?.Invoke();
 
         m_musicManager.SetMusic(MusicManager.MusicType.Victory);
+    }
+
+    /// <summary>
+    /// Updates the completion amounts in the UI
+    /// </summary>
+    private void UpdateUI()
+    {
+        var overallCompletion = CalculateCompletionPercentage(m_roomSaver.CurrentScene);
+        m_uiManager.UpdateCompletion(overallCompletion);
+        m_uiManager.UpdateProgressBar(overallCompletion);
+    }
+
+    /// <summary>
+    /// Calculates how much of a given scene's tasks have been completed.
+    /// </summary>
+    /// <param name="scene">The scene in which to check for completion.</param>
+    /// <returns>The overall completion percentage.</returns>
+    private float CalculateCompletionPercentage(Scene scene)
+    {
+        var numOfTasks = 0;
+        var sumOfTasks = 0f;
+
+        foreach (var sceneTask in m_taskData.Where(t => t.gameObject.scene == scene))
+        {
+            numOfTasks++;
+            sumOfTasks += sceneTask.Progress;
+        }
+
+        return sumOfTasks / numOfTasks / 100f;
     }
 }
