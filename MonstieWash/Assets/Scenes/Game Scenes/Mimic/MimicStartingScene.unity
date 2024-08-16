@@ -711,18 +711,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6026966271310651209, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: openSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: f1504bbb8aa08f54abc22e98c696a94e, type: 3}
-    - target: {fileID: 6026966271310651209, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: closedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
-    - target: {fileID: 6881272021667277159, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
     - target: {fileID: 7603753278036010449, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
       propertyPath: m_Name
       value: ConsumableManager

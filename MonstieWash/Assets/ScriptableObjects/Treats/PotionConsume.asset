@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PotionConsume
   m_EditorClassIdentifier: 
   consumableName: Potion
-  sprite: {fileID: 21300000, guid: c7b034936f623384b9f0776595560618, type: 3}
+  sprite: {fileID: -2174827668884051896, guid: 9b7fc302127ad42438380569a5903697, type: 3}
   diminishingReturns: 0
   craftingRequirements: []
   maxQuantity: 99
