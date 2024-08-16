@@ -10,15 +10,14 @@ public class MonsterController : MonoBehaviour
 {
     [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
     [SerializeField] private bool debug = false;
-    [Tooltip("ParticleSystem generated when a scene is completed")] [SerializeField] private ParticleSystem completionParticles;    // ParticleSystem generated when scene is completed
-    [Tooltip("Number of ParticleSystems to play upon scene completion")][SerializeField] private int numberCompletionParticles;
-    [Tooltip("Size of random completion particle spread")][SerializeField][Range(0f,5f)] private float completionParticleSpread;
 
     private MonsterBrain m_monsterAI;
     private Animator m_myAnimator;
 
     private AnimationClip m_interruptedAnimation = null;
     [Tooltip("Place each of the monster attack animations here.")][SerializeField] private List<AnimationClip> attackList;  // List of monster attack animations to be chosen from randomly when an attack is made. 
+
+    [Tooltip("Place completion particle GameObjects here.")][SerializeField] private List<Effect> completionEffectList; // List of Effect objects to play when a scene is completed
 
     private MoodType m_recentHighestMood;
 
@@ -39,13 +38,14 @@ public class MonsterController : MonoBehaviour
     {
         m_monsterAI.OnMoodChanged += UpdateAnimations;
         m_monsterAI.MonsterAttack += Attack;
-        //m_monsterAI.SceneCompleted += ProcessSceneComplete;
+        m_monsterAI.SceneCompleted += ProcessSceneComplete;
     }
 
     private void OnDisable()
     {
         m_monsterAI.OnMoodChanged -= UpdateAnimations;
         m_monsterAI.MonsterAttack -= Attack;
+        m_monsterAI.SceneCompleted -= ProcessSceneComplete;
     }
 
     /// <summary>
@@ -127,36 +127,24 @@ public class MonsterController : MonoBehaviour
         }
     }
 
-    /*
     /// <summary>
-    /// Executes the logic required when a scene is completed (the last task is finished). Receives this event from Monsterbrain <-- TaskTracker
+    /// Executes the logic required when a scene is completed (the last task is finished). Event is received from MonsterBrain <-- TaskTracker
     /// </summary>
+    /// <param name="activeScene"> The scene that was completed. </param>
     private void ProcessSceneComplete(Scene activeScene)
     {
-        if (completionParticles != null)
-        {
-            var particleSys = Instantiate(completionParticles, Vector2.zero, Quaternion.identity);
-            SceneManager.MoveGameObjectToScene(particleSys.gameObject, activeScene);
-            Vector2[] spawnPositions = new Vector2[numberCompletionParticles];
-            var CPS = completionParticleSpread;
-
-            // Populate array with random spawn points
-            for (int i = 0; i > numberCompletionParticles; i++)
-            {
-                spawnPositions[i] = new Vector2(UnityEngine.Random.Range(-CPS, CPS), UnityEngine.Random.Range(-CPS, CPS));
-            }
-
-            // Play particle system at each spawn point
-            for (int i = 0; i > numberCompletionParticles; i++)
-            {
-                particleSys.transform.position = spawnPositions[i];
-                particleSys.Play();
-                //particleSys.Stop();
-            }
-
-            // Cleanup
-            Destroy(particleSys);
-        }
+        Debug.Log("MonsterController ProcessSceneComplete");
+        // More required logic can go here
+        StartCoroutine(PlayCompletionSparkles());
     }
-    */
+
+    IEnumerator PlayCompletionSparkles()
+    {
+        foreach (var effect in completionEffectList)
+        {
+            effect.Play();
+            yield return new WaitForSeconds(0.31f);
+        }
+        
+    }
 }
