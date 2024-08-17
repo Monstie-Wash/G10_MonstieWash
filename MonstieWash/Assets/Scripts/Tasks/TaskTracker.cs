@@ -120,9 +120,9 @@ public class TaskTracker : MonoBehaviour
     /// <returns></returns>
     public bool IsThisSceneComplete()
     {
-        if (m_scenesCompleted.ContainsKey(m_roomSaver.CurrentScene.name))   // If the scene exists in dict
+        if (m_scenesCompleted.ContainsKey(m_roomSaver.CurrentScene))   // If the scene exists in dict
         {
-            return m_scenesCompleted[m_roomSaver.CurrentScene.name];    // Return the value of the scene
+            return m_scenesCompleted[m_roomSaver.CurrentScene];    // Return the value of the scene
         }
         return false;    // Scene is one that has no tasks (title screen, etc.) - return false by default
     }
