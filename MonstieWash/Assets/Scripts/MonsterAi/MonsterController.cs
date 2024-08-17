@@ -140,10 +140,12 @@ public class MonsterController : MonoBehaviour
 
     IEnumerator PlayCompletionSparkles()
     {
+        var randTime = 0f;
         foreach (var effect in completionEffectList)
         {
+            randTime = UnityEngine.Random.Range(0.15f, 0.45f);
             effect.Play();
-            yield return new WaitForSeconds(0.31f);
+            yield return new WaitForSeconds(randTime);
         }
         
     }

@@ -42,7 +42,6 @@ public class ToolFX : MonoBehaviour
 
     private void Eraser_OnErasing(bool completeScene)
     {
-        //Debug.Log($"Started: {completeScene}");
         if (!completeScene)
         {
             m_myParticles.Play(); // play non-complete particles
@@ -55,9 +54,14 @@ public class ToolFX : MonoBehaviour
 
     private void Eraser_OnErasing_Ended(bool completeScene)
     {
-        //Debug.Log($"Stopped: {completeScene}");
-        m_myParticles.Stop();
-        m_completeParticles.Stop();
+        if (!completeScene)
+        {
+            m_myParticles.Stop();   // stop non-complete particles
+        }
+        else
+        {
+            m_completeParticles.Stop(); // stop complete particles
+        }
     }
 
     private void Inputs_OnActivate()

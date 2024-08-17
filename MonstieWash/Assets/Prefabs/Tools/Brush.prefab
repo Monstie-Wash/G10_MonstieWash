@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particlesOnUse: {fileID: 3058718715873599778, guid: 585f89ab2d129e14abbd2670d6ca340a, type: 3}
-  particlesOnComplete: {fileID: 3058718715873599778, guid: 585f89ab2d129e14abbd2670d6ca340a, type: 3}
+  particlesOnComplete: {fileID: 7105375229832933360, guid: 23141edc3a8763b4d8577e2b243e4ee5, type: 3}
 --- !u!114 &4969812484562451773
 MonoBehaviour:
   m_ObjectHideFlags: 0

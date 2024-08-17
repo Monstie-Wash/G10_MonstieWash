@@ -14,7 +14,10 @@ public class Eraser : MonoBehaviour
     private PlayerHand m_playerHand;
     private TaskTracker m_taskTracker;
 
+    private float distFromCentre;   // Distance of the Eraser from the centre of the screen
+
     private bool IsErasing = false;
+    private bool IsErasingClean = false;
     public event Action<bool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
     public event Action<bool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
 
@@ -76,16 +79,25 @@ public class Eraser : MonoBehaviour
         InitializeTool();
     }
 
+    private void Update()
+    {
+        distFromCentre = Vector3.Distance(Vector3.zero, drawPosTransform.position);
+    }
+
     private void OnEnable()
     {
         InputManager.Instance.OnActivate_Held += UseTool;
+        InputManager.Instance.OnActivate_Held += UseToolClean;
         InputManager.Instance.OnActivate_Ended += StopUseTool;
+        InputManager.Instance.OnActivate_Ended += StopUseToolClean;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnActivate_Held -= UseTool;
+        InputManager.Instance.OnActivate_Held -= UseToolClean;
         InputManager.Instance.OnActivate_Ended -= StopUseTool;
+        InputManager.Instance.OnActivate_Ended -= StopUseToolClean;
 
         StopUseTool();
     }
@@ -116,11 +128,21 @@ public class Eraser : MonoBehaviour
             }
         }
 
-        var completedScene = m_taskTracker.IsThisSceneComplete();
+        if (!wasErasing && IsErasing) OnErasing_Started?.Invoke(false);
+        if (wasErasing && !IsErasing) OnErasing_Ended?.Invoke(false);
+    }
 
-        if (completedScene) OnErasing_Started?.Invoke(true);
-        if (!wasErasing && IsErasing && !completedScene) OnErasing_Started?.Invoke(false);
-        if (wasErasing && !IsErasing && !completedScene) OnErasing_Ended?.Invoke(false);
+    public void UseToolClean()
+    {
+        if (!IsErasingClean && (distFromCentre < 3f && m_taskTracker.IsThisSceneComplete()))
+        {
+            OnErasing_Started?.Invoke(true);
+            IsErasingClean = true;
+        }
+        if (IsErasingClean && distFromCentre > 3f)
+        {
+            StopUseToolClean();
+        }
     }
 
     /// <summary>
@@ -128,16 +150,19 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void StopUseTool() 
     {
-        var completedScene = m_taskTracker.IsThisSceneComplete();
-
-        if (IsErasing && !completedScene)
+        if (IsErasing)
         {
             OnErasing_Ended?.Invoke(false);
             IsErasing = false;
         }
-        if (completedScene)
+    }
+
+    public void StopUseToolClean()
+    {
+        if (IsErasingClean)
         {
             OnErasing_Ended?.Invoke(true);
+            IsErasingClean = false;
         }
     }
 
