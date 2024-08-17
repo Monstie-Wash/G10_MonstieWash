@@ -29,6 +29,10 @@ public class InputManager : MonoBehaviour
     public event Action OnToggleUI_Started;
     public event Action OnToggleUI;
     public event Action OnToggleUI_Ended;
+
+    public event Action OnScan_Started;
+    public event Action OnScan;
+    public event Action OnScan_Ended;
     #endregion
 
     #region MenuActions
@@ -55,8 +59,6 @@ public class InputManager : MonoBehaviour
     public event Action OnDebugReset_Ended;
     #endregion
     #endregion
-
-
 
     private PlayerInput m_playerInput;
     private Coroutine m_activeRoutine;
@@ -112,6 +114,10 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.ToggleUI.started += ToggleUI_started;
         m_playerInput.PlayerActions.ToggleUI.performed += ToggleUI_performed;
         m_playerInput.PlayerActions.ToggleUI.canceled += ToggleUI_canceled;
+
+        m_playerInput.PlayerActions.Scan.started += Scan_started;
+        m_playerInput.PlayerActions.Scan.performed += Scan_performed;
+        m_playerInput.PlayerActions.Scan.canceled += Scan_canceled;
         #endregion
 
         #region MenuActions Subscription
@@ -161,6 +167,10 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.ToggleUI.started -= ToggleUI_started;
         m_playerInput.PlayerActions.ToggleUI.performed -= ToggleUI_performed;
         m_playerInput.PlayerActions.ToggleUI.canceled -= ToggleUI_canceled;
+
+        m_playerInput.PlayerActions.Scan.started -= Scan_started;
+        m_playerInput.PlayerActions.Scan.performed -= Scan_performed;
+        m_playerInput.PlayerActions.Scan.canceled -= Scan_canceled;
         #endregion
 
         #region MenuActions Subscription
@@ -305,6 +315,26 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnToggleUI_Ended?.Invoke();
+    }
+    #endregion
+
+    #region Scan
+    private void Scan_started(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScan_Started?.Invoke();
+    }
+
+    private void Scan_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScan?.Invoke();
+    }
+
+    private void Scan_canceled(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScan_Ended?.Invoke();
     }
     #endregion
     #endregion

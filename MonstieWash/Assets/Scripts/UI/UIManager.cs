@@ -7,30 +7,38 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Image m_clipboard;
-    [SerializeField] private Animator m_CBAnimator;
-    [SerializeField] private GameObject m_taskContainer;
-    [SerializeField] private GameObject m_taskTextPrefab;
-    [SerializeField] private float m_fontSize = 36f;
+    [SerializeField] private Image clipboard;
+    [SerializeField] private Animator CBAnimator;
+    [SerializeField] private GameObject taskContainer;
+    [SerializeField] private GameObject taskTextPrefab;
+    [SerializeField] private TextMeshProUGUI completionText;
+    [SerializeField] private float fontSize = 36f;
+    [Space(20), SerializeField] private GameObject finishLevelButton;
 
     private Dictionary<string, bool> m_taskList = new();
 
     private GameSceneManager m_roomSaver;
+    private TaskTracker m_taskTracker;
+    private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
     private bool m_UIVisible = true;
 
     private void Awake()
     {
         m_roomSaver = FindFirstObjectByType<GameSceneManager>();
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_progressBars = FindObjectsByType<ProgressBarUI>(FindObjectsSortMode.None);
     }
 
     private void OnEnable()
     {
         InputManager.Instance.OnToggleUI += Inputs_OnToggleUI;
+        m_taskTracker.OnLevelCompleted += OnLevelCompleted;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnToggleUI -= Inputs_OnToggleUI;
+        m_taskTracker.OnLevelCompleted -= OnLevelCompleted;
     }
 
     private void Inputs_OnToggleUI()
@@ -40,7 +48,7 @@ public class UIManager : MonoBehaviour
     private void ToggleUIVisibility()
     {
         m_UIVisible = !m_UIVisible;
-        m_CBAnimator.SetBool("Hide", m_UIVisible);
+        CBAnimator.SetBool("Hide", m_UIVisible);
     }
 
 /// <summary>
@@ -68,11 +76,11 @@ public class UIManager : MonoBehaviour
     {
         foreach (var pair in m_taskList)
         {
-            var newTaskObject = Instantiate(m_taskTextPrefab, m_taskContainer.transform);
+            var newTaskObject = Instantiate(taskTextPrefab, taskContainer.transform);
             newTaskObject.name = pair.Key;
 
             var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
-            newTaskText.fontSize = m_fontSize;
+            newTaskText.fontSize = fontSize;
             newTaskText.text = $"{newTaskObject.name}";
         } 
     }
@@ -84,6 +92,31 @@ public class UIManager : MonoBehaviour
 /// <param name="taskProgress">Progress of the task to be displayed on the clipboard.</param>
     public void UpdateClipboardTask(string scene)
     {
-        m_taskContainer.transform.Find(scene).GetComponent<TextMeshProUGUI>().text = $"<s>{scene}</s>";
+        taskContainer.transform.Find(scene).GetComponent<TextMeshProUGUI>().text = $"<s>{scene}</s>";
+    }
+
+	/// <summary>
+	/// Updates the progress bar based on completion percentage.
+	/// </summary>
+    public void UpdateProgressBar(float overallCompletion)
+    {
+        foreach(var progressBar in m_progressBars)
+        {
+            progressBar.UpdateUI(overallCompletion);
+        }
+	}
+	
+    /// <summary>
+    /// Updates the completion percentage on the clipboard for the current scene.
+    /// </summary>
+    /// <param name="overallCompletion">The overall completion to display.</param>
+    public void UpdateCompletion(float overallCompletion)
+    {
+        completionText.text = $"{Mathf.CeilToInt(overallCompletion * 100f)}%";
+    }
+
+    private void OnLevelCompleted()
+    {
+        finishLevelButton.SetActive(true);
     }
 }

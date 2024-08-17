@@ -399,6 +399,7 @@ public class MonsterBrain : MonoBehaviour
             * NOTE: Creating and destroying particles sytems might not be the most performative, but consider that these particles need to exist across multiple
             * scenes (each angle of the monster). Consider asking designers how frequently particles will play to determine if a better solution is required. 
             */
+
             var tempParticles = Instantiate(mood.MoodParticle, moodParticleOrigin, Quaternion.identity); // The mood's ParticleSystem
             SceneManager.MoveGameObjectToScene(tempParticles.gameObject, m_gameSceneManager.CurrentScene);
             tempParticles.Play();

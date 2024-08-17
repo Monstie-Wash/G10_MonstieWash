@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: 1446344132}
   - component: {fileID: 1446344131}
   - component: {fileID: 1446344130}
+  - component: {fileID: 1446344134}
   m_Layer: 5
   m_Name: MainMenuCanvas
   m_TagString: Untagged
@@ -726,6 +727,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1446344134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446344129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c5d01a5d3b86ec4b9e91919d8e3950c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startButton: {fileID: 228472129}
 --- !u!1001 &1836793582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -982,14 +996,14 @@ PrefabInstance:
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: initialScene
       value: 
-      objectReference: {fileID: 11400000, guid: f27043940161ff747aa1bb4da3c508ed, type: 2}
+      objectReference: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: mainMenuCanvas
       value: 
       objectReference: {fileID: 1446344129}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: bedroomScenes.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'bedroomScenes.Array.data[0]'
@@ -1010,7 +1024,23 @@ PrefabInstance:
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'bedroomScenes.Array.data[4]'
       value: 
-      objectReference: {fileID: 11400000, guid: 0faa2be7a975bc54da460eee84266969, type: 2}
+      objectReference: {fileID: 11400000, guid: 60381fa7d5c2d11488b6581a378ae663, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'bedroomScenes.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f27043940161ff747aa1bb4da3c508ed, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'bedroomScenes.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: allLevelScenes.Array.data[0].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: allLevelScenes.Array.data[1].level
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allLevelScenes.Array.data[0].startingScene
       value: 

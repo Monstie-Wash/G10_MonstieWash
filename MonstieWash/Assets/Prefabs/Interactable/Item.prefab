@@ -280,6 +280,7 @@ MonoBehaviour:
   m_complete: 0
   m_threshold: 100
   m_container: {fileID: 0}
+  m_score: 9.85
 --- !u!1 &8982156441948872883
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +335,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 84e470ecef6a9af4da2865463067ac0b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -356,7 +357,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 6363578968428551813, guid: 746a024980393094b8d94a0724ff7506, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
