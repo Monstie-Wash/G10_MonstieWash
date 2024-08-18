@@ -133,7 +133,6 @@ public class MonsterController : MonoBehaviour
     /// <param name="activeScene"> The scene that was completed. </param>
     private void ProcessSceneComplete(Scene activeScene)
     {
-        Debug.Log("MonsterController ProcessSceneComplete");
         // More required logic can go here
         StartCoroutine(PlayCompletionSparkles());
     }
