@@ -8,8 +8,8 @@ public class Effect : MonoBehaviour
 {
     [SerializeField] private ParticleSystem usedParticle;
 
-    private ParticleSystem particle;
-    private SoundPlayer sound;
+    private ParticleSystem m_particle;
+    private SoundPlayer m_sound;
 
     private void Start()
     {
