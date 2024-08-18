@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: 8daa16cb36407fd4fa4e589f78ed8cb9, type: 2}
   drawPosTransform: {fileID: 8245340559071156610}
+  maxSparkleDist: 3
 --- !u!114 &-5845484624964815024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particlesOnUse: {fileID: 6948283868151992189, guid: da7385fa805198a4baef8cc534a00961, type: 3}
+  particlesOnComplete: {fileID: 0}
 --- !u!82 &-8963119639690457582
 AudioSource:
   m_ObjectHideFlags: 0
@@ -260,6 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 11400000, guid: bbba2914d429f5943942bf29edcee34a, type: 2}
+  hideWarning: 0
 --- !u!1 &8844650258625875270
 GameObject:
   m_ObjectHideFlags: 0
