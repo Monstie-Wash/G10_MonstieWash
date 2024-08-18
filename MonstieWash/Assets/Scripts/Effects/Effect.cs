@@ -11,14 +11,14 @@ public class Effect : MonoBehaviour
     private ParticleSystem m_particle;
     private SoundPlayer m_sound;
 
-    private void Start()
-    {
-        particle = Instantiate(usedParticle, gameObject.transform);
-    }
-
     private void Awake()
     {   
         sound = GetComponent<SoundPlayer>();
+    }
+    
+    private void Start()
+    {
+        particle = Instantiate(usedParticle, gameObject.transform);
     }
 
     public void Play()
