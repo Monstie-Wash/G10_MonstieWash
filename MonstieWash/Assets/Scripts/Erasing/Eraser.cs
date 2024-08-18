@@ -14,10 +14,11 @@ public class Eraser : MonoBehaviour
     private PlayerHand m_playerHand;
     private TaskTracker m_taskTracker;
 
-    private float distFromCentre;   // Distance of the Eraser from the centre of the screen
+    private float m_distFromCentre;   // Distance of the Eraser from the centre of the screen
+    [Tooltip("The distance of tool sparkle trail from centre of screen")][SerializeField] private float maxSparkleDist;  // When monstie is clean, sparkle trail detects a 'bubble' rather than the monster itself
 
-    private bool IsErasing = false;
-    private bool IsErasingClean = false;
+    private bool m_isErasing = false;
+    private bool m_isErasingClean = false;
     public event Action<bool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
     public event Action<bool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
 
@@ -81,7 +82,7 @@ public class Eraser : MonoBehaviour
 
     private void Update()
     {
-        distFromCentre = Vector3.Distance(Vector3.zero, drawPosTransform.position);
+        m_distFromCentre = Vector3.Distance(Vector3.zero, drawPosTransform.position);
     }
 
     private void OnEnable()
@@ -113,8 +114,8 @@ public class Eraser : MonoBehaviour
             return;
         }
 
-        var wasErasing = IsErasing;
-        IsErasing = false;
+        var wasErasing = m_isErasing;
+        m_isErasing = false;
 
         foreach (var erasable in m_erasables)
         {
@@ -124,22 +125,22 @@ public class Eraser : MonoBehaviour
                 erasable.ApplyMask();
                 m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
 
-                IsErasing = true;
+                m_isErasing = true;
             }
         }
 
-        if (!wasErasing && IsErasing) OnErasing_Started?.Invoke(false);
-        if (wasErasing && !IsErasing) OnErasing_Ended?.Invoke(false);
+        if (!wasErasing && m_isErasing) OnErasing_Started?.Invoke(false);
+        if (wasErasing && !m_isErasing) OnErasing_Ended?.Invoke(false);
     }
 
     public void UseToolClean()
     {
-        if (!IsErasingClean && (distFromCentre < 3f && m_taskTracker.IsThisSceneComplete()))
+        if (!m_isErasingClean && (m_distFromCentre < maxSparkleDist && m_taskTracker.IsThisSceneComplete()))
         {
             OnErasing_Started?.Invoke(true);
-            IsErasingClean = true;
+            m_isErasingClean = true;
         }
-        if (IsErasingClean && distFromCentre > 3f)
+        if (m_isErasingClean && m_distFromCentre > maxSparkleDist)
         {
             StopUseToolClean();
         }
@@ -150,19 +151,19 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void StopUseTool() 
     {
-        if (IsErasing)
+        if (m_isErasing)
         {
             OnErasing_Ended?.Invoke(false);
-            IsErasing = false;
+            m_isErasing = false;
         }
     }
 
     public void StopUseToolClean()
     {
-        if (IsErasingClean)
+        if (m_isErasingClean)
         {
             OnErasing_Ended?.Invoke(true);
-            IsErasingClean = false;
+            m_isErasingClean = false;
         }
     }
 

@@ -13,23 +13,23 @@ public class Effect : MonoBehaviour
 
     private void Awake()
     {   
-        sound = GetComponent<SoundPlayer>();
+        m_sound = GetComponent<SoundPlayer>();
     }
     
     private void Start()
     {
-        particle = Instantiate(usedParticle, gameObject.transform);
+        m_particle = Instantiate(usedParticle, gameObject.transform);
     }
 
     public void Play()
     {
-        particle.Play();
-        sound.PlaySound(true, true);
+        m_particle.Play();
+        m_sound.PlaySound(true, true);
     }
 
     public void Stop()
     {
-        particle.Stop();
-        sound.StopSound();
+        m_particle.Stop();
+        m_sound.StopSound();
     }
 }

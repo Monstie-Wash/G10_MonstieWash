@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: e7fc82490f269a042ac45ac4db2bc7f6, type: 2}
   drawPosTransform: {fileID: 8245340559071156610}
+  maxSparkleDist: 3
 --- !u!114 &-281357985919157149
 MonoBehaviour:
   m_ObjectHideFlags: 0
