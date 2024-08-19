@@ -676,22 +676,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2074756616}
     m_Modifications:
-    - target: {fileID: 2044947418061785837, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: m_Size.x
-      value: 99.91478
-      objectReference: {fileID: 0}
-    - target: {fileID: 2044947418061785837, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: m_Size.y
-      value: 99.914764
-      objectReference: {fileID: 0}
-    - target: {fileID: 2044947418061785837, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.49293518
-      objectReference: {fileID: 0}
-    - target: {fileID: 2044947418061785837, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: m_Offset.y
-      value: 1.1501694
-      objectReference: {fileID: 0}
     - target: {fileID: 4233595091761023778, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -772,18 +756,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6026966271310651209, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: openSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: f1504bbb8aa08f54abc22e98c696a94e, type: 3}
-    - target: {fileID: 6026966271310651209, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: closedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
-    - target: {fileID: 6881272021667277159, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
     - target: {fileID: 7603753278036010449, guid: 321865daa1dc2744f912d46b59fb0c32, type: 3}
       propertyPath: m_Name
       value: ConsumableManager

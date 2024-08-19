@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc2fe512cde9694c961c7ddcc726df5, type: 3}
   m_Name: BoneConsume
   m_EditorClassIdentifier: 
-  consumableName: Bone
+  itemName: BoneTreat
   sprite: {fileID: 21300000, guid: 6023c200936c91e4083230f2a7fc9897, type: 3}
-  diminishingReturns: 0
-  craftingRequirements: []
   maxQuantity: 99
+  sortingTags: 03000000
+  diminishingReturns: 0
   moods:
   - target: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
     effect: 25
