@@ -15,10 +15,10 @@ public class ConsumablesManager : MonoBehaviour
     [Tooltip("Gameobject new Ui consumable items will be parented under")] [SerializeField] private GameObject imageHolder; //Empty Gameobject in Ui to hold images; (I tried changing to transform as per feedback but doesn't seem to work with rect transform in ui)
     [Tooltip("A template obj requiring, image, UIconsumableScript, button linked to the scripts onclick")] [SerializeField] private GameObject refObject; //blank object for instantiate to reference; Needs a button, UIConsumableScript, Image.
     [Tooltip("Layer that checks player mouse is over monster collider")] [SerializeField] private LayerMask monsterLayer; //Layer of monster hitbox;
-    [Tooltip("Layer that checks player mouse is over bag to open its contents")] [SerializeField] public LayerMask bagLayer; //Layer of consumables hitbox;
-    [Tooltip("Layer that checks player mouse is over consumable collider")] [SerializeField] public LayerMask itemConsumableLayer; //Layer of consumables hitbox;
+    [Tooltip("Layer that checks player mouse is over bag to open its contents")] [SerializeField] private  LayerMask bagLayer; //Layer of consumables hitbox;
+    [Tooltip("Layer that checks player mouse is over consumable collider")] [SerializeField] private LayerMask itemConsumableLayer; //Layer of consumables hitbox;
 
-    [SerializeField] private Inventory m_inventory; //Reference to Inventory;
+    [SerializeField] private Inventory inventory; //Reference to Inventory;
 
     private Image m_managerimage; //Reference to the image object for this manager.
     private PlayerHand m_playerHand;
@@ -27,6 +27,7 @@ public class ConsumablesManager : MonoBehaviour
     public UiState state;
 
     public LayerMask MonsterLayer {  get { return monsterLayer; } }
+    public LayerMask ItemConsumableLayer { get { return itemConsumableLayer; } }
 
     public enum UiState
     {
@@ -36,23 +37,11 @@ public class ConsumablesManager : MonoBehaviour
         Closed
     }
 
-
-
-    public void OnEnable()
-    {
-        //InputManager.Instance.OnActivate += CheckClickedOn;
-    }
-
-    public void OnDisable()
-    {
-        //InputManager.Instance.OnActivate -= CheckClickedOn;
-    }
-
     private void Awake()
     {
         holdingConsumable = false;
         m_playerHand = FindFirstObjectByType<PlayerHand>();
-        m_inventory = FindFirstObjectByType<Inventory>();
+        inventory = FindFirstObjectByType<Inventory>();
         m_managerimage = gameObject.GetComponent<Image>();
         state = UiState.Closed;
         RefreshUI();
@@ -124,7 +113,7 @@ public class ConsumablesManager : MonoBehaviour
     public void RefreshUI()
     {
         //Generate new Ui objects
-        foreach (Inventory.InventoryEntry itemData in m_inventory.StoredItemsList)
+        foreach (Inventory.InventoryEntry itemData in inventory.StoredItemsList)
         {
             if (itemData.ItemData.ContainsTag(Inventory.ItemTags.Consumable))
             {
@@ -134,7 +123,7 @@ public class ConsumablesManager : MonoBehaviour
 
                 foreach (UIConsumable uiConsumable in activeUiElements)
                 {
-                    if (itemData.ItemData.ItemName == uiConsumable.consumable.ConsumableName) matched = true;
+                    if (itemData.ItemData.ItemName.Equals(uiConsumable.consumable.ConsumableName)) matched = true;
                     if (matched) //If an item already exists then update its number and remove it if it has been reduced to 0;
                     {
                         if (itemData.Quantity <= 0)

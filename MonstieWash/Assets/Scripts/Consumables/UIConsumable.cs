@@ -114,7 +114,7 @@ public class UIConsumable : MonoBehaviour
 
     public void CheckClickedOn()
     {
-        var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, manager.itemConsumableLayer);
+        var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, manager.ItemConsumableLayer);
         if (col != null)
         {
             if (col.gameObject == gameObject) ClickedOn();
