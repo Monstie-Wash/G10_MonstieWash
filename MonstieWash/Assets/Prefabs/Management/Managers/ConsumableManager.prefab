@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
+  m_Sprite: {fileID: -5111396227284693043, guid: 71ce56b4b7744f8438a1bef48b0174b9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -91,8 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiBorderDistance: 150
   uiMoveSpeed: 8
-  openSprite: {fileID: 21300000, guid: f1504bbb8aa08f54abc22e98c696a94e, type: 3}
-  closedSprite: {fileID: 21300000, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
+  openSprite: {fileID: 7662059621779487759, guid: 9c7495ad943bc344888ded17e8c382ef, type: 3}
+  closedSprite: {fileID: -5111396227284693043, guid: 71ce56b4b7744f8438a1bef48b0174b9, type: 3}
   activeUiElements: []
   imageHolder: {fileID: 7603753278036010449}
   refObject: {fileID: 7159353656609723325, guid: 1adc1322144855144abf480f216cc4fc, type: 3}

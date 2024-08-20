@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc2fe512cde9694c961c7ddcc726df5, type: 3}
   m_Name: CupcakeConsume
   m_EditorClassIdentifier: 
-  itemName: CupCakeTreat
-  sprite: {fileID: 21300000, guid: a5a5d212f071d8647b3916e8e8dfba85, type: 3}
+  itemName: Cupcake
+  sprite: {fileID: 8732635013323328055, guid: 6d1527c77603c4d458dbf672d34ee087, type: 3}
   maxQuantity: 99
   sortingTags: 03000000
   diminishingReturns: 0
