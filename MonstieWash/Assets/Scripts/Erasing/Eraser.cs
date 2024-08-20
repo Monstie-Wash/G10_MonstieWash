@@ -14,9 +14,13 @@ public class Eraser : MonoBehaviour
     private PlayerHand m_playerHand;
     private TaskTracker m_taskTracker;
 
-    private bool IsErasing = false;
-    public event Action OnErasing_Started;
-    public event Action OnErasing_Ended;
+    private float m_distFromCentre;   // Distance of the Eraser from the centre of the screen
+    [Tooltip("The distance of tool sparkle trail from centre of screen")][SerializeField] private float maxSparkleDist;  // When monstie is clean, sparkle trail detects a 'bubble' rather than the monster itself
+
+    private bool m_isErasing = false;
+    private bool m_isErasingClean = false;
+    public event Action<bool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
+    public event Action<bool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
@@ -76,16 +80,25 @@ public class Eraser : MonoBehaviour
         InitializeTool();
     }
 
+    private void Update()
+    {
+        m_distFromCentre = Vector3.Distance(Vector3.zero, drawPosTransform.position);
+    }
+
     private void OnEnable()
     {
         InputManager.Instance.OnActivate_Held += UseTool;
+        InputManager.Instance.OnActivate_Held += UseToolClean;
         InputManager.Instance.OnActivate_Ended += StopUseTool;
+        InputManager.Instance.OnActivate_Ended += StopUseToolClean;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnActivate_Held -= UseTool;
+        InputManager.Instance.OnActivate_Held -= UseToolClean;
         InputManager.Instance.OnActivate_Ended -= StopUseTool;
+        InputManager.Instance.OnActivate_Ended -= StopUseToolClean;
 
         StopUseTool();
     }
@@ -101,8 +114,8 @@ public class Eraser : MonoBehaviour
             return;
         }
 
-        var wasErasing = IsErasing;
-        IsErasing = false;
+        var wasErasing = m_isErasing;
+        m_isErasing = false;
 
         foreach (var erasable in m_erasables)
         {
@@ -112,12 +125,25 @@ public class Eraser : MonoBehaviour
                 erasable.ApplyMask();
                 m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
 
-                IsErasing = true;
+                m_isErasing = true;
             }
         }
 
-        if (!wasErasing && IsErasing) OnErasing_Started?.Invoke();
-        if (wasErasing && !IsErasing) OnErasing_Ended?.Invoke();
+        if (!wasErasing && m_isErasing) OnErasing_Started?.Invoke(false);
+        if (wasErasing && !m_isErasing) OnErasing_Ended?.Invoke(false);
+    }
+
+    public void UseToolClean()
+    {
+        if (!m_isErasingClean && (m_distFromCentre < maxSparkleDist && m_taskTracker.IsThisSceneComplete()))
+        {
+            OnErasing_Started?.Invoke(true);
+            m_isErasingClean = true;
+        }
+        if (m_isErasingClean && m_distFromCentre > maxSparkleDist)
+        {
+            StopUseToolClean();
+        }
     }
 
     /// <summary>
@@ -125,10 +151,19 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void StopUseTool() 
     {
-        if (IsErasing)
+        if (m_isErasing)
         {
-            OnErasing_Ended?.Invoke();
-            IsErasing = false;
+            OnErasing_Ended?.Invoke(false);
+            m_isErasing = false;
+        }
+    }
+
+    public void StopUseToolClean()
+    {
+        if (m_isErasingClean)
+        {
+            OnErasing_Ended?.Invoke(true);
+            m_isErasingClean = false;
         }
     }
 

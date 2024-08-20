@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator))]
 
@@ -9,6 +10,7 @@ public class MonsterController : MonoBehaviour
 {
     [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
     [Tooltip("Place each of the monster attack animations here.")][SerializeField] private List<AnimationClip> attackList;  // List of monster attack animations to be chosen from randomly when an attack is made. 
+    [Tooltip("Place completion particle GameObjects here.")][SerializeField] private List<Effect> completionEffectList; // List of Effect objects to play when a scene is completed
     [SerializeField] private AnimationClip flinch;
     [SerializeField] private bool debug = false;
 
@@ -35,6 +37,7 @@ public class MonsterController : MonoBehaviour
         m_monsterAI.OnMoodChanged += UpdateAnimations;
         m_monsterAI.MonsterAttack += Attack;
         m_monsterAI.OnFlinch += Flinch;
+        m_monsterAI.SceneCompleted += ProcessSceneComplete;
     }
 
     private void OnDisable()
@@ -42,6 +45,7 @@ public class MonsterController : MonoBehaviour
         m_monsterAI.OnMoodChanged -= UpdateAnimations;
         m_monsterAI.MonsterAttack -= Attack;
         m_monsterAI.OnFlinch -= Flinch;
+        m_monsterAI.SceneCompleted -= ProcessSceneComplete;
     }
 
     /// <summary>
@@ -143,5 +147,27 @@ public class MonsterController : MonoBehaviour
             m_myAnimator.Play(m_interruptedAnimation.name);
             m_interruptedAnimation = null;
         }
+    }
+
+    /// <summary>
+    /// Executes the logic required when a scene is completed (the last task is finished). Event is received from MonsterBrain <-- TaskTracker
+    /// </summary>
+    /// <param name="activeScene"> The scene that was completed. </param>
+    private void ProcessSceneComplete(Scene activeScene)
+    {
+        // More required logic can go here
+        StartCoroutine(PlayCompletionSparkles());
+    }
+
+    IEnumerator PlayCompletionSparkles()
+    {
+        var randTime = 0f;
+        foreach (var effect in completionEffectList)
+        {
+            randTime = UnityEngine.Random.Range(0.15f, 0.45f);
+            effect.Play();
+            yield return new WaitForSeconds(randTime);
+        }
+        
     }
 }

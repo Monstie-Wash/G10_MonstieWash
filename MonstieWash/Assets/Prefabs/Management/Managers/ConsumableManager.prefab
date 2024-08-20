@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6881272021667277159}
   - component: {fileID: 6026966271310651209}
   - component: {fileID: 2044947418061785837}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: ConsumableManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -9194654181630058782, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
+  m_Sprite: {fileID: -5111396227284693043, guid: 71ce56b4b7744f8438a1bef48b0174b9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -91,24 +91,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiBorderDistance: 150
   uiMoveSpeed: 8
-  openSprite: {fileID: 2333532504608575059, guid: f1504bbb8aa08f54abc22e98c696a94e, type: 3}
-  closedSprite: {fileID: -9194654181630058782, guid: ad2cb9e588e41a640af600f468d2793c, type: 3}
+  openSprite: {fileID: 7662059621779487759, guid: 9c7495ad943bc344888ded17e8c382ef, type: 3}
+  closedSprite: {fileID: -5111396227284693043, guid: 71ce56b4b7744f8438a1bef48b0174b9, type: 3}
   activeUiElements: []
   imageHolder: {fileID: 7603753278036010449}
   refObject: {fileID: 7159353656609723325, guid: 1adc1322144855144abf480f216cc4fc, type: 3}
   monsterLayer:
     serializedVersion: 2
     m_Bits: 4096
-  consumableLayer:
+  bagLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  itemConsumableLayer:
     serializedVersion: 2
     m_Bits: 32
-  consumableList:
-  - consumable: {fileID: 11400000, guid: 3e4b3f9f8c6c8754791d650e718d27ed, type: 2}
-    quantity: 5
-  - consumable: {fileID: 11400000, guid: 9a7599d6f8210e34987e0f2a7a6dea01, type: 2}
-    quantity: 3
-  - consumable: {fileID: 11400000, guid: 7512082f8c59b844eb338c70137bdf5a, type: 2}
-    quantity: 4
+  m_inventory: {fileID: 0}
   holdingConsumable: 0
   state: 0
 --- !u!61 &2044947418061785837
@@ -145,7 +142,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 205.50667, y: 0.88739014}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -155,5 +152,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 561.3628, y: 130.638}
   m_EdgeRadius: 0

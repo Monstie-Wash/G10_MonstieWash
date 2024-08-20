@@ -37,6 +37,7 @@ public class GameSceneManager : MonoBehaviour
 
     public enum Level
     {
+        None,
         Slime,
         Mimic,
     }
@@ -254,6 +255,7 @@ public class GameSceneManager : MonoBehaviour
 
         MoveToScene(loadingScene.SceneName);
 
+        m_currentLevel = Level.None;
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, false);
         await LoadScene(scoreSummaryScene.SceneName);
 
