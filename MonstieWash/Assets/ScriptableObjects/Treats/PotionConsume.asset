@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc2fe512cde9694c961c7ddcc726df5, type: 3}
   m_Name: PotionConsume
   m_EditorClassIdentifier: 
-  consumableName: Potion
+  itemName: Potion
   sprite: {fileID: -2174827668884051896, guid: 9b7fc302127ad42438380569a5903697, type: 3}
-  diminishingReturns: 0
-  craftingRequirements: []
   maxQuantity: 99
   sortingTags: 03000000
   diminishingReturns: 0
