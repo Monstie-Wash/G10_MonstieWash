@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemLinker : MonoBehaviour
@@ -85,6 +86,9 @@ public class ItemLinker : MonoBehaviour
             {
                 linkObject.positions.Add(FlipItemPos(child));
                 linkObject.rotations.Add(FlipItemRot(child));
+                linkObject.velocity.Add(FlipItemVel(child.GetComponent<Rigidbody2D>().velocity));
+                linkObject.angularVelocity.Add(child.GetComponent<Rigidbody2D>().angularVelocity);
+
                 linkObject.itemData.Add(new List<object>(child.GetComponent<ITaskScript>().SaveData()));
             }
         }
@@ -92,7 +96,9 @@ public class ItemLinker : MonoBehaviour
         {
             linkObject.positions.Add(FlipItemPos(transform));
             linkObject.rotations.Add(FlipItemRot(transform));
-            linkObject.itemData.Add(new List<object>(m_taskScript[0].SaveData()));
+			linkObject.velocity.Add(FlipItemVel(GetComponent<Rigidbody2D>().velocity));
+			linkObject.angularVelocity.Add(GetComponent<Rigidbody2D>().angularVelocity);
+			linkObject.itemData.Add(new List<object>(m_taskScript[0].SaveData()));
         }
         linkObject.loadOnEnable = true;
     }
@@ -110,14 +116,19 @@ public class ItemLinker : MonoBehaviour
                 {
                     transform.GetChild(i).position = linkObject.positions[i];
                     transform.GetChild(i).rotation = linkObject.rotations[i];
-                    transform.GetChild(i).GetComponent<ITaskScript>().LoadData(linkObject.itemData[i]);
+					transform.GetChild(i).GetComponent<Rigidbody2D>().velocity = linkObject.velocity[i];
+					transform.GetChild(i).GetComponent<Rigidbody2D>().angularVelocity = linkObject.angularVelocity[i];
+
+					transform.GetChild(i).GetComponent<ITaskScript>().LoadData(linkObject.itemData[i]);
                 }
             }
             else
             {
                 transform.position = linkObject.positions[0];
                 transform.rotation = linkObject.rotations[0];
-                m_taskScript[0].LoadData(linkObject.itemData[0]);
+				transform.GetComponent<Rigidbody2D>().velocity = linkObject.velocity[0];
+				transform.GetComponent<Rigidbody2D>().angularVelocity = linkObject.angularVelocity[0];
+				m_taskScript[0].LoadData(linkObject.itemData[0]);
             }
             linkObject.loadOnEnable = false;
         }
@@ -139,6 +150,16 @@ public class ItemLinker : MonoBehaviour
     private Quaternion FlipItemRot(Transform item)
     {
         return Quaternion.Euler(0f, 0f, 90f - (item.rotation.eulerAngles.z - 90f));
+    }
+
+    private Vector2 FlipItemVel(Vector2 vel)
+    {
+        return new Vector2(-vel.x, vel.y);
+    }
+
+    private float FlipItemAng(float ang)
+    {
+        return -1 * ang;
     }
     
 }
