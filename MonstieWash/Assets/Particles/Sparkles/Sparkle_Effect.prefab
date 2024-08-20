@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7567634535807300441
+--- !u!1 &5172914052198441013
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,62 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3788838035479637521}
-  - component: {fileID: 4944138896146903184}
-  - component: {fileID: 2405098562808921751}
-  - component: {fileID: 5096954100391497389}
+  - component: {fileID: 6975587544141363392}
+  - component: {fileID: 5503723273643183385}
+  - component: {fileID: 6435255236962026523}
+  - component: {fileID: 2523466697898283883}
   m_Layer: 0
-  m_Name: UpgradeMananger
+  m_Name: Sparkle_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3788838035479637521
+--- !u!4 &6975587544141363392
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7567634535807300441}
+  m_GameObject: {fileID: 5172914052198441013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 909.19226, y: 604.35876, z: -5.322669}
+  m_LocalPosition: {x: -0.3953559, y: -0.9236229, z: -0.012646574}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4944138896146903184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7567634535807300441}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ba6099d5c16f245a1341d51ef6fbc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolUpgradePrefab: {fileID: 7369942950632674450, guid: 4cbac3e940ca6c845a1c888784908683, type: 3}
-  upgradeContainer: {fileID: 22054860032148930, guid: afdd6854534d60d4f87d4fba82597163, type: 3}
-  scoreUI: {fileID: 0}
-  upgradeSound: {fileID: 0}
-  goldData: {fileID: 11400000, guid: bebaeab5dd6ab8d4b9df9524c282826b, type: 2}
-  levelReward: 150
---- !u!82 &2405098562808921751
+--- !u!82 &5503723273643183385
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7567634535807300441}
+  m_GameObject: {fileID: 5172914052198441013}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4831419169139161055, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
+  m_audioClip: {fileID: 8300000, guid: e8b964eee17dc7843991fbb48fd55631, type: 3}
+  m_Resource: {fileID: 8300000, guid: e8b964eee17dc7843991fbb48fd55631, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -149,17 +131,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5096954100391497389
+--- !u!114 &6435255236962026523
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7567634535807300441}
+  m_GameObject: {fileID: 5172914052198441013}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5df9cd3904642041b9464ccbf2cb451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound: {fileID: 0}
+  sound: {fileID: 11400000, guid: ce61f54d3a890324ba28a7ea60142fa3, type: 2}
   hideWarning: 0
+--- !u!114 &2523466697898283883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172914052198441013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62a33fd88dca50740bbab487c11c9d8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usedParticle: {fileID: 7105375229832933360, guid: 23141edc3a8763b4d8577e2b243e4ee5, type: 3}

@@ -132,6 +132,11 @@ MonoBehaviour:
     animation: {fileID: 7400000, guid: 07062cd3ee79f264c8c1296ab6023ca8, type: 2}
   - mood: {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
     animation: {fileID: 7400000, guid: 8ce0c9d00bab3fa449b33ecff005729e, type: 2}
+  debug: 0
+  completionParticles: {fileID: 7105375229832933360, guid: 23141edc3a8763b4d8577e2b243e4ee5, type: 3}
+  numberCompletionParticles: 7
+  completionParticleSpread: 1.5
+  attackList: []
 --- !u!61 &7471794663172716338
 BoxCollider2D:
   m_ObjectHideFlags: 0

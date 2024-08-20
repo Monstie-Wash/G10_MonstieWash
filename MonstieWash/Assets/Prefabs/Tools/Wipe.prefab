@@ -224,6 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: {fileID: 11400000, guid: 00e09ce6ac17a5447a5d26aa269393bf, type: 2}
   drawPosTransform: {fileID: 8245340559071156610}
+  maxSparkleDist: 3
 --- !u!114 &2630524186727272973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particlesOnUse: {fileID: 4340487156504707657, guid: c338e02110672ae4290d2d4e61b7ca7c, type: 3}
+  particlesOnComplete: {fileID: 0}
 --- !u!82 &5334898705030951121
 AudioSource:
   m_ObjectHideFlags: 0
@@ -347,6 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 11400000, guid: bbba2914d429f5943942bf29edcee34a, type: 2}
+  hideWarning: 0
 --- !u!1001 &983495908431496276
 PrefabInstance:
   m_ObjectHideFlags: 0
