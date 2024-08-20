@@ -16,6 +16,7 @@ public class MoodArea : MonoBehaviour
     [Tooltip("How frequently the area will react to being touched. (Every 'x' seconds).")] [SerializeField] private float areaCooldown; //How frequently the area will react to being touched.
     [Tooltip("Toggle on to make the area reduce effectiveness over frequent use.")] [SerializeField] private bool diminishingEffectiveness; //When repeatedly touched will reduce its effects momentarily.
     [Tooltip("How fast its effectiveness diminishes if above bool toggled on.")] [SerializeField] private int diminishStrength; //How quickly the effectiveness diminishes.
+    [Tooltip("Whether touching this should cause the monster to flinch.")] [SerializeField] private bool causesFlinch;
     [Tooltip("Produces debug text in console when toggled on.")] [SerializeField] private bool debug = false;
 
     //Internal states
@@ -64,18 +65,20 @@ public class MoodArea : MonoBehaviour
     /// </summary>
     void OnTouch()
     {
-            currentCooldown = areaCooldown; //Reset Cooldown
+        currentCooldown = areaCooldown; //Reset Cooldown
 
-            //Affect Moods
-            foreach (MoodEffect me in moodEffects)
-            {
-                m_mb.UpdateMood(me.reactionStrength * (currentEffectiveness/100f), me.mt);
-                if (debug) print($"Reaction Strength  {me.reactionStrength}  at effectivness of {currentEffectiveness} for the mood {me.mt.MoodName}");
-            }
+        //Affect Moods
+        foreach (MoodEffect me in moodEffects)
+        {
+            m_mb.UpdateMood(me.reactionStrength * (currentEffectiveness/100f), me.mt);
+            if (debug) print($"Reaction Strength  {me.reactionStrength}  at effectivness of {currentEffectiveness} for the mood {me.mt.MoodName}");
+        }
 
-            //Apply diminishing effect if toggled on.
-            if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness -= diminishStrength, 0f, 100f);
+        //Apply diminishing effect if toggled on.
+        if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness -= diminishStrength, 0f, 100f);
 
+        //Cause a flinch
+        if (causesFlinch) m_mb.Flinch();
     }
 
     /// <summary>

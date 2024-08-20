@@ -34,6 +34,10 @@ public class MonsterBrain : MonoBehaviour
     public event Action MonsterAttack;    // Monster attack event.
     #endregion
 
+    #region Flinch
+    public event Action OnFlinch;
+    #endregion
+
     #region Debug
     private int m_designerSanityBuff = 10; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
 
@@ -408,5 +412,10 @@ public class MonsterBrain : MonoBehaviour
         {
             if (debug) print($"Moodtype {mood.name} doesn't have a particle system attached");
         }
+    }
+
+    public void Flinch()
+    {
+        OnFlinch?.Invoke();
     }
 }

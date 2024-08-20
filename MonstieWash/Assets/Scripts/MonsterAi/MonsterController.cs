@@ -8,14 +8,13 @@ using UnityEngine;
 public class MonsterController : MonoBehaviour
 {
     [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
+    [Tooltip("Place each of the monster attack animations here.")][SerializeField] private List<AnimationClip> attackList;  // List of monster attack animations to be chosen from randomly when an attack is made. 
+    [SerializeField] private AnimationClip flinch;
     [SerializeField] private bool debug = false;
 
     private MonsterBrain m_monsterAI;
     private Animator m_myAnimator;
-
     private AnimationClip m_interruptedAnimation = null;
-    [Tooltip("Place each of the monster attack animations here.")][SerializeField] private List<AnimationClip> attackList;  // List of monster attack animations to be chosen from randomly when an attack is made. 
-
     private MoodType m_recentHighestMood;
 
     [Serializable]
@@ -35,12 +34,14 @@ public class MonsterController : MonoBehaviour
     {
         m_monsterAI.OnMoodChanged += UpdateAnimations;
         m_monsterAI.MonsterAttack += Attack;
+        m_monsterAI.OnFlinch += Flinch;
     }
 
     private void OnDisable()
     {
         m_monsterAI.OnMoodChanged -= UpdateAnimations;
         m_monsterAI.MonsterAttack -= Attack;
+        m_monsterAI.OnFlinch -= Flinch;
     }
 
     /// <summary>
@@ -79,7 +80,7 @@ public class MonsterController : MonoBehaviour
 
         if (numAttacks == 0)   // No attacks to use!
         {
-            if (debug) Debug.LogWarning("Tried to attack but there was no attack to use");
+            if (debug) Debug.LogWarning("Tried to attack but there was no attack to use!");
             return;
         }
 
@@ -88,11 +89,33 @@ public class MonsterController : MonoBehaviour
         var attack = attackList[chosenAttack];
 
         // Get and save the animation that's being interrupted
-        var animatorInfo = this.m_myAnimator.GetCurrentAnimatorClipInfo(0);
+        var animatorInfo = m_myAnimator.GetCurrentAnimatorClipInfo(0);
         m_interruptedAnimation = animatorInfo[0].clip;
 
         // Play the attack animation
         m_myAnimator.Play(attack.name);
+    }
+
+    private void Flinch()
+    {
+        if (m_interruptedAnimation != null)        // Another attack is already in progress
+        {
+            if (debug) Debug.Log("Interrupted animation not null");
+            return;
+        }
+
+        if (flinch == null)
+        {
+            if (debug) Debug.LogWarning("Tried to flinch but there was no animation to use!");
+            return;
+        }
+
+        // Get and save the animation that's being interrupted
+        var animatorInfo = m_myAnimator.GetCurrentAnimatorClipInfo(0);
+        m_interruptedAnimation = animatorInfo[0].clip;
+
+        // Play the attack animation
+        m_myAnimator.Play(flinch.name);
     }
 
     public void TransitoryAnimationComplete()
@@ -112,7 +135,7 @@ public class MonsterController : MonoBehaviour
         m_myAnimator.SetBool("mood_changed", false);
     }
 
-    public void AttackAnimationComplete()
+    public void AnimationComplete()
     {
         if (m_interruptedAnimation != null) 
         {
