@@ -726,6 +726,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: causesFlinch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
       objectReference: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
@@ -4176,6 +4180,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: causesFlinch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
       objectReference: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
@@ -4519,6 +4527,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: flinch
+      value: 
+      objectReference: {fileID: 7400000, guid: c398ce3795017ba438f6b35b2fee2b1e, type: 2}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: attackList.Array.size
       value: 1

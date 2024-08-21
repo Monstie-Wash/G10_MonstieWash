@@ -9,16 +9,14 @@ using UnityEngine.SceneManagement;
 public class MonsterController : MonoBehaviour
 {
     [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
+    [Tooltip("Place each of the monster attack animations here.")][SerializeField] private List<AnimationClip> attackList;  // List of monster attack animations to be chosen from randomly when an attack is made. 
+    [Tooltip("Place completion particle GameObjects here.")][SerializeField] private List<Effect> completionEffectList; // List of Effect objects to play when a scene is completed
+    [SerializeField] private AnimationClip flinch;
     [SerializeField] private bool debug = false;
 
     private MonsterBrain m_monsterAI;
     private Animator m_myAnimator;
-
-    private AnimationClip m_interruptedAnimation = null;
-    [Tooltip("Place each of the monster attack animations here.")][SerializeField] private List<AnimationClip> attackList;  // List of monster attack animations to be chosen from randomly when an attack is made. 
-
-    [Tooltip("Place completion particle GameObjects here.")][SerializeField] private List<Effect> completionEffectList; // List of Effect objects to play when a scene is completed
-
+    private InterruptAnimation m_interruptAnimation;
     private MoodType m_recentHighestMood;
 
     [Serializable]
@@ -26,6 +24,21 @@ public class MonsterController : MonoBehaviour
     {
         public MoodType mood;
         public AnimationClip animation;
+    }
+
+    private class InterruptAnimation
+    {
+        private AnimationClip m_interruptedAnimation;
+        private int m_rank;
+
+        public AnimationClip interruptedAnimation { get { return m_interruptedAnimation; } }
+        public int Rank { get { return m_rank; } }
+
+        public InterruptAnimation(AnimationClip interruptedAnimation, int priority)
+        {
+            m_interruptedAnimation = interruptedAnimation;
+            m_rank = priority;
+        }
     }
 
     private void Awake()
@@ -38,6 +51,7 @@ public class MonsterController : MonoBehaviour
     {
         m_monsterAI.OnMoodChanged += UpdateAnimations;
         m_monsterAI.MonsterAttack += Attack;
+        m_monsterAI.OnFlinch += Flinch;
         m_monsterAI.SceneCompleted += ProcessSceneComplete;
     }
 
@@ -45,6 +59,7 @@ public class MonsterController : MonoBehaviour
     {
         m_monsterAI.OnMoodChanged -= UpdateAnimations;
         m_monsterAI.MonsterAttack -= Attack;
+        m_monsterAI.OnFlinch -= Flinch;
         m_monsterAI.SceneCompleted -= ProcessSceneComplete;
     }
 
@@ -58,7 +73,7 @@ public class MonsterController : MonoBehaviour
         if (currentMood == m_recentHighestMood) return;
 
         // If currently performing an attack, should NOT update
-        if (m_interruptedAnimation != null) return;
+        if (m_interruptAnimation != null) return;
 
         // Update the recent highest mood, then play the exit animation followed by the new animation
         m_recentHighestMood = currentMood;
@@ -71,20 +86,31 @@ public class MonsterController : MonoBehaviour
     /// <summary>
     ///  Prepares an attack to be used: chooses one at random.
     /// </summary>
-    /// <param name="sender"> The object that sent the attack event.</param>
-    /// <param name="e"> Arguments included in the attack event (CURRENTLY UNUSED).</param>
     private void Attack()
     {
-        if (m_interruptedAnimation != null)        // Another attack is already in progress
+        var rank = 2;
+        var interruptIsNull = false;
+
+        if (m_interruptAnimation != null)
         {
-            if (debug) Debug.Log("Interrupted animation not null");
-            return;
+            if (m_interruptAnimation.Rank > rank)        // A higher priority animation is already in progress
+            {
+                if (debug) Debug.Log("Interrupted animation not null");
+                return;
+            }
+            else
+            {
+                // Maintain the animation that's being interrupted
+                m_interruptAnimation = new InterruptAnimation(m_interruptAnimation.interruptedAnimation, rank);
+            }
         }
+        else interruptIsNull = true;
+
         var numAttacks = attackList.Count;
 
         if (numAttacks == 0)   // No attacks to use!
         {
-            if (debug) Debug.LogWarning("Tried to attack but there was no attack to use");
+            if (debug) Debug.LogWarning("Tried to attack but there was no attack to use!");
             return;
         }
 
@@ -93,11 +119,48 @@ public class MonsterController : MonoBehaviour
         var attack = attackList[chosenAttack];
 
         // Get and save the animation that's being interrupted
-        var animatorInfo = this.m_myAnimator.GetCurrentAnimatorClipInfo(0);
-        m_interruptedAnimation = animatorInfo[0].clip;
+        var animatorInfo = m_myAnimator.GetCurrentAnimatorClipInfo(0);
+        if (interruptIsNull) m_interruptAnimation = new InterruptAnimation(animatorInfo[0].clip, rank);        
 
         // Play the attack animation
         m_myAnimator.Play(attack.name);
+    }
+
+    /// <summary>
+    /// Activates the flinch animation.
+    /// </summary>
+    private void Flinch()
+    {
+        var rank = 1;
+        var interruptIsNull = false;
+
+        if (m_interruptAnimation != null)
+        {
+            if (m_interruptAnimation.Rank > rank)        // A higher priority animation is already in progress
+            {
+                if (debug) Debug.Log("Interrupted animation not null");
+                return;
+            }
+            else
+            {
+                // Maintain the animation that's being interrupted
+                m_interruptAnimation = new InterruptAnimation(m_interruptAnimation.interruptedAnimation, rank);
+            }
+        }
+        else interruptIsNull = true;
+
+        if (flinch == null)
+        {
+            if (debug) Debug.LogWarning("Tried to flinch but there was no animation to use!");
+            return;
+        }
+
+        // Get and save the animation that's being interrupted
+        var animatorInfo = m_myAnimator.GetCurrentAnimatorClipInfo(0);
+        if (interruptIsNull) m_interruptAnimation = new InterruptAnimation(animatorInfo[0].clip, rank);
+
+        // Play the flinch animation
+        m_myAnimator.Play(flinch.name);
     }
 
     public void TransitoryAnimationComplete()
@@ -117,13 +180,13 @@ public class MonsterController : MonoBehaviour
         m_myAnimator.SetBool("mood_changed", false);
     }
 
-    public void AttackAnimationComplete()
+    public void InterruptAnimationComplete()
     {
-        if (m_interruptedAnimation != null) 
+        if (m_interruptAnimation != null) 
         {
             // Return to the animation that was playing previously
-            m_myAnimator.Play(m_interruptedAnimation.name);
-            m_interruptedAnimation = null;
+            m_myAnimator.Play(m_interruptAnimation.interruptedAnimation.name);
+            m_interruptAnimation = null;
         }
     }
 
@@ -146,6 +209,5 @@ public class MonsterController : MonoBehaviour
             effect.Play();
             yield return new WaitForSeconds(randTime);
         }
-        
     }
 }
