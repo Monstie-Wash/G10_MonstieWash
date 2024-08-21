@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     private GameSceneManager m_roomSaver;
     private TaskTracker m_taskTracker;
     private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
-    private bool m_UIVisible = true;
+    private bool m_UIInvisible = false;
 
     private void Awake()
     {
@@ -47,8 +47,8 @@ public class UIManager : MonoBehaviour
     }
     private void ToggleUIVisibility()
     {
-        m_UIVisible = !m_UIVisible;
-        CBAnimator.SetBool("Hide", m_UIVisible);
+        m_UIInvisible = !m_UIInvisible;
+        CBAnimator.SetBool("Hide", m_UIInvisible);
     }
 
 /// <summary>

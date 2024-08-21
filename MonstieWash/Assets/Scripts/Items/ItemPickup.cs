@@ -102,8 +102,7 @@ public class ItemPickup : MonoBehaviour
         }
         else
         {
-            if (m_heldItem.Stuck) LetGoItem();
-            else DropItem();
+            TryDropItem();
         }
     }
 

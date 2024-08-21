@@ -9,7 +9,6 @@ public class ItemLinker : MonoBehaviour
     [SerializeField] private LinkedItem linkObject;
     
     private GameSceneManager m_gameSceneManager;
-    private TaskTracker m_taskTracker;
     private List<ITaskScript> m_taskScript = new();
 
     private enum LinkMethod
@@ -21,7 +20,6 @@ public class ItemLinker : MonoBehaviour
     private void Awake()
     {
         m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
-        m_taskTracker = FindFirstObjectByType<TaskTracker>();
 
         ITaskScript taskScript;
         if (link == LinkMethod.Group)
@@ -79,15 +77,15 @@ public class ItemLinker : MonoBehaviour
 /// </summary>
     private void SaveItem()
     {
-        linkObject.Reset();
-        if (link == LinkMethod.Group)
+		linkObject.Reset();
+		if (link == LinkMethod.Group)
         {
             foreach (Transform child in transform)
             {
                 linkObject.positions.Add(FlipItemPos(child));
                 linkObject.rotations.Add(FlipItemRot(child));
                 linkObject.velocity.Add(FlipItemVel(child.GetComponent<Rigidbody2D>().velocity));
-                linkObject.angularVelocity.Add(child.GetComponent<Rigidbody2D>().angularVelocity);
+                linkObject.angularVelocity.Add(FlipItemAng(child.GetComponent<Rigidbody2D>().angularVelocity));
 
                 linkObject.itemData.Add(new List<object>(child.GetComponent<ITaskScript>().SaveData()));
             }
@@ -96,9 +94,10 @@ public class ItemLinker : MonoBehaviour
         {
             linkObject.positions.Add(FlipItemPos(transform));
             linkObject.rotations.Add(FlipItemRot(transform));
-			linkObject.velocity.Add(FlipItemVel(GetComponent<Rigidbody2D>().velocity));
-			linkObject.angularVelocity.Add(GetComponent<Rigidbody2D>().angularVelocity);
-			linkObject.itemData.Add(new List<object>(m_taskScript[0].SaveData()));
+            linkObject.velocity.Add(FlipItemVel(GetComponent<Rigidbody2D>().velocity));
+            linkObject.angularVelocity.Add(GetComponent<Rigidbody2D>().angularVelocity);
+
+            linkObject.itemData.Add(new List<object>(m_taskScript[0].SaveData()));
         }
         linkObject.loadOnEnable = true;
     }
@@ -128,6 +127,7 @@ public class ItemLinker : MonoBehaviour
                 transform.rotation = linkObject.rotations[0];
 				transform.GetComponent<Rigidbody2D>().velocity = linkObject.velocity[0];
 				transform.GetComponent<Rigidbody2D>().angularVelocity = linkObject.angularVelocity[0];
+
 				m_taskScript[0].LoadData(linkObject.itemData[0]);
             }
             linkObject.loadOnEnable = false;
@@ -156,10 +156,9 @@ public class ItemLinker : MonoBehaviour
     {
         return new Vector2(-vel.x, vel.y);
     }
-
-    private float FlipItemAng(float ang)
-    {
-        return -1 * ang;
-    }
     
+    private float FlipItemAng(float ang) 
+    {
+        return -ang;
+    }
 }

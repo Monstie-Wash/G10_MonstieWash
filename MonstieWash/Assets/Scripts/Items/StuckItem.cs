@@ -11,6 +11,7 @@ public class StuckItem : MonoBehaviour, ITaskScript
     [SerializeField] private float grabDistanceMultiplier = 1.5f;
     [SerializeField] private AnimationCurve greenFadeCurve;
     [SerializeField] private float greenFadeTime = 1f;
+    [SerializeField] private float boneBuffer = 10f;
 
     private Rigidbody2D m_rb;
     private int m_initialWiggleCount;
@@ -103,11 +104,12 @@ public class StuckItem : MonoBehaviour, ITaskScript
         var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
         var cameraHeightInWorldUnits = Camera.main.orthographicSize;
 
-        while (Mathf.Abs(transform.position.x) < cameraWidthInWorldUnits + 10f && Mathf.Abs(transform.position.y) < cameraHeightInWorldUnits + 10f)
+        while (!(transform.position.y > cameraHeightInWorldUnits + boneBuffer || transform.position.y < -cameraHeightInWorldUnits - boneBuffer))
         {
             yield return null;
         }
 
+        Debug.Log("Do the bone go?");
         gameObject.SetActive(false);
     }
 

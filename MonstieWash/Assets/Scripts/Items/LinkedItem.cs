@@ -19,5 +19,7 @@ public class LinkedItem : ScriptableObject
         positions.Clear();
         rotations.Clear();
         itemData.Clear();
+        velocity.Clear();
+        angularVelocity.Clear();
     }
 }
