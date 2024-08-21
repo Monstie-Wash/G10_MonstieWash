@@ -49,6 +49,9 @@ MonoBehaviour:
   toolUpgradePrefab: {fileID: 7369942950632674450, guid: 4cbac3e940ca6c845a1c888784908683, type: 3}
   upgradeContainer: {fileID: 22054860032148930, guid: afdd6854534d60d4f87d4fba82597163, type: 3}
   scoreUI: {fileID: 0}
+  upgradeSound: {fileID: 0}
+  goldData: {fileID: 11400000, guid: bebaeab5dd6ab8d4b9df9524c282826b, type: 2}
+  levelReward: 150
 --- !u!82 &2405098562808921751
 AudioSource:
   m_ObjectHideFlags: 0

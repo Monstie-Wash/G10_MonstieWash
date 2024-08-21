@@ -23,6 +23,8 @@ public class MonsterBrain : MonoBehaviour
 
     #region FX
     [Tooltip("The X and Y coordinates that mood particles originate from")][SerializeField] private Vector2 moodParticleOrigin = Vector2.zero; // Determines where particle systems are placed when calling PlayMoodParticles
+
+    public event Action<Scene> SceneCompleted;
     #endregion
 
     #region Attacks
@@ -368,6 +370,8 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     private void UpdateMoodOnSceneComplete()
     {
+        SceneCompleted?.Invoke(m_gameSceneManager.CurrentScene);
+
         for (int i = 0; i < moodData.Count; i++)
         {
             if (moodData[i].mood.SceneEffectOnMood == 0) continue;  // Skip if scene completion doesn't affect this mood

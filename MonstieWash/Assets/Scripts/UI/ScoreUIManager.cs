@@ -121,7 +121,9 @@ public class ScoreUIManager : MonoBehaviour
 
         //totalScore = MathF.Round(totalScore, 2);
 
-        m_totalScore.text = $"${totalScore.ToString()}";
+        m_totalScore.text = $"${Mathf.Round(totalScore).ToString()}";
+        FindFirstObjectByType<Inventory>().LastEarnedScore = (int)Mathf.Round(totalScore);
+        
     }
 
 	private void Inputs_OnAlt_Select()
