@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123cf863b9c4e00488e041f5b8de28eb, type: 3}
   m_Name: Compendium
   m_EditorClassIdentifier: 
-  sceneName: Compendium
+  sceneName: MonsterCompendium
