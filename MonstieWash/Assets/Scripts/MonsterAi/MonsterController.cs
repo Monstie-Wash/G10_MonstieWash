@@ -118,7 +118,7 @@ public class MonsterController : MonoBehaviour
         var animatorInfo = m_myAnimator.GetCurrentAnimatorClipInfo(0);
         m_interruptedAnimation = animatorInfo[0].clip;
 
-        // Play the attack animation
+        // Play the flinch animation
         m_myAnimator.Play(flinch.name);
     }
 
