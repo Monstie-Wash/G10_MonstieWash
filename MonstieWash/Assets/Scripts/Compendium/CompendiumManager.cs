@@ -20,6 +20,10 @@ public class CompendiumManager : MonoBehaviour
         }
     }
 
+/// <summary>
+/// Displays a monster entry on the screen and shows/hides the completion picture based on clear status
+/// </summary>
+/// <param name="entry">Compendium entry with information to be displayed</param>
     public void DisplayEntry(CompendiumEntry entry)
     {
         if (entry == null) return;

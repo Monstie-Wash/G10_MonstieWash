@@ -6,13 +6,6 @@ using UnityEngine.EventSystems;
 
 public class CompendiumEntry : MonoBehaviour
 {
-    public string MonsterName { get => monsterName;}
-    public string Temperament { get => temperament; }
-    public string Description { get => description;}
-    public Sprite ImageOriginal { get => imageOriginal; }
-    public Sprite ImageCleared { get => imageCleared; }
-    public bool Completed { get => completed;}
-
     [SerializeField] private string monsterName;
     [SerializeField] [TextAreaAttribute] private string temperament;
     [SerializeField] [TextAreaAttribute] private string description;
@@ -21,10 +14,24 @@ public class CompendiumEntry : MonoBehaviour
     [SerializeField] private bool completed;
 
     private CompendiumManager m_compendiumManager;
+    private PlayerHand m_playerHand;
 
-    private void Start()
+    public string MonsterName { get => monsterName;}
+    public string Temperament { get => temperament; }
+    public string Description { get => description;}
+    public Sprite ImageOriginal { get => imageOriginal; }
+    public Sprite ImageCleared { get => imageCleared; }
+    public bool Completed { get => completed;}
+
+    private void Awake()
     {
         m_compendiumManager = FindFirstObjectByType<CompendiumManager>();
+        m_playerHand = FindFirstObjectByType<PlayerHand>();
+    }
+
+    private void OnEnable()
+    {
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), m_playerHand.GetComponentInChildren<PolygonCollider2D>(), true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
