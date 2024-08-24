@@ -730,6 +730,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: materialToApply
+      value: 
+      objectReference: {fileID: 2100000, guid: 39c2f6c3ff6fad34d857333e634a72ca, type: 2}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: spriteToOutline
+      value: 
+      objectReference: {fileID: 2060305454}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
       objectReference: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
@@ -2674,7 +2682,7 @@ Transform:
   - {fileID: 617265149}
   - {fileID: 633303278}
   - {fileID: 1908516763}
-  m_Father: {fileID: 3799121171791714584}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1086771356
 PrefabInstance:
@@ -4184,6 +4192,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: materialToApply
+      value: 
+      objectReference: {fileID: 2100000, guid: 39c2f6c3ff6fad34d857333e634a72ca, type: 2}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: spriteToOutline
+      value: 
+      objectReference: {fileID: 2060305454}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
       objectReference: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
@@ -4274,6 +4290,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
+--- !u!212 &2060305454 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7025138398951839190, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+  m_PrefabInstance: {fileID: 3799121171791714579}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2100335024
 GameObject:
   m_ObjectHideFlags: 0
@@ -4591,6 +4612,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1180892439
       objectReference: {fileID: 0}
+    - target: {fileID: 7025138398951839190, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 8992106390371102444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.13
@@ -4725,3 +4750,4 @@ SceneRoots:
   - {fileID: 939486372}
   - {fileID: 830055418}
   - {fileID: 638505928}
+  - {fileID: 1051705178}

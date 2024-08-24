@@ -19,6 +19,14 @@ public class MoodArea : MonoBehaviour
     [Tooltip("Whether touching this should cause the monster to flinch.")] [SerializeField] private bool causesFlinch;
     [Tooltip("Produces debug text in console when toggled on.")] [SerializeField] private bool debug = false;
 
+    [Header("OutlineGlow")]
+    [Tooltip("Which Sprite will receive the outline material")] [SerializeField] private SpriteRenderer spriteToOutline;
+    [Tooltip("Create a variant of the better sprite outline shader material with chosen colour and thickness for  this slot.")] [SerializeField] private Material materialToApply;
+    private Material m_OriginalMat; //Stores original material to return it to normal after finished touching.
+    private float m_startingThickness; //Stores initial outline thickness.
+    private string m_thickPropertyName = "_Thickness";
+
+
     //Internal states
     private float currentCooldown;
     private float currentEffectiveness; //Current effectiveness of area.
@@ -36,13 +44,20 @@ public class MoodArea : MonoBehaviour
         m_mb = FindFirstObjectByType<MonsterBrain>();
         m_ph = FindFirstObjectByType<PlayerHand>();
         currentEffectiveness = 100;
+
+        //Assign values for creating outline
+        if (spriteToOutline != null)
+        {
+            m_OriginalMat = spriteToOutline.material;
+            m_startingThickness = materialToApply.GetFloat(m_thickPropertyName);
+            print(m_startingThickness + ":starting thick");
+        }
     }
 
     private void OnEnable()
     {
         //Assign to Input system.
         InputManager.Instance.OnActivate_Held += TestTouch;
-
     }
 
     private void OnDisable()
@@ -57,6 +72,27 @@ public class MoodArea : MonoBehaviour
         if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness +( (diminishStrength/2f) * Time.deltaTime), 0f , 100f);
         //Reduce Cooldown over time.
         currentCooldown = Mathf.Clamp(currentCooldown -= Time.deltaTime, 0f, areaCooldown);
+
+        //Update shader based on recent touch
+        if (spriteToOutline != null && spriteToOutline.material != m_OriginalMat)
+        {
+            print("not original sprite");
+            print("Current 1thickness is " + spriteToOutline.material.GetFloat(m_thickPropertyName));
+            if (spriteToOutline.material.GetFloat(m_thickPropertyName) > 0)
+            {
+                var newThickVal = spriteToOutline.material.GetFloat(m_thickPropertyName) - m_startingThickness / 4 * Time.deltaTime;
+                if (newThickVal <= 0)
+                {
+                    spriteToOutline.material = m_OriginalMat;
+                    return;
+                }
+                spriteToOutline.material.SetFloat(m_thickPropertyName, newThickVal);
+                print("Current 2thickness is " + spriteToOutline.material.GetFloat(m_thickPropertyName));
+            }
+            else spriteToOutline.material = m_OriginalMat;
+
+
+        }
     }
 
 
@@ -102,7 +138,12 @@ public class MoodArea : MonoBehaviour
         {
             //Call On Touch effect
             OnTouch();
+
+            if (spriteToOutline != null)
+            {
+                spriteToOutline.material = materialToApply;
+                spriteToOutline.material.SetFloat(m_thickPropertyName,m_startingThickness);
+            }
         }
     }
-
 }
