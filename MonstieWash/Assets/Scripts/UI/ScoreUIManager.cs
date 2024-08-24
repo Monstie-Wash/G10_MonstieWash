@@ -41,16 +41,6 @@ public class ScoreUIManager : MonoBehaviour
         StartCoroutine(LineItemSetActive());
 	}
 
-    private void OnEnable()
-    {
-        InputManager.Instance.OnAltSelect += Inputs_OnAlt_Select;
-    }
-
-    private void OnDisable()
-    {
-        InputManager.Instance.OnAltSelect -= Inputs_OnAlt_Select;
-    }
-
 	/// <summary>
 	/// Gathers the task list from the game manager.
 	/// </summary>
