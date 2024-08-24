@@ -22,7 +22,6 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameScene initialScene;
     [SerializeField] private List<GameScene> bedroomScenes;
     [SerializeField] private GameScene scoreSummaryScene;
-    [SerializeField] private GameScene deathScene;
     [SerializeField] private List<LevelScenes> allLevelScenes = new();
 
     private Level m_currentLevel;
@@ -263,22 +262,6 @@ public class GameSceneManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Loads the death screen.
-    /// </summary>
-    public async void PlayerDied()
-    {
-        await Task.Delay(7000);
-        OnLevelEnd?.Invoke();
-
-        MoveToScene(loadingScene.SceneName);
-
-        SetSceneActive(m_currentLevelScenes.startingScene.SceneName, false);
-        await LoadScene(deathScene.SceneName);
-
-        MoveToScene(deathScene.SceneName, true);
-    }
-
-    /// <summary>
     /// Moves to a bedroom scene, loading the bedroom if necessary.
     /// </summary>
     /// <param name="target">The bedroom scene to move to.</param>
@@ -309,20 +292,6 @@ public class GameSceneManager : MonoBehaviour
         await GoToBedroomScene(target, targetIsUI);
 
         m_musicManager.SetMusic(music);
-    }
-
-    /// <summary>
-    /// Sets the current scene back to the first scene of the current level.
-    /// </summary>
-    public async void ContinueLevel()
-    {
-        await UnloadScene(deathScene.SceneName);
-        m_loadedScenes.RemoveAt(m_loadedScenes.IndexOf(deathScene.SceneName));
-
-        m_musicManager.SetMusic(MusicManager.MusicType.Background);
-
-        SetSceneActive(m_currentLevelScenes.startingScene.SceneName, true);
-        SetSceneActive(m_currentLevelScenes.gameScenes[0].SceneName, true);
     }
 
     /// <summary>
