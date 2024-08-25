@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI completionText;
     [SerializeField] private float fontSize = 36f;
     [Space(20), SerializeField] private GameObject finishLevelButton;
+    [SerializeField] private GameObject nextUncleanButton;
 
     private Dictionary<string, bool> m_taskList = new();
 
@@ -33,12 +34,16 @@ public class UIManager : MonoBehaviour
     {
         InputManager.Instance.OnToggleUI += Inputs_OnToggleUI;
         m_taskTracker.OnLevelCompleted += OnLevelCompleted;
+        m_taskTracker.OnSceneCompleted += OnSceneCompleted;
+        m_roomSaver.OnSceneChanged += OnSceneChanged;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnToggleUI -= Inputs_OnToggleUI;
         m_taskTracker.OnLevelCompleted -= OnLevelCompleted;
+        m_taskTracker.OnSceneCompleted -= OnSceneCompleted;
+        m_roomSaver.OnSceneChanged -= OnSceneChanged;
     }
 
     private void Inputs_OnToggleUI()
@@ -117,6 +122,17 @@ public class UIManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
+        nextUncleanButton.SetActive(false);
         finishLevelButton.SetActive(true);
+    }
+
+    private void OnSceneCompleted()
+    {
+        nextUncleanButton.SetActive(true);
+    }
+
+    private void OnSceneChanged()
+    {
+        nextUncleanButton.SetActive(false);
     }
 }
