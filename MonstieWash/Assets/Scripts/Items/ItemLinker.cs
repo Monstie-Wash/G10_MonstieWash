@@ -55,7 +55,7 @@ public class ItemLinker : MonoBehaviour
         private void OnEnable()
     {
         m_gameSceneManager.OnSceneSwitch += SaveItem;
-        m_gameSceneManager.OnSceneChanged += LoadItem;
+        GameSceneManager.OnSceneChanged += LoadItem;
         m_gameSceneManager.OnLevelEnd += CleanUp;
         m_gameSceneManager.OnRestartGame += CleanUp;
     }
@@ -63,7 +63,7 @@ public class ItemLinker : MonoBehaviour
     private void OnDisable()
     {
         m_gameSceneManager.OnSceneSwitch -= SaveItem;
-        m_gameSceneManager.OnSceneChanged -= LoadItem;
+        GameSceneManager.OnSceneChanged -= LoadItem;
         m_gameSceneManager.OnLevelEnd -= CleanUp;
         m_gameSceneManager.OnRestartGame -= CleanUp;
     }
@@ -127,7 +127,7 @@ public class ItemLinker : MonoBehaviour
     private void CleanUp()
     {
         m_gameSceneManager.OnSceneSwitch -= SaveItem;
-        m_gameSceneManager.OnSceneChanged -= LoadItem;
+        GameSceneManager.OnSceneChanged -= LoadItem;
         linkObject.Reset();
     }
 

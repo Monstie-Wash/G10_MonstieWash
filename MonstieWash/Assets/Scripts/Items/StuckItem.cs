@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -36,6 +37,8 @@ public class StuckItem : MonoBehaviour, ITaskScript
     public Rigidbody2D Rb { get { return m_rb; } }
     public int WiggleCount { get {  return wiggleCount; } }
     public Transform InitialParent {  get { return m_initialParent; } }
+
+    public static event Action UnstickItem;
 
 
     private void Awake()
@@ -92,6 +95,7 @@ public class StuckItem : MonoBehaviour, ITaskScript
         if (wiggleCount <= 0)
         {
             SetStuck(false);
+            UnstickItem?.Invoke();
             return true;
         }
 

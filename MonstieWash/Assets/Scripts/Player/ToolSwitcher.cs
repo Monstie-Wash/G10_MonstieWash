@@ -10,6 +10,8 @@ public class ToolSwitcher : MonoBehaviour
     private List<GameObject> m_toolInstances = new();
     private GameSceneManager m_roomSaver;
 
+    public static event Action SwitchTool;  // The player switched the tool in their hand
+
     /// <summary>
     /// The current index in the m_toolInstances list. -1 represents an empty hand.
     /// </summary>
@@ -68,6 +70,7 @@ public class ToolSwitcher : MonoBehaviour
         var nextToolIndex = LoopValue(m_currentToolIndex + dir, -1, tools.Count - 1);
         
         SetActiveTool(nextToolIndex);
+        SwitchTool?.Invoke();
     }
 
     /// <summary>

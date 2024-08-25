@@ -11,7 +11,7 @@ public class GameSceneManager : MonoBehaviour
     /// <summary>Event that fires right before switching to another scene.</summary>
     public event Action OnSceneSwitch;
     /// <summary>Event that fires right after switching to another scene.</summary>
-    public event Action OnSceneChanged;
+    public static event Action OnSceneChanged;
     /// <summary>Event that fires when the level ends, before moving to another scene.</summary>
     public event Action OnLevelEnd;
     /// <summary>Event that fires right before the game is reset.</summary>

@@ -19,8 +19,8 @@ public class Eraser : MonoBehaviour
 
     private bool m_isErasing = false;
     private bool m_isErasingClean = false;
-    public event Action<bool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
-    public event Action<bool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
+    public static event Action<bool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
+    public static event Action<bool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.

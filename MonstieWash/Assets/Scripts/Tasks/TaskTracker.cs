@@ -32,7 +32,7 @@ public class TaskTracker : MonoBehaviour
     private void OnEnable()
     {
         m_roomSaver.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
-        m_roomSaver.OnSceneChanged += RoomSaver_OnSceneChanged; ;
+        GameSceneManager.OnSceneChanged += RoomSaver_OnSceneChanged; ;
     }
 
     private void RoomSaver_OnSceneChanged()
@@ -43,7 +43,7 @@ public class TaskTracker : MonoBehaviour
     private void OnDisable()
     {
         m_roomSaver.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
-        m_roomSaver.OnSceneChanged -= RoomSaver_OnSceneChanged;
+        GameSceneManager.OnSceneChanged -= RoomSaver_OnSceneChanged;
     }
 
     private void RoomSaver_OnScenesLoaded()
