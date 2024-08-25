@@ -25,7 +25,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameScene deathScene;
     [SerializeField] private List<LevelScenes> allLevelScenes = new();
 
-    private Level m_currentLevel;
+    [SerializeField] private Level m_currentLevel;
     private Scene m_currentScene;
     private LevelScenes m_currentLevelScenes;
     private List<string> m_loadedScenes = new();
@@ -255,7 +255,7 @@ public class GameSceneManager : MonoBehaviour
 
         MoveToScene(loadingScene.SceneName);
 
-        m_currentLevel = Level.None;
+        //m_currentLevel = Level.None;
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, false);
         await LoadScene(scoreSummaryScene.SceneName);
 
@@ -358,6 +358,11 @@ public class GameSceneManager : MonoBehaviour
     {
         Debug.Log("Quitting...");
         Application.Quit();
+    }
+
+    public void ResetLevel()
+    {
+        m_currentLevel = Level.None;
     }
     #endregion
 }
