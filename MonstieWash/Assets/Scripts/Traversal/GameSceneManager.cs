@@ -29,6 +29,7 @@ public class GameSceneManager : MonoBehaviour
     private LevelScenes m_currentLevelScenes;
     private List<string> m_loadedScenes = new();
     private MusicManager m_musicManager;
+    private Dictionary<int, bool> m_levelObjectActiveStates = new();
 
     [HideInInspector] public List<string> AllLevelScenes { get; private set; } = new();
     [HideInInspector] public Level CurrentLevel { get { return m_currentLevel; } }
@@ -114,7 +115,26 @@ public class GameSceneManager : MonoBehaviour
 
         foreach (var gameObject in gameObjs)
         {
-            gameObject.SetActive(active);
+            if (m_currentLevel != Level.None) // Only does this for monster levels (might make sense to also do it for others but this works for now).
+            {
+                var hash = gameObject.GetHashCode();
+
+                if (!active)
+                {
+                    if (m_levelObjectActiveStates.ContainsKey(hash)) m_levelObjectActiveStates[hash] = gameObject.activeSelf;
+                    else m_levelObjectActiveStates.Add(hash, gameObject.activeSelf);
+
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    if (m_levelObjectActiveStates.ContainsKey(hash)) gameObject.SetActive(m_levelObjectActiveStates[gameObject.GetHashCode()]);
+                }
+            }
+            else
+            {
+                gameObject.SetActive(active);
+            }
         }
 
         if (active) m_currentScene = currentScene;
@@ -164,34 +184,6 @@ public class GameSceneManager : MonoBehaviour
             SetSceneActive(scene.SceneName, false);
         }
     }
-    #endregion
-
-    #region Public
-    /// <summary>
-    /// Swaps the current active scene to a new scene. Will fail if the target scene is not loaded.
-    /// </summary>
-    /// <param name="target">The scene to move to.</param>
-    /// <param name="targetIsUI">Whether the target scene requires UI interaction.</param>
-    public void MoveToScene(string target, bool targetIsUI = false)
-    {
-        OnSceneSwitch?.Invoke();
-
-        SetSceneActive(m_currentScene.name, false);
-        SetSceneActive(target, true);
-
-        if (targetIsUI)
-        {
-            InputManager.Instance.SetCursorMode(false);
-            InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        }
-        else
-        {
-            InputManager.Instance.SetCursorMode(true);
-            InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
-        }
-
-        OnSceneChanged?.Invoke();
-    }
 
     /// <summary>
     /// Loads all the scenes of the given level and moves there.
@@ -229,6 +221,34 @@ public class GameSceneManager : MonoBehaviour
         //Remove loading screen and activate first level
         MoveToScene(monsterScenes[0].SceneName);
     }
+    #endregion
+
+    #region Public
+    /// <summary>
+    /// Swaps the current active scene to a new scene. Will fail if the target scene is not loaded.
+    /// </summary>
+    /// <param name="target">The scene to move to.</param>
+    /// <param name="targetIsUI">Whether the target scene requires UI interaction.</param>
+    public void MoveToScene(string target, bool targetIsUI = false)
+    {
+        OnSceneSwitch?.Invoke();
+
+        SetSceneActive(m_currentScene.name, false);
+        SetSceneActive(target, true);
+
+        if (targetIsUI)
+        {
+            InputManager.Instance.SetCursorMode(false);
+            InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
+        }
+        else
+        {
+            InputManager.Instance.SetCursorMode(true);
+            InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+        }
+
+        OnSceneChanged?.Invoke();
+    }
 
     /// <summary>
     /// Starts a level from the beginning. Intended to be run from the level select scene.
@@ -254,6 +274,7 @@ public class GameSceneManager : MonoBehaviour
 
         MoveToScene(loadingScene.SceneName);
 
+        m_levelObjectActiveStates.Clear();
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, false);
         await LoadScene(scoreSummaryScene.SceneName);
 
@@ -327,6 +348,12 @@ public class GameSceneManager : MonoBehaviour
     {
         Debug.Log("Quitting...");
         Application.Quit();
+    }
+
+    public void SetObjectActiveState(int hashCode, bool active)
+    {
+        if (m_levelObjectActiveStates.ContainsKey(hashCode)) m_levelObjectActiveStates[hashCode] = active;
+        else Debug.LogError("Could not find object to set state of!");
     }
     #endregion
 }
