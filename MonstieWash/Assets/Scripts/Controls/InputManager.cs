@@ -61,7 +61,7 @@ public class InputManager : MonoBehaviour
     #endregion
 
     private PlayerInput m_playerInput;
-    private Coroutine m_activeRoutine;
+    private bool m_runningActiveRoutine;
     private PlayerInputDevice m_inputDevice = PlayerInputDevice.Controller;
 
     public PlayerInputDevice InputDevice { get { return m_inputDevice; } }
@@ -238,18 +238,19 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnActivate?.Invoke();
-        m_activeRoutine = StartCoroutine(Activate());
+        m_runningActiveRoutine = true;
+        StartCoroutine(Activate());
     }
 
     private void Activate_canceled(InputAction.CallbackContext context)
     {
         OnActivate_Ended?.Invoke();
-        StopCoroutine(m_activeRoutine);
+        m_runningActiveRoutine = false;
     }
 
     private IEnumerator Activate()
     {
-        while (true)
+        while (m_runningActiveRoutine)
         {
             OnActivate_Held?.Invoke();
 
@@ -460,6 +461,8 @@ public class InputManager : MonoBehaviour
 
     public void SetControlScheme(ControlScheme scheme)
     {
+        m_runningActiveRoutine = false;
+
         switch (scheme)
         {
             case ControlScheme.None:
