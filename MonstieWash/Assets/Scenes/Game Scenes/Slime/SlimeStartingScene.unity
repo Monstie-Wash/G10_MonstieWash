@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e36cf0bc873ba4b934fb4ff71b196f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialPrompts:
+  m_tutorialPrompts:
   - prompt: {fileID: 1218831904}
     eventListen: 2
     promptCompletion: 2

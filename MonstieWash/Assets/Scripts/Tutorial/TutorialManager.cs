@@ -6,15 +6,15 @@ using UnityEngine.Events;
 
 public class TutorialManager : MonoBehaviour
 {
-    private int tutorialStep = 0;       // Index for current tutorial prompt in the List
-    private bool completed = false;     // Event flag for the current tutorial prompt
+    private int m_tutorialStep = 0;       // Index for current tutorial prompt in the List
+    private bool m_completed = false;     // Event flag for the current tutorial prompt
     private enum CompletionEvent { ChangeScene, EraseStarted, OnMove, SwitchTool, UnstickItem };    // Enumerated list for designers of events to listen for
     private enum CompletionType { Instant, Count, Time };
     // Enumerated list of ways the prompt can be completed:                                      
         // Instant - completes instantly once the event is received         (value = delay after event is received)
         // Count - completes after a number of times the event is received  (value = number of times)
         // Time - completes after receiving the event for a period of time  (value = overall time performed)
-    private float trackedValue = 0;     // depends on value of CompleteType
+    private float m_trackedValue = 0;     // depends on value of CompleteType
 
     [Serializable] 
     private struct TutorialPrompt
@@ -33,7 +33,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    [Tooltip("List of tutorial prompts in sequential order")][SerializeField] private List<TutorialPrompt> tutorialPrompts;     // List of prompts to iterate through
+    [Tooltip("List of tutorial prompts in sequential order")][SerializeField] private List<TutorialPrompt> m_tutorialPrompts;     // List of prompts to iterate through
 
     private void OnEnable()
     {
@@ -56,7 +56,7 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
         // Activate the first prompt
-        tutorialPrompts[tutorialStep].prompt.SetActive(true);
+        m_tutorialPrompts[m_tutorialStep].prompt.SetActive(true);
         // Begin
         StartCoroutine(RunTutorial());
     }
@@ -66,15 +66,15 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private IEnumerator RunTutorial()
     {
-        foreach (var prompt in tutorialPrompts)
+        foreach (var prompt in m_tutorialPrompts)
         {
-            yield return new WaitUntil(() => completed);
-            completed = false;
-            tutorialPrompts[tutorialStep].prompt.SetActive(false);
-            if (tutorialStep <  tutorialPrompts.Count - 1)
+            yield return new WaitUntil(() => m_completed);
+            m_completed = false;
+            m_tutorialPrompts[m_tutorialStep].prompt.SetActive(false);
+            if (m_tutorialStep <  m_tutorialPrompts.Count - 1)
             {
-                tutorialStep++;
-                tutorialPrompts[tutorialStep].prompt.SetActive(true);
+                m_tutorialStep++;
+                m_tutorialPrompts[m_tutorialStep].prompt.SetActive(true);
             }
         }
     }
@@ -86,12 +86,12 @@ public class TutorialManager : MonoBehaviour
     /// <param name="value">The time (in seconds) to wait before completing.</param>
     private IEnumerator InstantCompletion(float value)
     {
-        if (trackedValue != -1f)  // Don't allow multiple instant completions to run simultaneously
+        if (m_trackedValue != -1f)  // Don't allow multiple instant completions to run simultaneously
         {
-            trackedValue = -1f;
+            m_trackedValue = -1f;
             yield return new WaitForSeconds(value);
-            trackedValue = 0;
-            completed = true;
+            m_trackedValue = 0;
+            m_completed = true;
         }
     }
 
@@ -101,11 +101,11 @@ public class TutorialManager : MonoBehaviour
     /// <param name="targetValue">The number of successes required.</param>
     private void CountCompletion(float targetValue)
     {
-        trackedValue++;
-        if (trackedValue >= targetValue)
+        m_trackedValue++;
+        if (m_trackedValue >= targetValue)
         {
-            trackedValue = 0;
-            completed = true;
+            m_trackedValue = 0;
+            m_completed = true;
         }
     }
 
@@ -115,11 +115,11 @@ public class TutorialManager : MonoBehaviour
     /// <param name="targetValue">The time required to complete the task.</param>
     private void TimeCompletion(float targetValue)
     {
-        trackedValue += 0.002f;  // Approximate - can replace with how long the call actually takes
-        if (trackedValue >= targetValue)
+        m_trackedValue += 0.002f;  // Approximate - can replace with how long the call actually takes
+        if (m_trackedValue >= targetValue)
         {
-            trackedValue = 0;
-            completed = true;
+            m_trackedValue = 0;
+            m_completed = true;
         }
     }
     #endregion
@@ -127,7 +127,7 @@ public class TutorialManager : MonoBehaviour
     #region Event Listeners
     private void OnMove(Vector2 movement)
     {
-        var currentPrompt = tutorialPrompts[tutorialStep];
+        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
         if (currentPrompt.CompleteEvent == CompletionEvent.OnMove)
         {
             RunCompletionTests(currentPrompt);
@@ -136,7 +136,7 @@ public class TutorialManager : MonoBehaviour
 
     private void EraseStart(bool value)
     {
-        var currentPrompt = tutorialPrompts[tutorialStep];
+        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
         if (currentPrompt.CompleteEvent == CompletionEvent.EraseStarted)
         {
             RunCompletionTests(currentPrompt);
@@ -145,7 +145,7 @@ public class TutorialManager : MonoBehaviour
 
     private void SceneChange()
     {
-        var currentPrompt = tutorialPrompts[tutorialStep];
+        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
         if (currentPrompt.CompleteEvent == CompletionEvent.ChangeScene)
         {
             RunCompletionTests(currentPrompt);
@@ -154,7 +154,7 @@ public class TutorialManager : MonoBehaviour
 
     private void SwitchTool()
     {
-        var currentPrompt = tutorialPrompts[tutorialStep];
+        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
         if (currentPrompt.CompleteEvent == CompletionEvent.SwitchTool)
         {
             RunCompletionTests(currentPrompt);
@@ -163,7 +163,7 @@ public class TutorialManager : MonoBehaviour
 
     private void UnstickItem()
     {
-        var currentPrompt = tutorialPrompts[tutorialStep];
+        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
         if (currentPrompt.CompleteEvent == CompletionEvent.UnstickItem)
         {
             RunCompletionTests(currentPrompt);
