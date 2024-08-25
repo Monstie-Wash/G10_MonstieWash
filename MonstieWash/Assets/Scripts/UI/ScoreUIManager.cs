@@ -39,7 +39,6 @@ public class ScoreUIManager : MonoBehaviour
         LoadOverallTasks();
 
         StartCoroutine(LineItemSetActive());
-        gSM.ResetLevel();
 	}
 
     private void OnEnable()
