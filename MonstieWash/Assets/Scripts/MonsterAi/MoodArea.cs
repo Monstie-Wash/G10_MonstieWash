@@ -22,9 +22,8 @@ public class MoodArea : MonoBehaviour
     [Header("OutlineGlow")]
     [Tooltip("Which Sprite will receive the outline material")] [SerializeField] private SpriteRenderer spriteToOutline;
     [Tooltip("Create a variant of the better sprite outline shader material with chosen colour and thickness for  this slot.")] [SerializeField] private Material materialToApply;
+    [Tooltip("How long the outline should appear after touching area (Multiple duration by amount of areas that affect the same sprite.)")] [SerializeField] private float outlineAppearanceTime;
     private Material m_OriginalMat; //Stores original material to return it to normal after finished touching.
-    private float m_startingThickness; //Stores initial outline thickness.
-    private string m_thickPropertyName = "_Thickness";
 
 
     //Internal states
@@ -49,8 +48,6 @@ public class MoodArea : MonoBehaviour
         if (spriteToOutline != null)
         {
             m_OriginalMat = spriteToOutline.material;
-            m_startingThickness = materialToApply.GetFloat(m_thickPropertyName);
-            print(m_startingThickness + ":starting thick");
         }
     }
 
@@ -74,25 +71,18 @@ public class MoodArea : MonoBehaviour
         currentCooldown = Mathf.Clamp(currentCooldown -= Time.deltaTime, 0f, areaCooldown);
 
         //Update shader based on recent touch
-        if (spriteToOutline != null && spriteToOutline.material != m_OriginalMat)
+        if (spriteToOutline.material.HasProperty("_TimeActive"))
         {
-            print("not original sprite");
-            print("Current 1thickness is " + spriteToOutline.material.GetFloat(m_thickPropertyName));
-            if (spriteToOutline.material.GetFloat(m_thickPropertyName) > 0)
-            {
-                var newThickVal = spriteToOutline.material.GetFloat(m_thickPropertyName) - m_startingThickness / 4 * Time.deltaTime;
-                if (newThickVal <= 0)
-                {
-                    spriteToOutline.material = m_OriginalMat;
-                    return;
-                }
-                spriteToOutline.material.SetFloat(m_thickPropertyName, newThickVal);
-                print("Current 2thickness is " + spriteToOutline.material.GetFloat(m_thickPropertyName));
-            }
-            else spriteToOutline.material = m_OriginalMat;
+            var timeProperty = spriteToOutline.material.GetFloat("_TimeActive");
+
+            //Reset shader to original after timer runs out.
+            if (timeProperty <= 0) spriteToOutline.material = m_OriginalMat;
+
+            //Reduce Shaders TimeActive Property
+            spriteToOutline.material.SetFloat("_TimeActive", Mathf.MoveTowards(timeProperty,0,Time.deltaTime));
+        };
 
 
-        }
     }
 
 
@@ -142,7 +132,7 @@ public class MoodArea : MonoBehaviour
             if (spriteToOutline != null)
             {
                 spriteToOutline.material = materialToApply;
-                spriteToOutline.material.SetFloat(m_thickPropertyName,m_startingThickness);
+                if (spriteToOutline.material.HasProperty("_TimeActive")) spriteToOutline.material.SetFloat("_TimeActive", outlineAppearanceTime);
             }
         }
     }

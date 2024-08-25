@@ -732,11 +732,15 @@ PrefabInstance:
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: materialToApply
       value: 
-      objectReference: {fileID: 2100000, guid: 39c2f6c3ff6fad34d857333e634a72ca, type: 2}
+      objectReference: {fileID: 2100000, guid: 9a0fd7eb6fa89124f9c7c0dfaca3fca7, type: 2}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: spriteToOutline
       value: 
       objectReference: {fileID: 2060305454}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: outlineAppearanceTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
@@ -4194,11 +4198,15 @@ PrefabInstance:
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: materialToApply
       value: 
-      objectReference: {fileID: 2100000, guid: 39c2f6c3ff6fad34d857333e634a72ca, type: 2}
+      objectReference: {fileID: 2100000, guid: 9a0fd7eb6fa89124f9c7c0dfaca3fca7, type: 2}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: spriteToOutline
       value: 
       objectReference: {fileID: 2060305454}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: outlineAppearanceTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
