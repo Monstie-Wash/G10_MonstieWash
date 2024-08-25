@@ -147,7 +147,12 @@ public class StuckItem : MonoBehaviour, ITaskScript
 
         m_pickingTask.Progress = 100f*(m_initialWiggleCount - wiggleCount)/m_initialWiggleCount;
         m_taskTracker.UpdateTaskTracker(m_pickingTask);
-        return;
+        
+        if (!Stuck && gameObject.activeInHierarchy)
+        {
+            m_rb.bodyType = RigidbodyType2D.Dynamic;
+            m_OOBCheckRoutine = StartCoroutine(CheckOOB());
+        }
     }
 }
 
