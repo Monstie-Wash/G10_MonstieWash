@@ -255,7 +255,6 @@ public class GameSceneManager : MonoBehaviour
 
         MoveToScene(loadingScene.SceneName);
 
-        m_currentLevel = Level.None;
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, false);
         await LoadScene(scoreSummaryScene.SceneName);
 
@@ -286,6 +285,7 @@ public class GameSceneManager : MonoBehaviour
     public async Task GoToBedroomScene(string target, bool targetIsUI)
     {
         var lastActiveScene = m_currentScene.name;
+        m_currentLevel = Level.None;
         MoveToScene(loadingScene.SceneName);
 
         if (!bedroomScenes.Exists(scene => scene.SceneName.Equals(lastActiveScene)))
