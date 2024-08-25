@@ -131,7 +131,6 @@ public class UIManager : MonoBehaviour
 
     private void OnSceneCompleted()
     {
-
         FindRelevantUncleanButton().gameObject.SetActive(true);
     }
 
