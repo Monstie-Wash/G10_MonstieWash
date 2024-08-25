@@ -44,8 +44,8 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _PulseSpeed: 10
-    - _Thickness: 0.005
+    - _PulseSpeed: 8
+    - _Thickness: 0.00393
     - _TimeActive: 0
     m_Colors:
     - _Color: {r: 4, g: 0, b: 0, a: 1}
