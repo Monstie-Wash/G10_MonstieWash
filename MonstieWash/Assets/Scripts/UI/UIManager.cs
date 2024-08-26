@@ -127,17 +127,13 @@ public class UIManager : MonoBehaviour
         finishLevelButton.SetActive(true);
     }
 
-    private void OnSceneCompleted()
+    private void OnSceneCompleted(string scene)
     {
-        FindRelevantUncleanButton().gameObject.SetActive(true);
-    }
-
-    /// <summary>
-    /// Finds the NextUncleanButton object in the current scene.
-    /// </summary>
-    private NextUncleanButton FindRelevantUncleanButton()
-    {
-        var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        return Array.Find(uncleanButtons, button => GameSceneManager.Instance.CurrentScene.name.Equals(button.gameObject.scene.name));
+        if (GameSceneManager.Instance.CurrentScene.name.Equals(scene))
+        {
+            var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var button = Array.Find(uncleanButtons, button => button.gameObject.scene.name.Equals(scene));
+            button.gameObject.SetActive(true);
+        }
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(SoundPlayer))]
 public class TaskTracker : MonoBehaviour
 {
-    public event Action OnSceneCompleted;
+    public event Action<string> OnSceneCompleted;
     public event Action OnLevelCompleted;
 
     //Private
@@ -101,7 +101,7 @@ public class TaskTracker : MonoBehaviour
         }
 
         //Scene Complete!
-        OnSceneCompleted?.Invoke();
+        OnSceneCompleted?.Invoke(scene.name);
 
         m_scenesCompleted[scene] = true;
         m_uiManager.UpdateClipboardTask(scene.name);

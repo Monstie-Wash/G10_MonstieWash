@@ -370,7 +370,7 @@ public class MonsterBrain : MonoBehaviour
     /// <summary>
     /// Updates each mood when a scene is completed. 
     /// </summary>
-    private void UpdateMoodOnSceneComplete()
+    private void UpdateMoodOnSceneComplete(string scene)
     {
         SceneCompleted?.Invoke(GameSceneManager.Instance.CurrentScene);
 
