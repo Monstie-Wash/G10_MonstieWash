@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(SoundPlayer))]
 public class MusicManager : MonoBehaviour
 {
+    public static MusicManager Instance;
+
     [SerializeField] private Sound menuMusic;
     [SerializeField] private Sound morningMusic;
     [SerializeField] private Sound eveningMusic;
@@ -28,6 +30,10 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
+        //Ensure there's only one
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+
         m_soundPlayer = GetComponent<SoundPlayer>();
         m_currentMusic = m_soundPlayer.Sound;
         m_currentMusicType = MusicType.Menu;

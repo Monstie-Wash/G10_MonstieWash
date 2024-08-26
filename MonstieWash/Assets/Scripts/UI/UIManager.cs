@@ -17,14 +17,12 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, bool> m_taskList = new();
 
-    private GameSceneManager m_roomSaver;
     private TaskTracker m_taskTracker;
     private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
-    private bool m_UIVisible = true;
+    private bool m_UIInvisible = false;
 
     private void Awake()
     {
-        m_roomSaver = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
         m_progressBars = FindObjectsByType<ProgressBarUI>(FindObjectsSortMode.None);
     }
@@ -33,12 +31,14 @@ public class UIManager : MonoBehaviour
     {
         InputManager.Instance.OnToggleUI += Inputs_OnToggleUI;
         m_taskTracker.OnLevelCompleted += OnLevelCompleted;
+        m_taskTracker.OnSceneCompleted += OnSceneCompleted;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnToggleUI -= Inputs_OnToggleUI;
         m_taskTracker.OnLevelCompleted -= OnLevelCompleted;
+        m_taskTracker.OnSceneCompleted -= OnSceneCompleted;
     }
 
     private void Inputs_OnToggleUI()
@@ -47,8 +47,8 @@ public class UIManager : MonoBehaviour
     }
     private void ToggleUIVisibility()
     {
-        m_UIVisible = !m_UIVisible;
-        CBAnimator.SetBool("Hide", m_UIVisible);
+        m_UIInvisible = !m_UIInvisible;
+        CBAnimator.SetBool("Hide", m_UIInvisible);
     }
 
 /// <summary>
@@ -117,6 +117,27 @@ public class UIManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
+        var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var button in uncleanButtons)
+        {
+            GameSceneManager.Instance.SetObjectActiveState(button.gameObject.GetHashCode(), false);
+            button.gameObject.SetActive(false);
+        }
+
         finishLevelButton.SetActive(true);
+    }
+
+    private void OnSceneCompleted()
+    {
+        FindRelevantUncleanButton().gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Finds the NextUncleanButton object in the current scene.
+    /// </summary>
+    private NextUncleanButton FindRelevantUncleanButton()
+    {
+        var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        return Array.Find(uncleanButtons, button => GameSceneManager.Instance.CurrentScene.name.Equals(button.gameObject.scene.name));
     }
 }

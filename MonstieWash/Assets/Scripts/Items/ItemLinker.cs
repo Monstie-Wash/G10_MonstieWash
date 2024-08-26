@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemLinker : MonoBehaviour
@@ -7,7 +8,6 @@ public class ItemLinker : MonoBehaviour
     [SerializeField] private LinkMethod link;
     [SerializeField] private LinkedItem linkObject;
     
-    private GameSceneManager m_gameSceneManager;
     private TaskTracker m_taskTracker;
     private List<ITaskScript> m_taskScript = new();
 
@@ -19,7 +19,6 @@ public class ItemLinker : MonoBehaviour
 
     private void Awake()
     {
-        m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
 
         ITaskScript taskScript;
@@ -54,18 +53,18 @@ public class ItemLinker : MonoBehaviour
 
         private void OnEnable()
     {
-        m_gameSceneManager.OnSceneSwitch += SaveItem;
-        m_gameSceneManager.OnSceneChanged += LoadItem;
-        m_gameSceneManager.OnLevelEnd += CleanUp;
-        m_gameSceneManager.OnRestartGame += CleanUp;
+        GameSceneManager.Instance.OnSceneSwitch += SaveItem;
+        GameSceneManager.Instance.OnSceneChanged += LoadItem;
+        GameSceneManager.Instance.OnLevelEnd += CleanUp;
+        GameSceneManager.Instance.OnRestartGame += CleanUp;
     }
 
     private void OnDisable()
     {
-        m_gameSceneManager.OnSceneSwitch -= SaveItem;
-        m_gameSceneManager.OnSceneChanged -= LoadItem;
-        m_gameSceneManager.OnLevelEnd -= CleanUp;
-        m_gameSceneManager.OnRestartGame -= CleanUp;
+        GameSceneManager.Instance.OnSceneSwitch -= SaveItem;
+        GameSceneManager.Instance.OnSceneChanged -= LoadItem;
+        GameSceneManager.Instance.OnLevelEnd -= CleanUp;
+        GameSceneManager.Instance.OnRestartGame -= CleanUp;
     }
 
     private void OnApplicationQuit()
@@ -76,15 +75,18 @@ public class ItemLinker : MonoBehaviour
 /// <summary>
 /// Saves data from linked item in scene to link object
 /// </summary>
-    private void SaveItem()
+    public void SaveItem()
     {
-        linkObject.Reset();
-        if (link == LinkMethod.Group)
+		linkObject.Reset();
+		if (link == LinkMethod.Group)
         {
             foreach (Transform child in transform)
             {
                 linkObject.positions.Add(FlipItemPos(child));
                 linkObject.rotations.Add(FlipItemRot(child));
+                linkObject.velocity.Add(FlipItemVel(child.GetComponent<Rigidbody2D>().velocity));
+                linkObject.angularVelocity.Add(FlipItemAng(child.GetComponent<Rigidbody2D>().angularVelocity));
+
                 linkObject.itemData.Add(new List<object>(child.GetComponent<ITaskScript>().SaveData()));
             }
         }
@@ -92,6 +94,9 @@ public class ItemLinker : MonoBehaviour
         {
             linkObject.positions.Add(FlipItemPos(transform));
             linkObject.rotations.Add(FlipItemRot(transform));
+            linkObject.velocity.Add(FlipItemVel(GetComponent<Rigidbody2D>().velocity));
+            linkObject.angularVelocity.Add(GetComponent<Rigidbody2D>().angularVelocity);
+
             linkObject.itemData.Add(new List<object>(m_taskScript[0].SaveData()));
         }
         linkObject.loadOnEnable = true;
@@ -100,7 +105,7 @@ public class ItemLinker : MonoBehaviour
 /// <summary>
 /// Loads data from link object to linked item in scene
 /// </summary>
-    private void LoadItem()
+    public void LoadItem()
     {
         if (linkObject.loadOnEnable == true) 
         {
@@ -110,14 +115,20 @@ public class ItemLinker : MonoBehaviour
                 {
                     transform.GetChild(i).position = linkObject.positions[i];
                     transform.GetChild(i).rotation = linkObject.rotations[i];
-                    transform.GetChild(i).GetComponent<ITaskScript>().LoadData(linkObject.itemData[i]);
+					transform.GetChild(i).GetComponent<Rigidbody2D>().velocity = linkObject.velocity[i];
+					transform.GetChild(i).GetComponent<Rigidbody2D>().angularVelocity = linkObject.angularVelocity[i];
+
+					transform.GetChild(i).GetComponent<ITaskScript>().LoadData(linkObject.itemData[i]);
                 }
             }
             else
             {
                 transform.position = linkObject.positions[0];
                 transform.rotation = linkObject.rotations[0];
-                m_taskScript[0].LoadData(linkObject.itemData[0]);
+				transform.GetComponent<Rigidbody2D>().velocity = linkObject.velocity[0];
+				transform.GetComponent<Rigidbody2D>().angularVelocity = linkObject.angularVelocity[0];
+
+				m_taskScript[0].LoadData(linkObject.itemData[0]);
             }
             linkObject.loadOnEnable = false;
         }
@@ -126,8 +137,8 @@ public class ItemLinker : MonoBehaviour
     //If a scene with linked objects loads incorrectly it's probably because a previous scene was exited/closed without CleanUp being run, leaving bad data in the link scriptableObj
     private void CleanUp()
     {
-        m_gameSceneManager.OnSceneSwitch -= SaveItem;
-        m_gameSceneManager.OnSceneChanged -= LoadItem;
+        GameSceneManager.Instance.OnSceneSwitch -= SaveItem;
+        GameSceneManager.Instance.OnSceneChanged -= LoadItem;
         linkObject.Reset();
     }
 
@@ -140,5 +151,14 @@ public class ItemLinker : MonoBehaviour
     {
         return Quaternion.Euler(0f, 0f, 90f - (item.rotation.eulerAngles.z - 90f));
     }
+
+    private Vector2 FlipItemVel(Vector2 vel)
+    {
+        return new Vector2(-vel.x, vel.y);
+    }
     
+    private float FlipItemAng(float ang) 
+    {
+        return -ang;
+    }
 }

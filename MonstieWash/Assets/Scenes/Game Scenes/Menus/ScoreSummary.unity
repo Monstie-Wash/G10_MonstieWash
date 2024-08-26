@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996384be10af89946a0f302d7d2d5cbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: 3
+  action: 2
   level: 0
   targetScene: {fileID: 11400000, guid: 60381fa7d5c2d11488b6581a378ae663, type: 2}
   targetIsUI: 1

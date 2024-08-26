@@ -8,14 +8,14 @@ public class ToolFX : MonoBehaviour
     private ParticleSystem m_myParticles;
     private ParticleSystem m_completeParticles;
     private Transform m_drawPosTransform;
-    private Eraser m_eraser;
     private SoundPlayer m_soundPlayer;
+    private Eraser m_eraser;
 
     private void Awake()
     {
         m_drawPosTransform = transform.GetChild(0);
-        m_eraser = GetComponent<Eraser>();
         m_soundPlayer = GetComponent<SoundPlayer>();
+        m_eraser = GetComponent<Eraser>();
     }
 
     private void OnEnable()
