@@ -31,12 +31,14 @@ public class UIManager : MonoBehaviour
     {
         InputManager.Instance.OnToggleUI += Inputs_OnToggleUI;
         m_taskTracker.OnLevelCompleted += OnLevelCompleted;
+        m_taskTracker.OnSceneCompleted += OnSceneCompleted;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnToggleUI -= Inputs_OnToggleUI;
         m_taskTracker.OnLevelCompleted -= OnLevelCompleted;
+        m_taskTracker.OnSceneCompleted -= OnSceneCompleted;
     }
 
     private void Inputs_OnToggleUI()
@@ -115,6 +117,27 @@ public class UIManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
+        var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var button in uncleanButtons)
+        {
+            m_roomSaver.SetObjectActiveState(button.gameObject.GetHashCode(), false);
+            button.gameObject.SetActive(false);
+        }
+
         finishLevelButton.SetActive(true);
+    }
+
+    private void OnSceneCompleted()
+    {
+        FindRelevantUncleanButton().gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Finds the NextUncleanButton object in the current scene.
+    /// </summary>
+    private NextUncleanButton FindRelevantUncleanButton()
+    {
+        var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        return Array.Find(uncleanButtons, button => m_roomSaver.CurrentScene.name.Equals(button.gameObject.scene.name));
     }
 }

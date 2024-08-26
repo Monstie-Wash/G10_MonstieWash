@@ -18,6 +18,7 @@ public class TaskTracker : MonoBehaviour
     private SoundPlayer m_soundPlayer;
 
 	public List<TaskData> TaskData { get => m_taskData; }
+    public Dictionary<Scene, bool> ScenesCompleted { get => m_scenesCompleted; }
 
 	private void Awake()
     {

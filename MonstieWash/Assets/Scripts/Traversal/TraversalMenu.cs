@@ -16,7 +16,6 @@ public class TraversalMenu : MonoBehaviour, INavigator
     public enum MenuAction
     {
         StartNewLevel,
-        Continue,
         Restart,
         GoToBedroomScene,
         Quit
@@ -36,11 +35,6 @@ public class TraversalMenu : MonoBehaviour, INavigator
             case MenuAction.StartNewLevel:
                 {
                     GameSceneManager.Instance.StartNewLevel(level);
-                }
-                break;
-            case MenuAction.Continue:
-                {
-                    GameSceneManager.Instance.ContinueLevel();
                 }
                 break;
             case MenuAction.Restart:

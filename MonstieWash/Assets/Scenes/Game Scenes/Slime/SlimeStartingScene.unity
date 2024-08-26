@@ -251,6 +251,10 @@ PrefabInstance:
       propertyPath: finishLevelButton
       value: 
       objectReference: {fileID: 1909728570}
+    - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: nextUncleanButton
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8168637763214906077, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: m_Name
       value: LevelManager
