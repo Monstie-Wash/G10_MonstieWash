@@ -11,7 +11,6 @@ public class TraversalMenu : MonoBehaviour, INavigator
     [SerializeField] private bool setMusic;
     [SerializeField] private MusicManager.MusicType music;
 
-    private GameSceneManager m_sceneManager;
     private Button m_button;
 
     public enum MenuAction
@@ -24,7 +23,6 @@ public class TraversalMenu : MonoBehaviour, INavigator
 
     private void Awake()
     {
-        m_sceneManager = FindFirstObjectByType<GameSceneManager>();
         m_button = GetComponent<Button>();
 
         m_button.onClick.AddListener(OnClicked);
@@ -36,23 +34,23 @@ public class TraversalMenu : MonoBehaviour, INavigator
         {
             case MenuAction.StartNewLevel:
                 {
-                    m_sceneManager.StartNewLevel(level);
+                    GameSceneManager.Instance.StartNewLevel(level);
                 }
                 break;
             case MenuAction.Restart:
                 {
-                    m_sceneManager.RestartLevel();
+                    GameSceneManager.Instance.RestartLevel();
                 }
                 break;
             case MenuAction.GoToBedroomScene:
                 {
-                    if (setMusic) _ = m_sceneManager.GoToBedroomScene(targetScene.SceneName, targetIsUI, music);
-                    else _ = m_sceneManager.GoToBedroomScene(targetScene.SceneName, targetIsUI);
+                    if (setMusic) _ = GameSceneManager.Instance.GoToBedroomScene(targetScene.SceneName, targetIsUI, music);
+                    else _ = GameSceneManager.Instance.GoToBedroomScene(targetScene.SceneName, targetIsUI);
                 }
                 break;
             case MenuAction.Quit:
                 {
-                    m_sceneManager.QuitGame();
+                    GameSceneManager.Instance.QuitGame();
                 }
                 break;
         }

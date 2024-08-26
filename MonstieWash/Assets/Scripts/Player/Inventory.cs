@@ -45,7 +45,7 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         //Ensure there is only one class of this existing and that it persists.
-        MakeClassStatic();
+        Singletonize();
 
         //Create a new list for storing items if nothing has been assigned in unity inspector.
         if (storedItemsList == null) storedItemsList = new List<InventoryEntry>();
@@ -187,7 +187,7 @@ public class Inventory : MonoBehaviour
     /// <summary>
     /// Assigns this object to not be destroyed on load. If a new script is found will then remove it;
     /// </summary>
-    private void MakeClassStatic()
+    private void Singletonize()
     {
         Inventory[] objs = FindObjectsByType<Inventory>(FindObjectsSortMode.None);
 
