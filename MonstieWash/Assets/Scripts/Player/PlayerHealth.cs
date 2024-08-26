@@ -93,15 +93,15 @@ public class PlayerHealth : MonoBehaviour
         // Can't take damage if invincible.
         if (m_isInvincible) return;
 
-        playerHealth -= dmgTaken;
-        if (playerHealth < 0f)
-        {
-            FindFirstObjectByType<MusicManager>().SetMusic(MusicManager.MusicType.Death);
-            playerHealth = playerMaxHealth;
-            transform.parent.gameObject.SetActive(false);
-            m_gameSceneManager.PlayerDied();
-            return;
-        }
+        //playerHealth -= dmgTaken;
+        //if (playerHealth < 0f)
+        //{
+        //    FindFirstObjectByType<MusicManager>().SetMusic(MusicManager.MusicType.Death);
+        //    playerHealth = playerMaxHealth;
+        //    transform.parent.gameObject.SetActive(false);
+        //    m_gameSceneManager.PlayerDied();
+        //    return;
+        //}
 
         StartCoroutine(PlayDamageEffects(dmgTaken));
     }

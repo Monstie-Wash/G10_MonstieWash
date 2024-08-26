@@ -20,6 +20,7 @@ public class TaskTracker : MonoBehaviour
     private MusicManager m_musicManager;
 
 	public List<TaskData> TaskData { get => m_taskData; }
+    public Dictionary<Scene, bool> ScenesCompleted { get => m_scenesCompleted; }
 
 	private void Awake()
     {
