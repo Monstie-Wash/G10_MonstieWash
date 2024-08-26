@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LevelSelectUI : MonoBehaviour
@@ -10,12 +11,14 @@ public class LevelSelectUI : MonoBehaviour
     [SerializeField] private GameObject bigElement;
     [SerializeField] private Button backButton;
 
+    private EventSystem m_eventSystem;
     private Button m_selectBtn;
 
     private void Awake()
     {
         m_selectBtn = GetComponent<Button>();
         m_selectBtn.onClick.AddListener(EnableElement);
+        m_eventSystem = FindFirstObjectByType<EventSystem>();
     }
 
     private void EnableElement()
@@ -24,6 +27,8 @@ public class LevelSelectUI : MonoBehaviour
         bigParent.SetActive(true);
         bigElement.SetActive(true);
         backButton.onClick.AddListener(DisableElement);
+
+        m_eventSystem.SetSelectedGameObject(bigElement.GetComponentInChildren<Button>().gameObject);
     }
 
     public void DisableElement()
@@ -32,5 +37,7 @@ public class LevelSelectUI : MonoBehaviour
         bigParent.SetActive(false);
         bigElement.SetActive(false);
         backButton.onClick.RemoveListener(DisableElement);
+
+        m_eventSystem.SetSelectedGameObject(smallParent.GetComponentInChildren<Button>().gameObject);
     }
 }
