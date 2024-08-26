@@ -17,14 +17,12 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, bool> m_taskList = new();
 
-    private GameSceneManager m_roomSaver;
     private TaskTracker m_taskTracker;
     private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
     private bool m_UIVisible = true;
 
     private void Awake()
     {
-        m_roomSaver = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
         m_progressBars = FindObjectsByType<ProgressBarUI>(FindObjectsSortMode.None);
     }
@@ -122,7 +120,7 @@ public class UIManager : MonoBehaviour
         var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var button in uncleanButtons)
         {
-            m_roomSaver.SetObjectActiveState(button.gameObject.GetHashCode(), false);
+            GameSceneManager.Instance.SetObjectActiveState(button.gameObject.GetHashCode(), false);
             button.gameObject.SetActive(false);
         }
 
@@ -140,6 +138,6 @@ public class UIManager : MonoBehaviour
     private NextUncleanButton FindRelevantUncleanButton()
     {
         var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        return Array.Find(uncleanButtons, button => m_roomSaver.CurrentScene.name.Equals(button.gameObject.scene.name));
+        return Array.Find(uncleanButtons, button => GameSceneManager.Instance.CurrentScene.name.Equals(button.gameObject.scene.name));
     }
 }
