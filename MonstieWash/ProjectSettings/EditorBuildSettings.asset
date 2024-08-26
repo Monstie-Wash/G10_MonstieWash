@@ -35,7 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Menus/ScoreSummary.unity
     guid: c64edc70714cc75499eebb1e76b2a8d7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game Scenes/Menus/DeathScreen.unity
     guid: f9eb8cb70e7a3814083e62f071a3824c
   - enabled: 1

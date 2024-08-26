@@ -29,8 +29,8 @@ public class ScoreUIManager : MonoBehaviour
     {
 		m_tracker = FindFirstObjectByType<TaskTracker>(FindObjectsInactive.Include);
 
-        if (m_sprites.Count >= (int)GameSceneManager.Instance.CurrentLevel)
-            m_polaroid.sprite = m_sprites[((int)GameSceneManager.Instance.CurrentLevel)];
+        if (m_sprites.Count >= (int)GameSceneManager.Instance.CurrentLevel - 1)
+            m_polaroid.sprite = m_sprites[((int)GameSceneManager.Instance.CurrentLevel - 1)];
         else
             Debug.LogError("Invalid level. No polaroid sprite available.");
 

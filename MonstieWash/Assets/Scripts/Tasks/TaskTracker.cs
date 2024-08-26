@@ -146,9 +146,8 @@ public class TaskTracker : MonoBehaviour
     /// </summary>
     private void UpdateUI()
     {
-        var overallCompletion = CalculateCompletionPercentage(GameSceneManager.Instance.CurrentScene);
-        m_uiManager.UpdateCompletion(overallCompletion);
-        m_uiManager.UpdateProgressBar(overallCompletion);
+        m_uiManager.UpdateProgressBar(CalculateCurrentSceneCompletionPercentage(GameSceneManager.Instance.CurrentScene));
+        m_uiManager.UpdateCompletion(CalculateOverallCompletionPercentage());
     }
 
     /// <summary>
@@ -156,7 +155,7 @@ public class TaskTracker : MonoBehaviour
     /// </summary>
     /// <param name="scene">The scene in which to check for completion.</param>
     /// <returns>The overall completion percentage.</returns>
-    private float CalculateCompletionPercentage(Scene scene)
+    private float CalculateCurrentSceneCompletionPercentage(Scene scene)
     {
         var numOfTasks = 0;
         var sumOfTasks = 0f;
@@ -165,6 +164,20 @@ public class TaskTracker : MonoBehaviour
         {
             numOfTasks++;
             sumOfTasks += sceneTask.Progress;
+        }
+
+        return sumOfTasks / numOfTasks / 100f;
+    }
+
+    private float CalculateOverallCompletionPercentage()
+    {
+        var numOfTasks = 0;
+        var sumOfTasks = 0f;
+
+        foreach (var task in m_taskData)
+        {
+            numOfTasks++;
+            sumOfTasks += task.Progress;
         }
 
         return sumOfTasks / numOfTasks / 100f;
