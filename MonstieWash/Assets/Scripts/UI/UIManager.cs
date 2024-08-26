@@ -17,14 +17,12 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, bool> m_taskList = new();
 
-    private GameSceneManager m_roomSaver;
     private TaskTracker m_taskTracker;
     private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
     private bool m_UIVisible = true;
 
     private void Awake()
     {
-        m_roomSaver = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
         m_progressBars = FindObjectsByType<ProgressBarUI>(FindObjectsSortMode.None);
     }

@@ -31,7 +31,6 @@ public class PlayerHealth : MonoBehaviour
     private bool m_isInvincible = false;    // Flags whether the player is currently invincible after taking damage.
     private Component[] m_spriteRenderers;  // Array of SpriteRenderers from the PlayerHand bone Animation.
     private Collider2D m_playerHurtbox;     // The player's hurtbox (where they can be hit by attacks).
-    private GameSceneManager m_gameSceneManager;
     #endregion
 
     #region Accessors
@@ -43,7 +42,6 @@ public class PlayerHealth : MonoBehaviour
         m_playerHurtbox = GetComponent<Collider2D>();
         m_spriteRenderers = GetComponentsInChildren<SpriteRenderer>(); 
         playerHealth = playerMaxHealth;
-        m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
     }
 
     /// <summary>
@@ -96,10 +94,10 @@ public class PlayerHealth : MonoBehaviour
         playerHealth -= dmgTaken;
         if (playerHealth < 0f)
         {
-            FindFirstObjectByType<MusicManager>().SetMusic(MusicManager.MusicType.Death);
+            MusicManager.Instance.SetMusic(MusicManager.MusicType.Death);
             playerHealth = playerMaxHealth;
             transform.parent.gameObject.SetActive(false);
-            m_gameSceneManager.PlayerDied();
+            GameSceneManager.Instance.PlayerDied();
             return;
         }
 

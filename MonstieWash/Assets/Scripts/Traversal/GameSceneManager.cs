@@ -6,12 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
+    public static GameSceneManager Instance;
+
     /// <summary>Event that fires when all monster scenes have been loaded, but before they are set to inactive.</summary>
     public event Action OnMonsterScenesLoaded;
     /// <summary>Event that fires right before switching to another scene.</summary>
     public event Action OnSceneSwitch;
     /// <summary>Event that fires right after switching to another scene.</summary>
-    public static event Action OnSceneChanged;
+    public event Action OnSceneChanged;
     /// <summary>Event that fires when the level ends, before moving to another scene.</summary>
     public event Action OnLevelEnd;
     /// <summary>Event that fires right before the game is reset.</summary>
@@ -29,7 +31,6 @@ public class GameSceneManager : MonoBehaviour
     private Scene m_currentScene;
     private LevelScenes m_currentLevelScenes;
     private List<string> m_loadedScenes = new();
-    private MusicManager m_musicManager;
 
     [HideInInspector] public List<string> AllLevelScenes { get; private set; } = new();
     [HideInInspector] public Level CurrentLevel { get { return m_currentLevel; } }
@@ -52,7 +53,9 @@ public class GameSceneManager : MonoBehaviour
     
     private void Awake()
     {
-        m_musicManager = GetComponentInChildren<MusicManager>();
+        //Ensure there's only one
+        if (Instance == null) Instance = this;
+        else Destroy(this);
 
         foreach (var level in allLevelScenes)
         {
@@ -77,7 +80,7 @@ public class GameSceneManager : MonoBehaviour
         m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        m_musicManager.SetMusic(MusicManager.MusicType.Morning);
+        MusicManager.Instance.SetMusic(MusicManager.MusicType.Morning);
         SetSceneActive(loadingScene.SceneName, false);
     }
 
@@ -241,7 +244,7 @@ public class GameSceneManager : MonoBehaviour
 
         await UnloadAllScenes();
 
-        m_musicManager.SetMusic(MusicManager.MusicType.Background);
+        MusicManager.Instance.SetMusic(MusicManager.MusicType.Background);
 
         LoadMonsterScene(level);
     }
@@ -308,7 +311,7 @@ public class GameSceneManager : MonoBehaviour
     {
         await GoToBedroomScene(target, targetIsUI);
 
-        m_musicManager.SetMusic(music);
+        MusicManager.Instance.SetMusic(music);
     }
 
     /// <summary>
@@ -319,7 +322,7 @@ public class GameSceneManager : MonoBehaviour
         await UnloadScene(deathScene.SceneName);
         m_loadedScenes.RemoveAt(m_loadedScenes.IndexOf(deathScene.SceneName));
 
-        m_musicManager.SetMusic(MusicManager.MusicType.Background);
+        MusicManager.Instance.SetMusic(MusicManager.MusicType.Background);
 
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, true);
         SetSceneActive(m_currentLevelScenes.gameScenes[0].SceneName, true);
@@ -334,7 +337,7 @@ public class GameSceneManager : MonoBehaviour
 
         await UnloadActiveLevelScenes();
 
-        m_musicManager.SetMusic(MusicManager.MusicType.Background);
+        MusicManager.Instance.SetMusic(MusicManager.MusicType.Background);
 
         LoadMonsterScene(m_currentLevelScenes.level);
     }

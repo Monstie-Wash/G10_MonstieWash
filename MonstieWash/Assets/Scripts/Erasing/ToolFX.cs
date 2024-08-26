@@ -9,25 +9,27 @@ public class ToolFX : MonoBehaviour
     private ParticleSystem m_completeParticles;
     private Transform m_drawPosTransform;
     private SoundPlayer m_soundPlayer;
+    private Eraser m_eraser;
 
     private void Awake()
     {
         m_drawPosTransform = transform.GetChild(0);
         m_soundPlayer = GetComponent<SoundPlayer>();
+        m_eraser = GetComponent<Eraser>();
     }
 
     private void OnEnable()
     {
-        Eraser.OnErasing_Started += Eraser_OnErasing;
-        Eraser.OnErasing_Ended += Eraser_OnErasing_Ended;
+        m_eraser.OnErasing_Started += Eraser_OnErasing;
+        m_eraser.OnErasing_Ended += Eraser_OnErasing_Ended;
         InputManager.Instance.OnActivate += Inputs_OnActivate;
         InputManager.Instance.OnActivate_Ended += Inputs_OnActivate_Ended;
     }
 
     private void OnDisable()
     {
-        Eraser.OnErasing_Started -= Eraser_OnErasing;
-        Eraser.OnErasing_Ended -= Eraser_OnErasing_Ended;
+        m_eraser.OnErasing_Started -= Eraser_OnErasing;
+        m_eraser.OnErasing_Ended -= Eraser_OnErasing_Ended;
         InputManager.Instance.OnActivate -= Inputs_OnActivate;
         InputManager.Instance.OnActivate_Ended -= Inputs_OnActivate_Ended;
     }

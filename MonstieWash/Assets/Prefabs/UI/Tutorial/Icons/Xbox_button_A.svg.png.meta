@@ -195,7 +195,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Xbox_button_A.svg_0: -3474547559559131886
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

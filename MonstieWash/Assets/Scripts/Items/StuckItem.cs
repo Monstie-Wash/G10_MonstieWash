@@ -38,7 +38,7 @@ public class StuckItem : MonoBehaviour, ITaskScript
     public int WiggleCount { get {  return wiggleCount; } }
     public Transform InitialParent {  get { return m_initialParent; } }
 
-    public static event Action UnstickItem;
+    public event Action OnItemUnstuck;
 
 
     private void Awake()
@@ -95,7 +95,7 @@ public class StuckItem : MonoBehaviour, ITaskScript
         if (wiggleCount <= 0)
         {
             SetStuck(false);
-            UnstickItem?.Invoke();
+            OnItemUnstuck?.Invoke();
             return true;
         }
 
