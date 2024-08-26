@@ -120,7 +120,7 @@ public class UIManager : MonoBehaviour
         var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var button in uncleanButtons)
         {
-            m_roomSaver.SetObjectActiveState(button.gameObject.GetHashCode(), false);
+            GameSceneManager.Instance.SetObjectActiveState(button.gameObject.GetHashCode(), false);
             button.gameObject.SetActive(false);
         }
 
@@ -138,6 +138,6 @@ public class UIManager : MonoBehaviour
     private NextUncleanButton FindRelevantUncleanButton()
     {
         var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        return Array.Find(uncleanButtons, button => m_roomSaver.CurrentScene.name.Equals(button.gameObject.scene.name));
+        return Array.Find(uncleanButtons, button => GameSceneManager.Instance.CurrentScene.name.Equals(button.gameObject.scene.name));
     }
 }
