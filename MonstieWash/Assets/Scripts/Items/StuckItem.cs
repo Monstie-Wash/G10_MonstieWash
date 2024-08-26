@@ -113,7 +113,6 @@ public class StuckItem : MonoBehaviour, ITaskScript
             yield return null;
         }
 
-        Debug.Log("Do the bone go?");
         gameObject.SetActive(false);
     }
 
