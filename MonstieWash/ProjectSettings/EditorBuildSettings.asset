@@ -15,15 +15,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/Bedroom/Bedroom.unity
     guid: fe5f6bc22f505564b87488eeacd6919b
   - enabled: 1
-    path: Assets/Scenes/Game Scenes/Bedroom/Compendium.unity
-    guid: 72cb439dd83c7a94882fb8d9eafea187
+    path: Assets/Scenes/Game Scenes/Bedroom/MonsterCompendium.unity
+    guid: f402e0dbd8966f94fadd334852c922de
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Bedroom/Garden.unity
     guid: a14e3e92d1a815a4991562d589a62b9f
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Bedroom/Pigeon.unity
     guid: 0928f67a7c08c7b4395f4d6c09e835d7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game Scenes/Bedroom/UpgradeTable.unity
     guid: a36035a3571c8ce41a10ec493d2afceb
   - enabled: 1
@@ -44,7 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Mimic/MimicStartingScene.unity
     guid: aa33355a735657949b555275e662b643
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Game Scenes/Mimic/MimicOverview.unity
     guid: 5f12d0f1c93aed941b27a58233e9fd0e
   - enabled: 1

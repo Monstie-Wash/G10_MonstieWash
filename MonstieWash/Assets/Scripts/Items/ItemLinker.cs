@@ -8,7 +8,7 @@ public class ItemLinker : MonoBehaviour
     [SerializeField] private LinkMethod link;
     [SerializeField] private LinkedItem linkObject;
     
-    private GameSceneManager m_gameSceneManager;
+    private TaskTracker m_taskTracker;
     private List<ITaskScript> m_taskScript = new();
 
     private enum LinkMethod
@@ -19,7 +19,7 @@ public class ItemLinker : MonoBehaviour
 
     private void Awake()
     {
-        m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
 
         ITaskScript taskScript;
         if (link == LinkMethod.Group)
@@ -53,18 +53,18 @@ public class ItemLinker : MonoBehaviour
 
         private void OnEnable()
     {
-        m_gameSceneManager.OnSceneSwitch += SaveItem;
-        m_gameSceneManager.OnSceneChanged += LoadItem;
-        m_gameSceneManager.OnLevelEnd += CleanUp;
-        m_gameSceneManager.OnRestartGame += CleanUp;
+        GameSceneManager.Instance.OnSceneSwitch += SaveItem;
+        GameSceneManager.Instance.OnSceneChanged += LoadItem;
+        GameSceneManager.Instance.OnLevelEnd += CleanUp;
+        GameSceneManager.Instance.OnRestartGame += CleanUp;
     }
 
     private void OnDisable()
     {
-        m_gameSceneManager.OnSceneSwitch -= SaveItem;
-        m_gameSceneManager.OnSceneChanged -= LoadItem;
-        m_gameSceneManager.OnLevelEnd -= CleanUp;
-        m_gameSceneManager.OnRestartGame -= CleanUp;
+        GameSceneManager.Instance.OnSceneSwitch -= SaveItem;
+        GameSceneManager.Instance.OnSceneChanged -= LoadItem;
+        GameSceneManager.Instance.OnLevelEnd -= CleanUp;
+        GameSceneManager.Instance.OnRestartGame -= CleanUp;
     }
 
     private void OnApplicationQuit()
@@ -75,7 +75,7 @@ public class ItemLinker : MonoBehaviour
 /// <summary>
 /// Saves data from linked item in scene to link object
 /// </summary>
-    private void SaveItem()
+    public void SaveItem()
     {
 		linkObject.Reset();
 		if (link == LinkMethod.Group)
@@ -105,7 +105,7 @@ public class ItemLinker : MonoBehaviour
 /// <summary>
 /// Loads data from link object to linked item in scene
 /// </summary>
-    private void LoadItem()
+    public void LoadItem()
     {
         if (linkObject.loadOnEnable == true) 
         {
@@ -137,8 +137,8 @@ public class ItemLinker : MonoBehaviour
     //If a scene with linked objects loads incorrectly it's probably because a previous scene was exited/closed without CleanUp being run, leaving bad data in the link scriptableObj
     private void CleanUp()
     {
-        m_gameSceneManager.OnSceneSwitch -= SaveItem;
-        m_gameSceneManager.OnSceneChanged -= LoadItem;
+        GameSceneManager.Instance.OnSceneSwitch -= SaveItem;
+        GameSceneManager.Instance.OnSceneChanged -= LoadItem;
         linkObject.Reset();
     }
 

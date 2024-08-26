@@ -36,6 +36,10 @@ public class MonsterBrain : MonoBehaviour
     public event Action MonsterAttack;    // Monster attack event.
     #endregion
 
+    #region Flinch
+    public event Action OnFlinch;
+    #endregion
+
     #region Debug
     private int m_designerSanityBuff = 10; // A multiplier to reduce the tiny size of numbers used in setting up scriptable objects. Recommended set at 10.
 
@@ -50,13 +54,11 @@ public class MonsterBrain : MonoBehaviour
     #endregion
 
     #region References
-    private GameSceneManager m_gameSceneManager;
     private TaskTracker m_taskTracker;
     #endregion
 
     private void Awake()
     {
-        m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
 
         foreach (var data in moodData)
@@ -370,7 +372,7 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     private void UpdateMoodOnSceneComplete()
     {
-        SceneCompleted?.Invoke(m_gameSceneManager.CurrentScene);
+        SceneCompleted?.Invoke(GameSceneManager.Instance.CurrentScene);
 
         for (int i = 0; i < moodData.Count; i++)
         {
@@ -400,7 +402,7 @@ public class MonsterBrain : MonoBehaviour
             */
 
             var tempParticles = Instantiate(mood.MoodParticle, moodParticleOrigin, Quaternion.identity); // The mood's ParticleSystem
-            SceneManager.MoveGameObjectToScene(tempParticles.gameObject, m_gameSceneManager.CurrentScene);
+            SceneManager.MoveGameObjectToScene(tempParticles.gameObject, GameSceneManager.Instance.CurrentScene);
             tempParticles.Play();
 
             yield return new WaitForSeconds(time);
@@ -412,5 +414,10 @@ public class MonsterBrain : MonoBehaviour
         {
             if (debug) print($"Moodtype {mood.name} doesn't have a particle system attached");
         }
+    }
+
+    public void Flinch()
+    {
+        OnFlinch?.Invoke();
     }
 }

@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class DebugManager : MonoBehaviour
 {
-    private GameSceneManager m_gameSceneManager;
-
-    private void Awake()
-    {
-        m_gameSceneManager = GetComponent<GameSceneManager>();
-    }
-
     private void OnEnable()
     {
         InputManager.Instance.OnDebugReset += ResetGame;
@@ -23,6 +16,6 @@ public class DebugManager : MonoBehaviour
 
     private void ResetGame()
     {
-        m_gameSceneManager.RestartGame();
+        GameSceneManager.Instance.RestartGame();
     }
 }

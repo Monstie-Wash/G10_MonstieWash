@@ -25,14 +25,14 @@ public class PlayerHand : MonoBehaviour
     {
         InputManager.Instance.OnMove += Inputs_MovePerformed;
         InputManager.Instance.OnMove_Ended += Inputs_MoveEnded;
-        InputManager.Instance.OnNavigate += Inputs_OnNavigate;
+        InputManager.Instance.OnActivate += Inputs_OnNavigate;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnMove -= Inputs_MovePerformed;
         InputManager.Instance.OnMove_Ended -= Inputs_MoveEnded;
-        InputManager.Instance.OnNavigate -= Inputs_OnNavigate;
+        InputManager.Instance.OnActivate -= Inputs_OnNavigate;
     }
 
     private void Awake()

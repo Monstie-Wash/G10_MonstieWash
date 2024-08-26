@@ -17,13 +17,11 @@ public class MonsterSoundManager : MonoBehaviour
 
     private SoundPlayer m_soundPlayer;
     private MonsterBrain m_monsterBrain;
-    private MusicManager m_musicManager;
 
     private void Awake()
     {
         m_soundPlayer = GetComponent<SoundPlayer>();
         m_monsterBrain = GetComponent<MonsterBrain>();
-        m_musicManager = FindFirstObjectByType<MusicManager>();
     }
 
     private void OnEnable()
