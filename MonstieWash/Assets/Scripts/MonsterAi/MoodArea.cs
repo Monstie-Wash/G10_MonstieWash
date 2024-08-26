@@ -71,7 +71,7 @@ public class MoodArea : MonoBehaviour
         currentCooldown = Mathf.Clamp(currentCooldown -= Time.deltaTime, 0f, areaCooldown);
 
         //Update shader based on recent touch
-        if (spriteToOutline.material.HasProperty("_TimeActive"))
+        if (spriteToOutline != null && spriteToOutline.material.HasProperty("_TimeActive"))
         {
             var timeProperty = spriteToOutline.material.GetFloat("_TimeActive");
 
