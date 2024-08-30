@@ -19,7 +19,7 @@ public class ToolSwitcher : MonoBehaviour
 
     public int CurrentToolIndex { get { return m_currentToolIndex; } }
 
-    public bool HandFree { get { Debug.Log($"Tool Index: {m_currentToolIndex} Held Items: {m_heldItems.Count}");  return ((m_currentToolIndex == -1) && (m_heldItems.Count == 0)); } }
+    public bool HandFree { get { return ((m_currentToolIndex == -1) && (m_heldItems.Count == 0)); } }
 
     public List<GameObject> ToolInstances { get { return m_toolInstances; } }
 
