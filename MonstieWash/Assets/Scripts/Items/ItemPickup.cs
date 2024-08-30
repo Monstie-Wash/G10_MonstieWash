@@ -150,6 +150,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void LetGoItem()
     {
+        m_toolSwitcher.DropItem(this.gameObject);
         m_heldItem = null;
     }
 
@@ -159,6 +160,7 @@ public class ItemPickup : MonoBehaviour
     /// <param name="item">The item to pick up.</param>
     private void PickupItem()
     {
+        m_toolSwitcher.HoldItem(this.gameObject);
         m_heldItem.transform.parent = heldItemsTransform;
         m_heldItem.transform.localPosition = Vector3.zero; // snap to centre of hand
         m_heldItem.Rb.angularVelocity = 0f;
@@ -169,6 +171,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void DropItem()
     {
+        m_toolSwitcher.DropItem(this.gameObject);
         m_heldItem.transform.parent = m_heldItem.InitialParent;
 
         var handMovement = GetComponent<PlayerHand>().Velocity.normalized;
@@ -186,6 +189,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void SetupHoldingStuckItem()
     {
+        m_toolSwitcher.HoldItem(this.gameObject);
         SetMinimumDir();
 
         m_prevPos = transform.position;
