@@ -572,7 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: 2
   level: 0
-  targetScene: {fileID: 11400000, guid: 60381fa7d5c2d11488b6581a378ae663, type: 2}
+  targetScene: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
   targetIsUI: 1
   setMusic: 1
   music: 2
