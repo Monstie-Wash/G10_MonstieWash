@@ -12,8 +12,8 @@ public class PlayerHand_AnimationController : MonoBehaviour
     [Tooltip("PlayerHand idle animation")][SerializeField] private AnimationClip anim_idle;
     [Tooltip("PlayerHand grab animation")][SerializeField] private AnimationClip anim_grab;
     [Tooltip("PlayerHand petting animation")][SerializeField] private AnimationClip anim_pet;
-    
-    private Dictionary<AnimState, AnimationClip> m_handAnims = new Dictionary<AnimState, AnimationClip>();
+
+    private Dictionary<AnimState, AnimationClip> m_handAnims = new();
 
     private float m_stillTime = 0f;   // Consecutive time spent still
     private bool m_isMoving = false;    // Whether hand is moving this frame
@@ -22,12 +22,14 @@ public class PlayerHand_AnimationController : MonoBehaviour
     private PlayerHand m_playerHand;
     private Animation m_animator;
     private ToolSwitcher m_toolSwitcher;
+    private ItemPickup m_itemPickup;
 
     private void Awake()
     {
         m_playerHand = GetComponentInParent<PlayerHand>();
         m_animator = GetComponent<Animation>();
         m_toolSwitcher = GetComponentInParent<ToolSwitcher>();
+        m_itemPickup = GetComponentInParent<ItemPickup>();
         SetupDictionary();
     }
 
@@ -45,11 +47,11 @@ public class PlayerHand_AnimationController : MonoBehaviour
         TrackIdleTime();
 
         // Arranged in order of priority (only 4-5 hand animations, no need to overengineer?)
-        if (!m_toolSwitcher.HandFree)
+        if (m_itemPickup.HoldingItem || m_toolSwitcher.CurrentToolIndex != -1)
         {
             PlayAnimation(AnimState.Grab);
         }
-        else if (!m_isMoving && m_stillTime > 0.25f && (m_toolSwitcher.HandFree))
+        else if (!m_isMoving && m_stillTime > 0.1f && (!m_itemPickup.HoldingItem))
         {
             PlayAnimation(AnimState.Idle);
         }

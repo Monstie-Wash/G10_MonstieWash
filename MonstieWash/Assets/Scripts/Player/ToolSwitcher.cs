@@ -8,7 +8,6 @@ public class ToolSwitcher : MonoBehaviour
     [SerializeField] private Transform toolHolder;
 
     private List<GameObject> m_toolInstances = new();
-    private List<GameObject> m_heldItems = new();
 
     public event Action OnSwitchTool;  // The player switched the tool in their hand
 
@@ -18,8 +17,6 @@ public class ToolSwitcher : MonoBehaviour
     private int m_currentToolIndex = -1;
 
     public int CurrentToolIndex { get { return m_currentToolIndex; } }
-
-    public bool HandFree { get { return ((m_currentToolIndex == -1) && (m_heldItems.Count == 0)); } }
 
     public List<GameObject> ToolInstances { get { return m_toolInstances; } }
 
@@ -108,15 +105,5 @@ public class ToolSwitcher : MonoBehaviour
         m_currentToolIndex = toolIndex;
 
         if (m_currentToolIndex >= 0) m_toolInstances[m_currentToolIndex].SetActive(true);
-    }
-
-    public void HoldItem(GameObject item)
-    {
-        m_heldItems.Add(item);
-    }
-
-    public void DropItem(GameObject item)
-    {
-        if (m_heldItems.Contains(item)) m_heldItems.Remove(item);
     }
 }
