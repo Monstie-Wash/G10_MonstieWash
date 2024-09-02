@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tool", menuName = "ScriptableObjects/Tool")]
@@ -7,27 +10,12 @@ public class Tool : ScriptableObject
     public Sprite mask;
     [Range(1, 10)] public int size = 1;
     [SerializeField][Range(1f, 100f)] private float inputStrength = 100f;
+    [SerializeField] private List<ErasableLayerer.ErasableLayer> erasableLayers = new();
 
     public byte[] MaskPixels { get; private set; }
     public float InputStrength { get { return inputStrength; } set { inputStrength = Mathf.Clamp(value, 1f, 100f); } }
     public float Strength { get; private set; }
-
-    public Tool(string toolName, Sprite mask, int size, float inputStrength)
-    {
-        this.toolName = toolName;
-        this.mask = mask;
-        this.size = size;
-        this.inputStrength = inputStrength;
-
-        Initialize();
-    }
-
-    public Tool(Tool otherTool)
-    {
-        SetValues(otherTool);
-
-        Initialize();
-    }
+    public List<ErasableLayerer.ErasableLayer> ErasableLayers { get { return erasableLayers; } }
 
     /// <summary>
     /// Initalize the tool, setting up all required values and variables. (Used in place of an Awake)
@@ -54,5 +42,26 @@ public class Tool : ScriptableObject
         mask = otherTool.mask;
         size = otherTool.size;
         inputStrength = otherTool.inputStrength;
+    }
+
+    private void OnValidate()
+    {
+        List<ErasableLayerer.ErasableLayer> duplicateLayers = new();
+
+        foreach (var layer in erasableLayers)
+        {
+            var layerCount = 0;
+
+            foreach (var otherLayer in erasableLayers)
+            {
+                if (otherLayer == layer) layerCount++;
+            }
+
+            if (layerCount > 1 && !duplicateLayers.Contains(layer))
+            {
+                Debug.LogWarning($"There are duplicate values of {layer} in the ErasableLayers list on tool: {toolName}");
+                duplicateLayers.Add(layer);
+            }
+        }
     }
 }
