@@ -498,9 +498,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996384be10af89946a0f302d7d2d5cbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action: 2
+  action: 3
   level: 0
-  targetScene: {fileID: 11400000, guid: f27043940161ff747aa1bb4da3c508ed, type: 2}
+  targetScene: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
   targetIsUI: 0
   setMusic: 0
   music: 0

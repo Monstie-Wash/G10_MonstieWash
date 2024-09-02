@@ -841,7 +841,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49d73291b8dd75468eae6e3413d9855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_menuCanvas: {fileID: 1446344132}
 --- !u!1001 &1836793582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1159,12 +1158,12 @@ PrefabInstance:
       objectReference: {fileID: 1446344129}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: bedroomScenes.Array.size
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'bedroomScenes.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 055eb2ef65e83b24ca61d262d2b5797a, type: 2}
+      objectReference: {fileID: 11400000, guid: c9b85e23aaeb1d34fa4250e3d64a26f8, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'bedroomScenes.Array.data[1]'
       value: 
