@@ -8,6 +8,8 @@ public class Treat : Consumable
 {
     [SerializeField] private List<MoodEffect> moods;
 
+    public static event Action UseTreat;
+
     [Serializable]
     public struct MoodEffect
     {
@@ -29,6 +31,7 @@ public class Treat : Consumable
             if (!brain.Moods.Contains(moods[i].target)) continue;
             brain.UpdateMood(moods[i].effect, moods[i].target);
             Debug.Log("Updating: " + moods[i].target + " by " + moods[i].effect);
+            UseTreat?.Invoke();
         }
 
         //Remove one of this consumable type from the manager.
