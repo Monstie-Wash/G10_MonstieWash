@@ -34,10 +34,10 @@ Transform:
   - {fileID: 6928594621225611408}
   - {fileID: 427361703615729902}
   - {fileID: 7990959850495949271}
+  - {fileID: 3377189218074293396}
   - {fileID: 2485918782686392121}
   - {fileID: 5648402291046521697}
   - {fileID: 7241563579589221802}
-  - {fileID: 3377189218074293396}
   - {fileID: 5611531250606129381}
   - {fileID: 1952981365454850969}
   m_Father: {fileID: 0}
@@ -71,6 +71,10 @@ MonoBehaviour:
     eventListen: 3
     promptCompletion: 0
     value: 0
+  - prompt: {fileID: 9219732875464037146}
+    eventListen: 7
+    promptCompletion: 1
+    value: 3
   - prompt: {fileID: 8309981850128926903}
     eventListen: 0
     promptCompletion: 0
@@ -81,10 +85,6 @@ MonoBehaviour:
     value: 0
   - prompt: {fileID: 3842149055569132068}
     eventListen: 6
-    promptCompletion: 1
-    value: 3
-  - prompt: {fileID: 9219732875464037146}
-    eventListen: 7
     promptCompletion: 1
     value: 3
   - prompt: {fileID: 2075337475143722859}
