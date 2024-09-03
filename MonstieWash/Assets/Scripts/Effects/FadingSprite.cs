@@ -5,8 +5,6 @@ using UnityEngine;
 public class FadingSprite : MonoBehaviour
 {
     private SpriteRenderer m_sprite;
-    private Color m_tempColor;
-
     public enum state
     {
         Full,
@@ -16,6 +14,7 @@ public class FadingSprite : MonoBehaviour
     }
 
     [SerializeField] private state status;
+    [SerializeField] private float m_currentAlpha;
     [Tooltip("How high the alpha of the sprite must reach to be fully faded in (1-255)")] [SerializeField] private float upperAlphaLimit;
     [Tooltip("How low the alpha of the sprite must reach to be fully faded out (0-254)")] [SerializeField] private float lowerAlphaLimit;
     [Tooltip("How quickly the sprite fades in")] [SerializeField] private float fadeInSpeed;
@@ -24,6 +23,13 @@ public class FadingSprite : MonoBehaviour
 
 
     private float m_InternalFullTime; //How long has this remained at full fade.
+
+    private void Awake()
+    {
+        m_sprite = GetComponent<SpriteRenderer>();
+        m_currentAlpha = 0f;
+    }
+
     public void FadeIn()
     {
         status = state.FadingIn;
@@ -42,21 +48,19 @@ public class FadingSprite : MonoBehaviour
         {
             case state.FadingOut:
                 //Fade out sprite.
-                m_tempColor = m_sprite.color;
-                m_tempColor.a = Mathf.MoveTowards(m_tempColor.a, lowerAlphaLimit, fadeOutSpeed * Time.deltaTime);
-                m_sprite.color = m_tempColor;
+                m_currentAlpha = Mathf.MoveTowards(m_currentAlpha, lowerAlphaLimit, fadeOutSpeed * Time.deltaTime);
+                m_sprite.color = new Color(255, 255, 255, Mathf.InverseLerp(0, 255, m_currentAlpha));
                 //Check if should transition to fully faded.
-                if (m_sprite.color.a <= lowerAlphaLimit) status = state.Faded;
+                if (m_currentAlpha <= lowerAlphaLimit) status = state.Faded;
 
                 break;
 
             case state.FadingIn:
                 //Fade in sprite.
-                m_tempColor = m_sprite.color;
-                m_tempColor.a = Mathf.MoveTowards(m_tempColor.a, upperAlphaLimit, fadeInSpeed * Time.deltaTime);
-                m_sprite.color = m_tempColor;
+                m_currentAlpha = Mathf.MoveTowards(m_currentAlpha, upperAlphaLimit, fadeInSpeed * Time.deltaTime);
+                m_sprite.color = new Color(255, 255, 255, Mathf.InverseLerp(0,255, m_currentAlpha));
                 //Check if should transition to fully faded.
-                if (m_sprite.color.a >= upperAlphaLimit)
+                if (m_currentAlpha >= upperAlphaLimit)
                 {
                     status = state.Full;
                     m_InternalFullTime = 0f;
