@@ -1416,6 +1416,10 @@ PrefabInstance:
       propertyPath: m_score
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4738378391073371633, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
+      propertyPath: m_taskType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7855298997438079352, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.03
@@ -2493,6 +2497,10 @@ PrefabInstance:
       propertyPath: m_score
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4738378391073371633, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
+      propertyPath: m_taskType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7855298997438079352, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.9318349
@@ -3502,6 +3510,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4738378391073371633, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
       propertyPath: m_score
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738378391073371633, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
+      propertyPath: m_taskType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7855298997438079352, guid: 7132e4cdf39cf1a47af1df502a8907a2, type: 3}
