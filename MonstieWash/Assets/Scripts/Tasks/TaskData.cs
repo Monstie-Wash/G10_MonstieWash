@@ -1,17 +1,26 @@
 using UnityEngine;
 
+public enum TaskType
+{
+	Default,
+	Dirt,
+    Bone,
+}
+
 public class TaskData : MonoBehaviour
 {
-	[SerializeField] protected string m_id;
+	[SerializeField] private string m_id;
 
-    [SerializeField] protected float m_progress;
+    [SerializeField] private float m_progress;
 
-    [SerializeField] protected bool m_complete;
+    [SerializeField] private bool m_complete;
     [SerializeField] protected float m_threshold;
 
-	[SerializeField] protected Transform m_container;
+	[SerializeField] private Transform m_container;
 
-	[SerializeField] protected float m_score = 9.85f;
+	[SerializeField] private float m_score = 9.85f;
+
+    [SerializeField] private TaskType type;
 
 	public string Id { get => m_id; set => m_id = value; }
     public float Progress { get => m_progress; set => m_progress = value; }
@@ -19,8 +28,9 @@ public class TaskData : MonoBehaviour
     public float Threshold { get => m_threshold; set => m_threshold = value; }
     public Transform Container { get => m_container; }
 	public float Score { get => m_score; }
+	public TaskType Type { get => type; set => type = value; }
 
-	private void OnAwake()
+	private void Awake()
 	{
         m_container = gameObject.transform;
         m_id = m_container.name;

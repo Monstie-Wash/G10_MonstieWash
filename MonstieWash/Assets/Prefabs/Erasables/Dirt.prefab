@@ -105,3 +105,4 @@ MonoBehaviour:
   m_threshold: 95
   m_container: {fileID: 0}
   m_score: 9.85
+  type: 1
