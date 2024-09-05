@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,10 +34,16 @@ public class InputManager : MonoBehaviour
     public event Action OnScan_Started;
     public event Action OnScan;
     public event Action OnScan_Ended;
-    #endregion
+	#endregion
 
-    #region DebugActions
-    public event Action OnDebugReset_Started;
+	#region MenuActions
+	public event Action OnCancel_Started;
+	public event Action OnCancel;
+	public event Action OnCancel_Ended;
+	#endregion
+
+	#region DebugActions
+	public event Action OnDebugReset_Started;
     public event Action OnDebugReset;
     public event Action OnDebugReset_Ended;
     #endregion
@@ -102,8 +109,14 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Scan.canceled += Scan_canceled;
         #endregion
 
-        #region DebugActions Subscription
-        m_playerInput.DebugActions.DebugReset.started += DebugReset_started;
+        #region MenuActions Subscription
+        m_playerInput.MenuActions.Cancel.started += Cancel_started;
+        m_playerInput.MenuActions.Cancel.performed += Cancel_performed;
+        m_playerInput.MenuActions.Cancel.canceled += Cancel_canceled;
+		#endregion
+
+		#region DebugActions Subscription
+		m_playerInput.DebugActions.DebugReset.started += DebugReset_started;
         m_playerInput.DebugActions.DebugReset.performed += DebugReset_performed;
         m_playerInput.DebugActions.DebugReset.canceled += DebugReset_canceled;
         #endregion
@@ -135,10 +148,16 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Scan.started -= Scan_started;
         m_playerInput.PlayerActions.Scan.performed -= Scan_performed;
         m_playerInput.PlayerActions.Scan.canceled -= Scan_canceled;
-        #endregion
+		#endregion
 
-        #region DebugActions Subscription
-        m_playerInput.DebugActions.DebugReset.started -= DebugReset_started;
+		#region MenuActions Subscription
+		m_playerInput.MenuActions.Cancel.started += Cancel_started;
+		m_playerInput.MenuActions.Cancel.performed += Cancel_performed;
+		m_playerInput.MenuActions.Cancel.canceled += Cancel_canceled;
+		#endregion
+
+		#region DebugActions Subscription
+		m_playerInput.DebugActions.DebugReset.started -= DebugReset_started;
         m_playerInput.DebugActions.DebugReset.performed -= DebugReset_performed;
         m_playerInput.DebugActions.DebugReset.canceled -= DebugReset_canceled;
         #endregion
@@ -283,12 +302,36 @@ public class InputManager : MonoBehaviour
         UpdateInputDevice(context.control.device);
         OnScan_Ended?.Invoke();
     }
-    #endregion
-    #endregion
+	#endregion
+	#endregion
 
-    #region DebugInput
-    #region DebugReset
-    private void DebugReset_started(InputAction.CallbackContext context)
+	#region MenuInput
+	#region Cancel
+	private void Cancel_started(InputAction.CallbackContext context)
+	{
+		UpdateInputDevice(context.control.device);
+		OnCancel_Started?.Invoke();
+	}
+
+	private void Cancel_performed(InputAction.CallbackContext context)
+	{
+		UpdateInputDevice(context.control.device);
+		OnCancel?.Invoke();
+		m_runningActiveRoutine = true;
+		StartCoroutine(Activate());
+	}
+
+	private void Cancel_canceled(InputAction.CallbackContext context)
+	{
+		OnCancel_Ended?.Invoke();
+		m_runningActiveRoutine = false;
+	}
+	#endregion
+	#endregion
+
+	#region DebugInput
+	#region DebugReset
+	private void DebugReset_started(InputAction.CallbackContext context)
     {
         UpdateInputDevice(context.control.device);
         OnDebugReset_Started?.Invoke();

@@ -10,6 +10,7 @@ public class LevelSelectUI : MonoBehaviour
     [SerializeField] private GameObject bigParent;
     [SerializeField] private GameObject bigElement;
     [SerializeField] private Button backButton;
+    [SerializeField] private LevelSelectManager levelSelectManager;
 
     private EventSystem m_eventSystem;
     private Button m_selectBtn;
@@ -29,6 +30,7 @@ public class LevelSelectUI : MonoBehaviour
         backButton.onClick.AddListener(DisableElement);
 
         m_eventSystem.SetSelectedGameObject(bigElement.GetComponentInChildren<Button>().gameObject);
+        levelSelectManager.FindBack();
     }
 
     public void DisableElement()
@@ -39,5 +41,8 @@ public class LevelSelectUI : MonoBehaviour
         backButton.onClick.RemoveListener(DisableElement);
 
         m_eventSystem.SetSelectedGameObject(smallParent.GetComponentInChildren<Button>().gameObject);
+        levelSelectManager.FindBack();
     }
+
+
 }
