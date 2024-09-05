@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particlesOnUse: {fileID: 4340487156504707657, guid: c338e02110672ae4290d2d4e61b7ca7c, type: 3}
-  particlesOnComplete: {fileID: 0}
+  particlesOnComplete: {fileID: 3598553545991950424, guid: 08e94cab5d86d20408cc97828be4cbbd, type: 3}
 --- !u!82 &5334898705030951121
 AudioSource:
   m_ObjectHideFlags: 0
