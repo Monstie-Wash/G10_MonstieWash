@@ -105,7 +105,8 @@ MonoBehaviour:
   itemConsumableLayer:
     serializedVersion: 2
     m_Bits: 32
-  m_inventory: {fileID: 0}
+  inventory: {fileID: 0}
+  bagRefreshTime: 3
   holdingConsumable: 0
   state: 0
 --- !u!61 &2044947418061785837

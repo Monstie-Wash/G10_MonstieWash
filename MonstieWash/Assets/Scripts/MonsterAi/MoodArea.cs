@@ -25,6 +25,10 @@ public class MoodArea : MonoBehaviour
     [Tooltip("How long the outline should appear after touching area (Multiple duration by amount of areas that affect the same sprite.)")] [SerializeField] private float outlineAppearanceTime;
     private Material m_OriginalMat; //Stores original material to return it to normal after finished touching.
 
+    [Header("FadingSprites")]
+    [Tooltip("Fading sprite scripts that will fade in when this area is touched.")] [SerializeField] private List<FadingSprite> spritesToActivate;
+
+
 
     //Internal states
     private float currentCooldown;
@@ -128,6 +132,14 @@ public class MoodArea : MonoBehaviour
         {
             //Call On Touch effect
             OnTouch();
+
+            if (spritesToActivate != null && spritesToActivate.Count > 0)
+            {
+                foreach (FadingSprite fs in spritesToActivate)
+                {
+                    fs.FadeIn();
+                }
+            }
 
             if (spriteToOutline != null)
             {
