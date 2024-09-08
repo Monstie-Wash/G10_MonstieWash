@@ -30,7 +30,7 @@ public class LevelSelectUI : MonoBehaviour
         backButton.onClick.AddListener(DisableElement);
 
         m_eventSystem.SetSelectedGameObject(bigElement.GetComponentInChildren<Button>().gameObject);
-        levelSelectManager.FindBack();
+        //levelSelectManager.FindBack();
     }
 
     public void DisableElement()
@@ -41,7 +41,7 @@ public class LevelSelectUI : MonoBehaviour
         backButton.onClick.RemoveListener(DisableElement);
 
         m_eventSystem.SetSelectedGameObject(smallParent.GetComponentInChildren<Button>().gameObject);
-        levelSelectManager.FindBack();
+        //levelSelectManager.FindBack();
     }
 
 
