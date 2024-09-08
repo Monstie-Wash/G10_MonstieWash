@@ -106,6 +106,7 @@ MonoBehaviour:
   m_threshold: 95
   m_container: {fileID: 0}
   m_score: 9.85
+  m_taskType: 0
 --- !u!114 &6759982977512803452
 MonoBehaviour:
   m_ObjectHideFlags: 0

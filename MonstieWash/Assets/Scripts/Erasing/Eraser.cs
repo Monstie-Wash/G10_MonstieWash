@@ -7,6 +7,8 @@ using UnityEngine.U2D;
 
 public class Eraser : MonoBehaviour
 {
+    public bool ErasingEnabled = true;
+
     [SerializeField] private Tool tool;
     [SerializeField] private Transform drawPosTransform;
 
@@ -19,6 +21,9 @@ public class Eraser : MonoBehaviour
 
     private bool m_isErasing = false;
     private bool m_isErasingClean = false;
+
+    public Tool Tool { get { return tool; } }
+
     public event Action<bool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
     public event Action<bool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
 
@@ -82,11 +87,6 @@ public class Eraser : MonoBehaviour
         InitializeTool();
     }
 
-    private void Update()
-    {
-        m_distFromCentre = Vector3.Distance(Vector3.zero, drawPosTransform.position);
-    }
-
     private void OnEnable()
     {
         InputManager.Instance.OnActivate_Held += UseTool;
@@ -110,7 +110,7 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void UseTool()
     {
-        if (!m_playerHand.IsMoving)
+        if (!m_playerHand.IsMoving || !ErasingEnabled)
         {
             StopUseTool();
             return;
@@ -118,15 +118,18 @@ public class Eraser : MonoBehaviour
 
         var wasErasing = m_isErasing;
         m_isErasing = false;
-
+        
         foreach (var erasable in m_erasables)
         {
-            if (!erasable.obj.activeInHierarchy || !tool.ErasableLayers.Contains(erasable.layer)) continue;
+            if (!erasable.obj.activeInHierarchy || !tool.ErasableLayers.Contains(erasable.layer) && !tool.DoNotErase) continue;
 
             if (UpdateErasableMask(erasable)) 
             {
-                erasable.ApplyMask();
-                m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
+                if (!tool.DoNotErase)
+                {
+                    erasable.ApplyMask();
+                    m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
+                }
 
                 m_isErasing = true;
             }
@@ -138,6 +141,8 @@ public class Eraser : MonoBehaviour
 
     public void UseToolClean()
     {
+        m_distFromCentre = Vector3.Distance(Vector3.zero, drawPosTransform.position);
+
         if (!m_isErasingClean && (m_distFromCentre < maxSparkleDist && m_taskTracker.IsThisSceneComplete()))
         {
             OnErasing_Started?.Invoke(true);
@@ -251,6 +256,8 @@ public class Eraser : MonoBehaviour
             if (outOfBoundsX || outOfBoundsY) return false;
         }
 
+        if (tool.DoNotErase) return true;
+
         //Apply each pixel of the tool mask to the erasable texture mask
         for (var i = 0; i < tool.MaskPixels.Length; i++)
         {
@@ -318,7 +325,7 @@ public class Eraser : MonoBehaviour
     /// <returns>Whether a change was made to the erasable mask.</returns>
     private bool ApplyPixels(byte toolMaskPixelAlpha, byte[] erasableMaskPixels, int[] drawingPixels)
     {
-        var pixelStrength = toolMaskPixelAlpha * (tool.Strength / 100f);
+        var pixelStrength = toolMaskPixelAlpha * (tool.Strength * Time.deltaTime / 100f);
         var erased = false;
 
         foreach (var pixel in drawingPixels)
