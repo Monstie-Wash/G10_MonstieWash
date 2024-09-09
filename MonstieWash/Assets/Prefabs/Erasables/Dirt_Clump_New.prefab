@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 233640108633167322}
   - component: {fileID: 6759982977512803452}
   m_Layer: 0
-  m_Name: Dirt_Clump
+  m_Name: Dirt_Clump_New
   m_TagString: Erasable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: -1180892439
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c71fee77e03163b4ca1e4d705082a7f2, type: 3}
+  m_Sprite: {fileID: 7435965694143477821, guid: 78022b34264f7cc4093e7e151267de50, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

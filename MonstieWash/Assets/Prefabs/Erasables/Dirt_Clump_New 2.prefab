@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 233640108633167322}
   - component: {fileID: 6759982977512803452}
   m_Layer: 0
-  m_Name: Dirt_Clump
+  m_Name: Dirt_Clump_New 2
   m_TagString: Erasable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
