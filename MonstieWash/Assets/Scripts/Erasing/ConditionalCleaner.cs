@@ -5,7 +5,6 @@ using UnityEngine;
 public class ConditionalCleaner : MonoBehaviour
 {
     [SerializeField] private float activeTime = 0.5f;
-    [SerializeField, Tooltip("The time in seconds a particle must be alive to be considered finished.")] private float maxStrengthTime = 5f;
 
     private BoxCollider2D m_collider;
     private Eraser m_eraser;

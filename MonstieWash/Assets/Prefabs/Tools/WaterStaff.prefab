@@ -175,7 +175,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeTime: 1
-  maxStrengthTime: 5
 --- !u!1 &3773855883548905670
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particlesOnUse: {fileID: 6948283868151992189, guid: da7385fa805198a4baef8cc534a00961, type: 3}
   OnlySpawnOnErasing: 0
-  particlesOnComplete: {fileID: 7105375229832933360, guid: 23141edc3a8763b4d8577e2b243e4ee5, type: 3}
+  particlesOnComplete: {fileID: 3598553545991950424, guid: 08e94cab5d86d20408cc97828be4cbbd, type: 3}
 --- !u!114 &4969812484562451773
 MonoBehaviour:
   m_ObjectHideFlags: 0
