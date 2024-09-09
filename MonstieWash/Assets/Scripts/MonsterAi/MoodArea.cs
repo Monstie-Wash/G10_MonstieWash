@@ -9,14 +9,13 @@ public class MoodArea : MonoBehaviour
     private MonsterBrain m_mb;
     private PlayerHand m_ph;
 
-
     [Header("Configurables")]
     [Tooltip("Select the layer of the mood area")] [SerializeField] private LayerMask layerMask;
     [Tooltip("Add new moods to be affected by this, assign the type of mood and by what value it is affected.")] [SerializeField] private List<MoodEffect> moodEffects; //Stores which moods will be changed and by how much.
     [Tooltip("How frequently the area will react to being touched. (Every 'x' seconds).")] [SerializeField] private float areaCooldown; //How frequently the area will react to being touched.
     [Tooltip("Toggle on to make the area reduce effectiveness over frequent use.")] [SerializeField] private bool diminishingEffectiveness; //When repeatedly touched will reduce its effects momentarily.
     [Tooltip("How fast its effectiveness diminishes if above bool toggled on.")] [SerializeField] private int diminishStrength; //How quickly the effectiveness diminishes.
-    [Tooltip("Whether touching this should cause the monster to flinch.")] [SerializeField] private bool causesFlinch;
+    [Tooltip("Whether touching this should cause the monster to flinch. When false, will enable petting.")] [SerializeField] private bool causesFlinch;
     [Tooltip("Produces debug text in console when toggled on.")] [SerializeField] private bool debug = false;
 
     [Header("OutlineGlow")]
@@ -28,11 +27,16 @@ public class MoodArea : MonoBehaviour
     [Header("FadingSprites")]
     [Tooltip("Fading sprite scripts that will fade in when this area is touched.")] [SerializeField] private List<FadingSprite> spritesToActivate;
 
-
-
     //Internal states
     private float currentCooldown;
     private float currentEffectiveness; //Current effectiveness of area.
+
+    private bool m_isPetting;
+
+    public event Action OnPetStarted;
+    public event Action OnPetEnded;
+
+    public bool IsPettable { get { return !causesFlinch; } }
 
     [Serializable]
     public struct MoodEffect
@@ -59,12 +63,14 @@ public class MoodArea : MonoBehaviour
     {
         //Assign to Input system.
         InputManager.Instance.OnActivate_Held += TestTouch;
+        InputManager.Instance.OnActivate_Ended += StopTouch;
     }
 
     private void OnDisable()
     {
         //Unassign from Input system.
         InputManager.Instance.OnActivate_Held -= TestTouch;
+        InputManager.Instance.OnActivate_Ended += StopTouch;
     }
 
     private void Update()
@@ -85,15 +91,13 @@ public class MoodArea : MonoBehaviour
             //Reduce Shaders TimeActive Property
             spriteToOutline.material.SetFloat("_TimeActive", Mathf.MoveTowards(timeProperty,0,Time.deltaTime));
         };
-
-
     }
 
 
     /// <summary>
     /// Function that is called when a touch is detected by the area.
     /// </summary>
-    void OnTouch()
+    private void ApplyTouch()
     {
         currentCooldown = areaCooldown; //Reset Cooldown
 
@@ -109,6 +113,11 @@ public class MoodArea : MonoBehaviour
 
         //Cause a flinch
         if (causesFlinch) m_mb.Flinch();
+        else if (!m_isPetting)
+        {
+            OnPetStarted?.Invoke();
+            m_isPetting = true;
+        }
     }
 
     /// <summary>
@@ -131,7 +140,7 @@ public class MoodArea : MonoBehaviour
         if (colCheck != null && colCheck.gameObject == this.gameObject)
         {
             //Call On Touch effect
-            OnTouch();
+            ApplyTouch();
 
             if (spritesToActivate != null && spritesToActivate.Count > 0)
             {
@@ -146,6 +155,15 @@ public class MoodArea : MonoBehaviour
                 spriteToOutline.material = materialToApply;
                 if (spriteToOutline.material.HasProperty("_TimeActive")) spriteToOutline.material.SetFloat("_TimeActive", outlineAppearanceTime);
             }
+        }
+    }
+
+    private void StopTouch()
+    {
+        if (m_isPetting)
+        {
+            OnPetEnded?.Invoke();
+            m_isPetting = false;
         }
     }
 }

@@ -18,11 +18,13 @@ public class PlayerHand_AnimationController : MonoBehaviour
     private float m_stillTime = 0f;   // Consecutive time spent still
     private bool m_isMoving = false;    // Whether hand is moving this frame
     private bool m_wasMoving = false;   // Whether had was moving last frame
+    private bool m_isPetting = false;
 
     private PlayerHand m_playerHand;
     private Animation m_animator;
     private ToolSwitcher m_toolSwitcher;
     private ItemPickup m_itemPickup;
+    private List<MoodArea> m_moodAreas = new();
 
     private void Awake()
     {
@@ -31,6 +33,8 @@ public class PlayerHand_AnimationController : MonoBehaviour
         m_toolSwitcher = GetComponentInParent<ToolSwitcher>();
         m_itemPickup = GetComponentInParent<ItemPickup>();
         SetupDictionary();
+
+        GameSceneManager.Instance.OnMonsterScenesLoaded += OnScenesLoaded;
     }
 
     private void SetupDictionary()
@@ -39,6 +43,21 @@ public class PlayerHand_AnimationController : MonoBehaviour
         m_handAnims.Add(AnimState.Idle, anim_idle);
         m_handAnims.Add(AnimState.Grab, anim_grab);
         m_handAnims.Add(AnimState.Pet, anim_pet);
+    }
+
+    private void OnScenesLoaded()
+    {
+        GameSceneManager.Instance.OnMonsterScenesLoaded -= OnScenesLoaded;
+
+        foreach (var moodArea in FindObjectsByType<MoodArea>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (moodArea.IsPettable)
+            {
+                m_moodAreas.Add(moodArea);
+                moodArea.OnPetStarted += () => m_isPetting = true;
+                moodArea.OnPetEnded += () => m_isPetting = false;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -51,11 +70,14 @@ public class PlayerHand_AnimationController : MonoBehaviour
         {
             PlayAnimation(AnimState.Grab);
         }
+        else if (m_isPetting)
+        {
+            PlayAnimation(AnimState.Pet);
+        }
         else if (!m_isMoving && m_stillTime > 0.1f && (!m_itemPickup.HoldingItem))
         {
             PlayAnimation(AnimState.Idle);
         }
-        // Petting animation priority should go here
         else 
         {
             // No animation
