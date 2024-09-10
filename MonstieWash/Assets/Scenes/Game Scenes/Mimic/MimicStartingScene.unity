@@ -541,14 +541,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8624381380993330181, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: tools.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8624381380993330181, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: 'tools.Array.data[0]'
       value: 
-      objectReference: {fileID: 3773855883548905670, guid: f2de723e4718072438ad301b00419490, type: 3}
+      objectReference: {fileID: 3773855883548905670, guid: 3d37fcf689aa19e4e9536b8e2f5394e5, type: 3}
     - target: {fileID: 8624381380993330181, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: 'tools.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3773855883548905670, guid: f2de723e4718072438ad301b00419490, type: 3}
+    - target: {fileID: 8624381380993330181, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: 'tools.Array.data[2]'
       value: 
       objectReference: {fileID: 3773855883548905670, guid: 125e1b913e1115b4792f7f3fa4303407, type: 3}
     m_RemovedComponents: []
