@@ -31,6 +31,7 @@ public class Eraser : MonoBehaviour
         public Sprite sprite { get; private set; }
         public byte[] maskPixels;
         public TaskData erasableTask;
+        public ErasableLayerer.ErasableLayer layer { get; private set; }
 
         /// <summary>
         /// An erasable object representation.
@@ -42,6 +43,7 @@ public class Eraser : MonoBehaviour
             sprite = obj.GetComponent<SpriteRenderer>().sprite;
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
             erasableTask = obj.GetComponent<TaskData>();
+            layer = obj.GetComponent<ErasableLayerer>().Layer;
         }
 
         /// <summary>
@@ -119,7 +121,8 @@ public class Eraser : MonoBehaviour
 
         foreach (var erasable in m_erasables)
         {
-            if (!erasable.obj.activeInHierarchy) continue;
+            if (!erasable.obj.activeInHierarchy || !tool.ErasableLayers.Contains(erasable.layer)) continue;
+
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();

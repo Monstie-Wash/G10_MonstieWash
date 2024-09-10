@@ -19,6 +19,17 @@ public class MoodArea : MonoBehaviour
     [Tooltip("Whether touching this should cause the monster to flinch.")] [SerializeField] private bool causesFlinch;
     [Tooltip("Produces debug text in console when toggled on.")] [SerializeField] private bool debug = false;
 
+    [Header("OutlineGlow")]
+    [Tooltip("Which Sprite will receive the outline material")] [SerializeField] private SpriteRenderer spriteToOutline;
+    [Tooltip("Create a variant of the better sprite outline shader material with chosen colour and thickness for  this slot.")] [SerializeField] private Material materialToApply;
+    [Tooltip("How long the outline should appear after touching area (Multiple duration by amount of areas that affect the same sprite.)")] [SerializeField] private float outlineAppearanceTime;
+    private Material m_OriginalMat; //Stores original material to return it to normal after finished touching.
+
+    [Header("FadingSprites")]
+    [Tooltip("Fading sprite scripts that will fade in when this area is touched.")] [SerializeField] private List<FadingSprite> spritesToActivate;
+
+
+
     //Internal states
     private float currentCooldown;
     private float currentEffectiveness; //Current effectiveness of area.
@@ -36,13 +47,18 @@ public class MoodArea : MonoBehaviour
         m_mb = FindFirstObjectByType<MonsterBrain>();
         m_ph = FindFirstObjectByType<PlayerHand>();
         currentEffectiveness = 100;
+
+        //Assign values for creating outline
+        if (spriteToOutline != null)
+        {
+            m_OriginalMat = spriteToOutline.material;
+        }
     }
 
     private void OnEnable()
     {
         //Assign to Input system.
         InputManager.Instance.OnActivate_Held += TestTouch;
-
     }
 
     private void OnDisable()
@@ -57,6 +73,20 @@ public class MoodArea : MonoBehaviour
         if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness +( (diminishStrength/2f) * Time.deltaTime), 0f , 100f);
         //Reduce Cooldown over time.
         currentCooldown = Mathf.Clamp(currentCooldown -= Time.deltaTime, 0f, areaCooldown);
+
+        //Update shader based on recent touch
+        if (spriteToOutline != null && spriteToOutline.material.HasProperty("_TimeActive"))
+        {
+            var timeProperty = spriteToOutline.material.GetFloat("_TimeActive");
+
+            //Reset shader to original after timer runs out.
+            if (timeProperty <= 0) spriteToOutline.material = m_OriginalMat;
+
+            //Reduce Shaders TimeActive Property
+            spriteToOutline.material.SetFloat("_TimeActive", Mathf.MoveTowards(timeProperty,0,Time.deltaTime));
+        };
+
+
     }
 
 
@@ -102,7 +132,20 @@ public class MoodArea : MonoBehaviour
         {
             //Call On Touch effect
             OnTouch();
+
+            if (spritesToActivate != null && spritesToActivate.Count > 0)
+            {
+                foreach (FadingSprite fs in spritesToActivate)
+                {
+                    fs.FadeIn();
+                }
+            }
+
+            if (spriteToOutline != null)
+            {
+                spriteToOutline.material = materialToApply;
+                if (spriteToOutline.material.HasProperty("_TimeActive")) spriteToOutline.material.SetFloat("_TimeActive", outlineAppearanceTime);
+            }
         }
     }
-
 }

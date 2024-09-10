@@ -7,43 +7,40 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(SoundPlayer))]
 public class TaskTracker : MonoBehaviour
 {
-    public event Action OnSceneCompleted;
+    public event Action<string> OnSceneCompleted;
     public event Action OnLevelCompleted;
 
     //Private
     [SerializeField] private List<TaskData> m_taskData = new();
     private Dictionary<Scene, bool> m_scenesCompleted = new();
 
-    private GameSceneManager m_roomSaver;
     private UIManager m_uiManager;
     private SoundPlayer m_soundPlayer;
-    private MusicManager m_musicManager;
 
 	public List<TaskData> TaskData { get => m_taskData; }
+    public Dictionary<Scene, bool> ScenesCompleted { get => m_scenesCompleted; }
 
 	private void Awake()
     {
-        m_roomSaver = FindFirstObjectByType<GameSceneManager>();
         m_uiManager = FindFirstObjectByType<UIManager>();
         m_soundPlayer = GetComponent<SoundPlayer>();
-        m_musicManager = FindFirstObjectByType<MusicManager>();
     }
 
     private void OnEnable()
     {
-        m_roomSaver.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
-        m_roomSaver.OnSceneChanged += RoomSaver_OnSceneChanged; ;
+        GameSceneManager.Instance.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
+        GameSceneManager.Instance.OnSceneChanged += RoomSaver_OnSceneChanged; ;
     }
 
     private void RoomSaver_OnSceneChanged()
     {
-        if (m_roomSaver.CurrentLevel != GameSceneManager.Level.None) UpdateUI();
+        if (GameSceneManager.Instance.CurrentLevel != GameSceneManager.Level.None) UpdateUI();
     }
 
     private void OnDisable()
     {
-        m_roomSaver.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
-        m_roomSaver.OnSceneChanged -= RoomSaver_OnSceneChanged;
+        GameSceneManager.Instance.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
+        GameSceneManager.Instance.OnSceneChanged -= RoomSaver_OnSceneChanged;
     }
 
     private void RoomSaver_OnScenesLoaded()
@@ -61,7 +58,7 @@ public class TaskTracker : MonoBehaviour
             if (!m_scenesCompleted.ContainsKey(taskScene)) m_scenesCompleted.Add(taskScene, false);
         }
 
-        m_roomSaver.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
+        GameSceneManager.Instance.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
     /// <summary>
@@ -104,7 +101,7 @@ public class TaskTracker : MonoBehaviour
         }
 
         //Scene Complete!
-        OnSceneCompleted?.Invoke();
+        OnSceneCompleted?.Invoke(scene.name);
 
         m_scenesCompleted[scene] = true;
         m_uiManager.UpdateClipboardTask(scene.name);
@@ -120,9 +117,9 @@ public class TaskTracker : MonoBehaviour
     /// <returns></returns>
     public bool IsThisSceneComplete()
     {
-        if (m_scenesCompleted.ContainsKey(m_roomSaver.CurrentScene))   // If the scene exists in dict
+        if (m_scenesCompleted.ContainsKey(GameSceneManager.Instance.CurrentScene))   // If the scene exists in dict
         {
-            return m_scenesCompleted[m_roomSaver.CurrentScene];    // Return the value of the scene
+            return m_scenesCompleted[GameSceneManager.Instance.CurrentScene];    // Return the value of the scene
         }
         return false;    // Scene is one that has no tasks (title screen, etc.) - return false by default
     }
@@ -141,7 +138,7 @@ public class TaskTracker : MonoBehaviour
         //Level Complete!
         OnLevelCompleted?.Invoke();
 
-        m_musicManager.SetMusic(MusicManager.MusicType.Victory);
+        MusicManager.Instance.SetMusic(MusicManager.MusicType.Victory);
     }
 
     /// <summary>
@@ -149,9 +146,8 @@ public class TaskTracker : MonoBehaviour
     /// </summary>
     private void UpdateUI()
     {
-        var overallCompletion = CalculateCompletionPercentage(m_roomSaver.CurrentScene);
-        m_uiManager.UpdateCompletion(overallCompletion);
-        m_uiManager.UpdateProgressBar(overallCompletion);
+        m_uiManager.UpdateProgressBar(CalculateCurrentSceneCompletionPercentage(GameSceneManager.Instance.CurrentScene));
+        m_uiManager.UpdateCompletion(CalculateOverallCompletionPercentage());
     }
 
     /// <summary>
@@ -159,7 +155,7 @@ public class TaskTracker : MonoBehaviour
     /// </summary>
     /// <param name="scene">The scene in which to check for completion.</param>
     /// <returns>The overall completion percentage.</returns>
-    private float CalculateCompletionPercentage(Scene scene)
+    private float CalculateCurrentSceneCompletionPercentage(Scene scene)
     {
         var numOfTasks = 0;
         var sumOfTasks = 0f;
@@ -168,6 +164,20 @@ public class TaskTracker : MonoBehaviour
         {
             numOfTasks++;
             sumOfTasks += sceneTask.Progress;
+        }
+
+        return sumOfTasks / numOfTasks / 100f;
+    }
+
+    private float CalculateOverallCompletionPercentage()
+    {
+        var numOfTasks = 0;
+        var sumOfTasks = 0f;
+
+        foreach (var task in m_taskData)
+        {
+            numOfTasks++;
+            sumOfTasks += task.Progress;
         }
 
         return sumOfTasks / numOfTasks / 100f;

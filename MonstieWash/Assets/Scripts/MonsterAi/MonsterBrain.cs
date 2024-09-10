@@ -54,13 +54,11 @@ public class MonsterBrain : MonoBehaviour
     #endregion
 
     #region References
-    private GameSceneManager m_gameSceneManager;
     private TaskTracker m_taskTracker;
     #endregion
 
     private void Awake()
     {
-        m_gameSceneManager = FindFirstObjectByType<GameSceneManager>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
 
         foreach (var data in moodData)
@@ -372,9 +370,9 @@ public class MonsterBrain : MonoBehaviour
     /// <summary>
     /// Updates each mood when a scene is completed. 
     /// </summary>
-    private void UpdateMoodOnSceneComplete()
+    private void UpdateMoodOnSceneComplete(string scene)
     {
-        SceneCompleted?.Invoke(m_gameSceneManager.CurrentScene);
+        SceneCompleted?.Invoke(GameSceneManager.Instance.CurrentScene);
 
         for (int i = 0; i < moodData.Count; i++)
         {
@@ -404,7 +402,7 @@ public class MonsterBrain : MonoBehaviour
             */
 
             var tempParticles = Instantiate(mood.MoodParticle, moodParticleOrigin, Quaternion.identity); // The mood's ParticleSystem
-            SceneManager.MoveGameObjectToScene(tempParticles.gameObject, m_gameSceneManager.CurrentScene);
+            SceneManager.MoveGameObjectToScene(tempParticles.gameObject, GameSceneManager.Instance.CurrentScene);
             tempParticles.Play();
 
             yield return new WaitForSeconds(time);

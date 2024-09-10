@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class StuckItem : MonoBehaviour, ITaskScript
     [SerializeField] private float grabDistanceMultiplier = 1.5f;
     [SerializeField] private AnimationCurve greenFadeCurve;
     [SerializeField] private float greenFadeTime = 1f;
+    [SerializeField] private float boneBuffer = 10f;
 
     private Rigidbody2D m_rb;
     private int m_initialWiggleCount;
@@ -36,6 +38,8 @@ public class StuckItem : MonoBehaviour, ITaskScript
     public Rigidbody2D Rb { get { return m_rb; } }
     public int WiggleCount { get {  return wiggleCount; } }
     public Transform InitialParent {  get { return m_initialParent; } }
+
+    public event Action OnItemUnstuck;
 
 
     private void Awake()
@@ -92,6 +96,7 @@ public class StuckItem : MonoBehaviour, ITaskScript
         if (wiggleCount <= 0)
         {
             SetStuck(false);
+            OnItemUnstuck?.Invoke();
             return true;
         }
 
@@ -103,7 +108,7 @@ public class StuckItem : MonoBehaviour, ITaskScript
         var cameraWidthInWorldUnits = Camera.main.orthographicSize * Camera.main.aspect;
         var cameraHeightInWorldUnits = Camera.main.orthographicSize;
 
-        while (Mathf.Abs(transform.position.x) < cameraWidthInWorldUnits + 10f && Mathf.Abs(transform.position.y) < cameraHeightInWorldUnits + 10f)
+        while (!(transform.position.y > cameraHeightInWorldUnits + boneBuffer || transform.position.y < -cameraHeightInWorldUnits - boneBuffer))
         {
             yield return null;
         }
@@ -145,7 +150,12 @@ public class StuckItem : MonoBehaviour, ITaskScript
 
         m_pickingTask.Progress = 100f*(m_initialWiggleCount - wiggleCount)/m_initialWiggleCount;
         m_taskTracker.UpdateTaskTracker(m_pickingTask);
-        return;
+        
+        if (!Stuck && gameObject.activeInHierarchy)
+        {
+            m_rb.bodyType = RigidbodyType2D.Dynamic;
+            m_OOBCheckRoutine = StartCoroutine(CheckOOB());
+        }
     }
 }
 

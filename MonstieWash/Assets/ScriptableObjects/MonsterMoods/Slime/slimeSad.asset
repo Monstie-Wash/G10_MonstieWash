@@ -16,7 +16,7 @@ MonoBehaviour:
   moodUpperLimit: 20
   moodLowerLimit: 0
   moodStartingPoint: 20
-  moodNaturalChange: 2
+  moodNaturalChange: 0
   moodRestingPoint: 0
   chaosMultiplier: 0
   positiveChainReactions:
@@ -25,3 +25,5 @@ MonoBehaviour:
   negativeChainReactions:
   - {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
   negativeReactionStrength: 1
+  moodParticle: {fileID: 0}
+  sceneEffectOnMood: -20

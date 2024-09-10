@@ -16,4 +16,4 @@ MonoBehaviour:
   mask: {fileID: 21300000, guid: ad28d0a2b7038634397d714f30e18305, type: 3}
   size: 7
   inputStrength: 10
-  strength: 1.3810434
+  erasableLayers: 

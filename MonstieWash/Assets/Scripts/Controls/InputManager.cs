@@ -35,24 +35,6 @@ public class InputManager : MonoBehaviour
     public event Action OnScan_Ended;
     #endregion
 
-    #region MenuActions
-    public event Action OnSelect_Started;
-    public event Action OnSelect;
-    public event Action OnSelect_Ended;
-
-    public event Action OnBack_Started;
-    public event Action OnBack;
-    public event Action OnBack_Ended;
-
-    public event Action OnAltSelect_Started;
-    public event Action OnAltSelect;
-    public event Action OnAltSelect_Ended;
-
-    public event Action OnSwitch_Started;
-    public event Action OnSwitch;
-    public event Action OnSwitch_Ended;
-    #endregion
-
     #region DebugActions
     public event Action OnDebugReset_Started;
     public event Action OnDebugReset;
@@ -61,7 +43,7 @@ public class InputManager : MonoBehaviour
     #endregion
 
     private PlayerInput m_playerInput;
-    private Coroutine m_activeRoutine;
+    private bool m_runningActiveRoutine;
     private PlayerInputDevice m_inputDevice = PlayerInputDevice.Controller;
 
     public PlayerInputDevice InputDevice { get { return m_inputDevice; } }
@@ -120,24 +102,6 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Scan.canceled += Scan_canceled;
         #endregion
 
-        #region MenuActions Subscription
-        m_playerInput.MenuActions.Select.started += Select_started;
-        m_playerInput.MenuActions.Select.performed += Select_performed;
-        m_playerInput.MenuActions.Select.canceled += Select_canceled;
-
-        m_playerInput.MenuActions.Back.started += Back_started;
-        m_playerInput.MenuActions.Back.performed += Back_performed;
-        m_playerInput.MenuActions.Back.canceled += Back_canceled;
-
-        m_playerInput.MenuActions.AltSelect.started += AltSelect_started;
-        m_playerInput.MenuActions.AltSelect.performed += AltSelect_performed;
-        m_playerInput.MenuActions.AltSelect.canceled += AltSelect_canceled;
-
-        m_playerInput.MenuActions.Switch.started += Switch_started;
-        m_playerInput.MenuActions.Switch.performed += Switch_performed;
-        m_playerInput.MenuActions.Switch.canceled += Switch_canceled;
-        #endregion
-
         #region DebugActions Subscription
         m_playerInput.DebugActions.DebugReset.started += DebugReset_started;
         m_playerInput.DebugActions.DebugReset.performed += DebugReset_performed;
@@ -171,24 +135,6 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Scan.started -= Scan_started;
         m_playerInput.PlayerActions.Scan.performed -= Scan_performed;
         m_playerInput.PlayerActions.Scan.canceled -= Scan_canceled;
-        #endregion
-
-        #region MenuActions Subscription
-        m_playerInput.MenuActions.Select.started -= Select_started;
-        m_playerInput.MenuActions.Select.performed -= Select_performed;
-        m_playerInput.MenuActions.Select.canceled -= Select_canceled;
-
-        m_playerInput.MenuActions.Back.started -= Back_started;
-        m_playerInput.MenuActions.Back.performed -= Back_performed;
-        m_playerInput.MenuActions.Back.canceled -= Back_canceled;
-
-        m_playerInput.MenuActions.AltSelect.started -= AltSelect_started;
-        m_playerInput.MenuActions.AltSelect.performed -= AltSelect_performed;
-        m_playerInput.MenuActions.AltSelect.canceled -= AltSelect_canceled;
-
-        m_playerInput.MenuActions.Switch.started -= Switch_started;
-        m_playerInput.MenuActions.Switch.performed -= Switch_performed;
-        m_playerInput.MenuActions.Switch.canceled -= Switch_canceled;
         #endregion
 
         #region DebugActions Subscription
@@ -238,18 +184,19 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnActivate?.Invoke();
-        m_activeRoutine = StartCoroutine(Activate());
+        m_runningActiveRoutine = true;
+        StartCoroutine(Activate());
     }
 
     private void Activate_canceled(InputAction.CallbackContext context)
     {
         OnActivate_Ended?.Invoke();
-        StopCoroutine(m_activeRoutine);
+        m_runningActiveRoutine = false;
     }
 
     private IEnumerator Activate()
     {
-        while (true)
+        while (m_runningActiveRoutine)
         {
             OnActivate_Held?.Invoke();
 
@@ -339,88 +286,6 @@ public class InputManager : MonoBehaviour
     #endregion
     #endregion
 
-    #region MenuInput
-    #region Select
-    private void Select_started(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnSelect_Started?.Invoke();
-    }
-
-    private void Select_performed(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnSelect?.Invoke();
-    }
-
-    private void Select_canceled(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnSelect_Ended?.Invoke();
-    }
-    #endregion
-
-    #region Back
-    private void Back_started(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnBack_Started?.Invoke();
-    }
-
-    private void Back_performed(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnBack?.Invoke();
-    }
-
-    private void Back_canceled(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnBack_Ended?.Invoke();
-    }
-    #endregion
-
-    #region AltSelect
-    private void AltSelect_started(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnAltSelect_Started?.Invoke();
-    }
-
-    private void AltSelect_performed(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnAltSelect?.Invoke();
-    }
-
-    private void AltSelect_canceled(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnAltSelect_Ended?.Invoke();
-    }
-    #endregion
-
-    #region Switch
-    private void Switch_started(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnSwitch_Started?.Invoke();
-    }
-
-    private void Switch_performed(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnSwitch?.Invoke();
-    }
-
-    private void Switch_canceled(InputAction.CallbackContext context)
-    {
-        UpdateInputDevice(context.control.device);
-        OnSwitch_Ended?.Invoke();
-    }
-    #endregion
-    #endregion
-
     #region DebugInput
     #region DebugReset
     private void DebugReset_started(InputAction.CallbackContext context)
@@ -460,6 +325,8 @@ public class InputManager : MonoBehaviour
 
     public void SetControlScheme(ControlScheme scheme)
     {
+        m_runningActiveRoutine = false;
+
         switch (scheme)
         {
             case ControlScheme.None:
