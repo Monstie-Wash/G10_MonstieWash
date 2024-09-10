@@ -46,16 +46,15 @@ public class ConditionalCleaner : MonoBehaviour
         var ps = other.GetComponent<ParticleSystem>();
         var particles = new ParticleSystem.Particle[ps.particleCount];
         float maxLifetimePercentage = 0f;
-        List<Vector4> lifetimes = new();
-        ps.GetCustomParticleData(lifetimes, ParticleSystemCustomData.Custom1);
-
+        List<Vector4> particleData = new();
+        ps.GetCustomParticleData(particleData, ParticleSystemCustomData.Custom1);
         ps.GetParticles(particles);
 
         for (int i = 0; i < particles.Length; i++)
         {
             if (particles[i].remainingLifetime == 0f)
             {
-                maxLifetimePercentage = Mathf.Max(maxLifetimePercentage, lifetimes[i].x);
+                maxLifetimePercentage = Mathf.Max(maxLifetimePercentage, particleData[i].x);
             }
         }
 
