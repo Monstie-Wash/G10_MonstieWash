@@ -8,7 +8,7 @@ public class ConditionalCleaner : MonoBehaviour
 
     private BoxCollider2D m_collider;
     private Eraser m_eraser;
-    private float currentStrength = 0f;
+    private float m_currentStrength = 0f;
 
     private Coroutine m_activeCoroutine;
 
@@ -41,29 +41,40 @@ public class ConditionalCleaner : MonoBehaviour
         m_collider.enabled = false;
     }
 
+    /// <summary>
+    /// Called when the tool collides with a particle (bubble)
+    /// </summary>
+    /// <param name="other">The particle being collided with</param>
     private void OnParticleCollision(GameObject other)
     {
-        var ps = other.GetComponent<ParticleSystem>();
-        var particles = new ParticleSystem.Particle[ps.particleCount];
+        var particleSystem = other.GetComponent<ParticleSystem>();
+        var particles = new ParticleSystem.Particle[particleSystem.particleCount];
         float maxLifetimePercentage = 0f;
         List<Vector4> particleData = new();
-        ps.GetCustomParticleData(particleData, ParticleSystemCustomData.Custom1);
-        ps.GetParticles(particles);
+
+        // Populates the particleData list with one entry per particle.
+        // The only one we care about is the x component which represents the particle's lifetime as a percentage of the completion time (5s).
+        particleSystem.GetCustomParticleData(particleData, ParticleSystemCustomData.Custom1); 
+        // Populates the particles array.
+        particleSystem.GetParticles(particles);
 
         for (int i = 0; i < particles.Length; i++)
         {
-            if (particles[i].remainingLifetime == 0f)
+            // When we collide with a particle, we set its remainingLifetime to 0.
+            // So this is just how we find out which particles we collided with.
+            if (particles[i].remainingLifetime == 0f) 
             {
-                maxLifetimePercentage = Mathf.Max(maxLifetimePercentage, particleData[i].x);
+                maxLifetimePercentage = Mathf.Max(maxLifetimePercentage, particleData[i].x); // Find the particle with the highest completion percentage.
             }
         }
 
-        currentStrength = maxLifetimePercentage;
+        m_currentStrength = maxLifetimePercentage; // Set tool strength relative to the completion percentage of the best particle.
 
         m_eraser.ErasingEnabled = true;
-        m_eraser.Tool.InputStrength = currentStrength * 100f;
+        m_eraser.Tool.InputStrength = m_currentStrength * 100f;
         m_eraser.Tool.UpdateStrength();
 
+        //Restart use timer
         if (m_activeCoroutine != null) StopCoroutine(m_activeCoroutine);
         m_activeCoroutine = StartCoroutine(ActiveTimeout());
     }
