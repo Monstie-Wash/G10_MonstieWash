@@ -6,8 +6,8 @@ using System;
 public class MoodArea : MonoBehaviour
 {
     //References
-    private MonsterBrain m_mb;
-    private PlayerHand m_ph;
+    private MonsterBrain m_monsterBrain;
+    private PlayerHand m_playerHand;
 
     [Header("Configurables")]
     [Tooltip("Select the layer of the mood area")] [SerializeField] private LayerMask layerMask;
@@ -16,6 +16,7 @@ public class MoodArea : MonoBehaviour
     [Tooltip("Toggle on to make the area reduce effectiveness over frequent use.")] [SerializeField] private bool diminishingEffectiveness; //When repeatedly touched will reduce its effects momentarily.
     [Tooltip("How fast its effectiveness diminishes if above bool toggled on.")] [SerializeField] private int diminishStrength; //How quickly the effectiveness diminishes.
     [Tooltip("Whether touching this should cause the monster to flinch. When false, will enable petting.")] [SerializeField] private bool causesFlinch;
+    [Tooltip("Whether or not this area can be petted.")][SerializeField] private bool isPettable;
     [Tooltip("Produces debug text in console when toggled on.")] [SerializeField] private bool debug = false;
 
     [Header("OutlineGlow")]
@@ -32,24 +33,27 @@ public class MoodArea : MonoBehaviour
     private float currentEffectiveness; //Current effectiveness of area.
 
     private bool m_isPetting;
+    private BoxCollider2D m_collider;
+    private bool m_isOnCooldown { get { return currentCooldown != 0f; } }
 
     public event Action OnPetStarted;
     public event Action OnPetEnded;
 
-    public bool IsPettable { get { return !causesFlinch; } }
+    public bool IsPettable { get { return isPettable; } }
 
     [Serializable]
     public struct MoodEffect
     {
-        public MoodType mt; //Which mood to target.
+        public MoodType mood; //Which mood to target.
         public float reactionStrength; //How much the mood will change by.
     }
 
     private void Awake()
     {
 
-        m_mb = FindFirstObjectByType<MonsterBrain>();
-        m_ph = FindFirstObjectByType<PlayerHand>();
+        m_monsterBrain = FindFirstObjectByType<MonsterBrain>();
+        m_playerHand = FindFirstObjectByType<PlayerHand>();
+        m_collider = GetComponent<BoxCollider2D>();
         currentEffectiveness = 100;
 
         //Assign values for creating outline
@@ -102,18 +106,19 @@ public class MoodArea : MonoBehaviour
         currentCooldown = areaCooldown; //Reset Cooldown
 
         //Affect Moods
-        foreach (MoodEffect me in moodEffects)
+        foreach (MoodEffect moodEffect in moodEffects)
         {
-            m_mb.UpdateMood(me.reactionStrength * (currentEffectiveness/100f), me.mt);
-            if (debug) print($"Reaction Strength  {me.reactionStrength}  at effectivness of {currentEffectiveness} for the mood {me.mt.MoodName}");
+            m_monsterBrain.UpdateMood(moodEffect.reactionStrength * (currentEffectiveness/100f), moodEffect.mood);
+            if (debug) print($"Reaction Strength  {moodEffect.reactionStrength}  at effectivness of {currentEffectiveness} for the mood {moodEffect.mood.MoodName}");
         }
 
         //Apply diminishing effect if toggled on.
         if (diminishingEffectiveness) currentEffectiveness = Mathf.Clamp(currentEffectiveness -= diminishStrength, 0f, 100f);
 
         //Cause a flinch
-        if (causesFlinch) m_mb.Flinch();
-        else if (!m_isPetting)
+        if (causesFlinch) m_monsterBrain.Flinch();
+
+        if (isPettable && !m_isPetting)
         {
             OnPetStarted?.Invoke();
             m_isPetting = true;
@@ -125,20 +130,17 @@ public class MoodArea : MonoBehaviour
     /// </summary>
     private void TestTouch()
     {
-        //Skip test if area still on cooldown;
-        if (currentCooldown > 0) return;
-
-        var toolSwitcher = m_ph.GetComponent<ToolSwitcher>();
-        Vector3 toolTipPos = m_ph.transform.position;
+        var toolSwitcher = m_playerHand.GetComponent<ToolSwitcher>();
+        Vector2 toolTipPos = m_playerHand.transform.position;
 
         //Get the tool tip as long as you don't have an empty hand
         if (toolSwitcher.CurrentToolIndex != -1) toolTipPos = toolSwitcher.ToolInstances[toolSwitcher.CurrentToolIndex].transform.GetChild(0).position;
 
-        //Check if playerhand is over a mood area and it matches this mood area.
-        var colCheck = Physics2D.OverlapCircle(toolTipPos, 0.1f, layerMask, -999999, 999999);
-
-        if (colCheck != null && colCheck.gameObject == this.gameObject)
+        //Check if playerhand is over this mood area
+        if (m_collider.bounds.Contains(toolTipPos))
         {
+            if (m_isOnCooldown) return;
+
             //Call On Touch effect
             ApplyTouch();
 
@@ -156,6 +158,7 @@ public class MoodArea : MonoBehaviour
                 if (spriteToOutline.material.HasProperty("_TimeActive")) spriteToOutline.material.SetFloat("_TimeActive", outlineAppearanceTime);
             }
         }
+        else StopTouch();
     }
 
     private void StopTouch()
