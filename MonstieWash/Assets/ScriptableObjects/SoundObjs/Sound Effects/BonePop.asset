@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BonePop
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: fee00bfd144160f43beaa1ab25f53f12, type: 3}
-  mixer: {fileID: 0}
-  volume: 0.5
+  mixer: {fileID: 4831419169139161055, guid: bf8e1928b247fd24ebd9911ddb137123, type: 2}
+  volume: 1
   pitch: 1
   loop: 0
   playOnAwake: 0

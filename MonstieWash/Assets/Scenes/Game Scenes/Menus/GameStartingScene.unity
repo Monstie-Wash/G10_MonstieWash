@@ -1122,7 +1122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1086796710868375111, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: tools.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1086796710868375111, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'tools.Array.data[0]'
@@ -1140,6 +1140,10 @@ PrefabInstance:
       propertyPath: 'tools.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 00e09ce6ac17a5447a5d26aa269393bf, type: 2}
+    - target: {fileID: 1086796710868375111, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'tools.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: cb18e00f344f84b4bb9a039e7e17d3f6, type: 2}
     - target: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: m_Name
       value: GameManager

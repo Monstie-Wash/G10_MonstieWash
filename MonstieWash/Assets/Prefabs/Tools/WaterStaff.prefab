@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8245340559071156610}
   - component: {fileID: 8003957217036251028}
-  - component: {fileID: 67453905488941800}
-  - component: {fileID: 1511525565117234118}
-  m_Layer: 6
+  - component: {fileID: 9155998100344335290}
+  - component: {fileID: 5167484125874105036}
+  - component: {fileID: 204796879621003107}
+  m_Layer: 4
   m_Name: DrawMaskPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3028125934884543323}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8769999, y: 0.066000015, z: 0}
+  m_LocalPosition: {x: -1.098, y: 1.236, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -88,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &67453905488941800
+--- !u!50 &9155998100344335290
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -111,18 +112,18 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &1511525565117234118
+--- !u!61 &5167484125874105036
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3028125934884543323}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -145,11 +146,11 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.053941965, y: 0.061647832}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -159,8 +160,21 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.2311797, y: 0.856014}
+  m_Size: {x: 0.5924685, y: 0.5924685}
   m_EdgeRadius: 0
+--- !u!114 &204796879621003107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3028125934884543323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79bec2dfad59c5541955fb4aa48ba2b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeTime: 1
 --- !u!1 &3773855883548905670
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +189,7 @@ GameObject:
   - component: {fileID: 4969812484562451773}
   - component: {fileID: 1138100471038949827}
   m_Layer: 6
-  m_Name: Brush
+  m_Name: WaterStaff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ErasingEnabled: 1
-  tool: {fileID: 11400000, guid: e7fc82490f269a042ac45ac4db2bc7f6, type: 2}
+  tool: {fileID: 11400000, guid: cb18e00f344f84b4bb9a039e7e17d3f6, type: 2}
   drawPosTransform: {fileID: 8245340559071156610}
   maxSparkleDist: 3
 --- !u!114 &-281357985919157149
@@ -226,8 +240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aecd85ae3ba4bf4ca38b55d7a13d2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesOnUse: {fileID: 0}
-  OnlySpawnOnErasing: 1
+  particlesOnUse: {fileID: 6948283868151992189, guid: da7385fa805198a4baef8cc534a00961, type: 3}
+  OnlySpawnOnErasing: 0
   particlesOnComplete: {fileID: 3598553545991950424, guid: 08e94cab5d86d20408cc97828be4cbbd, type: 3}
 --- !u!114 &4969812484562451773
 MonoBehaviour:
@@ -365,13 +379,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5747709288254856341}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.18422444, w: 0.9828842}
-  m_LocalPosition: {x: -1.212, y: -0.059, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.06892433, w: 0.9976219}
+  m_LocalPosition: {x: -0.451, y: 0.467, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 312063306794273981}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -21.232}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.904}
 --- !u!212 &7522106548468571616
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -415,7 +429,7 @@ SpriteRenderer:
   m_SortingLayerID: 1881744917
   m_SortingLayer: 5
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ad42e5a495010df43816db19843234bd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6023c200936c91e4083230f2a7fc9897, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
