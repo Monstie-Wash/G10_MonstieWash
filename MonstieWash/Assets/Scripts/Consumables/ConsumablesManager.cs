@@ -22,6 +22,9 @@ public class ConsumablesManager : MonoBehaviour
 
     private Image m_managerimage; //Reference to the image object for this manager.
     private PlayerHand m_playerHand;
+    private float m_TimeSinceLastHoldOrHover; //How long since the player held an item or hovered over the bag.
+    [Tooltip("How long until the bag closes when not being interacted with.")] [SerializeField] private float bagRefreshTime; 
+
     public bool holdingConsumable;
 
     public UiState state;
@@ -51,7 +54,10 @@ public class ConsumablesManager : MonoBehaviour
     {
         //Open or close bag when hovered over;
         CheckHovered();
-
+        if (holdingConsumable) m_TimeSinceLastHoldOrHover = 0;
+        //Update hover timer.
+        m_TimeSinceLastHoldOrHover += Time.deltaTime;
+        if (m_TimeSinceLastHoldOrHover > bagRefreshTime) CloseUI();
 
         //State Transitions
         switch (state)
@@ -62,7 +68,7 @@ public class ConsumablesManager : MonoBehaviour
 
                 foreach (var consumableUI in activeUiElements)
                 {
-                    if (!consumableUI.isActiveAndEnabled) consumableUI.gameObject.SetActive(true); //Set objects to be active.
+                    if (!consumableUI.isActiveAndEnabled) consumableUI.transform.parent.gameObject.SetActive(true); //Set objects to be active.
                     if (!consumableUI.clickable)
                     {
                         consumableUI.MoveTowardsExtendedPos(uiMoveSpeed);
@@ -129,7 +135,7 @@ public class ConsumablesManager : MonoBehaviour
                         if (itemData.Quantity <= 0)
                         {
                             consumableToRemoveIndex = activeUiElements.IndexOf(uiConsumable);
-                            Destroy(uiConsumable.gameObject);
+                            Destroy(uiConsumable.transform.parent.gameObject);
                         }
                         else uiConsumable.quantityText.text = itemData.Quantity.ToString();
                         break;
@@ -159,10 +165,11 @@ public class ConsumablesManager : MonoBehaviour
         var newImage = Instantiate(refObject, refObject.transform.position, Quaternion.identity);
         newImage.transform.SetParent(imageHolder.transform);
         newImage.transform.position = this.transform.position;
-        newImage.GetComponent<Image>().sprite = data.ItemData.Sprite;
+        newImage.transform.GetChild(0).GetComponent<Image>().sprite = data.ItemData.Sprite;
         newImage.gameObject.SetActive(false);
 
-        var newImageUi = newImage.GetComponent<UIConsumable>();
+        var newImageUi = newImage.transform.GetChild(0).GetComponent<UIConsumable>();
+        newImageUi.fadedBackground.sprite = data.ItemData.Sprite;
         Consumable c = (data.ItemData as Consumable);
         if (c != null)
         {
@@ -237,9 +244,9 @@ public class ConsumablesManager : MonoBehaviour
         var col = Physics2D.OverlapCircle(Camera.main.WorldToScreenPoint(m_playerHand.transform.position), 1f, bagLayer, -999999, 999999);
         if (col != null)
         {
+            m_TimeSinceLastHoldOrHover = 0;
             if ((col.gameObject == gameObject) && state != UiState.Open) OpenUI();
         }
-        else if (state != UiState.Closed && !holdingConsumable) CloseUI();
     }
 
 

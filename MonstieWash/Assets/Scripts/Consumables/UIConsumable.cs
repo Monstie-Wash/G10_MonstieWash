@@ -16,10 +16,12 @@ public class UIConsumable : MonoBehaviour
     [SerializeField] public bool holding;
 
     private float m_distToPoint;
+    private GameObject itemBackground; //Item that will move with the hand when grabbed.
 
     [HideInInspector] public ConsumablesManager manager;
 
-    [HideInInspector] public TextMeshProUGUI quantityText;
+    [SerializeField] public TextMeshProUGUI quantityText;
+    [SerializeField] public Image fadedBackground;
     private PlayerHand m_playerHand;
 
     public void OnEnable()
@@ -34,8 +36,8 @@ public class UIConsumable : MonoBehaviour
 
     public void Awake()
     {
-        quantityText = GetComponentInChildren<TextMeshProUGUI>();
         m_playerHand = FindFirstObjectByType<PlayerHand>();
+        itemBackground = transform.parent.gameObject;
     }
 
     private void Update()
@@ -68,6 +70,7 @@ public class UIConsumable : MonoBehaviour
             manager.dropItems();
             manager.holdingConsumable = false;
             clickable = false;
+            GetComponent<RectTransform>().SetLocalPositionAndRotation(Vector3.zero,Quaternion.identity);
             manager.RefreshUI();
         }
     }
@@ -75,12 +78,12 @@ public class UIConsumable : MonoBehaviour
     public void MoveTowardsExtendedPos(float speed)
     {
         //Get Distance to Pos;
-        m_distToPoint = Vector3.Distance(transform.position, extendedPos);
+        m_distToPoint = Vector3.Distance(itemBackground.transform.position, extendedPos);
 
         //Move towards pos if not close enough.
         if (m_distToPoint >= 0.2f)
         {
-           transform.position = Vector3.Lerp(transform.position, extendedPos, speed * Time.deltaTime);
+            itemBackground.transform.position = Vector3.Lerp(itemBackground.transform.position, extendedPos, speed * Time.deltaTime);
         }
         else // Become clickable
         {
@@ -91,17 +94,17 @@ public class UIConsumable : MonoBehaviour
     public void MoveTowardsClosedPos(float speed)
     {
         //Get Distance to Pos;
-        m_distToPoint = Vector3.Distance(transform.position, closedPos);
+        m_distToPoint = Vector3.Distance(itemBackground.transform.position, closedPos);
 
         //Move towards pos if not close enough.
         if (m_distToPoint >= 0.5f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, closedPos, speed * Time.deltaTime * 100f);
+            itemBackground.transform.position = Vector3.MoveTowards(itemBackground.transform.position, closedPos, speed * Time.deltaTime * 100f);
         }
         else // Become unclickable
         {
             clickable = false;
-            gameObject.SetActive(false);
+            itemBackground.SetActive(false);
         }
 
     }
