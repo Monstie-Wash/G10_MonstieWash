@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 71ce56b4b7744f8438a1bef48b0174b9
+guid: 66f17f3ba1a00a24ca42bac16b2da722
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5111396227284693043
-    second: bag_close_0
+      213: 6851270825317352804
+    second: cake v3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bag_close_0
+      name: cake v3_0
       rect:
         serializedVersion: 2
-        x: 200
-        y: 157
-        width: 400
-        height: 456
+        x: 29
+        y: 19
+        width: 195
+        height: 215
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dcf8c6e663ca019b0800000000000000
-      internalID: -5111396227284693043
+      spriteID: 465c90b148a941f50800000000000000
+      internalID: 6851270825317352804
       vertices: []
       indices: 
       edges: []
@@ -131,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      bag_close_0: -5111396227284693043
+      cake v3_0: 6851270825317352804
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

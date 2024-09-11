@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 71ce56b4b7744f8438a1bef48b0174b9
+guid: 09ba6e3678bf0f54c812db4d7c25f9f6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5111396227284693043
-    second: bag_close_0
+      213: -9050231835438481254
+    second: bag close v2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,11 +100,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bag_close_0
+      name: bag close v2_0
       rect:
         serializedVersion: 2
-        x: 200
-        y: 157
+        x: 50
+        y: 7
         width: 400
         height: 456
       alignment: 0
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dcf8c6e663ca019b0800000000000000
-      internalID: -5111396227284693043
+      spriteID: a9002c9881e176280800000000000000
+      internalID: -9050231835438481254
       vertices: []
       indices: 
       edges: []
@@ -131,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      bag_close_0: -5111396227284693043
+      bag close v2_0: -9050231835438481254
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
