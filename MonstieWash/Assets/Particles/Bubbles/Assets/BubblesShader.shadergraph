@@ -11,6 +11,9 @@
         },
         {
             "m_Id": "61672927324e42efbf05b1bf346e12e2"
+        },
+        {
+            "m_Id": "4e46b1406f85404796e3909042c01915"
         }
     ],
     "m_Keywords": [],
@@ -314,6 +317,9 @@
         },
         {
             "m_Id": "61672927324e42efbf05b1bf346e12e2"
+        },
+        {
+            "m_Id": "4e46b1406f85404796e3909042c01915"
         }
     ]
 }
@@ -648,6 +654,36 @@
         "w": 0.0
     },
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "4e46b1406f85404796e3909042c01915",
+    "m_Guid": {
+        "m_GuidSerialized": "cc08d581-d1aa-4d13-b1ad-4127ea58b428"
+    },
+    "m_Name": "DirtyColour",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "DirtyColour",
+    "m_DefaultReferenceName": "_DirtyColour",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.501960813999176,
+        "g": 0.4901961088180542,
+        "b": 0.48235297203063967,
+        "a": 1.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
 }
 
 {
