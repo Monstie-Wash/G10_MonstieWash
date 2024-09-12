@@ -45,12 +45,9 @@ public class TaskTracker : MonoBehaviour
 
     private void RoomSaver_OnScenesLoaded()
     {
-        foreach (var obj in FindObjectsByType<TaskData>(FindObjectsSortMode.None))
-        {
-            m_taskData.Add(obj);
-        }
+        AddTasks(FindObjectsByType<TaskData>(FindObjectsSortMode.None));
 
-        m_uiManager.LoadOverallTasks(m_taskData);
+        m_uiManager.LoadOverallTasks(m_taskData.ToArray());
 
         foreach (var task in m_taskData)
         {
@@ -59,6 +56,14 @@ public class TaskTracker : MonoBehaviour
         }
 
         GameSceneManager.Instance.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
+    }
+
+    public void AddTasks(TaskData[] tasks)
+    {
+        foreach (var obj in tasks)
+        {
+            m_taskData.Add(obj);
+        }
     }
 
     /// <summary>
@@ -144,7 +149,7 @@ public class TaskTracker : MonoBehaviour
     /// <summary>
     /// Updates the completion amounts in the UI
     /// </summary>
-    private void UpdateUI()
+    public void UpdateUI()
     {
         m_uiManager.UpdateProgressBar(CalculateCurrentSceneCompletionPercentage(GameSceneManager.Instance.CurrentScene));
         m_uiManager.UpdateCompletion(CalculateOverallCompletionPercentage());

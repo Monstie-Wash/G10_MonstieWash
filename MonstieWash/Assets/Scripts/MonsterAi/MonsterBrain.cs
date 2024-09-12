@@ -16,7 +16,7 @@ public class MonsterBrain : MonoBehaviour
         public float value;
     }
 
-    public System.Action<MoodType> OnMoodChanged;
+    public Action<MoodType> OnMoodChanged;
 
     [Tooltip("Add all moodtype objects intended for this brain here.")][SerializeField] protected List<MoodData> moodData = new(); //Scriptable objects holding data about moods.
     #endregion
@@ -30,6 +30,8 @@ public class MonsterBrain : MonoBehaviour
     #region Attacks
     [Tooltip("Minimum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float minBetweenAttacks; // Creates an attack event between the min and max time, if possible.
     [Tooltip("Maximum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float maxBetweenAttacks; // Creates an attack event between the min and max time, if possible.
+    [Tooltip("Dirt that shows up on monster attack.")][SerializeField] private GameObject attackDirt;
+    [SerializeField] private int numOfDirt = 3;
     private float m_attackTimer;    // Chosen time to wait before the next attack (randomized between min and max after every attack).
     private float m_lastAttackTime = 0f;    // Time elapsed since the last attack.
 
@@ -293,6 +295,15 @@ public class MonsterBrain : MonoBehaviour
         m_lastAttackTime = 0f;
         m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
         MonsterAttack?.Invoke();
+
+        var monsterController = FindFirstObjectByType<MonsterController>();
+        Action onAttackComplete = null;
+        onAttackComplete = delegate ()
+        {
+            monsterController.OnAttackEnd -= onAttackComplete;
+            SpawnDirt();
+        };
+        monsterController.OnAttackEnd += onAttackComplete;
     }
 
     /// <summary>
@@ -331,6 +342,10 @@ public class MonsterBrain : MonoBehaviour
     public void UpdateMood(float amount, MoodType mt)
     {
         var index = moodData.FindIndex(item => item.mood == mt);
+        if (index < 0 || index >= moodData.Count)
+        {
+            Debug.Log("Here!");
+        }
         moodData[index].value += amount;
         MaintainLimit(index);
     }
@@ -419,5 +434,34 @@ public class MonsterBrain : MonoBehaviour
     public void Flinch()
     {
         OnFlinch?.Invoke();
+    }
+
+    private void SpawnDirt()
+    {
+        //Add dirt from attack
+        var taskContainer = GameObject.FindGameObjectWithTag("TaskContainer");
+        var monsterCollider = FindFirstObjectByType<MonsterController>().GetComponent<BoxCollider2D>();
+        var halfMonsterWidth = monsterCollider.bounds.extents.x;
+        var halfMonsterHeight = monsterCollider.bounds.extents.y;
+        List<TaskData> tasks = new();
+
+        for (int i = 0; i < numOfDirt; i++)
+        {
+            var spawnPosX = UnityEngine.Random.Range(-halfMonsterWidth, halfMonsterWidth);
+            var spawnPosY = UnityEngine.Random.Range(-halfMonsterHeight, halfMonsterHeight);
+            var spawnPos = new Vector3(spawnPosX, spawnPosY);
+            var rotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f));
+            var obj = Instantiate(attackDirt, spawnPos, rotation, taskContainer.transform);
+            tasks.Add(obj.GetComponent<TaskData>());
+        }
+
+        m_taskTracker.AddTasks(tasks.ToArray());
+        m_taskTracker.UpdateUI();
+
+        var erasers = FindObjectsByType<Eraser>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var eraser in erasers)
+        {
+            eraser.PopulateErasables();
+        }
     }
 }

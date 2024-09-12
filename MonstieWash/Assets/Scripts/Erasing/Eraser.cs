@@ -187,7 +187,7 @@ public class Eraser : MonoBehaviour
     /// <summary>
     /// Populates the erasables list, setting up the sprites ready for drawing.
     /// </summary>
-    private void PopulateErasables()
+    public void PopulateErasables()
     {
         var tempErasables = GameObject.FindGameObjectsWithTag("Erasable");
 

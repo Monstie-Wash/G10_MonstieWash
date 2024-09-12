@@ -19,6 +19,9 @@ public class MonsterController : MonoBehaviour
     private InterruptAnimation m_interruptAnimation;
     private MoodType m_recentHighestMood;
 
+    public event Action OnInterruptComplete;
+    public event Action OnAttackEnd;
+
     [Serializable]
     private struct MoodToAnimation
     {
@@ -182,6 +185,8 @@ public class MonsterController : MonoBehaviour
 
     public void InterruptAnimationComplete()
     {
+        OnInterruptComplete?.Invoke();
+
         if (m_interruptAnimation != null) 
         {
             // Return to the animation that was playing previously
@@ -209,5 +214,10 @@ public class MonsterController : MonoBehaviour
             effect.Play();
             yield return new WaitForSeconds(randTime);
         }
+    }
+
+    public void OnAttackEnded()
+    {
+        OnAttackEnd?.Invoke();
     }
 }

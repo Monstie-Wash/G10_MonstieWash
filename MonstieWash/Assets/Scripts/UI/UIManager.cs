@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
 /// Public method used by TaskTracker to initialise clipboard after all task trackers have been initialised. Creates filters for tasks to show on each scene.
 /// </summary>
 /// <param name="keys">A list of all the keys used to identify tasks tracked in TaskTracker</param>
-    public void LoadOverallTasks(List<TaskData> tasks)
+    public void LoadOverallTasks(TaskData[] tasks)
     {
         foreach (var task in tasks)
         {
