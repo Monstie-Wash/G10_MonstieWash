@@ -151,9 +151,9 @@ public class InputManager : MonoBehaviour
 		#endregion
 
 		#region MenuActions Subscription
-		m_playerInput.MenuActions.Cancel.started += Cancel_started;
-		m_playerInput.MenuActions.Cancel.performed += Cancel_performed;
-		m_playerInput.MenuActions.Cancel.canceled += Cancel_canceled;
+		m_playerInput.MenuActions.Cancel.started -= Cancel_started;
+		m_playerInput.MenuActions.Cancel.performed -= Cancel_performed;
+		m_playerInput.MenuActions.Cancel.canceled -= Cancel_canceled;
 		#endregion
 
 		#region DebugActions Subscription
@@ -317,14 +317,12 @@ public class InputManager : MonoBehaviour
 	{
 		UpdateInputDevice(context.control.device);
 		OnCancel?.Invoke();
-		m_runningActiveRoutine = true;
-		StartCoroutine(Activate());
 	}
 
 	private void Cancel_canceled(InputAction.CallbackContext context)
 	{
+		UpdateInputDevice(context.control.device);
 		OnCancel_Ended?.Invoke();
-		m_runningActiveRoutine = false;
 	}
 	#endregion
 	#endregion

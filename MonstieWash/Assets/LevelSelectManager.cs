@@ -42,7 +42,7 @@ public class LevelSelectManager : MonoBehaviour
 
         m_backButton = FindBackButton();
 
-        m_currentPanel.transform.SetAsLastSibling();
+        //m_currentPanel.transform.SetAsLastSibling();
 
         m_es.SetSelectedGameObject(FindFirstObjectByType<Button>().gameObject);
     }

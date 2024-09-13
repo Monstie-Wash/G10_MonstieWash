@@ -114,4 +114,9 @@ public class ScoreUIManager : MonoBehaviour
         FindFirstObjectByType<Inventory>().LastEarnedScore = (int)Mathf.Round(totalScore);
         
     }
+
+    private void Inputs_OnRightClick()
+    {
+        m_skip = true;
+    }
 }

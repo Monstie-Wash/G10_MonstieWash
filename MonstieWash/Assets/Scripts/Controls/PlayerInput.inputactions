@@ -744,6 +744,17 @@
                 },
                 {
                     "name": "",
+                    "id": "752faf4d-7d6f-45d2-9957-ae8dbe97cd8f",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6423ce45-07a9-4627-82a9-a7a5c43805cd",
                     "path": "<XRController>/devicePosition",
                     "interactions": "",
