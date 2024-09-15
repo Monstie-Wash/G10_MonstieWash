@@ -15,7 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject taskTextPrefab;
     [SerializeField] private TextMeshProUGUI completionText;
     [SerializeField] private float fontSize = 36f;
-    [Space(20), SerializeField] private GameObject finishLevelButton;
+    [SerializeField] private float fontBuffer = 1.25f;
+	[Space(20), SerializeField] private GameObject finishLevelButton;
 
     [Space(20), SerializeField] private GameObject startList;
     [SerializeField] private Animator taskListAnim;
@@ -83,7 +84,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (var pair in m_taskList)
         {
-            var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
+            var newTaskObject = Instantiate(taskTextPrefab, taskContainer.transform);
             
             newTaskObject.name = pair.Key.ToString();
 
@@ -99,12 +100,12 @@ public class UIManager : MonoBehaviour
 		{
 			foreach (var pair in m_taskList)
 			{
-				var newTaskObject = Instantiate(taskTextPrefab, taskContainer.transform);
+				var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
 
 				newTaskObject.name = pair.Key.ToString();
 
 				var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
-				newTaskText.fontSize = fontSize * 2.5f;
+				newTaskText.fontSize = fontSize * fontBuffer;
 				newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
 			}
 		}
@@ -116,8 +117,8 @@ public class UIManager : MonoBehaviour
 /// <param name="scene">String identifier of the task to update.</param>
     public void UpdateClipboardTask(TaskType type)
     {
-		Debug.Log(type.ToString());
-		taskContainer.transform.Find(type.ToString()).GetComponent<TextMeshProUGUI>().text = $"<s>{taskContainer.transform.Find(type.ToString()).GetComponent<TextMeshProUGUI>().text}</s>"; //this is the worst line of c# ever written.
+		TextMeshProUGUI taskText = taskContainer.transform.Find(type.ToString()).GetComponent<TextMeshProUGUI>();
+		taskText.text = $"<s>{taskText.text}</s>";
     }
 
 	/// <summary>
