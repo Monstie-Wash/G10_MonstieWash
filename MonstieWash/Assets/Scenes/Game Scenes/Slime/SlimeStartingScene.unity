@@ -622,11 +622,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: knockbackDuration
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: knockbackInitialStrength
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: knockbackCurve.m_Curve.Array.size

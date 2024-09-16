@@ -32,10 +32,11 @@ public class PlayerHealth : MonoBehaviour
     //Values to tweak damage knockback functionality.
     [Header("Knockback Controls")]
     [Tooltip("How long the hand is knocked back for.")] [SerializeField] private float knockbackDuration;
-    [Tooltip("How strong the knockbakc force is")] [SerializeField] private float knockbackInitialStrength;
-    [Tooltip("Controls knockback strength over time")] [SerializeField] private AnimationCurve knockbackCurve;
+    [Tooltip("How strong the knockbakc force is.")] [SerializeField] private float knockbackInitialStrength;
+    [Tooltip("Controls knockback strength over time.")] [SerializeField] private AnimationCurve knockbackCurve;
+    [Tooltip("Where the hand will be knocked away from. If left blank will use center of screen.")] [SerializeField] private Transform knockBackCentralPoint;
     [Tooltip("How strongly the hand is slowed after being hit")] [SerializeField] private float slowStrength;
-    [Tooltip("How long the hand is slowed for")] [SerializeField] private float slowDuration;
+    [Tooltip("How long the hand is slowed for.")] [SerializeField] private float slowDuration;
 
     //Hidden
     private float m_originalMoveSpeed; //Used to restore move speed back to normal after slow takes place.
@@ -182,22 +183,26 @@ public class PlayerHealth : MonoBehaviour
         }
 
         m_isInvincible = false;
-    }   
-    
+    }
+
     /// <summary>
     /// Applies a slow and knockback away from the centre of the monster, knockback and slow reduce over time.
     /// </summary>
     /// <returns></returns>
     IEnumerator ApplyKnockbackEffects()
     {
-        print("Applying Knockback");
         var timeRunning = 0f;
 
         //Get the centre of the screen.
-        var centre = Camera.main.WorldToScreenPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
+        var centre = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
         //Calculate knockback direction.
-        var dir = new Vector2(transform.position.x,transform.position.y) - new Vector2(centre.x,centre.y);
-        print("Center is " + centre);
+        var dir = Vector3.zero;
+        var handToV2 = new Vector2(transform.position.x, transform.position.y);
+
+        if (knockBackCentralPoint != null) 
+        { dir = handToV2 - new Vector2(knockBackCentralPoint.position.x, knockBackCentralPoint.position.y);}
+        else 
+        { dir = handToV2 - new Vector2(centre.x, centre.y);};
 
         //If slow or knockback hasn't completed continue running.
         while (timeRunning < knockbackDuration || timeRunning < slowDuration)
