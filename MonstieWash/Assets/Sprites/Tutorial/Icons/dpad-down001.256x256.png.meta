@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      dpad-down001.256x256_0: -4048164500613155003
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

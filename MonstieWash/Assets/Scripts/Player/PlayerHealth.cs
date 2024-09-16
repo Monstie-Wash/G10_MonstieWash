@@ -26,6 +26,15 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("Animation curve for color shift upon taking damage/healing")][SerializeField] private AnimationCurve colorShift;  // Animation curve that controls damage/healing intensity. 
     #endregion
 
+    #region Knockback Controls
+    //Values to tweak damage knockback functionality.
+    [Tooltip("How long the hand is knocked back for.")] [SerializeField] private float knockbackDuration;
+    [Tooltip("How strong the knockbakc force is")] [SerializeField] private float knockbackInitialStrength;
+    [Tooltip("Controls knockback strength over time")] [SerializeField] private AnimationCurve knockbackCurve;
+    [Tooltip("How strongly the hand is slowed after being hit")] [SerializeField] private float slowStrength;
+    [Tooltip("How long the hand is slowed for")] [SerializeField] private float slowDuration;
+    #endregion
+
     #region Other Variables
     // Other
     private bool m_isInvincible = false;    // Flags whether the player is currently invincible after taking damage.
@@ -38,7 +47,7 @@ public class PlayerHealth : MonoBehaviour
     #endregion
 
     private void Start()
-    {
+    { 
         m_playerHurtbox = GetComponent<Collider2D>();
         m_spriteRenderers = GetComponentsInChildren<SpriteRenderer>(); 
         playerHealth = playerMaxHealth;
