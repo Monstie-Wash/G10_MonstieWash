@@ -32,12 +32,12 @@ public class PlayerHealth : MonoBehaviour
     //Values to tweak damage knockback functionality.
     [Header("Knockback Controls")]
     [Tooltip("How long the hand is knocked back for.")] [SerializeField] private float knockbackDuration;
-    [Tooltip("How strong the knockbakc force is.")] [SerializeField] private float knockbackInitialStrength;
-    [Tooltip("Controls knockback strength over time.")] [SerializeField] private AnimationCurve knockbackCurve;
+    [Tooltip("How strong the knockback force is.")] [SerializeField] private float knockbackInitialStrength;
+    [Tooltip("Controls shape of knockback strength over time.")] [SerializeField] private AnimationCurve knockbackCurve;
     [Tooltip("Where the hand will be knocked away from. If left blank will use center of screen.")] [SerializeField] private Transform knockBackCentralPoint;
     [Tooltip("How strongly the hand is slowed after being hit")] [SerializeField] private float slowStrength;
     [Tooltip("How long the hand is slowed for.")] [SerializeField] private float slowDuration;
-    [Tooltip("Controls slow strength over time.")] [SerializeField] private AnimationCurve speedCurve;
+    [Tooltip("Controls shape of slow strength over time.")] [SerializeField] private AnimationCurve speedCurve;
 
     //Hidden
     private float m_originalMoveSpeed; //Used to restore move speed back to normal after slow takes place.

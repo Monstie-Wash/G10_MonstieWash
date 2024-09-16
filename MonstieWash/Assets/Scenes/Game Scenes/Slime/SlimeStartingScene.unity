@@ -610,11 +610,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: slowDuration
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: slowStrength
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: playerMaxHealth
