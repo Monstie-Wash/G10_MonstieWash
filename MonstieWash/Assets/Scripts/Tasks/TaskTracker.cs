@@ -112,13 +112,13 @@ public class TaskTracker : MonoBehaviour
 
     private void TaskTypeCompletionCheck(TaskData toCheck)
     {
-        foreach (var task in m_taskData.Where(task => task.Type == toCheck.Type))
+        foreach (var task in m_taskData.Where(task => task.TaskType == toCheck.TaskType))
         {
             if(!task.Complete)
                 return;
         }
 
-		m_uiManager.UpdateClipboardTask(toCheck.Type);
+		m_uiManager.UpdateClipboardTask(toCheck.TaskType);
 	}
 
     /// <summary>

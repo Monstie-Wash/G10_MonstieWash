@@ -48,13 +48,13 @@ public class ScoreUIManager : MonoBehaviour
 	{
 		foreach (var task in m_tracker.TaskData)
 		{
-			if (!m_tasks.ContainsKey(task.Type.ToString()))
+			if (!m_tasks.ContainsKey(task.TaskType.ToString()))
 			{
-				m_tasks.Add(task.Type.ToString(), task.Score);
+				m_tasks.Add(task.TaskType.ToString(), task.Score);
 			}
 			else
 			{
-				m_tasks[task.Type.ToString()] += task.Score;
+				m_tasks[task.TaskType.ToString()] += task.Score;
 			}
 		}
 	}

@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8733a3cda31c6174aa499a66ae89a85d, type: 3}
-  m_Name: Bone
+  m_Name: StuckItem
   m_EditorClassIdentifier: 
   description: Pick out bones

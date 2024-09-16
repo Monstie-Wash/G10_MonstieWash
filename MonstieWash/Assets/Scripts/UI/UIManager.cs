@@ -66,9 +66,9 @@ public class UIManager : MonoBehaviour
     {
         foreach (var task in tasks)
         {
-            if (!m_taskList.ContainsKey(task.Type))
+            if (!m_taskList.ContainsKey(task.TaskType))
             {
-                m_taskList.Add(task.Type, false);
+                m_taskList.Add(task.TaskType, false);
             }
         }
 

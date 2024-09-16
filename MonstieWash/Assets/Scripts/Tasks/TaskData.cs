@@ -1,45 +1,34 @@
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public enum TaskType
 {
-	Default,
 	Dirt,
-    Bone,
+    StuckItem,
 }
 
 public class TaskData : MonoBehaviour
 {
-	[SerializeField] private string m_id;
-    public enum TypeOfTask { Dirt, StuckItem };
+	[SerializeField] private string id;
+    [SerializeField] private float progress;
+    [SerializeField] private bool complete;
+    [SerializeField] private float threshold;
+	[SerializeField] private Transform container;
+	[SerializeField] private float score = 9.85f;
+    [SerializeField] private TaskType taskType;
 
-    [SerializeField] private float m_progress;
-
-    [SerializeField] private bool m_complete;
-    [SerializeField] protected float m_threshold;
-
-	[SerializeField] private Transform m_container;
-
-	[SerializeField] private float m_score = 9.85f;
-
-    [SerializeField] private TaskType type;
-
-    [SerializeField] protected TypeOfTask m_taskType;
-
-	public string Id { get => m_id; set => m_id = value; }
-    public float Progress { get => m_progress; set => m_progress = value; }
-    public bool Complete { get => m_complete; set => m_complete = value; }
-    public float Threshold { get => m_threshold; set => m_threshold = value; }
-    public Transform Container { get => m_container; }
-	public float Score { get => m_score; }
-	public TaskType Type { get => type; set => type = value; }
-    public TypeOfTask TaskType { get => m_taskType; }
+	public string Id { get => id; set => id = value; }
+    public float Progress { get => progress; set => progress = value; }
+    public bool Complete { get => complete; set => complete = value; }
+    public float Threshold { get => threshold; set => threshold = value; }
+    public Transform Container { get => container; }
+	public float Score { get => score; }
+	public TaskType TaskType { get => taskType; set => taskType = value; }
 
 	private void Awake()
 	{
-        m_container = gameObject.transform;
-        m_id = m_container.name;
-        m_progress = 0f;
-        m_complete = false;
+        container = gameObject.transform;
+        id = container.name;
+        progress = 0f;
+        complete = false;
 	}
 }
