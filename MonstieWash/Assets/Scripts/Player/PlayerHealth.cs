@@ -225,9 +225,6 @@ public class PlayerHealth : MonoBehaviour
                 m_hand.HandSpeed = Mathf.Max( m_originalMoveSpeed - speedCurve.Evaluate(timeRunning / slowDuration) * slowStrength, 0);
             }
 
-            print(m_hand.HandSpeed + ":current speed");
-
-
             timeRunning += Time.deltaTime;
             print(timeRunning);
             yield return null;
