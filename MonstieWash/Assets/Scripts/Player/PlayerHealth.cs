@@ -37,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("Where the hand will be knocked away from. If left blank will use center of screen.")] [SerializeField] private Transform knockBackCentralPoint;
     [Tooltip("How strongly the hand is slowed after being hit")] [SerializeField] private float slowStrength;
     [Tooltip("How long the hand is slowed for.")] [SerializeField] private float slowDuration;
+    [Tooltip("Controls slow strength over time.")] [SerializeField] private AnimationCurve speedCurve;
 
     //Hidden
     private float m_originalMoveSpeed; //Used to restore move speed back to normal after slow takes place.
@@ -61,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
         m_spriteRenderers = GetComponentsInChildren<SpriteRenderer>(); 
         playerHealth = playerMaxHealth;
         m_hand = FindFirstObjectByType<PlayerHand>();
+        m_originalMoveSpeed = m_hand.HandSpeed;
     }
 
     /// <summary>
@@ -191,7 +193,9 @@ public class PlayerHealth : MonoBehaviour
     /// <returns></returns>
     IEnumerator ApplyKnockbackEffects()
     {
+        //Initialise time tracking and set hand move speed to starting slow strength.
         var timeRunning = 0f;
+        m_hand.HandSpeed = Mathf.Max(m_originalMoveSpeed - speedCurve.Evaluate(0 / slowDuration) * slowStrength, 0);
 
         //Get Hands location
         var handToV2 = new Vector2(m_hand.transform.position.x, m_hand.transform.position.y);
@@ -209,12 +213,27 @@ public class PlayerHealth : MonoBehaviour
         while (timeRunning < knockbackDuration || timeRunning < slowDuration)
         {
             //Move hand in direction of knockback by animation curve strength at time.
+            if (timeRunning < knockbackDuration)
+            { 
             var moveVec = dir.normalized * knockbackCurve.Evaluate(timeRunning / knockbackDuration) * knockbackInitialStrength * Time.deltaTime;
             m_hand.gameObject.transform.position += new Vector3(moveVec.x, moveVec.y, 0);
+            }
+
+            //Update slow strength by animation curve over time.
+            if (timeRunning < slowDuration)
+            {
+                m_hand.HandSpeed = Mathf.Max( m_originalMoveSpeed - speedCurve.Evaluate(timeRunning / slowDuration) * slowStrength, 0);
+            }
+
+            print(m_hand.HandSpeed + ":current speed");
+
 
             timeRunning += Time.deltaTime;
             print(timeRunning);
             yield return null;
-        }        
+        }
+
+        //Reset speed to normal.
+        m_hand.HandSpeed = m_originalMoveSpeed;
     }
 }
