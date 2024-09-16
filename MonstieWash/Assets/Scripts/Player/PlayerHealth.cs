@@ -16,18 +16,21 @@ public class PlayerHealth : MonoBehaviour
 
     #region Damage Controls
     // Damage controls for designers
+    [Header("Damage Controls")]
     [Tooltip("Animation intensity scales with damage taken up to this amount")][SerializeField] private float damageAnimationCap;   // Amount of damage taken scales the damage animation, up to this amount of damage. 
     [Tooltip("Animation curve for the screen shake upon taking damage")][SerializeField] private AnimationCurve damageShake;    // Animation curve that controls damage shake intensity.
     #endregion
 
     #region Effect Controls
     // Effect controls for designers
+    [Header("Effect Controls")]
     [Tooltip("Duration of the damage / healing animation (in seconds)")][SerializeField][Range(0f, 2f)] private float animationDuration;   // Duration of the "take damage" and "heal" animations.
     [Tooltip("Animation curve for color shift upon taking damage/healing")][SerializeField] private AnimationCurve colorShift;  // Animation curve that controls damage/healing intensity. 
     #endregion
 
     #region Knockback Controls
     //Values to tweak damage knockback functionality.
+    [Header("Knockback Controls")]
     [Tooltip("How long the hand is knocked back for.")] [SerializeField] private float knockbackDuration;
     [Tooltip("How strong the knockbakc force is")] [SerializeField] private float knockbackInitialStrength;
     [Tooltip("Controls knockback strength over time")] [SerializeField] private AnimationCurve knockbackCurve;
