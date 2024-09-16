@@ -40,6 +40,16 @@ public class ScoreUIManager : MonoBehaviour
         StartCoroutine(LineItemSetActive());
 	}
 
+	private void OnEnable()
+	{
+		InputManager.Instance.OnRightClick += Inputs_OnRightClick;
+	}
+
+	private void OnDisable()
+    {
+        InputManager.Instance.OnRightClick -= Inputs_OnRightClick;
+	}
+
 	/// <summary>
 	/// Gathers the task list from the game manager.
 	/// </summary>

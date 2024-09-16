@@ -40,6 +40,10 @@ public class InputManager : MonoBehaviour
 	public event Action OnCancel_Started;
 	public event Action OnCancel;
 	public event Action OnCancel_Ended;
+
+	public event Action OnRightClick_Started;
+	public event Action OnRightClick;
+	public event Action OnRightClick_Ended;
 	#endregion
 
 	#region DebugActions
@@ -113,6 +117,10 @@ public class InputManager : MonoBehaviour
         m_playerInput.MenuActions.Cancel.started += Cancel_started;
         m_playerInput.MenuActions.Cancel.performed += Cancel_performed;
         m_playerInput.MenuActions.Cancel.canceled += Cancel_canceled;
+
+		m_playerInput.MenuActions.RightClick.started += RightClick_started;
+		m_playerInput.MenuActions.RightClick.performed += RightClick_performed;
+		m_playerInput.MenuActions.RightClick.canceled += RightClick_canceled;
 		#endregion
 
 		#region DebugActions Subscription
@@ -154,6 +162,10 @@ public class InputManager : MonoBehaviour
 		m_playerInput.MenuActions.Cancel.started -= Cancel_started;
 		m_playerInput.MenuActions.Cancel.performed -= Cancel_performed;
 		m_playerInput.MenuActions.Cancel.canceled -= Cancel_canceled;
+
+		m_playerInput.MenuActions.RightClick.started -= RightClick_started;
+		m_playerInput.MenuActions.RightClick.performed -= RightClick_performed;
+		m_playerInput.MenuActions.RightClick.canceled -= RightClick_canceled;
 		#endregion
 
 		#region DebugActions Subscription
@@ -323,6 +335,26 @@ public class InputManager : MonoBehaviour
 	{
 		UpdateInputDevice(context.control.device);
 		OnCancel_Ended?.Invoke();
+	}
+	#endregion
+
+	#region Cancel
+	private void RightClick_started(InputAction.CallbackContext context)
+	{
+		UpdateInputDevice(context.control.device);
+		OnRightClick_Started?.Invoke();
+	}
+
+	private void RightClick_performed(InputAction.CallbackContext context)
+	{
+		UpdateInputDevice(context.control.device);
+		OnRightClick?.Invoke();
+	}
+
+	private void RightClick_canceled(InputAction.CallbackContext context)
+	{
+		UpdateInputDevice(context.control.device);
+		OnRightClick_Ended?.Invoke();
 	}
 	#endregion
 	#endregion
