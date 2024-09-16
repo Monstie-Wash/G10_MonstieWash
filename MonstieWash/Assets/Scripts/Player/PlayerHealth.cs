@@ -36,6 +36,11 @@ public class PlayerHealth : MonoBehaviour
     [Tooltip("Controls knockback strength over time")] [SerializeField] private AnimationCurve knockbackCurve;
     [Tooltip("How strongly the hand is slowed after being hit")] [SerializeField] private float slowStrength;
     [Tooltip("How long the hand is slowed for")] [SerializeField] private float slowDuration;
+
+    //Hidden
+    private float m_originalMoveSpeed; //Used to restore move speed back to normal after slow takes place.
+    private PlayerHand m_hand; //Reference to hand script.
+
     #endregion
 
     #region Other Variables
@@ -54,6 +59,7 @@ public class PlayerHealth : MonoBehaviour
         m_playerHurtbox = GetComponent<Collider2D>();
         m_spriteRenderers = GetComponentsInChildren<SpriteRenderer>(); 
         playerHealth = playerMaxHealth;
+        m_hand = FindFirstObjectByType<PlayerHand>();
     }
 
     /// <summary>
@@ -114,6 +120,7 @@ public class PlayerHealth : MonoBehaviour
         //}
 
         StartCoroutine(PlayDamageEffects(dmgTaken));
+        StartCoroutine(ApplyKnockbackEffects());
     }
 
     /// <summary>
@@ -175,5 +182,32 @@ public class PlayerHealth : MonoBehaviour
         }
 
         m_isInvincible = false;
-    }    
+    }   
+    
+    /// <summary>
+    /// Applies a slow and knockback away from the centre of the monster, knockback and slow reduce over time.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ApplyKnockbackEffects()
+    {
+        var timeRunning = 0f;
+
+        //Get the centre of the screen.
+        var centre = Camera.main.WorldToScreenPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, Camera.main.nearClipPlane));
+        //Calculate knockback direction.
+        var dir = gameObject.transform.position - centre;
+
+        //If slow or knockback hasn't completed continue running.
+        while (timeRunning < knockbackDuration || timeRunning < slowDuration)
+        {
+            //Move hand in direction of knockback by animation curve strength at time.
+            m_hand.gameObject.transform.position += dir.normalized * knockbackCurve.Evaluate(timeRunning / knockbackDuration) * Time.deltaTime;
+
+            timeRunning += Time.deltaTime;
+        }
+
+
+
+        yield return null;
+    }
 }
