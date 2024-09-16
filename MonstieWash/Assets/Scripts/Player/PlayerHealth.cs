@@ -190,24 +190,25 @@ public class PlayerHealth : MonoBehaviour
     /// <returns></returns>
     IEnumerator ApplyKnockbackEffects()
     {
+        print("Applying Knockback");
         var timeRunning = 0f;
 
         //Get the centre of the screen.
-        var centre = Camera.main.WorldToScreenPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, Camera.main.nearClipPlane));
+        var centre = Camera.main.WorldToScreenPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
         //Calculate knockback direction.
-        var dir = gameObject.transform.position - centre;
+        var dir = new Vector2(transform.position.x,transform.position.y) - new Vector2(centre.x,centre.y);
+        print("Center is " + centre);
 
         //If slow or knockback hasn't completed continue running.
         while (timeRunning < knockbackDuration || timeRunning < slowDuration)
         {
             //Move hand in direction of knockback by animation curve strength at time.
-            m_hand.gameObject.transform.position += dir.normalized * knockbackCurve.Evaluate(timeRunning / knockbackDuration) * Time.deltaTime;
+            var moveVec = dir.normalized * knockbackCurve.Evaluate(timeRunning / knockbackDuration) * knockbackInitialStrength * Time.deltaTime;
+            m_hand.gameObject.transform.position += new Vector3(moveVec.x, moveVec.y, 0);
 
             timeRunning += Time.deltaTime;
-        }
-
-
-
-        yield return null;
+            print(timeRunning);
+            yield return null;
+        }        
     }
 }
