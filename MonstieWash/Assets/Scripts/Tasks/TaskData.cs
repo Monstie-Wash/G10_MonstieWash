@@ -1,3 +1,4 @@
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public enum TaskType
@@ -10,6 +11,7 @@ public enum TaskType
 public class TaskData : MonoBehaviour
 {
 	[SerializeField] private string m_id;
+    public enum TypeOfTask { Dirt, StuckItem };
 
     [SerializeField] private float m_progress;
 
@@ -22,6 +24,8 @@ public class TaskData : MonoBehaviour
 
     [SerializeField] private TaskType type;
 
+    [SerializeField] protected TypeOfTask m_taskType;
+
 	public string Id { get => m_id; set => m_id = value; }
     public float Progress { get => m_progress; set => m_progress = value; }
     public bool Complete { get => m_complete; set => m_complete = value; }
@@ -29,6 +33,7 @@ public class TaskData : MonoBehaviour
     public Transform Container { get => m_container; }
 	public float Score { get => m_score; }
 	public TaskType Type { get => type; set => type = value; }
+    public TypeOfTask TaskType { get => m_taskType; }
 
 	private void Awake()
 	{

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3772029328255838128}
   - component: {fileID: 4938277568639111315}
   - component: {fileID: 4500140306808643018}
+  - component: {fileID: -2166154959638611201}
   m_Layer: 0
   m_Name: Dirt2
   m_TagString: Erasable
@@ -106,3 +107,17 @@ MonoBehaviour:
   m_container: {fileID: 0}
   m_score: 9.85
   type: 1
+  m_taskType: 0
+--- !u!114 &-2166154959638611201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487633809713049485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa600741f8288a4fb0c0980b70e74e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer: 0

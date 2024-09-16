@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BoneConsume
   m_EditorClassIdentifier: 
   itemName: Bone
-  sprite: {fileID: 7553835203902197830, guid: 80f82bdd54260124fa0a0010368d186c, type: 3}
+  sprite: {fileID: 21300000, guid: db18211b6e273e84fa2d736cebe2361e, type: 3}
   maxQuantity: 99
   sortingTags: 03000000
   diminishingReturns: 0
