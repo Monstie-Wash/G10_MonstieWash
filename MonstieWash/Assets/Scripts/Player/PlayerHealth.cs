@@ -193,16 +193,17 @@ public class PlayerHealth : MonoBehaviour
     {
         var timeRunning = 0f;
 
+        //Get Hands location
+        var handToV2 = new Vector2(m_hand.transform.position.x, m_hand.transform.position.y);
         //Get the centre of the screen.
-        var centre = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0));
-        //Calculate knockback direction.
-        var dir = Vector3.zero;
-        var handToV2 = new Vector2(transform.position.x, transform.position.y);
+        Vector2 centre;
+        if (knockBackCentralPoint != null)
+        { centre = new Vector2(knockBackCentralPoint.position.x, knockBackCentralPoint.position.y) - handToV2; }
+        else
+        { centre = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0)); };
 
-        if (knockBackCentralPoint != null) 
-        { dir = handToV2 - new Vector2(knockBackCentralPoint.position.x, knockBackCentralPoint.position.y);}
-        else 
-        { dir = handToV2 - new Vector2(centre.x, centre.y);};
+        //Calculate knockback from point provided.
+        var dir = new Vector2(handToV2.x - centre.x,handToV2.y - centre.y);
 
         //If slow or knockback hasn't completed continue running.
         while (timeRunning < knockbackDuration || timeRunning < slowDuration)
