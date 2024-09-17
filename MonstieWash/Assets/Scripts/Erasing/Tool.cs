@@ -9,10 +9,12 @@ public class Tool : ScriptableObject
     public string toolName = "";
     public Sprite mask;
     [Range(1, 10)] public int size = 1;
+    [SerializeField] private bool doNotErase = false;
     [SerializeField][Range(1f, 100f)] private float inputStrength = 100f;
     [SerializeField] private List<ErasableLayerer.ErasableLayer> erasableLayers = new();
 
     public byte[] MaskPixels { get; private set; }
+    public bool DoNotErase { get { return doNotErase; } }
     public float InputStrength { get { return inputStrength; } set { inputStrength = Mathf.Clamp(value, 1f, 100f); } }
     public float Strength { get; private set; }
     public List<ErasableLayerer.ErasableLayer> ErasableLayers { get { return erasableLayers; } }
@@ -22,10 +24,7 @@ public class Tool : ScriptableObject
     /// </summary>
     public void Initialize()
     {
-        //The input strength is what the user will adjust to control the strength of the tool.
-        //The input strength is scaled exponentially to provide a smoother strength gradient and improved user experience.
-        var exponentBase = 1.0472f; //This is a value that comes from the 100th root of 100. This is to ensure 100% input strength matches 100% output strength.
-        Strength = Mathf.Clamp(Mathf.Pow(exponentBase, inputStrength), 1f, 100f);
+        UpdateStrength();
 
         MaskPixels = new byte[mask.texture.width * mask.texture.height];
         Color[] maskColors = mask.texture.GetPixels();
@@ -34,6 +33,14 @@ public class Tool : ScriptableObject
         {
             MaskPixels[i] = (byte)Mathf.FloorToInt(255f * maskColors[i].a);
         }
+    }
+
+    public void UpdateStrength()
+    {
+        //The input strength is what the user will adjust to control the strength of the tool.
+        //The input strength is scaled exponentially to provide a smoother strength gradient and improved user experience.
+        var exponentBase = 1.0472f; //This is a value that comes from the 100th root of 100. This is to ensure 100% input strength matches 100% output strength.
+        Strength = Mathf.Clamp(Mathf.Pow(exponentBase, inputStrength), 1f, 100f);
     }
 
     public void SetValues(Tool otherTool)
