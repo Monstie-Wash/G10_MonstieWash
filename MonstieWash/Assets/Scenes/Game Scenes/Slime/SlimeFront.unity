@@ -2856,9 +2856,9 @@ MonoBehaviour:
   m_currentAlpha: 0
   upperAlphaLimit: 240
   lowerAlphaLimit: 0
-  fadeInSpeed: 245
-  fadeOutSpeed: 175
-  fullFadeTime: 1
+  fadeInSpeed: 500
+  fadeOutSpeed: 500
+  fullFadeTime: 0
 --- !u!1001 &1736562946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3391,9 +3391,9 @@ MonoBehaviour:
   m_currentAlpha: 0
   upperAlphaLimit: 240
   lowerAlphaLimit: 0
-  fadeInSpeed: 245
-  fadeOutSpeed: 175
-  fullFadeTime: 1
+  fadeInSpeed: 500
+  fadeOutSpeed: 500
+  fullFadeTime: 0
 --- !u!1001 &2046161252
 PrefabInstance:
   m_ObjectHideFlags: 0
