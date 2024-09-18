@@ -84,6 +84,7 @@ public class TaskTracker : MonoBehaviour
         //task.gameObject.SetActive(false); // Remove task here?
 
         SceneCompletionCheck(task.gameObject.scene);
+        TaskTypeCompletionCheck(task);
 	}
 
     /// <summary>
@@ -104,11 +105,21 @@ public class TaskTracker : MonoBehaviour
         OnSceneCompleted?.Invoke(scene.name);
 
         m_scenesCompleted[scene] = true;
-        m_uiManager.UpdateClipboardTask(scene.name);
         m_soundPlayer.PlaySound(true, true);
 
         LevelCompletionCheck();
     }
+
+    private void TaskTypeCompletionCheck(TaskData toCheck)
+    {
+        foreach (var task in m_taskData.Where(task => task.TaskType == toCheck.TaskType))
+        {
+            if(!task.Complete)
+                return;
+        }
+
+		m_uiManager.UpdateClipboardTask(toCheck.TaskType);
+	}
 
     /// <summary>
     /// Return whether a scene exists in the dict of completed scenes, without requiring knowledge of other scenes.

@@ -294,7 +294,7 @@ public class TutorialManager : MonoBehaviour
     {
         foreach (var task in m_taskTracker.TaskData)
         {
-            if ((task.TaskType == TaskData.TypeOfTask.Dirt) && !task.Complete)
+            if ((task.TaskType == TaskType.Dirt) && !task.Complete)
             {
                 return true;
             }
