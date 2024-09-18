@@ -107,6 +107,7 @@ MonoBehaviour:
   m_container: {fileID: 0}
   m_score: 9.85
   m_taskType: 0
+  type: 1
 --- !u!114 &3582042371335616824
 MonoBehaviour:
   m_ObjectHideFlags: 0
