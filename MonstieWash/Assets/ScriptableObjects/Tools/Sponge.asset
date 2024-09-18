@@ -17,4 +17,4 @@ MonoBehaviour:
   size: 2
   doNotErase: 1
   inputStrength: 10
-  erasableLayers: 
+  erasableLayers: 0000000001000000

@@ -342,10 +342,6 @@ public class MonsterBrain : MonoBehaviour
     public void UpdateMood(float amount, MoodType mt)
     {
         var index = moodData.FindIndex(item => item.mood == mt);
-        if (index < 0 || index >= moodData.Count)
-        {
-            Debug.Log("Here!");
-        }
         moodData[index].value += amount;
         MaintainLimit(index);
     }

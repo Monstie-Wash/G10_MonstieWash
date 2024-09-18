@@ -103,7 +103,7 @@ MonoBehaviour:
   m_id: 
   m_progress: 0
   m_complete: 0
-  m_threshold: 95
+  m_threshold: 98
   m_container: {fileID: 0}
   m_score: 9.85
   m_taskType: 0
@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa600741f8288a4fb0c0980b70e74e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer: 3
+  layer: 2

@@ -80,13 +80,7 @@ public class TaskTracker : MonoBehaviour
 
         UpdateUI();
 
-        if (task.Progress < task.Threshold) return;
-
-        // Task over threshold; complete!
-        task.Complete = true;
-
-        // Needed to comment out the below line to keep bone picking tasks working. Will figure out a way to make dirt disappear later.
-        //task.gameObject.SetActive(false); // Remove task here?
+        if (!task.Complete) return;
 
         SceneCompletionCheck(task.gameObject.scene);
 	}

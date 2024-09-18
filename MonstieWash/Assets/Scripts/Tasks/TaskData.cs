@@ -20,7 +20,7 @@ public class TaskData : MonoBehaviour
 
 	public string Id { get => m_id; set => m_id = value; }
     public float Progress { get => m_progress; set => m_progress = value; }
-    public bool Complete { get => m_complete; set => m_complete = value; }
+    public bool Complete { get => m_progress >= m_threshold; }
     public float Threshold { get => m_threshold; set => m_threshold = value; }
     public Transform Container { get => m_container; }
 	public float Score { get => m_score; }

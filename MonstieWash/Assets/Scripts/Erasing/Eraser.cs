@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
-using UnityEngine.U2D;
 
 public class Eraser : MonoBehaviour
 {
@@ -35,8 +32,12 @@ public class Eraser : MonoBehaviour
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
         public byte[] maskPixels;
-        public TaskData erasableTask;
+        public TaskData erasableTask { get; private set; }
         public ErasableLayerer.ErasableLayer layer { get; private set; }
+
+        public bool Complete { get => erasableTask.Complete; }
+
+        private SpriteRenderer m_spriteRenderer;
 
         /// <summary>
         /// An erasable object representation.
@@ -45,7 +46,8 @@ public class Eraser : MonoBehaviour
         public Erasable(GameObject obj)
         {
             this.obj = obj;
-            sprite = obj.GetComponent<SpriteRenderer>().sprite;
+            m_spriteRenderer = obj.GetComponent<SpriteRenderer>();
+            sprite = m_spriteRenderer.sprite;
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
             erasableTask = obj.GetComponent<TaskData>();
             layer = obj.GetComponent<ErasableLayerer>().Layer;
@@ -66,14 +68,19 @@ public class Eraser : MonoBehaviour
                 newColors[i].g = colors[i].g;
                 newColors[i].b = colors[i].b;
                 newColors[i].a = Mathf.Min((255 - maskPixels[i])/255f, colors[i].a);
-                if (newColors[i].a < 0.01f) erasedCount++;
+                if (newColors[i].a < 0.1f) erasedCount++;
             }
 
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
 			erasableTask.Progress = ((float)erasedCount / maskPixels.Length) * 100;
-		}
+
+            if (Complete)
+            {
+                m_spriteRenderer.enabled = false;
+            }
+        }
     }
 
     private void Awake()
@@ -121,15 +128,16 @@ public class Eraser : MonoBehaviour
         
         foreach (var erasable in m_erasables)
         {
-            if (!erasable.obj.activeInHierarchy || !tool.ErasableLayers.Contains(erasable.layer) && !tool.DoNotErase) continue;
+            var erasableInactive = !erasable.obj.activeInHierarchy;
+            var erasableNotInToolLayers = !tool.ErasableLayers.Contains(erasable.layer);
+            var erasableComplete = erasable.Complete;
+            var skipErasure = erasableInactive || erasableNotInToolLayers || erasableComplete;
+            if (skipErasure) continue;
 
             if (UpdateErasableMask(erasable)) 
             {
-                if (!tool.DoNotErase)
-                {
-                    erasable.ApplyMask();
-                    m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
-                }
+                erasable.ApplyMask();
+                m_taskTracker.UpdateTaskTracker(erasable.erasableTask);
 
                 m_isErasing = true;
             }
