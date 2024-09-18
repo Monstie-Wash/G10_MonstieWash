@@ -1444,6 +1444,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2074756616}
     m_Modifications:
+    - target: {fileID: 427361703615729902, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 674.1724
+      objectReference: {fileID: 0}
+    - target: {fileID: 427361703615729902, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 42.1683
+      objectReference: {fileID: 0}
+    - target: {fileID: 427361703615729902, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 77
+      objectReference: {fileID: 0}
+    - target: {fileID: 427361703615729902, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 195.71716
+      objectReference: {fileID: 0}
     - target: {fileID: 971829507767012901, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_text
       value: 'You can navigate to different views by hovering your hand over the
@@ -1493,6 +1509,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1101106012185439661, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 219.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1101106012185439661, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180123456087207547, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_text
+      value: '<b><i><size=45>Swap</b></i></size> to your brush with       or   '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244945096486855166, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1602624346367620042, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_text
       value: 'To remove bones, hover over them with an empty hand and hold:
@@ -1509,6 +1541,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1734384178934781368, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2018545080781698745, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1521,17 +1557,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2532625216321080376, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2911753253606692221, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3533757363977393950, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3842149055569132068, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276597992654170269, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 331.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276597992654170269, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[0].value
@@ -1539,35 +1587,55 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[1].value
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[2].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.data[3].value
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[1].prompt
       value: 
-      objectReference: {fileID: 7241775246093986049}
+      objectReference: {fileID: 7241775246093986047}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[2].prompt
+      value: 
+      objectReference: {fileID: 7241775246093986049}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.data[3].prompt
       value: 
       objectReference: {fileID: 7241775246093986048}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[1].eventListen
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[2].eventListen
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.data[3].eventListen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.data[1].promptCompletion
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4596110498636144217, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4688208615737586938, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_Name
       value: TutorialManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5247358923178901051, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5347848311514229783, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
@@ -1579,7 +1647,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6107856036486559584, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6135502789068484657, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 930.1086
+      objectReference: {fileID: 0}
+    - target: {fileID: 6135502789068484657, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 159.3145
+      objectReference: {fileID: 0}
+    - target: {fileID: 6135502789068484657, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 106.5484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6135502789068484657, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 190.50757
       objectReference: {fileID: 0}
     - target: {fileID: 7473753447340719570, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
@@ -1605,6 +1689,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8478517961137950213, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_text
+      value: '<b><i><size=45>Use</b></i></size> the brush on dirt with      or '
+      objectReference: {fileID: 0}
     - target: {fileID: 8775708587707239772, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1627,6 +1715,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+--- !u!1 &7241775246093986047 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1244945096486855166, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+  m_PrefabInstance: {fileID: 7241775246093986046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7241775246093986048 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6107856036486559584, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
@@ -1634,7 +1727,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7241775246093986049 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3533757363977393950, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2532625216321080376, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
   m_PrefabInstance: {fileID: 7241775246093986046}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
