@@ -340,7 +340,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RightClick",
+                    "name": "AltSelect",
                     "type": "PassThrough",
                     "id": "3dce965f-9205-4e85-ad90-dfd0fcd54f5a",
                     "expectedControlType": "Button",
@@ -760,7 +760,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "RightClick",
+                    "action": "AltSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -771,7 +771,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RightClick",
+                    "action": "AltSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -42,12 +42,12 @@ public class ScoreUIManager : MonoBehaviour
 
 	private void OnEnable()
 	{
-		InputManager.Instance.OnRightClick += Inputs_OnRightClick;
+		InputManager.Instance.OnAltSelect += Inputs_OnAltSelect;
 	}
 
 	private void OnDisable()
     {
-        InputManager.Instance.OnRightClick -= Inputs_OnRightClick;
+        InputManager.Instance.OnAltSelect -= Inputs_OnAltSelect;
 	}
 
 	/// <summary>
@@ -125,7 +125,7 @@ public class ScoreUIManager : MonoBehaviour
         
     }
 
-    private void Inputs_OnRightClick()
+    private void Inputs_OnAltSelect()
     {
         m_skip = true;
     }

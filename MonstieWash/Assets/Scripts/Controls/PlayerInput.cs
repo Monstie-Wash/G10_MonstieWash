@@ -362,7 +362,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RightClick"",
+                    ""name"": ""AltSelect"",
                     ""type"": ""PassThrough"",
                     ""id"": ""3dce965f-9205-4e85-ad90-dfd0fcd54f5a"",
                     ""expectedControlType"": ""Button"",
@@ -782,7 +782,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""RightClick"",
+                    ""action"": ""AltSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -793,7 +793,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RightClick"",
+                    ""action"": ""AltSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -886,7 +886,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MenuActions_Click = m_MenuActions.FindAction("Click", throwIfNotFound: true);
         m_MenuActions_ScrollWheel = m_MenuActions.FindAction("ScrollWheel", throwIfNotFound: true);
         m_MenuActions_MiddleClick = m_MenuActions.FindAction("MiddleClick", throwIfNotFound: true);
-        m_MenuActions_RightClick = m_MenuActions.FindAction("RightClick", throwIfNotFound: true);
+        m_MenuActions_AltSelect = m_MenuActions.FindAction("AltSelect", throwIfNotFound: true);
         m_MenuActions_TrackedDevicePosition = m_MenuActions.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_MenuActions_TrackedDeviceOrientation = m_MenuActions.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         // DebugActions
@@ -1046,7 +1046,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuActions_Click;
     private readonly InputAction m_MenuActions_ScrollWheel;
     private readonly InputAction m_MenuActions_MiddleClick;
-    private readonly InputAction m_MenuActions_RightClick;
+    private readonly InputAction m_MenuActions_AltSelect;
     private readonly InputAction m_MenuActions_TrackedDevicePosition;
     private readonly InputAction m_MenuActions_TrackedDeviceOrientation;
     public struct MenuActionsActions
@@ -1060,7 +1060,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Click => m_Wrapper.m_MenuActions_Click;
         public InputAction @ScrollWheel => m_Wrapper.m_MenuActions_ScrollWheel;
         public InputAction @MiddleClick => m_Wrapper.m_MenuActions_MiddleClick;
-        public InputAction @RightClick => m_Wrapper.m_MenuActions_RightClick;
+        public InputAction @AltSelect => m_Wrapper.m_MenuActions_AltSelect;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_MenuActions_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_MenuActions_TrackedDeviceOrientation;
         public InputActionMap Get() { return m_Wrapper.m_MenuActions; }
@@ -1093,9 +1093,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MiddleClick.started += instance.OnMiddleClick;
             @MiddleClick.performed += instance.OnMiddleClick;
             @MiddleClick.canceled += instance.OnMiddleClick;
-            @RightClick.started += instance.OnRightClick;
-            @RightClick.performed += instance.OnRightClick;
-            @RightClick.canceled += instance.OnRightClick;
+            @AltSelect.started += instance.OnAltSelect;
+            @AltSelect.performed += instance.OnAltSelect;
+            @AltSelect.canceled += instance.OnAltSelect;
             @TrackedDevicePosition.started += instance.OnTrackedDevicePosition;
             @TrackedDevicePosition.performed += instance.OnTrackedDevicePosition;
             @TrackedDevicePosition.canceled += instance.OnTrackedDevicePosition;
@@ -1127,9 +1127,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MiddleClick.started -= instance.OnMiddleClick;
             @MiddleClick.performed -= instance.OnMiddleClick;
             @MiddleClick.canceled -= instance.OnMiddleClick;
-            @RightClick.started -= instance.OnRightClick;
-            @RightClick.performed -= instance.OnRightClick;
-            @RightClick.canceled -= instance.OnRightClick;
+            @AltSelect.started -= instance.OnAltSelect;
+            @AltSelect.performed -= instance.OnAltSelect;
+            @AltSelect.canceled -= instance.OnAltSelect;
             @TrackedDevicePosition.started -= instance.OnTrackedDevicePosition;
             @TrackedDevicePosition.performed -= instance.OnTrackedDevicePosition;
             @TrackedDevicePosition.canceled -= instance.OnTrackedDevicePosition;
@@ -1226,7 +1226,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnScrollWheel(InputAction.CallbackContext context);
         void OnMiddleClick(InputAction.CallbackContext context);
-        void OnRightClick(InputAction.CallbackContext context);
+        void OnAltSelect(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
     }

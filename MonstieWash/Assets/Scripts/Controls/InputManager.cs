@@ -41,9 +41,9 @@ public class InputManager : MonoBehaviour
 	public event Action OnCancel;
 	public event Action OnCancel_Ended;
 
-	public event Action OnRightClick_Started;
-	public event Action OnRightClick;
-	public event Action OnRightClick_Ended;
+	public event Action OnAltSelect_Started;
+	public event Action OnAltSelect;
+	public event Action OnAltSelect_Ended;
 	#endregion
 
 	#region DebugActions
@@ -118,9 +118,9 @@ public class InputManager : MonoBehaviour
         m_playerInput.MenuActions.Cancel.performed += Cancel_performed;
         m_playerInput.MenuActions.Cancel.canceled += Cancel_canceled;
 
-		m_playerInput.MenuActions.RightClick.started += RightClick_started;
-		m_playerInput.MenuActions.RightClick.performed += RightClick_performed;
-		m_playerInput.MenuActions.RightClick.canceled += RightClick_canceled;
+		m_playerInput.MenuActions.AltSelect.started += AltSelect_started;
+		m_playerInput.MenuActions.AltSelect.performed += AltSelect_performed;
+		m_playerInput.MenuActions.AltSelect.canceled += AltSelect_canceled;
 		#endregion
 
 		#region DebugActions Subscription
@@ -163,9 +163,9 @@ public class InputManager : MonoBehaviour
 		m_playerInput.MenuActions.Cancel.performed -= Cancel_performed;
 		m_playerInput.MenuActions.Cancel.canceled -= Cancel_canceled;
 
-		m_playerInput.MenuActions.RightClick.started -= RightClick_started;
-		m_playerInput.MenuActions.RightClick.performed -= RightClick_performed;
-		m_playerInput.MenuActions.RightClick.canceled -= RightClick_canceled;
+		m_playerInput.MenuActions.AltSelect.started -= AltSelect_started;
+		m_playerInput.MenuActions.AltSelect.performed -= AltSelect_performed;
+		m_playerInput.MenuActions.AltSelect.canceled -= AltSelect_canceled;
 		#endregion
 
 		#region DebugActions Subscription
@@ -338,23 +338,23 @@ public class InputManager : MonoBehaviour
 	}
 	#endregion
 
-	#region Cancel
-	private void RightClick_started(InputAction.CallbackContext context)
+	#region AltSelect
+	private void AltSelect_started(InputAction.CallbackContext context)
 	{
 		UpdateInputDevice(context.control.device);
-		OnRightClick_Started?.Invoke();
+		OnAltSelect_Started?.Invoke();
 	}
 
-	private void RightClick_performed(InputAction.CallbackContext context)
+	private void AltSelect_performed(InputAction.CallbackContext context)
 	{
 		UpdateInputDevice(context.control.device);
-		OnRightClick?.Invoke();
+		OnAltSelect?.Invoke();
 	}
 
-	private void RightClick_canceled(InputAction.CallbackContext context)
+	private void AltSelect_canceled(InputAction.CallbackContext context)
 	{
 		UpdateInputDevice(context.control.device);
-		OnRightClick_Ended?.Invoke();
+		OnAltSelect_Ended?.Invoke();
 	}
 	#endregion
 	#endregion
