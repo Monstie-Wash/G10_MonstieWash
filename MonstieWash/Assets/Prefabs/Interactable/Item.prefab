@@ -278,8 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   progress: 0
-  complete: 0
-  threshold: 0
+  threshold: 100
   container: {fileID: 0}
   score: 9.85
   taskType: 1

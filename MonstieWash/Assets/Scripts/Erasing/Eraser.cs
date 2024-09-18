@@ -76,10 +76,7 @@ public class Eraser : MonoBehaviour
 
 			erasableTask.Progress = ((float)erasedCount / maskPixels.Length) * 100;
 
-            if (Complete)
-            {
-                m_spriteRenderer.enabled = false;
-            }
+            if (Complete) m_spriteRenderer.enabled = false;
         }
     }
 

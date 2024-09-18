@@ -17,7 +17,7 @@ public class TaskData : MonoBehaviour
 
 	public string Id { get => id; set => id = value; }
     public float Progress { get => progress; set => progress = value; }
-    public bool Complete { get => m_progress >= m_threshold; }
+    public bool Complete { get => progress >= threshold; }
     public float Threshold { get => threshold; set => threshold = value; }
     public Transform Container { get => container; }
 	public float Score { get => score; }
