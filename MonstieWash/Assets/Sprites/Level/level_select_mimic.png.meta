@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9164e0126bdd1da439d14191398fcca9
+guid: 378ac94c0602c924eb5eec2074b9d6a4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4048164500613155003
-    second: dpad-down001.256x256_0
+      213: 1782789231526178604
+    second: level_select_mimic_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dpad-down001.256x256_0
+      name: level_select_mimic_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 256
-        height: 256
+        x: 52
+        y: 227
+        width: 903
+        height: 573
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5473b94b5d702d7c0800000000000000
-      internalID: -4048164500613155003
+      spriteID: c2f62864c5dbdb810800000000000000
+      internalID: 1782789231526178604
       vertices: []
       indices: 
       edges: []
@@ -131,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      dpad-down001.256x256_0: -4048164500613155003
+      level_select_mimic_0: 1782789231526178604
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

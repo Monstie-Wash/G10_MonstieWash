@@ -648,8 +648,124 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: slowDuration
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: slowStrength
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: playerMaxHealth
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackInitialStrength
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[1].value
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[1].value
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[0].tangentMode
+      value: 136
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: speedCurve.m_Curve.Array.data[1].tangentMode
+      value: 136
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[0].tangentMode
+      value: 136
+      objectReference: {fileID: 0}
+    - target: {fileID: 228735492732315945, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
+      propertyPath: knockbackCurve.m_Curve.Array.data[1].tangentMode
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 1316933848323378630, guid: 8bf2bc9843ed6ba419c9aed75d94f874, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1476,6 +1592,38 @@ PrefabInstance:
     - target: {fileID: 8238423586362045310, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8595949309307684373, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d193a919ffbb344fa8ee2da8679896c, type: 2}
+    - target: {fileID: 8595949309307684373, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7945559271412737320, guid: 4d193a919ffbb344fa8ee2da8679896c, type: 2}
+    - target: {fileID: 8595949309307684373, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058439506055385138, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_fontSize
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058439506055385138, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d193a919ffbb344fa8ee2da8679896c, type: 2}
+    - target: {fileID: 9058439506055385138, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 9058439506055385138, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7945559271412737320, guid: 4d193a919ffbb344fa8ee2da8679896c, type: 2}
+    - target: {fileID: 9058439506055385138, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

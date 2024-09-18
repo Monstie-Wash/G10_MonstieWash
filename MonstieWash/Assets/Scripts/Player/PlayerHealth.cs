@@ -16,14 +16,33 @@ public class PlayerHealth : MonoBehaviour
 
     #region Damage Controls
     // Damage controls for designers
+    [Header("Damage Controls")]
     [Tooltip("Animation intensity scales with damage taken up to this amount")][SerializeField] private float damageAnimationCap;   // Amount of damage taken scales the damage animation, up to this amount of damage. 
     [Tooltip("Animation curve for the screen shake upon taking damage")][SerializeField] private AnimationCurve damageShake;    // Animation curve that controls damage shake intensity.
     #endregion
 
     #region Effect Controls
     // Effect controls for designers
+    [Header("Effect Controls")]
     [Tooltip("Duration of the damage / healing animation (in seconds)")][SerializeField][Range(0f, 2f)] private float animationDuration;   // Duration of the "take damage" and "heal" animations.
     [Tooltip("Animation curve for color shift upon taking damage/healing")][SerializeField] private AnimationCurve colorShift;  // Animation curve that controls damage/healing intensity. 
+    #endregion
+
+    #region Knockback Controls
+    //Values to tweak damage knockback functionality.
+    [Header("Knockback Controls")]
+    [Tooltip("How long the hand is knocked back for.")] [SerializeField] private float knockbackDuration;
+    [Tooltip("How strong the knockback force is.")] [SerializeField] private float knockbackInitialStrength;
+    [Tooltip("Controls shape of knockback strength over time.")] [SerializeField] private AnimationCurve knockbackCurve;
+    [Tooltip("Where the hand will be knocked away from. If left blank will use center of screen.")] [SerializeField] private Transform knockBackCentralPoint;
+    [Tooltip("How strongly the hand is slowed after being hit")] [SerializeField] private float slowStrength;
+    [Tooltip("How long the hand is slowed for.")] [SerializeField] private float slowDuration;
+    [Tooltip("Controls shape of slow strength over time.")] [SerializeField] private AnimationCurve speedCurve;
+
+    //Hidden
+    private float m_originalMoveSpeed; //Used to restore move speed back to normal after slow takes place.
+    private PlayerHand m_hand; //Reference to hand script.
+
     #endregion
 
     #region Other Variables
@@ -38,10 +57,12 @@ public class PlayerHealth : MonoBehaviour
     #endregion
 
     private void Start()
-    {
+    { 
         m_playerHurtbox = GetComponent<Collider2D>();
         m_spriteRenderers = GetComponentsInChildren<SpriteRenderer>(); 
         playerHealth = playerMaxHealth;
+        m_hand = FindFirstObjectByType<PlayerHand>();
+        m_originalMoveSpeed = m_hand.HandSpeed;
     }
 
     /// <summary>
@@ -102,6 +123,7 @@ public class PlayerHealth : MonoBehaviour
         //}
 
         StartCoroutine(PlayDamageEffects(dmgTaken));
+        StartCoroutine(ApplyKnockbackEffects());
     }
 
     /// <summary>
@@ -163,5 +185,51 @@ public class PlayerHealth : MonoBehaviour
         }
 
         m_isInvincible = false;
-    }    
+    }
+
+    /// <summary>
+    /// Applies a slow and knockback away from the centre of the monster, knockback and slow reduce over time.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ApplyKnockbackEffects()
+    {
+        //Initialise time tracking and set hand move speed to starting slow strength.
+        var timeRunning = 0f;
+        m_hand.HandSpeed = Mathf.Max(m_originalMoveSpeed - speedCurve.Evaluate(timeRunning / slowDuration) * slowStrength, 0);
+
+        //Get Hands location
+        var handToV2 = new Vector2(m_hand.transform.position.x, m_hand.transform.position.y);
+        //Get the centre of the screen.
+        Vector2 centre;
+        if (knockBackCentralPoint != null)
+        { centre = new Vector2(knockBackCentralPoint.position.x, knockBackCentralPoint.position.y) - handToV2; }
+        else
+        { centre = Vector2.zero; };
+
+        //Calculate knockback from point provided.
+        var dir = new Vector2(handToV2.x - centre.x,handToV2.y - centre.y);
+
+        //If slow or knockback hasn't completed continue running.
+        while (timeRunning < knockbackDuration || timeRunning < slowDuration)
+        {
+            //Move hand in direction of knockback by animation curve strength at time.
+            if (timeRunning < knockbackDuration)
+            { 
+            var moveVec = dir.normalized * knockbackCurve.Evaluate(timeRunning / knockbackDuration) * knockbackInitialStrength * Time.deltaTime;
+            m_hand.gameObject.transform.position += new Vector3(moveVec.x, moveVec.y, 0);
+            }
+
+            //Update slow strength by animation curve over time.
+            if (timeRunning < slowDuration)
+            {
+                m_hand.HandSpeed = Mathf.Max( m_originalMoveSpeed - speedCurve.Evaluate(timeRunning / slowDuration) * slowStrength, 0);
+            }
+
+            timeRunning += Time.deltaTime;
+            yield return null;
+        }
+
+        //Reset speed to normal.
+        m_hand.HandSpeed = m_originalMoveSpeed;
+    }
 }
