@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 62cb4f763ec7bd34eb7c102c9d20dcf9
+guid: 356277c9a29e577459f44667f6741920
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6268863924420542554
-    second: Xbox_button_B.svg_0
+      213: 2706979281333632427
+    second: level_select_slime_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Xbox_button_B.svg_0
+      name: level_select_slime_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 240
-        height: 240
+        x: 52
+        y: 231
+        width: 901
+        height: 568
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a500950868a7ff650800000000000000
-      internalID: 6268863924420542554
+      spriteID: badbb3e605f119520800000000000000
+      internalID: 2706979281333632427
       vertices: []
       indices: 
       edges: []
@@ -131,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Xbox_button_B.svg_0: 6268863924420542554
+      level_select_slime_0: 2706979281333632427
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

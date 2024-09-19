@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aecd85ae3ba4bf4ca38b55d7a13d2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesOnUse: {fileID: 0}
+  particlesOnUse: {fileID: 4538047596698664981, guid: fa39a950c328e1545b2f58e5d29a10f0, type: 3}
   OnlySpawnOnErasing: 1
   particlesOnComplete: {fileID: 3598553545991950424, guid: 08e94cab5d86d20408cc97828be4cbbd, type: 3}
 --- !u!114 &4969812484562451773
@@ -413,7 +413,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1881744917
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ad42e5a495010df43816db19843234bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
