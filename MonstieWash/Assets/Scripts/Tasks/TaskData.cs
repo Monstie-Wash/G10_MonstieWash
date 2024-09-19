@@ -10,7 +10,6 @@ public class TaskData : MonoBehaviour
 {
 	[SerializeField] private string id;
     [SerializeField] private float progress;
-    [SerializeField] private bool complete;
     [SerializeField] private float threshold;
 	[SerializeField] private Transform container;
 	[SerializeField] private float score = 9.85f;
@@ -18,7 +17,7 @@ public class TaskData : MonoBehaviour
 
 	public string Id { get => id; set => id = value; }
     public float Progress { get => progress; set => progress = value; }
-    public bool Complete { get => complete; set => complete = value; }
+    public bool Complete { get => progress >= threshold; }
     public float Threshold { get => threshold; set => threshold = value; }
     public Transform Container { get => container; }
 	public float Score { get => score; }
@@ -29,6 +28,5 @@ public class TaskData : MonoBehaviour
         container = gameObject.transform;
         id = container.name;
         progress = 0f;
-        complete = false;
 	}
 }
