@@ -132,6 +132,7 @@ public class MonsterController : MonoBehaviour
 
     public void AttackStarted()
     {
+        if (attackSound == null) return;
         m_soundPlayer.SwitchSound(attackSound);
         m_soundPlayer.PlaySound();
     }

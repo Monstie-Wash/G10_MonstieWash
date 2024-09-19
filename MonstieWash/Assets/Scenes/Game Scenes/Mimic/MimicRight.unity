@@ -731,9 +731,29 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: moodEffectMap.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
       propertyPath: completionEffectList.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
+    - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
+    - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c4fcb8aaefd49b48b77c526987584b1, type: 2}
+    - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b0b8be48e7dd6d14e8c4022a6f68e4b4, type: 2}
     - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
       propertyPath: 'completionEffectList.Array.data[0]'
       value: 
@@ -746,6 +766,18 @@ PrefabInstance:
       propertyPath: 'completionEffectList.Array.data[2]'
       value: 
       objectReference: {fileID: 836230469}
+    - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 93958d84a93055c44a21f88b4c0a42b4, type: 2}
+    - target: {fileID: -4850747262108209868, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 356b7badf2e4eb84089a097ca9738584, type: 2}
+    - target: {fileID: 4977835303720252318, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: hideWarning
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5036995656876074879, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
