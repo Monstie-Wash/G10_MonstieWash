@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
-using UnityEngine.U2D;
 
 public class Eraser : MonoBehaviour
 {
+    public bool ErasingEnabled = true;
+
     [SerializeField] private Tool tool;
     [SerializeField] private Transform drawPosTransform;
 
@@ -19,6 +18,9 @@ public class Eraser : MonoBehaviour
 
     private bool m_isErasing = false;
     private bool m_isErasingClean = false;
+
+    public Tool Tool { get { return tool; } }
+
     public event Action<bool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
     public event Action<bool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
 
@@ -30,7 +32,12 @@ public class Eraser : MonoBehaviour
         public GameObject obj { get; private set; }
         public Sprite sprite { get; private set; }
         public byte[] maskPixels;
-        public TaskData erasableTask;
+        public TaskData erasableTask { get; private set; }
+        public ErasableLayerer.ErasableLayer layer { get; private set; }
+
+        public bool Complete { get => erasableTask.Complete; }
+
+        private SpriteRenderer m_spriteRenderer;
 
         /// <summary>
         /// An erasable object representation.
@@ -39,9 +46,11 @@ public class Eraser : MonoBehaviour
         public Erasable(GameObject obj)
         {
             this.obj = obj;
-            sprite = obj.GetComponent<SpriteRenderer>().sprite;
+            m_spriteRenderer = obj.GetComponent<SpriteRenderer>();
+            sprite = m_spriteRenderer.sprite;
             maskPixels = new byte[sprite.texture.width * sprite.texture.height];
             erasableTask = obj.GetComponent<TaskData>();
+            layer = obj.GetComponent<ErasableLayerer>().Layer;
         }
 
         /// <summary>
@@ -59,14 +68,16 @@ public class Eraser : MonoBehaviour
                 newColors[i].g = colors[i].g;
                 newColors[i].b = colors[i].b;
                 newColors[i].a = Mathf.Min((255 - maskPixels[i])/255f, colors[i].a);
-                if (newColors[i].a < 0.01f) erasedCount++;
+                if (newColors[i].a < 0.1f) erasedCount++;
             }
 
             sprite.texture.SetPixels(newColors, 0);
             sprite.texture.Apply(false);
 
 			erasableTask.Progress = ((float)erasedCount / maskPixels.Length) * 100;
-		}
+
+            if (Complete) m_spriteRenderer.enabled = false;
+        }
     }
 
     private void Awake()
@@ -78,11 +89,6 @@ public class Eraser : MonoBehaviour
     private void Start()
     {
         InitializeTool();
-    }
-
-    private void Update()
-    {
-        m_distFromCentre = Vector3.Distance(Vector3.zero, drawPosTransform.position);
     }
 
     private void OnEnable()
@@ -108,7 +114,7 @@ public class Eraser : MonoBehaviour
     /// </summary>
     public void UseTool()
     {
-        if (!m_playerHand.IsMoving)
+        if (!m_playerHand.IsMoving || !ErasingEnabled)
         {
             StopUseTool();
             return;
@@ -116,10 +122,15 @@ public class Eraser : MonoBehaviour
 
         var wasErasing = m_isErasing;
         m_isErasing = false;
-
+        
         foreach (var erasable in m_erasables)
         {
-            if (!erasable.obj.activeInHierarchy) continue;
+            var erasableInactive = !erasable.obj.activeInHierarchy;
+            var erasableNotInToolLayers = !tool.ErasableLayers.Contains(erasable.layer);
+            var erasableComplete = erasable.Complete;
+            var skipErasure = erasableInactive || erasableNotInToolLayers || erasableComplete;
+            if (skipErasure) continue;
+
             if (UpdateErasableMask(erasable)) 
             {
                 erasable.ApplyMask();
@@ -135,6 +146,8 @@ public class Eraser : MonoBehaviour
 
     public void UseToolClean()
     {
+        m_distFromCentre = Vector3.Distance(Vector3.zero, drawPosTransform.position);
+
         if (!m_isErasingClean && (m_distFromCentre < maxSparkleDist && m_taskTracker.IsThisSceneComplete()))
         {
             OnErasing_Started?.Invoke(true);
@@ -179,7 +192,7 @@ public class Eraser : MonoBehaviour
     /// <summary>
     /// Populates the erasables list, setting up the sprites ready for drawing.
     /// </summary>
-    private void PopulateErasables()
+    public void PopulateErasables()
     {
         var tempErasables = GameObject.FindGameObjectsWithTag("Erasable");
 
@@ -248,6 +261,8 @@ public class Eraser : MonoBehaviour
             if (outOfBoundsX || outOfBoundsY) return false;
         }
 
+        if (tool.DoNotErase) return true;
+
         //Apply each pixel of the tool mask to the erasable texture mask
         for (var i = 0; i < tool.MaskPixels.Length; i++)
         {
@@ -315,7 +330,7 @@ public class Eraser : MonoBehaviour
     /// <returns>Whether a change was made to the erasable mask.</returns>
     private bool ApplyPixels(byte toolMaskPixelAlpha, byte[] erasableMaskPixels, int[] drawingPixels)
     {
-        var pixelStrength = toolMaskPixelAlpha * (tool.Strength / 100f);
+        var pixelStrength = toolMaskPixelAlpha * (tool.Strength * Time.deltaTime / 100f);
         var erased = false;
 
         foreach (var pixel in drawingPixels)

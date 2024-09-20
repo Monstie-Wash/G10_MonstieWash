@@ -14,7 +14,9 @@ public class ItemPickup : MonoBehaviour
     private Vector3 m_minimumDir;
     private bool m_lastWiggleUp = false;
 
-    private bool m_holding { get { return m_heldItem != null; } }
+    private bool m_holding = false;
+
+    public bool HoldingItem { get { return m_holding; } }
 
     private void Awake()
     {
@@ -150,6 +152,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void LetGoItem()
     {
+        m_holding = false;
         m_heldItem = null;
     }
 
@@ -159,6 +162,7 @@ public class ItemPickup : MonoBehaviour
     /// <param name="item">The item to pick up.</param>
     private void PickupItem()
     {
+        m_holding = true;
         m_heldItem.transform.parent = heldItemsTransform;
         m_heldItem.transform.localPosition = Vector3.zero; // snap to centre of hand
         m_heldItem.Rb.angularVelocity = 0f;
@@ -169,6 +173,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void DropItem()
     {
+        m_holding = false;
         m_heldItem.transform.parent = m_heldItem.InitialParent;
 
         var handMovement = GetComponent<PlayerHand>().Velocity.normalized;
@@ -186,6 +191,7 @@ public class ItemPickup : MonoBehaviour
     /// </summary>
     private void SetupHoldingStuckItem()
     {
+        m_holding = true;
         SetMinimumDir();
 
         m_prevPos = transform.position;

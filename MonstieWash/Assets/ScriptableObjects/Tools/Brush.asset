@@ -15,5 +15,6 @@ MonoBehaviour:
   toolName: Brush
   mask: {fileID: 21300000, guid: 0164c7e401b05ec4c9f268127bc98a86, type: 3}
   size: 2
+  doNotErase: 0
   inputStrength: 66
-  strength: 20.987217
+  erasableLayers: 0000000002000000

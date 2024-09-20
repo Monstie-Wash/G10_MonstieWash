@@ -12,7 +12,7 @@ public class TutorialManager : MonoBehaviour
 
     private int m_tutorialStep = 0;       // Index for current tutorial prompt in the List
     private bool m_completed = false;     // Event flag for the current tutorial prompt
-    private enum CompletionEvent { ChangeScene, EraseStarted, OnMove, SwitchTool, UnstickItem };    // Enumerated list for designers of events to listen for
+    private enum CompletionEvent { ChangeScene, EraseStarted, OnMove, Scan, SwitchTool, ToggleUI, UnstickItem, UseTreat };    // Enumerated list for designers of events to listen for
     private enum CompletionType { Instant, Count, Time };
     // Enumerated list of ways the prompt can be completed:                                      
         // Instant - completes instantly once the event is received         (value = delay after event is received)
@@ -23,6 +23,7 @@ public class TutorialManager : MonoBehaviour
     private List<Eraser> m_erasers = new();
     private List<StuckItem> m_stuckItems = new();
     private ToolSwitcher m_toolSwitcher;
+    private TaskTracker m_taskTracker;
 
     [Serializable] 
     private struct TutorialPrompt
@@ -42,13 +43,17 @@ public class TutorialManager : MonoBehaviour
     {
         GameSceneManager.Instance.OnMonsterScenesLoaded += OnMonsterScenesLoaded;
         m_toolSwitcher = FindFirstObjectByType<ToolSwitcher>();
+        m_taskTracker = FindFirstObjectByType<TaskTracker>();
     }
 
     private void OnEnable()
     {
         GameSceneManager.Instance.OnSceneChanged += OnSceneChanged;
         InputManager.Instance.OnMove += OnMove;
+        InputManager.Instance.OnScan += OnScan;
         m_toolSwitcher.OnSwitchTool += OnSwitchTool;
+        InputManager.Instance.OnToggleUI += OnToggleUI;
+        Treat.UseTreat += UseTreat;
     }
 
     private void OnMonsterScenesLoaded()
@@ -65,9 +70,12 @@ public class TutorialManager : MonoBehaviour
     {
         GameSceneManager.Instance.OnSceneChanged -= OnSceneChanged;
         InputManager.Instance.OnMove -= OnMove;
+        InputManager.Instance.OnScan -= OnScan;
         foreach (var eraser in m_erasers) eraser.OnErasing_Started -= EraseStart;
         foreach (var stuckItem in m_stuckItems) stuckItem.OnItemUnstuck -= OnItemUnstuck;
         m_toolSwitcher.OnSwitchTool -= OnSwitchTool;
+        InputManager.Instance.OnToggleUI -= OnToggleUI;
+        Treat.UseTreat -= UseTreat;
     }
 
     private void Start()
@@ -76,6 +84,11 @@ public class TutorialManager : MonoBehaviour
         m_tutorialPrompts[m_tutorialStep].Prompt.SetActive(true);
         // Begin
         StartCoroutine(RunTutorial());
+    }
+
+    private void Update()
+    {
+        TaskSafetyCheck();  // Prevents the player from being softlocked
     }
 
     /// <summary>
@@ -202,7 +215,16 @@ public class TutorialManager : MonoBehaviour
         {
             RunCompletionTests(currentPrompt);
         }
-    }    
+    }
+
+    private void OnScan()
+    {
+        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
+        if (currentPrompt.CompleteEvent == CompletionEvent.Scan)
+        {
+            RunCompletionTests(currentPrompt);
+        }
+    }
 
     private void OnSceneChanged()
     {
@@ -229,6 +251,55 @@ public class TutorialManager : MonoBehaviour
         {
             RunCompletionTests(currentPrompt);
         }
+    }
+
+    private void OnToggleUI()
+    {
+        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
+        if (currentPrompt.CompleteEvent == CompletionEvent.ToggleUI)
+        {
+            RunCompletionTests(currentPrompt);
+        }
+    }
+
+    private void UseTreat()
+    {
+        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
+        if (currentPrompt.CompleteEvent == CompletionEvent.UseTreat)
+        {
+            RunCompletionTests(currentPrompt);
+        }
+    }
+    #endregion
+
+    #region Safety Checks
+    /// <summary>
+    /// Runs every frame and will skip a task if it is uncompletable by the player
+    /// </summary>
+    private void TaskSafetyCheck()
+    {
+        switch (m_tutorialPrompts[m_tutorialStep].CompleteEvent) {
+            case CompletionEvent.EraseStarted:
+                if (!DirtRemains()) m_completed = true; break;
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Returns TRUE if there is an uncompleted Dirt task in TaskTracker, otherwise returns FALSE.
+    /// </summary>
+    ///
+    private bool DirtRemains()
+    {
+        foreach (var task in m_taskTracker.TaskData)
+        {
+            if ((task.TaskType == TaskType.Dirt) && !task.Complete)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     #endregion
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CupcakeConsume
   m_EditorClassIdentifier: 
   itemName: Cupcake
-  sprite: {fileID: 8732635013323328055, guid: 6d1527c77603c4d458dbf672d34ee087, type: 3}
+  sprite: {fileID: 21300000, guid: 66f17f3ba1a00a24ca42bac16b2da722, type: 3}
   maxQuantity: 99
   sortingTags: 03000000
   diminishingReturns: 0

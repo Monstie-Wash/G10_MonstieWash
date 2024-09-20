@@ -17,10 +17,11 @@ MonoBehaviour:
   moodLowerLimit: 0
   moodStartingPoint: 10
   moodNaturalChange: 1
-  moodRestingPoint: 5
+  moodRestingPoint: 10
   chaosMultiplier: 0
-  positiveChainReactions:
-  - {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
-  positiveReactionStrength: 0.4
+  positiveChainReactions: []
+  positiveReactionStrength: 0
   negativeChainReactions: []
-  negativeReactionStrength: 0.5
+  negativeReactionStrength: 0
+  moodParticle: {fileID: 0}
+  sceneEffectOnMood: 0

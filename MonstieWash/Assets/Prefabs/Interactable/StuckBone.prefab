@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StuckBone
       objectReference: {fileID: 0}
+    - target: {fileID: 5837724090544375497, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9061939516888355392, guid: 243dad7d51190d044b8af32e561f6bf5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
