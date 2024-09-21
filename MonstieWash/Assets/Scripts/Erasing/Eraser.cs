@@ -21,8 +21,8 @@ public class Eraser : MonoBehaviour
 
     public Tool Tool { get { return tool; } }
 
-    public event Action<bool, Tool.ToolType> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
-    public event Action<bool, Tool.ToolType> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
+    public event Action<bool, Tool> OnErasing_Started;    // True = Started erasing on a complete scene. | False = Started erasing on an incomplete scene. 
+    public event Action<bool, Tool> OnErasing_Ended;      // True = Stopped erasing on a complete scene. | False = Stopped erasing on an incomplete scene. 
 
     /// <summary>
     /// A struct representing any erasable object (dirt, mould etc.) to keep track of all relevant values and apply changes.
@@ -142,11 +142,11 @@ public class Eraser : MonoBehaviour
 
         if (!wasErasing && m_isErasing)
         {
-            OnErasing_Started?.Invoke(false, tool.TypeOfTool);
+            OnErasing_Started?.Invoke(false, tool);
         }
         if (wasErasing && !m_isErasing)
         {
-            OnErasing_Ended?.Invoke(false, tool.TypeOfTool);
+            OnErasing_Ended?.Invoke(false, tool);
         }
     }
 
@@ -156,7 +156,7 @@ public class Eraser : MonoBehaviour
 
         if (!m_isErasingClean && (m_distFromCentre < maxSparkleDist && m_taskTracker.IsThisSceneComplete()))
         {
-            OnErasing_Started?.Invoke(true, tool.TypeOfTool);
+            OnErasing_Started?.Invoke(true, tool);
             m_isErasingClean = true;
         }
         if (m_isErasingClean && m_distFromCentre > maxSparkleDist)
@@ -172,7 +172,7 @@ public class Eraser : MonoBehaviour
     {
         if (m_isErasing)
         {
-            OnErasing_Ended?.Invoke(false, tool.TypeOfTool);
+            OnErasing_Ended?.Invoke(false, tool);
             m_isErasing = false;
         }
     }
@@ -181,7 +181,7 @@ public class Eraser : MonoBehaviour
     {
         if (m_isErasingClean)
         {
-            OnErasing_Ended?.Invoke(true, tool.TypeOfTool);
+            OnErasing_Ended?.Invoke(true, tool);
             m_isErasingClean = false;
         }
     }

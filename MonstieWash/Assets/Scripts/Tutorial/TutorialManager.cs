@@ -87,11 +87,6 @@ public class TutorialManager : MonoBehaviour
         StartCoroutine(RunTutorial());
     }
 
-    private void Update()
-    {
-        TaskSafetyCheck();  // Prevents the player from being softlocked
-    }
-
     /// <summary>
     /// Runs the tutorial.
     /// </summary>
@@ -215,9 +210,9 @@ public class TutorialManager : MonoBehaviour
         EventTriggered(CompletionEvent.OnMove);
     }
 
-    private void EraseStart(bool value, Tool.ToolType toolType)
+    private void EraseStart(bool value, Tool tool)
     {
-        switch (toolType)
+        switch (tool.TypeOfTool)
         {
             case Tool.ToolType.Brush:
                 Debug.Log("Use brush");
@@ -234,6 +229,8 @@ public class TutorialManager : MonoBehaviour
             default:
                 break;  //ToolType.None
         }
+
+        TaskSafetyCheck(tool); // Prevents the player from being softlocked
     }
 
     private void OnScan()
@@ -271,25 +268,21 @@ public class TutorialManager : MonoBehaviour
     /// <summary>
     /// Runs every frame and will skip a task if it is uncompletable by the player
     /// </summary>
-    private void TaskSafetyCheck()
+    private void TaskSafetyCheck(Tool tool)
     {
-        // == BROKEN - SEARCH FOR SPECIFIC DIRT TYPES BASED ON WHICH TOOL TYPE IS REQUIRED TO BE USED!! ==
-
-        /* 
-
         switch (m_tutorialPrompts[m_tutorialStep].CompleteEvent) {
             case CompletionEvent.UseBrush:
-                if (!DirtRemains()) m_completed = true; break;
+                {
+                    if (!DirtRemainsForTool(tool)) m_completed = true;
+
+                } break;
             default:
                 break;
         }
-
-        */
-
     }
 
     /// <summary>
-    /// Returns TRUE if there is an uncompleted Dirt task in TaskTracker, otherwise returns FALSE.
+    /// Returns TRUE if there is an incomplete Dirt task in TaskTracker, otherwise returns FALSE.
     /// </summary>
     ///
     private bool DirtRemains()
@@ -299,6 +292,25 @@ public class TutorialManager : MonoBehaviour
             if ((task.TaskType == TaskType.Dirt) && !task.Complete)
             {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Returns TRUE if there is an incomplete Dirt task in TaskTracker that can be erased by the given tool, otherwise returns FALSE.
+    /// </summary>
+    /// <param name="tool">The tool to check for remaining erasables.</param>
+    private bool DirtRemainsForTool(Tool tool)
+    {
+        foreach (var task in m_taskTracker.TaskData)
+        {
+            if ((task.TaskType == TaskType.Dirt) && !task.Complete)
+            {
+                var dirt = task.Container.gameObject;
+                var dirtLayerInToolLayer = tool.ErasableLayers.Contains(dirt.GetComponent<ErasableLayerer>().Layer);
+
+                if (dirtLayerInToolLayer) return true;
             }
         }
         return false;
