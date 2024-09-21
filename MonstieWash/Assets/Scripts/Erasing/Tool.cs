@@ -6,18 +6,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Tool", menuName = "ScriptableObjects/Tool")]
 public class Tool : ScriptableObject
 {
+    public enum ToolType { Brush, None, Sponge, WaterWand };
+
     public string toolName = "";
     public Sprite mask;
     [Range(1, 10)] public int size = 1;
     [SerializeField] private bool doNotErase = false;
     [SerializeField][Range(1f, 100f)] private float inputStrength = 100f;
     [SerializeField] private List<ErasableLayerer.ErasableLayer> erasableLayers = new();
+    [SerializeField] private ToolType toolType = ToolType.None;
 
     public byte[] MaskPixels { get; private set; }
     public bool DoNotErase { get { return doNotErase; } }
     public float InputStrength { get { return inputStrength; } set { inputStrength = Mathf.Clamp(value, 1f, 100f); } }
     public float Strength { get; private set; }
     public List<ErasableLayerer.ErasableLayer> ErasableLayers { get { return erasableLayers; } }
+    public ToolType TypeOfTool { get { return toolType; } }
 
     /// <summary>
     /// Initalize the tool, setting up all required values and variables. (Used in place of an Awake)

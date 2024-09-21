@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,7 +13,7 @@ public class TutorialManager : MonoBehaviour
 
     private int m_tutorialStep = 0;       // Index for current tutorial prompt in the List
     private bool m_completed = false;     // Event flag for the current tutorial prompt
-    private enum CompletionEvent { ChangeScene, EraseStarted, OnMove, Scan, SwitchTool, ToggleUI, UnstickItem, UseTreat };    // Enumerated list for designers of events to listen for
+    private enum CompletionEvent { ChangeScene, OnMove, Scan, SwitchTool, ToggleUI, UnstickItem, UseBrush, UseSponge, UseWaterWand, UseTreat };    // Enumerated list for designers of events to listen for
     private enum CompletionType { Instant, Count, Time };
     // Enumerated list of ways the prompt can be completed:                                      
         // Instant - completes instantly once the event is received         (value = delay after event is received)
@@ -199,76 +200,70 @@ public class TutorialManager : MonoBehaviour
     #endregion
 
     #region Event Listeners
-    private void OnMove(Vector2 movement)
+
+    private void EventTriggered(CompletionEvent eventType)
     {
         var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.OnMove)
+        if (currentPrompt.CompleteEvent == eventType)
         {
             RunCompletionTests(currentPrompt);
         }
     }
 
-    private void EraseStart(bool value)
+    private void OnMove(Vector2 movement)
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.EraseStarted)
+        EventTriggered(CompletionEvent.OnMove);
+    }
+
+    private void EraseStart(bool value, Tool.ToolType toolType)
+    {
+        switch (toolType)
         {
-            RunCompletionTests(currentPrompt);
+            case Tool.ToolType.Brush:
+                Debug.Log("Use brush");
+                EventTriggered(CompletionEvent.UseBrush);
+                break;
+            case Tool.ToolType.Sponge:
+                Debug.Log("Use sponge");
+                EventTriggered(CompletionEvent.UseSponge);
+                break;
+            case Tool.ToolType.WaterWand:
+                Debug.Log("Use water wand");
+                EventTriggered(CompletionEvent.UseWaterWand);
+                break;
+            default:
+                break;  //ToolType.None
         }
     }
 
     private void OnScan()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.Scan)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.Scan);
     }
 
     private void OnSceneChanged()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.ChangeScene)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.ChangeScene);
     }
 
     private void OnSwitchTool()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.SwitchTool)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.SwitchTool);
     }
 
     private void OnItemUnstuck()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.UnstickItem)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.UnstickItem);
     }
 
     private void OnToggleUI()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.ToggleUI)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.ToggleUI);
     }
 
     private void UseTreat()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.UseTreat)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.UseTreat);
     }
     #endregion
 
@@ -278,12 +273,19 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private void TaskSafetyCheck()
     {
+        // == BROKEN - SEARCH FOR SPECIFIC DIRT TYPES BASED ON WHICH TOOL TYPE IS REQUIRED TO BE USED!! ==
+
+        /* 
+
         switch (m_tutorialPrompts[m_tutorialStep].CompleteEvent) {
-            case CompletionEvent.EraseStarted:
+            case CompletionEvent.UseBrush:
                 if (!DirtRemains()) m_completed = true; break;
             default:
                 break;
         }
+
+        */
+
     }
 
     /// <summary>
