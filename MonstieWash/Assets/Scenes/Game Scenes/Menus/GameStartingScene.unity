@@ -1209,6 +1209,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 27b2c379a9f55e3448786e4c8159cc3d, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: allLevelScenes.Array.data[0].decorationScene
+      value: 
+      objectReference: {fileID: 11400000, guid: cfdef903db9b0ea42a7fa63f2aa9fe99, type: 2}
+    - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: allLevelScenes.Array.data[0].gameScenes.Array.size
       value: 2
       objectReference: {fileID: 0}

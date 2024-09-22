@@ -44,5 +44,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Slime/SlimeBack.unity
     guid: 878efb7d1f30caa4dacc04b2f66a0b95
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Slime/SlimeDecorate.unity
+    guid: dc4692b8f509a304b9be761c2e0b9145
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

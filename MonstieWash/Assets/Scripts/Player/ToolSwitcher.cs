@@ -20,6 +20,7 @@ public class ToolSwitcher : MonoBehaviour
 
     public List<GameObject> ToolInstances { get { return m_toolInstances; } }
 
+
     private void Awake()
     {
         foreach (var tool in tools)
@@ -105,5 +106,14 @@ public class ToolSwitcher : MonoBehaviour
         m_currentToolIndex = toolIndex;
 
         if (m_currentToolIndex >= 0) m_toolInstances[m_currentToolIndex].SetActive(true);
+    }
+
+    /// <summary>
+    /// Utilised by decoration scene to prevent player swapping to anything other than empty hand.
+    /// </summary>
+    public void RemoveOptions()
+    {
+        m_toolInstances.Clear();
+        tools.Clear();
     }
 }

@@ -48,6 +48,7 @@ public class GameSceneManager : MonoBehaviour
     {
         public Level level;
         public GameScene startingScene;
+        public GameScene decorationScene;
         public List<GameScene> gameScenes;
     }
     
@@ -282,6 +283,37 @@ public class GameSceneManager : MonoBehaviour
         await LoadScene(scoreSummaryScene.SceneName);
 
         MoveToScene(scoreSummaryScene.SceneName, true);
+    }
+
+    /// <summary>
+    /// Loads the decoration scene.
+    /// </summary>
+    public async void BeginDecoration()
+    {
+        //Null check for unassigned decoration scene. Will likely remove once full setup is implemented.
+        if (m_currentLevelScenes.decorationScene == null)
+        {
+            FinishLevel();
+            return;
+        }
+
+        //m_levelObjectActiveStates.Clear();
+
+        //Turn off inventory bag if it exists.
+        ConsumablesManager c;
+        if (c = FindFirstObjectByType<ConsumablesManager>()) c.gameObject.SetActive(false);
+
+        //Turn off tutorial if it exists.
+        TutorialManager t;
+        if (t = FindFirstObjectByType<TutorialManager>()) t.transform.parent.gameObject.SetActive(false);
+
+        //Remove tool options.
+        FindFirstObjectByType<ToolSwitcher>().RemoveOptions();
+
+        SetSceneActive(m_currentScene.name, false);
+        await LoadScene(m_currentLevelScenes.decorationScene.SceneName);
+
+        MoveToScene(m_currentLevelScenes.decorationScene.SceneName, false);
     }
 
     /// <summary>
