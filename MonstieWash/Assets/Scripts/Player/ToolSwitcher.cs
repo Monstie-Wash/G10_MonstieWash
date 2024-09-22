@@ -113,6 +113,7 @@ public class ToolSwitcher : MonoBehaviour
     /// </summary>
     public void RemoveOptions()
     {
+        SetActiveTool(-1);
         m_toolInstances.Clear();
         tools.Clear();
     }
