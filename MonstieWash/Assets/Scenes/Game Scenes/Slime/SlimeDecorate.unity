@@ -300,6 +300,12 @@ MonoBehaviour:
   - sprite: {fileID: 21300000, guid: db18211b6e273e84fa2d736cebe2361e, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
     relativeActualScale: {x: 3, y: 3, z: 3}
+  - sprite: {fileID: 21300000, guid: db18211b6e273e84fa2d736cebe2361e, type: 3}
+    relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
+    relativeActualScale: {x: 3, y: 3, z: 3}
+  - sprite: {fileID: 21300000, guid: db18211b6e273e84fa2d736cebe2361e, type: 3}
+    relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
+    relativeActualScale: {x: 3, y: 3, z: 3}
   - sprite: {fileID: 21300000, guid: 242ab2372d01dab419ec04f0b5975a4e, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
     relativeActualScale: {x: 3, y: 3, z: 3}
@@ -321,6 +327,7 @@ MonoBehaviour:
   decoBarBufferDist: 3
   decoBarItemSpeed: 15
   referenceBarItem: {fileID: 2423894526994754762, guid: b5cdaa9e7c02f81429276338b0b03db2, type: 3}
+  managerStatus: 0
 --- !u!4 &573636384
 Transform:
   m_ObjectHideFlags: 0

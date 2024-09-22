@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
 public class DecorationManager : MonoBehaviour
 {
+    public enum ManagerStatus
+    {
+        EmptyHand,
+        Holding
+    }
+
+
     [Tooltip("Populate with sprites you wish to become decorations.")]
     [SerializeField] private List<DecorationSprite> decorations;
     [Tooltip("Distance between objects on the deco bar.")]
@@ -14,6 +21,7 @@ public class DecorationManager : MonoBehaviour
     [SerializeField] private float decoBarItemSpeed;
     [Tooltip("Object that will be created to represent decoration on bar.")]
     [SerializeField] private GameObject referenceBarItem;
+    public ManagerStatus managerStatus;
 
 
     private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
@@ -67,11 +75,22 @@ public class DecorationManager : MonoBehaviour
         }
     }
 
+    public void OnEnable()
+    {
+        InputManager.Instance.OnSwitchTool += cycleOptions;
+    }
+
+    public void OnDisable()
+    {
+        InputManager.Instance.OnSwitchTool -= cycleOptions;
+    }
+
 
     private void Awake()
     {
         m_barDecorations = new List<DecorationUi>();
         m_activeDecorations = new List<DecorationUi>();
+        managerStatus = ManagerStatus.EmptyHand;
 
         //Generate new gameobject and populate an equivalent Decoration Ui
         foreach (DecorationSprite s in decorations)
@@ -131,15 +150,40 @@ public class DecorationManager : MonoBehaviour
         }
     }
 
+
+    private void cycleOptions(int dir)
+    {
+        if (dir == -1) cycleOptionsLeft();
+        else if (dir == 1) cycleOptionsRight();       
+    }
+
     private void cycleOptionsLeft()
     {
-        //Only allow cycling while enough decorations exist to matter.
+        //Only allow cycling while enough decorations exist to matter and not holding an item.
         if (m_barDecorations.Count <= 4) return;
+        if (managerStatus == ManagerStatus.Holding) return;
+        //Get first item and move to back
+        var itemToMove = m_barDecorations[0];
+        m_barDecorations.RemoveAt(0);
+        m_barDecorations.Add(itemToMove);
+        //Refresh UI
+        RefreshBarUI();
+        //Instantly update new last items position.
+        m_barDecorations[m_barDecorations.Count - 1].sceneObject.transform.position = m_barDecorations[m_barDecorations.Count - 1].desiredLocation;
     }
 
     private void cycleOptionsRight()
     {
-        //Only allow cycling while enough decorations exist to matter.
+        //Only allow cycling while enough decorations exist to matter and not holding an item.
         if (m_barDecorations.Count <= 4) return;
+        if (managerStatus == ManagerStatus.Holding) return;
+        //Get last item and move to front
+        var itemToMove = m_barDecorations[m_barDecorations.Count-1];
+        m_barDecorations.RemoveAt(m_barDecorations.Count - 1);
+        m_barDecorations.Insert(0, itemToMove);
+        //Refresh Ui
+        RefreshBarUI();
+        //Instantly update new first items position.
+        m_barDecorations[0].sceneObject.transform.position = m_barDecorations[0].desiredLocation;
     }
 }
