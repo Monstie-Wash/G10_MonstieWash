@@ -28,7 +28,7 @@ public class DecorationManager : MonoBehaviour
     [SerializeField] private List<DecorationUi> m_activeDecorations; //Decorations active in scene.
     [SerializeField] private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
     private Transform m_hand; //reference to players hand transform.
-    private float m_pickupDistance = 1; //How far to check for an item to pickup.
+    private float m_pickupDistance = 1.5f; //How far to check for an item to pickup.
 
     [Serializable]
     public class DecorationSprite
@@ -264,7 +264,7 @@ public class DecorationManager : MonoBehaviour
                 }
             }
             //Then check scene if none were found.
-            foreach (DecorationUi d in m_barDecorations)
+            foreach (DecorationUi d in m_activeDecorations)
             {
                 if (Vector2.Distance(m_hand.transform.position, d.sceneObject.transform.position) <= m_pickupDistance)
                 {
