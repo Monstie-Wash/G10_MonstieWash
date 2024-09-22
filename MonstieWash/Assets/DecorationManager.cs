@@ -85,7 +85,7 @@ public class DecorationManager : MonoBehaviour
             //Change to relative scene scale if picked up off the bar.
             if (status == Status.onBar)
             {
-                sceneObject.transform.localScale = spriteInfo.relativeActualScale;
+                m_spriteImage.gameObject.transform.localScale = spriteInfo.relativeActualScale;
             }
 
             status = Status.beingHeld;
@@ -100,9 +100,9 @@ public class DecorationManager : MonoBehaviour
             //Change back to local bar scale and save scale changes if was in scene.
             if (status == Status.activeInScene)
             {
-                spriteInfo.relativeActualScale = sceneObject.transform.localScale;
+                spriteInfo.relativeActualScale = m_spriteImage.gameObject.transform.localScale;
             }
-            sceneObject.transform.localScale = spriteInfo.relativeBarScale;
+            m_spriteImage.gameObject.transform.localScale = spriteInfo.relativeBarScale;
 
             status = Status.onBar;
             m_backingImage.gameObject.SetActive(true);
@@ -127,6 +127,7 @@ public class DecorationManager : MonoBehaviour
         InputManager.Instance.OnSwitchTool += CycleOptions;
         InputManager.Instance.OnActivate_Started += Clicked;
         InputManager.Instance.OnSwitchTool_Ended += ResetRotation;
+        InputManager.Instance.OnNavigate += DropHeldItem;
     }
 
     public void OnDisable()
@@ -134,6 +135,7 @@ public class DecorationManager : MonoBehaviour
         InputManager.Instance.OnSwitchTool -= CycleOptions;
         InputManager.Instance.OnActivate_Started -= Clicked;
         InputManager.Instance.OnSwitchTool_Ended -= ResetRotation;
+        InputManager.Instance.OnNavigate -= DropHeldItem;
     }
 
 
@@ -281,6 +283,18 @@ public class DecorationManager : MonoBehaviour
         rotatingValue = 0f;
     }
     #endregion
+
+    private void DropHeldItem()
+    {
+        if (m_currentlyHeldDecoration == null) return;      
+        m_activeDecorations.Remove(m_currentlyHeldDecoration);
+        m_barDecorations.Add(m_currentlyHeldDecoration);
+        m_currentlyHeldDecoration.returnToBar();
+        RefreshBarUI();
+        m_currentlyHeldDecoration.sceneObject.transform.position = m_currentlyHeldDecoration.desiredLocation;
+        m_currentlyHeldDecoration = null;
+        managerStatus = ManagerStatus.EmptyHand;
+    }
 
     private void Clicked()
     {
