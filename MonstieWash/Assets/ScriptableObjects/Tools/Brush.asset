@@ -18,4 +18,4 @@ MonoBehaviour:
   doNotErase: 0
   inputStrength: 66
   erasableLayers: 0000000002000000
-  toolType: 0
+  toolType: 1
