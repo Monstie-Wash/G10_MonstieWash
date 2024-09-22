@@ -187,7 +187,7 @@ public class DecorationManager : MonoBehaviour
         //Scales held object if desired.
         if (scaling != 0 && m_currentlyHeldDecoration != null)
         {
-            m_currentlyHeldDecoration.m_spriteImage.gameObject.transform.localScale += new Vector3(10 * scaling * Time.deltaTime, 10 * scaling * Time.deltaTime, 0);
+            m_currentlyHeldDecoration.m_spriteImage.gameObject.transform.localScale += new Vector3(5 * scaling * Time.deltaTime, 5 * scaling * Time.deltaTime, 0);
         }
     }
 
