@@ -45,7 +45,7 @@ public class ToolFX : MonoBehaviour
         m_completeParticles = Instantiate(particlesOnComplete, m_drawPosTransform);
     }
 
-    private void Eraser_OnErasing(bool completeScene)
+    private void Eraser_OnErasing(bool completeScene, Tool tool)
     {
         if (!completeScene)
         {
@@ -58,7 +58,7 @@ public class ToolFX : MonoBehaviour
 
     }
 
-    private void Eraser_OnErasing_Ended(bool completeScene)
+    private void Eraser_OnErasing_Ended(bool completeScene, Tool tool)
     {
         if (!completeScene)
         {
