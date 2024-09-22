@@ -29,7 +29,9 @@ public class DecorationManager : MonoBehaviour
     [SerializeField] private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
     private Transform m_hand; //reference to players hand transform.
     private float m_pickupDistance = 1.5f; //How far to check for an item to pickup.
+    private float rotatingValue = 0f; //Actively rotates held object with this.
 
+    #region Serializable 'Data' Classes
     [Serializable]
     public class DecorationSprite
     {
@@ -107,6 +109,9 @@ public class DecorationManager : MonoBehaviour
 
             //Reset spritemask to appear on mask.
             m_spriteImage.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+
+            //Reset rotation.
+            sceneObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
         public void placeInScene()
@@ -115,16 +120,20 @@ public class DecorationManager : MonoBehaviour
         }
     }
 
+    #endregion
+
     public void OnEnable()
     {
         InputManager.Instance.OnSwitchTool += CycleOptions;
         InputManager.Instance.OnActivate_Started += Clicked;
+        InputManager.Instance.OnSwitchTool_Ended += ResetRotation;
     }
 
     public void OnDisable()
     {
         InputManager.Instance.OnSwitchTool -= CycleOptions;
         InputManager.Instance.OnActivate_Started -= Clicked;
+        InputManager.Instance.OnSwitchTool_Ended -= ResetRotation;
     }
 
 
@@ -160,6 +169,11 @@ public class DecorationManager : MonoBehaviour
     {
         //Update positions of all decorations.
         MoveAllDecorations();
+        //Rotate held object if desired.
+        if (rotatingValue != 0 && m_currentlyHeldDecoration != null)
+        {
+            m_currentlyHeldDecoration.sceneObject.transform.Rotate(0,0, 100 * rotatingValue * Time.deltaTime);
+        }
     }
 
 
@@ -207,8 +221,18 @@ public class DecorationManager : MonoBehaviour
     #region Cycling
     private void CycleOptions(int dir)
     {
-        if (dir == -1) CycleOptionsLeft();
-        else if (dir == 1) CycleOptionsRight();       
+        //While empty handed cycle through decoration options.
+        if (managerStatus == ManagerStatus.EmptyHand)
+        {
+            if (dir == -1) CycleOptionsLeft();
+            else if (dir == 1) CycleOptionsRight();
+        }
+        //If holding an item instead rotate it.
+        else
+        {
+            if (dir == -1) RotateObjectLeft();
+            else if (dir == 1) RotateObjectRight();
+        }    
     }
 
     private void CycleOptionsLeft()
@@ -241,6 +265,21 @@ public class DecorationManager : MonoBehaviour
         m_barDecorations[0].sceneObject.transform.position = m_barDecorations[0].desiredLocation;
     }
 
+    #endregion
+
+    #region Rotating
+    private void RotateObjectLeft()
+    {
+        rotatingValue = 1f;
+    }
+    private void RotateObjectRight()
+    {
+        rotatingValue = -1f;
+    }
+    private void ResetRotation()
+    {
+        rotatingValue = 0f;
+    }
     #endregion
 
     private void Clicked()
