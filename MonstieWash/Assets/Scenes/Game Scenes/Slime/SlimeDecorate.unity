@@ -299,31 +299,31 @@ MonoBehaviour:
   decorations:
   - sprite: {fileID: 21300000, guid: db18211b6e273e84fa2d736cebe2361e, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   - sprite: {fileID: 21300000, guid: db18211b6e273e84fa2d736cebe2361e, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   - sprite: {fileID: 21300000, guid: db18211b6e273e84fa2d736cebe2361e, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   - sprite: {fileID: 21300000, guid: 242ab2372d01dab419ec04f0b5975a4e, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   - sprite: {fileID: 21300000, guid: 242ab2372d01dab419ec04f0b5975a4e, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   - sprite: {fileID: 21300000, guid: 84d1a158adc90264f9fabf4b2dd3e5aa, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   - sprite: {fileID: 7662059621779487759, guid: 9c7495ad943bc344888ded17e8c382ef, type: 3}
     relativeBarScale: {x: 0.7, y: 0.7, z: 0.7}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   - sprite: {fileID: 7662059621779487759, guid: 9c7495ad943bc344888ded17e8c382ef, type: 3}
     relativeBarScale: {x: 0.7, y: 0.7, z: 0.7}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   - sprite: {fileID: 7662059621779487759, guid: 9c7495ad943bc344888ded17e8c382ef, type: 3}
     relativeBarScale: {x: 0.7, y: 0.7, z: 0.7}
-    relativeActualScale: {x: 3, y: 3, z: 3}
+    relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   decoBarBufferDist: 3
   decoBarItemSpeed: 15
   referenceBarItem: {fileID: 2423894526994754762, guid: b5cdaa9e7c02f81429276338b0b03db2, type: 3}

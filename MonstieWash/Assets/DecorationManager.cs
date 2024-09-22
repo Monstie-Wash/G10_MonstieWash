@@ -24,9 +24,9 @@ public class DecorationManager : MonoBehaviour
     public ManagerStatus managerStatus;
 
 
-    private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
-    private List<DecorationUi> m_activeDecorations; //Decorations active in scene.
-    private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
+    [SerializeField] private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
+    [SerializeField] private List<DecorationUi> m_activeDecorations; //Decorations active in scene.
+    [SerializeField] private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
     private Transform m_hand; //reference to players hand transform.
     private float m_pickupDistance = 1; //How far to check for an item to pickup.
 
@@ -49,7 +49,7 @@ public class DecorationManager : MonoBehaviour
             activeInScene
         }
 
-        public Status status;
+        [SerializeField] public Status status;
         private float moveSpeed; //How fast object moves in the ui.
 
         public GameObject sceneObject; //Reference to decorations object in scene.
@@ -118,13 +118,13 @@ public class DecorationManager : MonoBehaviour
     public void OnEnable()
     {
         InputManager.Instance.OnSwitchTool += CycleOptions;
-        InputManager.Instance.OnActivate += Clicked;
+        InputManager.Instance.OnActivate_Started += Clicked;
     }
 
     public void OnDisable()
     {
         InputManager.Instance.OnSwitchTool -= CycleOptions;
-        InputManager.Instance.OnActivate -= Clicked;
+        InputManager.Instance.OnActivate_Started -= Clicked;
     }
 
 
@@ -187,16 +187,18 @@ public class DecorationManager : MonoBehaviour
     {
         foreach (DecorationUi dUI in m_barDecorations)
         {
-            switch(dUI.status)
+            if (dUI.status == DecorationUi.Status.onBar) dUI.MoveTowardDesiredLocation();
+        }
+
+        foreach (DecorationUi aUI in m_activeDecorations)
+        {
+            switch (aUI.status)
             {
-                case DecorationUi.Status.onBar:
-                    dUI.MoveTowardDesiredLocation();
-                    break;
                 case DecorationUi.Status.activeInScene:
                     //Don't move while actively placed in scene.
                     break;
                 case DecorationUi.Status.beingHeld:
-                    dUI.sceneObject.transform.position = m_hand.position;
+                    aUI.sceneObject.transform.position = m_hand.position;
                     break;
             }
         }
@@ -277,13 +279,12 @@ public class DecorationManager : MonoBehaviour
                 }
             }
         }
-        else if(managerStatus == ManagerStatus.Holding)
-        {
-            managerStatus = ManagerStatus.EmptyHand;
+        else //When holding something
+        {            
             m_currentlyHeldDecoration.placeInScene();
             RefreshBarUI();
-            
 
+            managerStatus = ManagerStatus.EmptyHand;
             m_currentlyHeldDecoration = null;
         }
     }
