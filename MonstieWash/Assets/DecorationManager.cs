@@ -27,6 +27,8 @@ public class DecorationManager : MonoBehaviour
     private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
     private List<DecorationUi> m_activeDecorations; //Decorations active in scene.
     private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
+    private Transform m_hand; //reference to players hand transform.
+    private float m_pickupDistance = 1; //How far to check for an item to pickup.
 
     [Serializable]
     public class DecorationSprite
@@ -54,16 +56,18 @@ public class DecorationManager : MonoBehaviour
         private SpriteRenderer m_backingImage; //Reference to image showing its backing sprite while on the bar.
         private SpriteRenderer m_spriteImage; //Reference to image showing its actual representative sprite.
         public Vector3 desiredLocation; //Where the Ui object wants to be positioned in the scene.
+        private DecorationSprite spriteInfo; //Original sprite sizing data.
         
 
-        public DecorationUi(GameObject obj, SpriteRenderer back, SpriteRenderer sprite, Sprite InitialSprite, float speed)
+        public DecorationUi(GameObject obj, SpriteRenderer back, SpriteRenderer sprite, float speed, DecorationSprite spr)
         {
             status = Status.onBar;
             sceneObject = obj;
             m_backingImage = back;
             m_spriteImage = sprite;
-            m_spriteImage.sprite = InitialSprite;
+            m_spriteImage.sprite = spr.sprite;
             moveSpeed = speed;
+            spriteInfo = spr;
         }
 
         /// <summary>
@@ -73,16 +77,54 @@ public class DecorationManager : MonoBehaviour
         {
             sceneObject.gameObject.transform.position = Vector3.MoveTowards(sceneObject.gameObject.transform.position, desiredLocation, moveSpeed * Time.deltaTime);
         }
+
+        public void pickUp()
+        {
+            //Change to relative scene scale if picked up off the bar.
+            if (status == Status.onBar)
+            {
+                sceneObject.transform.localScale = spriteInfo.relativeActualScale;
+            }
+
+            status = Status.beingHeld;
+            m_backingImage.gameObject.SetActive(false);
+
+            //Change sprite mask to appear anywhere.
+            m_spriteImage.maskInteraction = SpriteMaskInteraction.None;   
+        }
+
+        public void returnToBar()
+        {
+            //Change back to local bar scale and save scale changes if was in scene.
+            if (status == Status.activeInScene)
+            {
+                spriteInfo.relativeActualScale = sceneObject.transform.localScale;
+            }
+            sceneObject.transform.localScale = spriteInfo.relativeBarScale;
+
+            status = Status.onBar;
+            m_backingImage.gameObject.SetActive(true);
+
+            //Reset spritemask to appear on mask.
+            m_spriteImage.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        }
+
+        public void placeInScene()
+        {
+            status = Status.activeInScene;
+        }
     }
 
     public void OnEnable()
     {
-        InputManager.Instance.OnSwitchTool += cycleOptions;
+        InputManager.Instance.OnSwitchTool += CycleOptions;
+        InputManager.Instance.OnActivate += Clicked;
     }
 
     public void OnDisable()
     {
-        InputManager.Instance.OnSwitchTool -= cycleOptions;
+        InputManager.Instance.OnSwitchTool -= CycleOptions;
+        InputManager.Instance.OnActivate -= Clicked;
     }
 
 
@@ -91,13 +133,14 @@ public class DecorationManager : MonoBehaviour
         m_barDecorations = new List<DecorationUi>();
         m_activeDecorations = new List<DecorationUi>();
         managerStatus = ManagerStatus.EmptyHand;
+        m_hand = FindFirstObjectByType<PlayerHand>().gameObject.transform;
 
         //Generate new gameobject and populate an equivalent Decoration Ui
         foreach (DecorationSprite s in decorations)
         {
             
             var newObj = Instantiate(referenceBarItem,this.transform);
-            var newDeco = new DecorationUi(newObj, newObj.transform.GetChild(0).GetComponent<SpriteRenderer>(), newObj.transform.GetChild(1).GetComponent<SpriteRenderer>(), s.sprite, decoBarItemSpeed);
+            var newDeco = new DecorationUi(newObj, newObj.transform.GetChild(0).GetComponent<SpriteRenderer>(), newObj.transform.GetChild(1).GetComponent<SpriteRenderer>(), decoBarItemSpeed, s);
             newObj.transform.GetChild(1).transform.localScale = s.relativeBarScale;
 
             m_barDecorations.Add(newDeco);
@@ -116,7 +159,7 @@ public class DecorationManager : MonoBehaviour
     private void Update()
     {
         //Update positions of all decorations.
-        moveAllDecorations();
+        MoveAllDecorations();
     }
 
 
@@ -140,24 +183,33 @@ public class DecorationManager : MonoBehaviour
         }        
     }
 
-    private void moveAllDecorations()
+    private void MoveAllDecorations()
     {
         foreach (DecorationUi dUI in m_barDecorations)
         {
-            //Only apply to objects still sitting on the ui bar.
-            if (dUI.status != DecorationUi.Status.onBar) continue;
-            dUI.MoveTowardDesiredLocation();
+            switch(dUI.status)
+            {
+                case DecorationUi.Status.onBar:
+                    dUI.MoveTowardDesiredLocation();
+                    break;
+                case DecorationUi.Status.activeInScene:
+                    //Don't move while actively placed in scene.
+                    break;
+                case DecorationUi.Status.beingHeld:
+                    dUI.sceneObject.transform.position = m_hand.position;
+                    break;
+            }
         }
     }
 
-
-    private void cycleOptions(int dir)
+    #region Cycling
+    private void CycleOptions(int dir)
     {
-        if (dir == -1) cycleOptionsLeft();
-        else if (dir == 1) cycleOptionsRight();       
+        if (dir == -1) CycleOptionsLeft();
+        else if (dir == 1) CycleOptionsRight();       
     }
 
-    private void cycleOptionsLeft()
+    private void CycleOptionsLeft()
     {
         //Only allow cycling while enough decorations exist to matter and not holding an item.
         if (m_barDecorations.Count <= 4) return;
@@ -172,7 +224,7 @@ public class DecorationManager : MonoBehaviour
         m_barDecorations[m_barDecorations.Count - 1].sceneObject.transform.position = m_barDecorations[m_barDecorations.Count - 1].desiredLocation;
     }
 
-    private void cycleOptionsRight()
+    private void CycleOptionsRight()
     {
         //Only allow cycling while enough decorations exist to matter and not holding an item.
         if (m_barDecorations.Count <= 4) return;
@@ -185,5 +237,54 @@ public class DecorationManager : MonoBehaviour
         RefreshBarUI();
         //Instantly update new first items position.
         m_barDecorations[0].sceneObject.transform.position = m_barDecorations[0].desiredLocation;
+    }
+
+    #endregion
+
+    private void Clicked()
+    {
+        //Check you aren't already holding an item.
+        if (managerStatus == ManagerStatus.EmptyHand)
+        { 
+            //Find if any decorations in bar are near player hand first.
+            foreach (DecorationUi d in m_barDecorations)
+            {
+                if (Vector2.Distance(m_hand.transform.position, d.sceneObject.transform.position) <= m_pickupDistance)
+                {
+                    m_currentlyHeldDecoration = d;
+                    m_barDecorations.Remove(d);
+                    m_activeDecorations.Add(d);
+                    d.pickUp();
+                    RefreshBarUI();
+
+                    managerStatus = ManagerStatus.Holding;
+                    return;
+                }
+            }
+            //Then check scene if none were found.
+            foreach (DecorationUi d in m_barDecorations)
+            {
+                if (Vector2.Distance(m_hand.transform.position, d.sceneObject.transform.position) <= m_pickupDistance)
+                {
+                    m_currentlyHeldDecoration = d;
+                    m_barDecorations.Remove(d);
+                    m_activeDecorations.Add(d);
+                    d.pickUp();
+                    RefreshBarUI();
+
+                    managerStatus = ManagerStatus.Holding;
+                    return;
+                }
+            }
+        }
+        else if(managerStatus == ManagerStatus.Holding)
+        {
+            managerStatus = ManagerStatus.EmptyHand;
+            m_currentlyHeldDecoration.placeInScene();
+            RefreshBarUI();
+            
+
+            m_currentlyHeldDecoration = null;
+        }
     }
 }
