@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class DecorationManager : MonoBehaviour
 {
     [Tooltip("Populate with sprites you wish to become decorations.")]
-    [SerializeField] private List<Sprite> decorations;
+    [SerializeField] private List<DecorationSprite> decorations;
     [Tooltip("Distance between objects on the deco bar.")]
     [SerializeField] private float decoBarBufferDist;
     [Tooltip("Speed items on deco bar move")]
@@ -19,6 +19,15 @@ public class DecorationManager : MonoBehaviour
     private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
     private List<DecorationUi> m_activeDecorations; //Decorations active in scene.
     private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
+
+    [Serializable]
+    public class DecorationSprite
+    {
+        [Tooltip("The sprite to use as a decoration")] public Sprite sprite;
+        [Tooltip("A scale to apply while on the Ui bar to shrink sprite")] public Vector3 relativeBarScale;
+        [Tooltip("A scale to apply while in the scene to grow sprite")] public Vector3 relativeActualScale;
+    }
+
 
     [Serializable]
     public class DecorationUi
@@ -34,12 +43,12 @@ public class DecorationManager : MonoBehaviour
         private float moveSpeed; //How fast object moves in the ui.
 
         public GameObject sceneObject; //Reference to decorations object in scene.
-        private Image m_backingImage; //Reference to image showing its backing sprite while on the bar.
-        private Image m_spriteImage; //Reference to image showing its actual representative sprite.
+        private SpriteRenderer m_backingImage; //Reference to image showing its backing sprite while on the bar.
+        private SpriteRenderer m_spriteImage; //Reference to image showing its actual representative sprite.
         public Vector3 desiredLocation; //Where the Ui object wants to be positioned in the scene.
         
 
-        public DecorationUi(GameObject obj, Image back, Image sprite, Sprite InitialSprite, float speed)
+        public DecorationUi(GameObject obj, SpriteRenderer back, SpriteRenderer sprite, Sprite InitialSprite, float speed)
         {
             status = Status.onBar;
             sceneObject = obj;
@@ -65,17 +74,24 @@ public class DecorationManager : MonoBehaviour
         m_activeDecorations = new List<DecorationUi>();
 
         //Generate new gameobject and populate an equivalent Decoration Ui
-        foreach (Sprite s in decorations)
+        foreach (DecorationSprite s in decorations)
         {
             
-            var newObj = Instantiate(referenceBarItem);
-            var newDeco = new DecorationUi(newObj, newObj.transform.GetChild(0).GetComponent<Image>(), newObj.transform.GetChild(1).GetComponent<Image>(), s, decoBarItemSpeed);
-            
+            var newObj = Instantiate(referenceBarItem,this.transform);
+            var newDeco = new DecorationUi(newObj, newObj.transform.GetChild(0).GetComponent<SpriteRenderer>(), newObj.transform.GetChild(1).GetComponent<SpriteRenderer>(), s.sprite, decoBarItemSpeed);
+            newObj.transform.GetChild(1).transform.localScale = s.relativeBarScale;
+
             m_barDecorations.Add(newDeco);
         }
 
         //Reset positions of newly generated objects.
         RefreshBarUI();
+
+        //Instantly set them to the correct locations.
+        foreach (DecorationUi dUI in m_barDecorations)
+        {
+            dUI.sceneObject.transform.position = dUI.desiredLocation;
+        }
     }
 
     private void Update()
@@ -98,9 +114,9 @@ public class DecorationManager : MonoBehaviour
                 var halfwayPoint = Mathf.Round(m_barDecorations.Count * 0.5f);
 
                 //In first half
-                if (i <= (halfwayPoint - 1)) m_barDecorations[i].desiredLocation = (transform.position - new Vector3(decoBarBufferDist * (halfwayPoint - i), 0, 0));
+                if (i <= (halfwayPoint - 1)) m_barDecorations[i].desiredLocation = (transform.position - new Vector3(decoBarBufferDist * (halfwayPoint - i) - decoBarBufferDist * 0.5f, 0, 0));
                 //In second half
-                else m_barDecorations[i].desiredLocation = (transform.position + new Vector3(decoBarBufferDist * (i - halfwayPoint), 0, 0));
+                else m_barDecorations[i].desiredLocation = (transform.position + new Vector3(decoBarBufferDist * (i - halfwayPoint) + decoBarBufferDist * 0.5f, 0, 0));
             }
         }        
     }
@@ -109,7 +125,21 @@ public class DecorationManager : MonoBehaviour
     {
         foreach (DecorationUi dUI in m_barDecorations)
         {
+            //Only apply to objects still sitting on the ui bar.
+            if (dUI.status != DecorationUi.Status.onBar) continue;
             dUI.MoveTowardDesiredLocation();
         }
+    }
+
+    private void cycleOptionsLeft()
+    {
+        //Only allow cycling while enough decorations exist to matter.
+        if (m_barDecorations.Count <= 4) return;
+    }
+
+    private void cycleOptionsRight()
+    {
+        //Only allow cycling while enough decorations exist to matter.
+        if (m_barDecorations.Count <= 4) return;
     }
 }
