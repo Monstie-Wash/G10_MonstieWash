@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Tool", menuName = "ScriptableObjects/Tool")]
 public class Tool : ScriptableObject
 {
-    public enum ToolType { Brush, None, Sponge, WaterWand };
+    public enum ToolType { None, Brush, Sponge, WaterWand };
 
     public string toolName = "";
     public Sprite mask;
