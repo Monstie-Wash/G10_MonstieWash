@@ -215,15 +215,12 @@ public class TutorialManager : MonoBehaviour
         switch (tool.TypeOfTool)
         {
             case Tool.ToolType.Brush:
-                Debug.Log("Use brush");
                 EventTriggered(CompletionEvent.UseBrush);
                 break;
             case Tool.ToolType.Sponge:
-                Debug.Log("Use sponge");
                 EventTriggered(CompletionEvent.UseSponge);
                 break;
             case Tool.ToolType.WaterWand:
-                Debug.Log("Use water wand");
                 EventTriggered(CompletionEvent.UseWaterWand);
                 break;
             default:
