@@ -30,6 +30,7 @@ public class DecorationManager : MonoBehaviour
     private Transform m_hand; //reference to players hand transform.
     private float m_pickupDistance = 1.5f; //How far to check for an item to pickup.
     private float rotatingValue = 0f; //Actively rotates held object with this.
+    private float scaling = 0f; //Actively scales held object with this.
 
     #region Serializable 'Data' Classes
     [Serializable]
@@ -56,7 +57,7 @@ public class DecorationManager : MonoBehaviour
 
         public GameObject sceneObject; //Reference to decorations object in scene.
         private SpriteRenderer m_backingImage; //Reference to image showing its backing sprite while on the bar.
-        private SpriteRenderer m_spriteImage; //Reference to image showing its actual representative sprite.
+        public SpriteRenderer m_spriteImage; //Reference to image showing its actual representative sprite.
         public Vector3 desiredLocation; //Where the Ui object wants to be positioned in the scene.
         private DecorationSprite spriteInfo; //Original sprite sizing data.
         
@@ -117,6 +118,9 @@ public class DecorationManager : MonoBehaviour
         public void placeInScene()
         {
             status = Status.activeInScene;
+
+            //Save scale changes.
+            spriteInfo.relativeActualScale = m_spriteImage.gameObject.transform.localScale;
         }
     }
 
@@ -128,6 +132,8 @@ public class DecorationManager : MonoBehaviour
         InputManager.Instance.OnActivate_Started += Clicked;
         InputManager.Instance.OnSwitchTool_Ended += ResetRotation;
         InputManager.Instance.OnNavigate += DropHeldItem;
+        InputManager.Instance.OnScroll += ScaleInput;
+        InputManager.Instance.OnScroll_Ended += ResetScaling;
     }
 
     public void OnDisable()
@@ -136,6 +142,8 @@ public class DecorationManager : MonoBehaviour
         InputManager.Instance.OnActivate_Started -= Clicked;
         InputManager.Instance.OnSwitchTool_Ended -= ResetRotation;
         InputManager.Instance.OnNavigate -= DropHeldItem;
+        InputManager.Instance.OnScroll -= ScaleInput;
+        InputManager.Instance.OnScroll_Ended -= ResetScaling;
     }
 
 
@@ -175,6 +183,11 @@ public class DecorationManager : MonoBehaviour
         if (rotatingValue != 0 && m_currentlyHeldDecoration != null)
         {
             m_currentlyHeldDecoration.sceneObject.transform.Rotate(0,0, 100 * rotatingValue * Time.deltaTime);
+        }
+        //Scales held object if desired.
+        if (scaling != 0 && m_currentlyHeldDecoration != null)
+        {
+            m_currentlyHeldDecoration.m_spriteImage.gameObject.transform.localScale += new Vector3(10 * scaling * Time.deltaTime, 10 * scaling * Time.deltaTime, 0);
         }
     }
 
@@ -220,7 +233,6 @@ public class DecorationManager : MonoBehaviour
         }
     }
 
-    #region Cycling
     private void CycleOptions(int dir)
     {
         //While empty handed cycle through decoration options.
@@ -232,8 +244,7 @@ public class DecorationManager : MonoBehaviour
         //If holding an item instead rotate it.
         else
         {
-            if (dir == -1) RotateObjectLeft();
-            else if (dir == 1) RotateObjectRight();
+            rotatingValue = -dir;
         }    
     }
 
@@ -267,22 +278,24 @@ public class DecorationManager : MonoBehaviour
         m_barDecorations[0].sceneObject.transform.position = m_barDecorations[0].desiredLocation;
     }
 
-    #endregion
 
-    #region Rotating
-    private void RotateObjectLeft()
-    {
-        rotatingValue = 1f;
-    }
-    private void RotateObjectRight()
-    {
-        rotatingValue = -1f;
-    }
     private void ResetRotation()
     {
         rotatingValue = 0f;
     }
-    #endregion
+
+
+    private void ScaleInput(int dir)
+    {
+        if (m_currentlyHeldDecoration == null) return;
+        scaling = -dir;  
+    }
+
+    private void ResetScaling()
+    {       
+        scaling = 0f;
+    }
+
 
     private void DropHeldItem()
     {

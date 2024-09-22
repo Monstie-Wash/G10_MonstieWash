@@ -80,6 +80,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""3b00dd9e-d390-424d-94e6-abf350705d7e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -291,6 +300,72 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Scan"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""KBM"",
+                    ""id"": ""704e116b-0298-4109-9c6f-ef2b33f49517"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b6a1d8d8-4637-4f6b-95f8-67a4b3743daf"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""849f3fc6-0ad4-49b2-ac14-27f4da167ddc"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Controller"",
+                    ""id"": ""acc60d2c-c420-4ac7-ada8-84b51c0ecfd5"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""91f92c7c-3d92-4362-ac5a-894f0ab2bcfa"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""11d18d83-95a5-4624-8ca3-18bd3f144eb5"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -866,6 +941,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions_Navigate = m_PlayerActions.FindAction("Navigate", throwIfNotFound: true);
         m_PlayerActions_ToggleUI = m_PlayerActions.FindAction("ToggleUI", throwIfNotFound: true);
         m_PlayerActions_Scan = m_PlayerActions.FindAction("Scan", throwIfNotFound: true);
+        m_PlayerActions_Scroll = m_PlayerActions.FindAction("Scroll", throwIfNotFound: true);
         // MenuActions
         m_MenuActions = asset.FindActionMap("MenuActions", throwIfNotFound: true);
         m_MenuActions_Navigate = m_MenuActions.FindAction("Navigate", throwIfNotFound: true);
@@ -948,6 +1024,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Navigate;
     private readonly InputAction m_PlayerActions_ToggleUI;
     private readonly InputAction m_PlayerActions_Scan;
+    private readonly InputAction m_PlayerActions_Scroll;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -958,6 +1035,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Navigate => m_Wrapper.m_PlayerActions_Navigate;
         public InputAction @ToggleUI => m_Wrapper.m_PlayerActions_ToggleUI;
         public InputAction @Scan => m_Wrapper.m_PlayerActions_Scan;
+        public InputAction @Scroll => m_Wrapper.m_PlayerActions_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -985,6 +1063,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Scan.started += instance.OnScan;
             @Scan.performed += instance.OnScan;
             @Scan.canceled += instance.OnScan;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -1007,6 +1088,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Scan.started -= instance.OnScan;
             @Scan.performed -= instance.OnScan;
             @Scan.canceled -= instance.OnScan;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -1205,6 +1289,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnNavigate(InputAction.CallbackContext context);
         void OnToggleUI(InputAction.CallbackContext context);
         void OnScan(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
     public interface IMenuActionsActions
     {

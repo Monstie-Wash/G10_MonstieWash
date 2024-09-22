@@ -22,6 +22,10 @@ public class InputManager : MonoBehaviour
     public event Action<int> OnSwitchTool;
     public event Action OnSwitchTool_Ended;
 
+    public event Action OnScroll_Started;
+    public event Action<int> OnScroll;
+    public event Action OnScroll_Ended;
+
     public event Action OnNavigate_Started;
     public event Action OnNavigate;
     public event Action OnNavigate_Ended;
@@ -100,6 +104,10 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Scan.started += Scan_started;
         m_playerInput.PlayerActions.Scan.performed += Scan_performed;
         m_playerInput.PlayerActions.Scan.canceled += Scan_canceled;
+
+        m_playerInput.PlayerActions.Scroll.started += Scroll_started;
+        m_playerInput.PlayerActions.Scroll.performed += Scroll_performed;
+        m_playerInput.PlayerActions.Scroll.canceled += Scroll_canceled;
         #endregion
 
         #region DebugActions Subscription
@@ -135,6 +143,10 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Scan.started -= Scan_started;
         m_playerInput.PlayerActions.Scan.performed -= Scan_performed;
         m_playerInput.PlayerActions.Scan.canceled -= Scan_canceled;
+
+        m_playerInput.PlayerActions.Scroll.started -= Scroll_started;
+        m_playerInput.PlayerActions.Scroll.performed -= Scroll_performed;
+        m_playerInput.PlayerActions.Scroll.canceled -= Scroll_canceled;
         #endregion
 
         #region DebugActions Subscription
@@ -222,6 +234,27 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnSwitchTool_Ended?.Invoke();
+    }
+    #endregion
+
+
+    #region Scroll
+    private void Scroll_started(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScroll_Started?.Invoke();
+    }
+
+    private void Scroll_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScroll?.Invoke(Math.Sign(context.ReadValue<float>()));
+    }
+
+    private void Scroll_canceled(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScroll_Ended?.Invoke();
     }
     #endregion
 
