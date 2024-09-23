@@ -9,7 +9,7 @@ public class LevelSelectManager : MonoBehaviour
     [SerializeField] private GameObject m_currentPanel;
     [SerializeField] private Button m_firstSelected;
 
-    private EventSystem m_es;
+	private EventSystem m_es;
     private Button m_backButton;
 
     private void Awake()
@@ -32,17 +32,13 @@ public class LevelSelectManager : MonoBehaviour
     }
 
     public void ShowPanel(GameObject panel)
-    {
-        //Save the last selected button here?
-        
+    {        
         panel.SetActive(true);
 
         m_currentPanel.SetActive(false);
         m_currentPanel = panel;
 
         m_backButton = FindBackButton();
-
-        //m_currentPanel.transform.SetAsLastSibling();
 
         m_es.SetSelectedGameObject(FindFirstObjectByType<Button>().gameObject);
     }
@@ -63,5 +59,6 @@ public class LevelSelectManager : MonoBehaviour
     private void Inputs_Back()
     {
         m_backButton.onClick.Invoke();
+
     }
 }
