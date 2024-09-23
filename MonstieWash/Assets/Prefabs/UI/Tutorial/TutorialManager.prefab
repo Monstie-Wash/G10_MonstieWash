@@ -56,7 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tutorialPrompts:
   - prompt: {fileID: 8076963425140957593}
-    eventListen: 2
+    eventListen: 1
     promptCompletion: 2
     value: 0.5
   - prompt: {fileID: 3533757363977393950}
