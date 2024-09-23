@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 public class TutorialManager : MonoBehaviour
 {
     [Tooltip("List of tutorial prompts in sequential order")][SerializeField] private List<TutorialPrompt> m_tutorialPrompts;     // List of prompts to iterate through
@@ -26,6 +27,9 @@ public class TutorialManager : MonoBehaviour
     private ToolSwitcher m_toolSwitcher;
     private TaskTracker m_taskTracker;
 
+    // scripted events - include scripted event enumtypes to be used here (tutoriial should probably have all types)
+    private ScriptedEventsManager m_scriptedEventsManager;
+
     [Serializable] 
     private struct TutorialPrompt
     {
@@ -33,11 +37,13 @@ public class TutorialManager : MonoBehaviour
         [Tooltip("The event to listen for")][SerializeField] private CompletionEvent eventListen;                    
         [Tooltip("The method to detect for completion")][SerializeField] private CompletionType promptCompletion;
         [Tooltip("The value to pair with the completion detection method")][SerializeField] private float value;
+        [Tooltip("The scripted event to occur")][SerializeField] private ScriptedEventsManager.ScriptedEventType scriptedEvent;
 
         public GameObject Prompt { get { return prompt; } }
         public CompletionEvent CompleteEvent { get { return eventListen; } }
         public CompletionType CompleteType { get { return promptCompletion; } }
         public float Value { get { return value; } }
+        public ScriptedEventsManager.ScriptedEventType ScriptedEventType { get { return scriptedEvent; } }
     }
 
     private void Awake()
@@ -45,6 +51,11 @@ public class TutorialManager : MonoBehaviour
         GameSceneManager.Instance.OnMonsterScenesLoaded += OnMonsterScenesLoaded;
         m_toolSwitcher = FindFirstObjectByType<ToolSwitcher>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_scriptedEventsManager = FindFirstObjectByType<ScriptedEventsManager>();
+
+        // subscribe to all Scripted Events Manager events
+        m_scriptedEventsManager.Subscribe(gameObject,
+            ScriptedEventsManager.ScriptedEventType.SetAngry);
     }
 
     private void OnEnable()
@@ -94,16 +105,25 @@ public class TutorialManager : MonoBehaviour
     {
         foreach (var prompt in m_tutorialPrompts)
         {
+            // run the scripted event for the new prompt if there is one
+            var currentPrompt = m_tutorialPrompts[m_tutorialStep];
+            if (currentPrompt.ScriptedEventType != ScriptedEventsManager.ScriptedEventType.None) m_scriptedEventsManager.RunScriptedEvent(gameObject, currentPrompt.ScriptedEventType);
+
+            // wait for the prompt to be completed
             yield return new WaitUntil(() => m_completed);
+
+            // reset complete flag and hide old prompt
             m_completed = false;
             m_tutorialPrompts[m_tutorialStep].Prompt.SetActive(false);
 
+            // dont exceed bounds of prompt list
             if (m_tutorialStep <  m_tutorialPrompts.Count - 1)
             {
+                // show new prompt
                 m_tutorialStep++;
-                var currentPrompt = m_tutorialPrompts[m_tutorialStep];
+                currentPrompt = m_tutorialPrompts[m_tutorialStep];
                 currentPrompt.Prompt.SetActive(true);
-
+                // run safety checks
                 if (currentPrompt.CompleteEvent == CompletionEvent.UnstickItem) SetStuckItemTrackedValue();
             }
         }
@@ -196,6 +216,10 @@ public class TutorialManager : MonoBehaviour
 
     #region Event Listeners
 
+    /// <summary>
+    /// Runs a completion check if the triggered event type matches the current prompt event listener. 
+    /// </summary>
+    /// <param name="eventType">The event to evaluate.</param>
     private void EventTriggered(CompletionEvent eventType)
     {
         var currentPrompt = m_tutorialPrompts[m_tutorialStep];
@@ -259,6 +283,21 @@ public class TutorialManager : MonoBehaviour
     {
         EventTriggered(CompletionEvent.UseTreat);
     }
+    #endregion
+
+    #region Scripted Events
+
+    private void RunScriptedEvent(ScriptedEventsManager.ScriptedEventType type) { 
+        switch (type)
+        {
+            case ScriptedEventsManager.ScriptedEventType.SetAngry:
+                m_scriptedEventsManager.RunScriptedEvent(gameObject, ScriptedEventsManager.ScriptedEventType.SetAngry);
+                break;
+            default:
+                break;
+        }
+    }
+
     #endregion
 
     #region Safety Checks
