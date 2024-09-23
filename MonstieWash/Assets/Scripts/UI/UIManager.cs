@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Image clipboard;
+    [SerializeField] private bool autoHideClipboard = true;
     [SerializeField] private float clipboardAutoHideDelay = 5f;
     [SerializeField] private Animator CBAnimator;
     [SerializeField] private GameObject taskContainer;
@@ -57,6 +58,8 @@ public class UIManager : MonoBehaviour
     {
         var clipboardHidden = animator.GetBool("Hide");
         animator.SetBool("Hide", !clipboardHidden);
+
+        if (!autoHideClipboard) return;
         if (clipboardHidden) m_clipboardAutoHide = StartCoroutine(ClipboardHideTimer());
         else StopCoroutine(m_clipboardAutoHide);
     }
