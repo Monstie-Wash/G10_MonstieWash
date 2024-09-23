@@ -1060,6 +1060,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mimic_Left
       objectReference: {fileID: 0}
+    - target: {fileID: 6664901743123005370, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
+      propertyPath: moodEffectMap.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6664901743123005370, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
+    - target: {fileID: 6664901743123005370, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
+    - target: {fileID: 6664901743123005370, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c4fcb8aaefd49b48b77c526987584b1, type: 2}
+    - target: {fileID: 6664901743123005370, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b0b8be48e7dd6d14e8c4022a6f68e4b4, type: 2}
+    - target: {fileID: 6664901743123005370, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: f5a4b8b3bb94a4d43af9176c31096d7e, type: 2}
+    - target: {fileID: 6664901743123005370, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 9e1474d74f11eb04abd50d94617d2f3f, type: 2}
+    - target: {fileID: 7240759896583663491, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
+      propertyPath: hideWarning
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8423798043676862120, guid: 100007f4589ae9d41a3fe92cb1f437bb, type: 3}
       propertyPath: m_Enabled
       value: 1

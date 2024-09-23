@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D), typeof(SoundPlayer))]
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
     // Effect controls for designers
     [Header("Effect Controls")]
     [Tooltip("Duration of the damage / healing animation (in seconds)")][SerializeField][Range(0f, 2f)] private float animationDuration;   // Duration of the "take damage" and "heal" animations.
-    [Tooltip("Animation curve for color shift upon taking damage/healing")][SerializeField] private AnimationCurve colorShift;  // Animation curve that controls damage/healing intensity. 
+    [Tooltip("Animation curve for color shift upon taking damage/healing")][SerializeField] private AnimationCurve colorShift;  // Animation curve that controls damage/healing intensity.
     #endregion
 
     #region Knockback Controls
@@ -50,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
     private bool m_isInvincible = false;    // Flags whether the player is currently invincible after taking damage.
     private Component[] m_spriteRenderers;  // Array of SpriteRenderers from the PlayerHand bone Animation.
     private Collider2D m_playerHurtbox;     // The player's hurtbox (where they can be hit by attacks).
+    private SoundPlayer m_soundPlayer;
     #endregion
 
     #region Accessors
@@ -63,6 +64,7 @@ public class PlayerHealth : MonoBehaviour
         playerHealth = playerMaxHealth;
         m_hand = FindFirstObjectByType<PlayerHand>();
         m_originalMoveSpeed = m_hand.HandSpeed;
+        m_soundPlayer = GetComponent<SoundPlayer>();
     }
 
     /// <summary>
@@ -124,6 +126,7 @@ public class PlayerHealth : MonoBehaviour
 
         StartCoroutine(PlayDamageEffects(dmgTaken));
         StartCoroutine(ApplyKnockbackEffects());
+        m_soundPlayer.PlaySound(true);
     }
 
     /// <summary>

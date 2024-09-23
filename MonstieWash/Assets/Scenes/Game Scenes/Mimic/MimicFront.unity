@@ -1237,6 +1237,10 @@ PrefabInstance:
       propertyPath: moodEffects.Array.data[0].reactionStrength
       value: -20
       objectReference: {fileID: 0}
+    - target: {fileID: 4977835303720252318, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: hideWarning
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5036995656876074879, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1294,6 +1298,10 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: moodEffectMap.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: numberCompletionParticles
       value: 7
       objectReference: {fileID: 0}
@@ -1301,6 +1309,22 @@ PrefabInstance:
       propertyPath: completionEffectList.Array.size
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c4fcb8aaefd49b48b77c526987584b1, type: 2}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b0b8be48e7dd6d14e8c4022a6f68e4b4, type: 2}
     - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: 'completionEffectList.Array.data[0]'
       value: 
@@ -1321,6 +1345,14 @@ PrefabInstance:
       propertyPath: 'completionEffectList.Array.data[4]'
       value: 
       objectReference: {fileID: 1874689298}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 02920d361488df541ad1c4d2c82be44a, type: 2}
+    - target: {fileID: 9051964115541874592, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: a10620ba5c925de4dbb0cfddfbebfcb7, type: 2}
     - target: {fileID: 9094874810309194301, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: m_SortingOrder
       value: 1
