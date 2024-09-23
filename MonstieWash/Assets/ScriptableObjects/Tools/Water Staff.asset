@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolName: Water Staff
   mask: {fileID: 21300000, guid: ad28d0a2b7038634397d714f30e18305, type: 3}
-  size: 1
+  size: 2
+  doNotErase: 0
   inputStrength: 100
-  erasableLayers: 02000000
+  erasableLayers: 0000000001000000
+  toolType: 3

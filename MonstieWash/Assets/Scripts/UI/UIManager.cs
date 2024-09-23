@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,18 +15,24 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject taskTextPrefab;
     [SerializeField] private TextMeshProUGUI completionText;
     [SerializeField] private float fontSize = 36f;
-    [Space(20), SerializeField] private GameObject finishLevelButton;
+    [SerializeField] private float fontBuffer = 1.25f;
+	[Space(20), SerializeField] private GameObject finishLevelButton;
 
-    private Dictionary<string, bool> m_taskList = new();
+    [Space(20), SerializeField] private GameObject startList;
+    [SerializeField] private Animator taskListAnim;
+    [SerializeField] private Button hideTL;
+
+    private Dictionary<TaskType, bool> m_taskList = new();
 
     private TaskTracker m_taskTracker;
     private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
-    private bool m_UIInvisible = false;
 
     private void Awake()
     {
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
         m_progressBars = FindObjectsByType<ProgressBarUI>(FindObjectsSortMode.None);
+
+        Time.timeScale = 0f;
     }
 
     private void OnEnable()
@@ -43,29 +51,29 @@ public class UIManager : MonoBehaviour
 
     private void Inputs_OnToggleUI()
     {
-        ToggleUIVisibility();
+        ToggleUIVisibility(CBAnimator);
     }
-    private void ToggleUIVisibility()
+    private void ToggleUIVisibility(Animator animator)
     {
-        m_UIInvisible = !m_UIInvisible;
-        CBAnimator.SetBool("Hide", m_UIInvisible);
+        animator.SetBool("Hide", !animator.GetBool("Hide"));
     }
 
 /// <summary>
 /// Public method used by TaskTracker to initialise clipboard after all task trackers have been initialised. Creates filters for tasks to show on each scene.
 /// </summary>
 /// <param name="keys">A list of all the keys used to identify tasks tracked in TaskTracker</param>
-    public void LoadOverallTasks(List<TaskData> tasks)
+    public void LoadOverallTasks(TaskData[] tasks)
     {
         foreach (var task in tasks)
         {
-            if (!m_taskList.ContainsKey(task.gameObject.scene.name))
+            if (!m_taskList.ContainsKey(task.TaskType))
             {
-                m_taskList.Add(task.gameObject.scene.name, false);
+                m_taskList.Add(task.TaskType, false);
             }
         }
 
         InitialiseClipboard();
+        InitialiseStartList();
     }
 
 /// <summary>
@@ -77,22 +85,40 @@ public class UIManager : MonoBehaviour
         foreach (var pair in m_taskList)
         {
             var newTaskObject = Instantiate(taskTextPrefab, taskContainer.transform);
-            newTaskObject.name = pair.Key;
+            
+            newTaskObject.name = pair.Key.ToString();
 
             var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
             newTaskText.fontSize = fontSize;
-            newTaskText.text = $"{newTaskObject.name}";
+            newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
         } 
     }
+
+    private void InitialiseStartList()
+    {
+		for (var i = 0; i < m_taskList.Count; i++)
+		{
+			foreach (var pair in m_taskList)
+			{
+				var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
+
+				newTaskObject.name = pair.Key.ToString();
+
+				var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
+				newTaskText.fontSize = fontSize * fontBuffer;
+				newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
+			}
+		}
+	}
 
 /// <summary>
 /// Updates the progress value displayed on the clipboard for a given task.
 /// </summary>
-/// <param name="taskName">String identifier of the task to update.</param>
-/// <param name="taskProgress">Progress of the task to be displayed on the clipboard.</param>
-    public void UpdateClipboardTask(string scene)
+/// <param name="scene">String identifier of the task to update.</param>
+    public void UpdateClipboardTask(TaskType type)
     {
-        taskContainer.transform.Find(scene).GetComponent<TextMeshProUGUI>().text = $"<s>{scene}</s>";
+		TextMeshProUGUI taskText = taskContainer.transform.Find(type.ToString()).GetComponent<TextMeshProUGUI>();
+		taskText.text = $"<s>{taskText.text}</s>";
     }
 
 	/// <summary>
@@ -135,5 +161,12 @@ public class UIManager : MonoBehaviour
             var button = Array.Find(uncleanButtons, button => button.gameObject.scene.name.Equals(scene));
             button.gameObject.SetActive(true);
         }
+    }
+
+    public void OnTaskListHide()
+    {
+		ToggleUIVisibility(taskListAnim);
+		ToggleUIVisibility(CBAnimator);
+        Time.timeScale = 1.0f;
     }
 }

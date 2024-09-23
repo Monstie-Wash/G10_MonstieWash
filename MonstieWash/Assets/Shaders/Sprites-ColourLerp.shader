@@ -46,6 +46,8 @@ Shader "Sprites/ColourLerp"
                 fixed4 c = SampleSpriteTexture(IN.texcoord);
                 //Blend toward sprite component colour depending on its alpha.
                 c.rgb = lerp(IN.color.rgb, c.rgb, IN.color.a);
+                //If sprite alpha > 0, lerp alpha towards 1
+                c.a = lerp(c.a, 1, (1 - IN.color.a) * step(0.1, c.a));
                 //Pre-multiply alpha to work with the blending function
                 c.rgb *= c.a;
                 return c;
