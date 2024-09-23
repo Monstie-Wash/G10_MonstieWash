@@ -291,7 +291,7 @@ public class TutorialManager : MonoBehaviour
         switch (type)
         {
             case ScriptedEventsManager.ScriptedEventType.SetAngry:
-                m_scriptedEventsManager.SetAngry(gameObject);
+                m_scriptedEventsManager.RunScriptedEvent(gameObject, ScriptedEventsManager.ScriptedEventType.SetAngry);
                 break;
             default:
                 break;

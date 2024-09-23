@@ -41,16 +41,8 @@ public class ScriptedEventsManager : MonoBehaviour
             // create and add perms for new subscriber
             foreach (ScriptedEventType eventType in Enum.GetValues(typeof(ScriptedEventType)))
             {
-                bool found = false;
-                foreach (var permission in permissions)
-                {
-                    if (permission == eventType)
-                    {
-                        m_subscribers[subscriber].Add(eventType, true);
-                        found = true;
-                    }
-                }
-                if (!found) m_subscribers[subscriber].Add(eventType, false);
+                if (permissions.Contains(eventType)) m_subscribers[subscriber].Add(eventType, true);
+                else m_subscribers[subscriber].Add(eventType, false);
             }
         }
     }
@@ -70,34 +62,34 @@ public class ScriptedEventsManager : MonoBehaviour
 
     public void RunScriptedEvent(GameObject caller, ScriptedEventType type)
     {
-        switch (type)
+        if (m_subscribers.ContainsKey(caller))  // if caller is subscribed
         {
-            case ScriptedEventType.SetAngry:
-                SetAngry(caller);
-                break;
-            default:
-                break;
+            switch (type)
+            {
+                case ScriptedEventType.SetAngry:
+                    if (m_subscribers[caller][ScriptedEventType.SetAngry])  // if caller has permission to execute this scripted event
+                    {
+                        SetAngry(caller);
+                    }
+                    else // caller doesn't have permission
+                    {
+                        if (debugMode) Debug.LogWarning($"{caller.name} tried to call scripted event SetAngry but is missing permissions to do so!");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        else // caller isn't subscribed
+        {
+            if (debugMode) Debug.LogWarning($"{caller.name} tried to call a scripted event but isn't subscribed!");
         }
     }
 
-    public void SetAngry(GameObject caller)
+    private void SetAngry(GameObject caller)
     {
-        if (m_subscribers.ContainsKey(caller))  // if caller is subscribed
-        {
-            if (m_subscribers[caller][ScriptedEventType.SetAngry])  // if caller has permission to execute this scripted event
-            {
-                // currently sets the monster to its maximum anger
-                float maxAnger = monsterAngryMood.MoodUpperLimit;
-                m_monsterBrain.UpdateMood(maxAnger, monsterAngryMood);
-            }
-            else
-            {
-                if (debugMode) Debug.LogWarning($"{caller.name} tried to call scripted event SetAngry but is missing permissions to do so!");
-            }
-        }
-        else
-        {
-            if (debugMode) Debug.LogWarning($"{caller.name} tried to call scripted event SetAngry but hasn't subscribed to Scripted Events!");
-        }
+        // currently sets the monster to its maximum anger
+        float maxAnger = monsterAngryMood.MoodUpperLimit;
+        m_monsterBrain.UpdateMood(maxAnger, monsterAngryMood);
     }
 }
