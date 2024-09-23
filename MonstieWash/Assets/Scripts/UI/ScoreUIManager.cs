@@ -58,14 +58,13 @@ public class ScoreUIManager : MonoBehaviour
 	{
 		foreach (var task in m_tracker.TaskData)
 		{
-			if (!m_tasks.ContainsKey(task.gameObject.scene.name))
+			if (!m_tasks.ContainsKey(task.TaskType.ToString()))
 			{
-				m_tasks.Add(task.gameObject.scene.name, task.Score);
-                //Debug.Log($"{task.gameObject}, {task.Score}");
+				m_tasks.Add(task.TaskType.ToString(), task.Score);
 			}
 			else
 			{
-				m_tasks[task.gameObject.scene.name] += task.Score;
+				m_tasks[task.TaskType.ToString()] += task.Score;
 			}
 		}
 	}
@@ -90,7 +89,7 @@ public class ScoreUIManager : MonoBehaviour
             name = m_LIList[i].transform.Find("TaskName").GetComponent<TextMeshProUGUI>();
             strikeOut = m_LIList[i].transform.Find("StrikeOut").gameObject;
 
-            name.text = m_tasks.ElementAt(i).Key;
+            name.text = Resources.Load<TaskDesc>(m_tasks.ElementAt(i).Key).description;
 
             m_LIList[i].SetActive(true);
             strikeOut.SetActive(false);

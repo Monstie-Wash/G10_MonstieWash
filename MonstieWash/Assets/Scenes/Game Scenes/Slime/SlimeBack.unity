@@ -819,6 +819,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: moodParticleSystem
+      value: 
+      objectReference: {fileID: 911378826}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
       objectReference: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
@@ -918,9 +922,41 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: 3419eb33094ab9a4db72bfaccca975b2, type: 2}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: completionEffectList.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c085ae8b7e03fe4f9f1412031a4109e, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b6422bdfb1f0e1c4ca508c40ae662291, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: 80365dfe12b830940bd694ce63fe3792, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b7609a6e08da2c042aa4956ce7d3f7a6, type: 2}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: 'completionEffectList.Array.data[0]'
       value: 
@@ -929,6 +965,22 @@ PrefabInstance:
       propertyPath: 'completionEffectList.Array.data[1]'
       value: 
       objectReference: {fileID: 1545634366}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: f1eed0e68ee572d4fb4c5a79c46beb93, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: fc22217ad01d762478e35bb48f4a10d0, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 5983b9fa0d27ae6498873a9b35ba3238, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 02d2f46010db86a4d958a2e4e23caf96, type: 2}
     - target: {fileID: 6174601992942811934, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: m_Name
       value: Slime_body&eyes
@@ -965,6 +1017,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1311236353
       objectReference: {fileID: 0}
+    - target: {fileID: 9068842602551363734, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: hideWarning
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6793149257861410724, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
@@ -974,6 +1030,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3388646996981217167, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1520921599}
+    - targetCorrespondingSourceObject: {fileID: 3388646996981217167, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 911378827}
     - targetCorrespondingSourceObject: {fileID: 1968287971661902663, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 365464105}
@@ -1223,6 +1282,78 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.393}
+--- !u!1001 &911378825
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 817092584}
+    m_Modifications:
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.17223775
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.3194187
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701429289123836779, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_Name
+      value: Mood FX
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+--- !u!198 &911378826 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 779581136623032217, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+  m_PrefabInstance: {fileID: 911378825}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &911378827 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+  m_PrefabInstance: {fileID: 911378825}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &911378828 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3386892717480709554, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+  m_PrefabInstance: {fileID: 911378825}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &950214482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1295,6 +1426,10 @@ PrefabInstance:
       propertyPath: isPettable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: moodParticleSystem
+      value: 
+      objectReference: {fileID: 911378828}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
