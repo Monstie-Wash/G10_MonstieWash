@@ -152,6 +152,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   greenFadeTime: 1
+  boneBuffer: 10
 --- !u!82 &1410444606662148047
 AudioSource:
   m_ObjectHideFlags: 0
@@ -275,12 +276,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ec41a0aeeedc1408a6d28c1d386b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_id: 
-  m_progress: 0
-  m_complete: 0
-  m_threshold: 100
-  m_container: {fileID: 0}
-  m_score: 9.85
+  id: 
+  progress: 0
+  threshold: 100
+  container: {fileID: 0}
+  score: 9.85
+  taskType: 1
 --- !u!1 &8982156441948872883
 GameObject:
   m_ObjectHideFlags: 0

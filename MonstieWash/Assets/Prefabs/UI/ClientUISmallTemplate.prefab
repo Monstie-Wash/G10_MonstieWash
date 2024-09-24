@@ -349,7 +349,6 @@ GameObject:
   - component: {fileID: 7691433327280914870}
   - component: {fileID: 5392091119775860959}
   - component: {fileID: 7539236836976133323}
-  - component: {fileID: 8906350455609438477}
   m_Layer: 0
   m_Name: ClientUISmallTemplate
   m_TagString: Untagged
@@ -506,18 +505,3 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8906350455609438477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7508645772907729772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34687cd5f4e97ed44ac8e4c4d684960f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bigParent: {fileID: 0}
-  bigElement: {fileID: 0}
-  backButton: {fileID: 0}

@@ -21,6 +21,9 @@ public class PlayerHand : MonoBehaviour
     }
     public Vector2 Velocity { get { return m_movement; } }
 
+    //Accessor used by knockback to slow hand temporarily.
+    public float HandSpeed { get { return handSpeed; } set { handSpeed = value; } }
+
     private void OnEnable()
     {
         InputManager.Instance.OnMove += Inputs_MovePerformed;

@@ -35,6 +35,8 @@ public class ToolFX : MonoBehaviour
         m_eraser.OnErasing_Ended -= Eraser_OnErasing_Ended;
         InputManager.Instance.OnActivate -= Inputs_OnActivate;
         InputManager.Instance.OnActivate_Ended -= Inputs_OnActivate_Ended;
+
+        Inputs_OnActivate_Ended();
     }
 
     private void Start()
@@ -43,7 +45,7 @@ public class ToolFX : MonoBehaviour
         m_completeParticles = Instantiate(particlesOnComplete, m_drawPosTransform);
     }
 
-    private void Eraser_OnErasing(bool completeScene)
+    private void Eraser_OnErasing(bool completeScene, Tool tool)
     {
         if (!completeScene)
         {
@@ -56,7 +58,7 @@ public class ToolFX : MonoBehaviour
 
     }
 
-    private void Eraser_OnErasing_Ended(bool completeScene)
+    private void Eraser_OnErasing_Ended(bool completeScene, Tool tool)
     {
         if (!completeScene)
         {

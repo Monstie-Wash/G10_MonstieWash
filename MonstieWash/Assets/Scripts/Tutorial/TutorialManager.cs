@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+
 
 public class TutorialManager : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class TutorialManager : MonoBehaviour
 
     private int m_tutorialStep = 0;       // Index for current tutorial prompt in the List
     private bool m_completed = false;     // Event flag for the current tutorial prompt
-    private enum CompletionEvent { ChangeScene, EraseStarted, OnMove, Scan, SwitchTool, ToggleUI, UnstickItem, UseTreat };    // Enumerated list for designers of events to listen for
+    private enum CompletionEvent { ChangeScene, OnMove, Scan, SwitchTool, ToggleUI, UnstickItem, UseBrush, UseSponge, UseWaterWand, UseTreat };    // Enumerated list for designers of events to listen for
     private enum CompletionType { Instant, Count, Time };
     // Enumerated list of ways the prompt can be completed:                                      
         // Instant - completes instantly once the event is received         (value = delay after event is received)
@@ -25,6 +27,9 @@ public class TutorialManager : MonoBehaviour
     private ToolSwitcher m_toolSwitcher;
     private TaskTracker m_taskTracker;
 
+    // scripted events - include scripted event enumtypes to be used here (tutoriial should probably have all types)
+    private ScriptedEventsManager m_scriptedEventsManager;
+
     [Serializable] 
     private struct TutorialPrompt
     {
@@ -32,11 +37,13 @@ public class TutorialManager : MonoBehaviour
         [Tooltip("The event to listen for")][SerializeField] private CompletionEvent eventListen;                    
         [Tooltip("The method to detect for completion")][SerializeField] private CompletionType promptCompletion;
         [Tooltip("The value to pair with the completion detection method")][SerializeField] private float value;
+        [Tooltip("The scripted event to occur")][SerializeField] private ScriptedEventsManager.ScriptedEventType scriptedEvent;
 
         public GameObject Prompt { get { return prompt; } }
         public CompletionEvent CompleteEvent { get { return eventListen; } }
         public CompletionType CompleteType { get { return promptCompletion; } }
         public float Value { get { return value; } }
+        public ScriptedEventsManager.ScriptedEventType ScriptedEventType { get { return scriptedEvent; } }
     }
 
     private void Awake()
@@ -44,6 +51,11 @@ public class TutorialManager : MonoBehaviour
         GameSceneManager.Instance.OnMonsterScenesLoaded += OnMonsterScenesLoaded;
         m_toolSwitcher = FindFirstObjectByType<ToolSwitcher>();
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
+        m_scriptedEventsManager = FindFirstObjectByType<ScriptedEventsManager>();
+
+        // subscribe to all Scripted Events Manager events
+        m_scriptedEventsManager.Subscribe(gameObject,
+            ScriptedEventsManager.ScriptedEventType.SetAngry);
     }
 
     private void OnEnable()
@@ -86,11 +98,6 @@ public class TutorialManager : MonoBehaviour
         StartCoroutine(RunTutorial());
     }
 
-    private void Update()
-    {
-        TaskSafetyCheck();  // Prevents the player from being softlocked
-    }
-
     /// <summary>
     /// Runs the tutorial.
     /// </summary>
@@ -98,16 +105,25 @@ public class TutorialManager : MonoBehaviour
     {
         foreach (var prompt in m_tutorialPrompts)
         {
+            // run the scripted event for the new prompt if there is one
+            var currentPrompt = m_tutorialPrompts[m_tutorialStep];
+            if (currentPrompt.ScriptedEventType != ScriptedEventsManager.ScriptedEventType.None) m_scriptedEventsManager.RunScriptedEvent(gameObject, currentPrompt.ScriptedEventType);
+
+            // wait for the prompt to be completed
             yield return new WaitUntil(() => m_completed);
+
+            // reset complete flag and hide old prompt
             m_completed = false;
             m_tutorialPrompts[m_tutorialStep].Prompt.SetActive(false);
 
+            // dont exceed bounds of prompt list
             if (m_tutorialStep <  m_tutorialPrompts.Count - 1)
             {
+                // show new prompt
                 m_tutorialStep++;
-                var currentPrompt = m_tutorialPrompts[m_tutorialStep];
+                currentPrompt = m_tutorialPrompts[m_tutorialStep];
                 currentPrompt.Prompt.SetActive(true);
-
+                // run safety checks
                 if (currentPrompt.CompleteEvent == CompletionEvent.UnstickItem) SetStuckItemTrackedValue();
             }
         }
@@ -199,104 +215,138 @@ public class TutorialManager : MonoBehaviour
     #endregion
 
     #region Event Listeners
-    private void OnMove(Vector2 movement)
+
+    /// <summary>
+    /// Runs a completion check if the triggered event type matches the current prompt event listener. 
+    /// </summary>
+    /// <param name="eventType">The event to evaluate.</param>
+    private void EventTriggered(CompletionEvent eventType)
     {
         var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.OnMove)
+        if (currentPrompt.CompleteEvent == eventType)
         {
             RunCompletionTests(currentPrompt);
         }
     }
 
-    private void EraseStart(bool value)
+    private void OnMove(Vector2 movement)
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.EraseStarted)
+        EventTriggered(CompletionEvent.OnMove);
+    }
+
+    private void EraseStart(bool value, Tool tool)
+    {
+        switch (tool.TypeOfTool)
         {
-            RunCompletionTests(currentPrompt);
+            case Tool.ToolType.Brush:
+                EventTriggered(CompletionEvent.UseBrush);
+                break;
+            case Tool.ToolType.Sponge:
+                EventTriggered(CompletionEvent.UseSponge);
+                break;
+            case Tool.ToolType.WaterWand:
+                EventTriggered(CompletionEvent.UseWaterWand);
+                break;
+            default:
+                break;  //ToolType.None
         }
+
+        TaskSafetyCheck(tool); // Prevents the player from being softlocked
     }
 
     private void OnScan()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.Scan)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.Scan);
     }
 
     private void OnSceneChanged()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.ChangeScene)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.ChangeScene);
     }
 
     private void OnSwitchTool()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.SwitchTool)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.SwitchTool);
     }
 
     private void OnItemUnstuck()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.UnstickItem)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.UnstickItem);
     }
 
     private void OnToggleUI()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.ToggleUI)
-        {
-            RunCompletionTests(currentPrompt);
-        }
+        EventTriggered(CompletionEvent.ToggleUI);
     }
 
     private void UseTreat()
     {
-        var currentPrompt = m_tutorialPrompts[m_tutorialStep];
-        if (currentPrompt.CompleteEvent == CompletionEvent.UseTreat)
+        EventTriggered(CompletionEvent.UseTreat);
+    }
+    #endregion
+
+    #region Scripted Events
+
+    private void RunScriptedEvent(ScriptedEventsManager.ScriptedEventType type) { 
+        switch (type)
         {
-            RunCompletionTests(currentPrompt);
+            case ScriptedEventsManager.ScriptedEventType.SetAngry:
+                m_scriptedEventsManager.RunScriptedEvent(gameObject, ScriptedEventsManager.ScriptedEventType.SetAngry);
+                break;
+            default:
+                break;
         }
     }
+
     #endregion
 
     #region Safety Checks
     /// <summary>
     /// Runs every frame and will skip a task if it is uncompletable by the player
     /// </summary>
-    private void TaskSafetyCheck()
+    private void TaskSafetyCheck(Tool tool)
     {
         switch (m_tutorialPrompts[m_tutorialStep].CompleteEvent) {
-            case CompletionEvent.EraseStarted:
-                if (!DirtRemains()) m_completed = true; break;
+            case CompletionEvent.UseBrush:
+                {
+                    if (!DirtRemainsForTool(tool)) m_completed = true;
+
+                } break;
             default:
                 break;
         }
     }
 
     /// <summary>
-    /// Returns TRUE if there is an uncompleted Dirt task in TaskTracker, otherwise returns FALSE.
+    /// Returns TRUE if there is an incomplete Dirt task in TaskTracker, otherwise returns FALSE.
     /// </summary>
     ///
     private bool DirtRemains()
     {
         foreach (var task in m_taskTracker.TaskData)
         {
-            if ((task.TaskType == TaskData.TypeOfTask.Dirt) && !task.Complete)
+            if ((task.TaskType == TaskType.Dirt) && !task.Complete)
             {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Returns TRUE if there is an incomplete Dirt task in TaskTracker that can be erased by the given tool, otherwise returns FALSE.
+    /// </summary>
+    /// <param name="tool">The tool to check for remaining erasables.</param>
+    private bool DirtRemainsForTool(Tool tool)
+    {
+        foreach (var task in m_taskTracker.TaskData)
+        {
+            if ((task.TaskType == TaskType.Dirt) && !task.Complete)
+            {
+                var dirt = task.Container.gameObject;
+                var dirtLayerInToolLayer = tool.ErasableLayers.Contains(dirt.GetComponent<ErasableLayerer>().Layer);
+
+                if (dirtLayerInToolLayer) return true;
             }
         }
         return false;
