@@ -325,7 +325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -159}
+  m_AnchoredPosition: {x: -22, y: -166}
   m_SizeDelta: {x: 400, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &228472129
@@ -554,10 +554,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: START!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 28e5c799c3f5d9a47ada0c23e029864b, type: 2}
+  m_sharedMaterial: {fileID: 4979466108815502015, guid: 28e5c799c3f5d9a47ada0c23e029864b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1122,7 +1122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1086796710868375111, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: tools.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1086796710868375111, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'tools.Array.data[0]'
@@ -1140,6 +1140,10 @@ PrefabInstance:
       propertyPath: 'tools.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: 00e09ce6ac17a5447a5d26aa269393bf, type: 2}
+    - target: {fileID: 1086796710868375111, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
+      propertyPath: 'tools.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: cb18e00f344f84b4bb9a039e7e17d3f6, type: 2}
     - target: {fileID: 6059618893801588742, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: m_Name
       value: GameManager
