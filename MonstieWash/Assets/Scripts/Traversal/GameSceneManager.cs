@@ -359,4 +359,9 @@ public class GameSceneManager : MonoBehaviour
         else Debug.LogError("Could not find object to set state of!");
     }
     #endregion
+
+    public List<GameScene> GetLevelScenes()
+    {
+        return m_currentLevelScenes.gameScenes;
+    }
 }

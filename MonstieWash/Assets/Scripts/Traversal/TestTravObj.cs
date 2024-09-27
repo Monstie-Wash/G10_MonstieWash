@@ -9,6 +9,8 @@ public class TestTravObj : MonoBehaviour, INavigator
 
     private string m_targetScene;
 
+    public GameScene TargetScene { get => targetScene; set => targetScene = value; }
+
     public void Awake()
     {
         if (targetScene == null) Debug.LogError($"Target scene not assigned for {name}!");

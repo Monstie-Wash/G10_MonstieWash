@@ -97,7 +97,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Windows Store Apps
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -116,10 +116,10 @@ TextureImporter:
       name: ph_slime_front_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 250
-        height: 250
+        x: 2
+        y: 2
+        width: 246
+        height: 246
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

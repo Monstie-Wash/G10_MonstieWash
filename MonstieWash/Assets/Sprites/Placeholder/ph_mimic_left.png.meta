@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f6a6805f3206fd8419a4d74a6906b7d4
+guid: d2b171dd231c2bb448cffd2a4230a532
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1348977960010495174
-    second: ph_slime_back_0
+      213: -4786150042270799890
+    second: ph_mimic_left_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ph_slime_back_0
+      name: ph_mimic_left_0
       rect:
         serializedVersion: 2
         x: 2
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6c4b144be4888b210800000000000000
-      internalID: 1348977960010495174
+      spriteID: ee76ab805ed249db0800000000000000
+      internalID: -4786150042270799890
       vertices: []
       indices: 
       edges: []
