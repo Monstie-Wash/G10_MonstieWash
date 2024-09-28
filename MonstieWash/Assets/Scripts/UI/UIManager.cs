@@ -1,15 +1,15 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Image clipboard;
+    [SerializeField] private bool autoHideClipboard = true;
+    [SerializeField] private float clipboardAutoHideDelay = 5f;
     [SerializeField] private Animator CBAnimator;
     [SerializeField] private GameObject taskContainer;
     [SerializeField] private GameObject taskTextPrefab;
@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
 
     private TaskTracker m_taskTracker;
     private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
+    private Coroutine m_clipboardAutoHide;
 
     private void Awake()
     {
@@ -55,7 +56,18 @@ public class UIManager : MonoBehaviour
     }
     private void ToggleUIVisibility(Animator animator)
     {
-        animator.SetBool("Hide", !animator.GetBool("Hide"));
+        var clipboardHidden = animator.GetBool("Hide");
+        animator.SetBool("Hide", !clipboardHidden);
+
+        if (!autoHideClipboard) return;
+        if (clipboardHidden) m_clipboardAutoHide = StartCoroutine(ClipboardHideTimer());
+        else StopCoroutine(m_clipboardAutoHide);
+    }
+
+    private IEnumerator ClipboardHideTimer()
+    {
+        yield return new WaitForSeconds(clipboardAutoHideDelay);
+        ToggleUIVisibility(CBAnimator);
     }
 
 /// <summary>

@@ -629,6 +629,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2419755155998966545, guid: a8b0e021d02d0224d9414110020f9abb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7620088373925145203}
+    - targetCorrespondingSourceObject: {fileID: 2419755155998966545, guid: a8b0e021d02d0224d9414110020f9abb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6413517041910453223}
+    - targetCorrespondingSourceObject: {fileID: 2419755155998966545, guid: a8b0e021d02d0224d9414110020f9abb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5473222558727710019}
   m_SourcePrefab: {fileID: 100100000, guid: a8b0e021d02d0224d9414110020f9abb, type: 3}
 --- !u!1 &7225011906423088770 stripped
 GameObject:
@@ -775,6 +781,23 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  knockbackDuration: 0
+  knockbackInitialStrength: 0
+  knockbackCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  knockBackCentralPoint: {fileID: 0}
+  slowStrength: 0
+  slowDuration: 0
+  speedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!50 &7993864775247175003
 Rigidbody2D:
   serializedVersion: 4
@@ -818,6 +841,117 @@ MonoBehaviour:
   anim_idle: {fileID: 7400000, guid: d2f040cd0f3c64a4fafbdcf829431209, type: 2}
   anim_grab: {fileID: 7400000, guid: 19aad3fe17b26b243832c1a95e175497, type: 2}
   anim_pet: {fileID: 7400000, guid: 775ea1969ddf0f141a167297089f011c, type: 2}
+--- !u!82 &6413517041910453223
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7225011906423088770}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &5473222558727710019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7225011906423088770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5df9cd3904642041b9464ccbf2cb451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 11400000, guid: 3037a8b4af146af40b39e1f896fe2c1b, type: 2}
+  hideWarning: 0
 --- !u!4 &8398227971916938977 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3556906555036556146, guid: a8b0e021d02d0224d9414110020f9abb, type: 3}

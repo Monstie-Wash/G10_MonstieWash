@@ -415,7 +415,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RightClick",
+                    "name": "AltSelect",
                     "type": "PassThrough",
                     "id": "3dce965f-9205-4e85-ad90-dfd0fcd54f5a",
                     "expectedControlType": "Button",
@@ -835,7 +835,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "RightClick",
+                    "action": "AltSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "752faf4d-7d6f-45d2-9957-ae8dbe97cd8f",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AltSelect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

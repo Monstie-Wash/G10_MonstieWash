@@ -28,6 +28,9 @@ public class MoodArea : MonoBehaviour
     [Header("FadingSprites")]
     [Tooltip("Fading sprite scripts that will fade in when this area is touched.")] [SerializeField] private List<FadingSprite> spritesToActivate;
 
+    [Header("Particle Effect")]
+    [SerializeField] private ParticleSystem moodParticleSystem;
+
     //Internal states
     private float currentCooldown;
     private float currentEffectiveness; //Current effectiveness of area.
@@ -123,6 +126,8 @@ public class MoodArea : MonoBehaviour
             OnPetStarted?.Invoke();
             m_isPetting = true;
         }
+
+        if (moodParticleSystem != null) moodParticleSystem.Play();
     }
 
     /// <summary>
