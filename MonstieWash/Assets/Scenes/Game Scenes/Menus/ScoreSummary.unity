@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ba7d740a899f94884c98892f97144b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveLocation: /Save.Png
+  saveLocation: /Save
 --- !u!1 &802692921
 GameObject:
   m_ObjectHideFlags: 0

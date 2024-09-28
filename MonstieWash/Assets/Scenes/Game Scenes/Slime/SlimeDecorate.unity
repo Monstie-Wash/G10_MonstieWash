@@ -407,7 +407,7 @@ MonoBehaviour:
   referenceBarItem: {fileID: 2423894526994754762, guid: b5cdaa9e7c02f81429276338b0b03db2, type: 3}
   camFlash: {fileID: 760505841}
   screenshotArea: {fileID: 341102340}
-  savePath: /Save.Png
+  savePath: /Save
   m_barDecorations: []
   m_activeDecorations: []
   m_currentlyHeldDecoration:

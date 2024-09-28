@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using System.IO;
+
 
 public class DecorationManager : MonoBehaviour
 {
@@ -408,10 +410,14 @@ public class DecorationManager : MonoBehaviour
         tempText.ReadPixels(new Rect(startX, startY, width, height), 0, 0);
         tempText.Apply();
 
+        //Apply a modifier to end of file based on count of objects stored.
+        var fileCount = Directory.GetFiles(Application.persistentDataPath).Length;
         //Save to file.
         byte[] byteArray = tempText.EncodeToPNG();
-        string saveLocation = Application.persistentDataPath + savePath;
-        System.IO.File.WriteAllBytes(saveLocation, byteArray);
+        string saveLocation = Application.persistentDataPath + savePath + fileCount + ".Png";
+
+
+        File.WriteAllBytes(saveLocation, byteArray);
 
         Debug.Log("Saved screenshot at: " + saveLocation);
         Destroy(tempText);
