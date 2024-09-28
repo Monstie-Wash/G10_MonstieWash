@@ -284,7 +284,7 @@ public class DecorationManager : MonoBehaviour
         //Refresh Ui
         RefreshBarUI();
         //Instantly update new first items position.
-        m_barDecorations[0].sceneObject.transform.position = m_barDecorations[0].desiredLocation;
+        m_barDecorations[0].sceneObject.transform.position = m_barDecorations[0].desiredLocation - new Vector3(decoBarBufferDist , 0);
     }
 
 
