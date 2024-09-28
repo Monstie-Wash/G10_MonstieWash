@@ -13,6 +13,8 @@ public class DecorationManager : MonoBehaviour
     }
 
     public ManagerStatus managerStatus;
+
+    [Header("Configurables")]
     [Tooltip("Populate with sprites you wish to become decorations.")]
     [SerializeField] private List<DecorationSprite> decorations;
     [Tooltip("Distance between objects on the deco bar.")]
@@ -24,11 +26,15 @@ public class DecorationManager : MonoBehaviour
     [Tooltip("Min size an item can be scaled to")]
     [SerializeField] private float minItemScale;
 
+    [Header("References")]
     [Tooltip("Object that will be created to represent decoration on bar.")]
     [SerializeField] private GameObject referenceBarItem;
-    
+    [Tooltip("Area to capture screenshot for polaroid")]
+    [SerializeField] private RectTransform screenshotArea;
+    [Tooltip("Save Path ie; /Save.Png, will be stored in default application data path.")]
+    [SerializeField] private string savePath;
 
-
+    [Header("Status")]
     [SerializeField] private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
     [SerializeField] private List<DecorationUi> m_activeDecorations; //Decorations active in scene.
     [SerializeField] private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
@@ -158,6 +164,10 @@ public class DecorationManager : MonoBehaviour
         m_activeDecorations = new List<DecorationUi>();
         managerStatus = ManagerStatus.EmptyHand;
         m_hand = FindFirstObjectByType<PlayerHand>().gameObject.transform;
+
+        //Enable Finish button. Disable decorate button
+        FindFirstObjectByType<DecorationNavigate>().gameObject.SetActive(false);
+        FindFirstObjectByType<FinishLevelButton>(FindObjectsInactive.Include).gameObject.SetActive(true);
 
         //Generate new gameobject and populate an equivalent Decoration Ui
         foreach (DecorationSprite s in decorations)
@@ -363,4 +373,39 @@ public class DecorationManager : MonoBehaviour
             m_currentlyHeldDecoration = null;
         }
     }
+
+    public void TakePolaroid()
+    {
+        StartCoroutine(PolaroidSnap());
+    }
+
+    private IEnumerator PolaroidSnap()
+    {
+        yield return new WaitForEndOfFrame();
+
+        //Screenshot area definition
+        Vector3[] corners = new Vector3[4];
+        screenshotArea.GetWorldCorners(corners);
+        int width = ((int)corners[3].x - (int)corners[0].x) - 100;
+        int height = (int)corners[1].y - (int)corners[0].y;
+        var startX = corners[0].x;
+        var startY = corners[0].y;
+
+        Texture2D tempText = new Texture2D(width, height, TextureFormat.RGB24, false);
+        tempText.ReadPixels(new Rect(startX, startY, width, height), 0, 0);
+        tempText.Apply();
+
+        //Save function
+        byte[] byteArray = tempText.EncodeToPNG();
+        string saveLocation = Application.persistentDataPath + savePath;
+        System.IO.File.WriteAllBytes(saveLocation, byteArray);
+
+        Debug.Log("Saved screenshot at: " + saveLocation);
+        Destroy(tempText);
+
+        //Could add wait for seconds and camera flash + sound here.
+
+        GameSceneManager.Instance.FinishLevel();
+    }
+
 }
