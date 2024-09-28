@@ -29,6 +29,8 @@ public class DecorationManager : MonoBehaviour
     [Header("References")]
     [Tooltip("Object that will be created to represent decoration on bar.")]
     [SerializeField] private GameObject referenceBarItem;
+    [Tooltip("FadingSprite to represent Camera Flash")]
+    [SerializeField] private FadingSprite camFlash;
     [Tooltip("Area to capture screenshot for polaroid")]
     [SerializeField] private RectTransform screenshotArea;
     [Tooltip("Save Path ie; /Save.Png, will be stored in default application data path.")]
@@ -380,9 +382,7 @@ public class DecorationManager : MonoBehaviour
     }
 
     private IEnumerator PolaroidSnap()
-    {
-        yield return new WaitForEndOfFrame();
-
+    {       
         //Screenshot area definition
         Vector3[] corners = new Vector3[4];
         screenshotArea.GetWorldCorners(corners);
@@ -391,11 +391,24 @@ public class DecorationManager : MonoBehaviour
         var startX = corners[0].x;
         var startY = corners[0].y;
 
+        //Turn off bar and button for photo.
+        this.transform.GetChild(0).gameObject.SetActive(false);
+        FindFirstObjectByType<FinishLevelButton>().gameObject.SetActive(false);
+
+        //Wait for seconds and camera flash + sound here.
+        camFlash.FadeIn();
+        yield return new WaitForSeconds(1f);
+        
+
+        //Wait for frame to fully render and update before taking screenshot.
+        yield return new WaitForEndOfFrame();
+
+        //Apply screen view to a texture (Take screenshot)
         Texture2D tempText = new Texture2D(width, height, TextureFormat.RGB24, false);
         tempText.ReadPixels(new Rect(startX, startY, width, height), 0, 0);
         tempText.Apply();
 
-        //Save function
+        //Save to file.
         byte[] byteArray = tempText.EncodeToPNG();
         string saveLocation = Application.persistentDataPath + savePath;
         System.IO.File.WriteAllBytes(saveLocation, byteArray);
@@ -403,7 +416,7 @@ public class DecorationManager : MonoBehaviour
         Debug.Log("Saved screenshot at: " + saveLocation);
         Destroy(tempText);
 
-        //Could add wait for seconds and camera flash + sound here.
+
 
         GameSceneManager.Instance.FinishLevel();
     }
