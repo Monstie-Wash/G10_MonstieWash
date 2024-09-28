@@ -12,16 +12,21 @@ public class DecorationManager : MonoBehaviour
         Holding
     }
 
-
+    public ManagerStatus managerStatus;
     [Tooltip("Populate with sprites you wish to become decorations.")]
     [SerializeField] private List<DecorationSprite> decorations;
     [Tooltip("Distance between objects on the deco bar.")]
     [SerializeField] private float decoBarBufferDist;
     [Tooltip("Speed items on deco bar move")]
     [SerializeField] private float decoBarItemSpeed;
+    [Tooltip("Max size an item can be scaled to")]
+    [SerializeField] private float maxItemScale;
+    [Tooltip("Min size an item can be scaled to")]
+    [SerializeField] private float minItemScale;
+
     [Tooltip("Object that will be created to represent decoration on bar.")]
     [SerializeField] private GameObject referenceBarItem;
-    public ManagerStatus managerStatus;
+    
 
 
     [SerializeField] private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
@@ -187,7 +192,11 @@ public class DecorationManager : MonoBehaviour
         //Scales held object if desired.
         if (scaling != 0 && m_currentlyHeldDecoration != null)
         {
-            m_currentlyHeldDecoration.m_spriteImage.gameObject.transform.localScale += new Vector3(5 * scaling * Time.deltaTime, 5 * scaling * Time.deltaTime, 0);
+            var scaleToApply = new Vector3(5 * scaling * Time.deltaTime, 5 * scaling * Time.deltaTime, 0);
+            var newScale = m_currentlyHeldDecoration.m_spriteImage.gameObject.transform.localScale + scaleToApply;
+
+            //If new scale doesn't breach upper or lower limits then apply it.
+            if (!(newScale.x > maxItemScale) && !(newScale.x < minItemScale)) m_currentlyHeldDecoration.m_spriteImage.gameObject.transform.localScale = newScale;
         }
     }
 

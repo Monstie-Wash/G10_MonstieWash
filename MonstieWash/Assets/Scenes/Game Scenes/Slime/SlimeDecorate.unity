@@ -296,6 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c922011e1d0aeb4a822502db74db7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  managerStatus: 0
   decorations:
   - sprite: {fileID: 21300000, guid: db18211b6e273e84fa2d736cebe2361e, type: 3}
     relativeBarScale: {x: 0.8, y: 0.8, z: 0.8}
@@ -326,8 +327,16 @@ MonoBehaviour:
     relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   decoBarBufferDist: 3
   decoBarItemSpeed: 15
+  maxItemScale: 3
+  minItemScale: 0.3
   referenceBarItem: {fileID: 2423894526994754762, guid: b5cdaa9e7c02f81429276338b0b03db2, type: 3}
-  managerStatus: 0
+  m_barDecorations: []
+  m_activeDecorations: []
+  m_currentlyHeldDecoration:
+    status: 0
+    sceneObject: {fileID: 0}
+    m_spriteImage: {fileID: 0}
+    desiredLocation: {x: 0, y: 0, z: 0}
 --- !u!4 &573636384
 Transform:
   m_ObjectHideFlags: 0
