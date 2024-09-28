@@ -400,14 +400,14 @@ MonoBehaviour:
   - sprite: {fileID: 7662059621779487759, guid: 9c7495ad943bc344888ded17e8c382ef, type: 3}
     relativeBarScale: {x: 0.7, y: 0.7, z: 0.7}
     relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
-  decoBarBufferDist: 3
+  decoBarBufferDist: 2.5
   decoBarItemSpeed: 15
   maxItemScale: 3
   minItemScale: 0.3
   referenceBarItem: {fileID: 2423894526994754762, guid: b5cdaa9e7c02f81429276338b0b03db2, type: 3}
   camFlash: {fileID: 760505841}
   screenshotArea: {fileID: 341102340}
-  savePath: /Save
+  savePath: /SlimeSaves/Polaroid
   m_barDecorations: []
   m_activeDecorations: []
   m_currentlyHeldDecoration:

@@ -396,6 +396,7 @@ public class DecorationManager : MonoBehaviour
         //Turn off bar and button for photo.
         this.transform.GetChild(0).gameObject.SetActive(false);
         FindFirstObjectByType<FinishLevelButton>().gameObject.SetActive(false);
+        m_hand.gameObject.SetActive(false);
 
         //Wait for seconds and camera flash + sound here.
         camFlash.FadeIn();
@@ -415,7 +416,6 @@ public class DecorationManager : MonoBehaviour
         //Save to file.
         byte[] byteArray = tempText.EncodeToPNG();
         string saveLocation = Application.persistentDataPath + savePath + fileCount + ".Png";
-
 
         File.WriteAllBytes(saveLocation, byteArray);
 
