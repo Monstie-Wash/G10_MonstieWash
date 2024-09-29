@@ -108,18 +108,15 @@ public class UIManager : MonoBehaviour
 
     private void InitialiseStartList()
     {
-		for (var i = 0; i < m_taskList.Count; i++)
+		foreach (var pair in m_taskList)
 		{
-			foreach (var pair in m_taskList)
-			{
-				var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
+            var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
 
-				newTaskObject.name = pair.Key.ToString();
+			newTaskObject.name = pair.Key.ToString();
 
-				var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
-				newTaskText.fontSize = fontSize * fontBuffer;
-				newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
-			}
+			var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
+			newTaskText.fontSize = fontSize * fontBuffer;
+			newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
 		}
 	}
 
