@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1.2, y: 4}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &992319796888556150
 CanvasRenderer:
@@ -94,13 +94,13 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0.5
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
-  m_ChildScaleWidth: 1
-  m_ChildScaleHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
 --- !u!1 &4628619612609533095
 GameObject:
@@ -162,7 +162,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 959028455
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &2664535338325509624
@@ -219,4 +219,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonTile: {fileID: 4598847733548012659, guid: 4c5fd23b49caa4b47b99d404d72034ad, type: 3}
   navPanel: {fileID: 90176986499578501}
-  sizeBuffer: 1.75
+  tilePadding: 1.25

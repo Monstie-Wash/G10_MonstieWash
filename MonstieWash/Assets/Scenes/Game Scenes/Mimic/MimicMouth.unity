@@ -525,6 +525,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mimic_Teeth_Front
       objectReference: {fileID: 0}
+    - target: {fileID: 6225298171251721088, guid: 5e5abb24921a44847b8bf6dd2e6bd96f, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6225298171251721088, guid: 5e5abb24921a44847b8bf6dd2e6bd96f, type: 3}
+      propertyPath: m_TagString
+      value: Mouth
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1554,6 +1562,18 @@ PrefabInstance:
     - target: {fileID: 1121883053647568799, guid: 70ade1eb75fc29145b6d857acce49d1a, type: 3}
       propertyPath: m_Name
       value: Mimic_Teeth_Back
+      objectReference: {fileID: 0}
+    - target: {fileID: 1121883053647568799, guid: 70ade1eb75fc29145b6d857acce49d1a, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1121883053647568799, guid: 70ade1eb75fc29145b6d857acce49d1a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1121883053647568799, guid: 70ade1eb75fc29145b6d857acce49d1a, type: 3}
+      propertyPath: m_TagString
+      value: Mouth
       objectReference: {fileID: 0}
     - target: {fileID: 7715786836037259171, guid: 70ade1eb75fc29145b6d857acce49d1a, type: 3}
       propertyPath: m_LocalScale.x

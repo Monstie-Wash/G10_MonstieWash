@@ -11,6 +11,7 @@ TagManager:
   - Left
   - Back
   - Pickable
+  - Mouth
   layers:
   - Default
   - TransparentFX
