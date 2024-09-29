@@ -12,7 +12,6 @@ public class MonsterBrain : MonoBehaviour
     protected class MoodData
     {
         public MoodType mood;
-        [Tooltip("Monster won't attack unless mood value is equal or higher than its attack threshold")]public float attackThreshold;
         public float value;
     }
 
@@ -120,7 +119,7 @@ public class MonsterBrain : MonoBehaviour
             //Assign new value to active mood.
             moodData[i].value = currentValue;
 
-            if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " naturally changed to " + currentValue);
+            //if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " naturally changed to " + currentValue);
         }
     }
 
@@ -282,13 +281,11 @@ public class MonsterBrain : MonoBehaviour
         if (m_lastAttackTime < m_attackTimer) return;
 
         // Check to see if an attack should be performed based on mood values.
-        for (int i = 0; i < moodData.Count; i++)
+        var highestMoodData = moodData.Find(m => m.mood == HighestMood);
+        if (highestMoodData == null || highestMoodData.value < highestMoodData.mood.AttackThreshold) // If the value of a mood is below its attack threshold, an attack is not made.
         {
-            if (moodData[i].value < moodData[i].attackThreshold)    // If the value of a mood is below its attack threshold, an attack is not made.
-            {
-                m_lastAttackTime = 0f;
-                return;
-            }
+            m_lastAttackTime = 0f;
+            return;
         }
 
         // Attack is legal, perform the attack.
