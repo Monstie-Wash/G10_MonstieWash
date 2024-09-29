@@ -22,6 +22,7 @@ public class MonsterController : MonoBehaviour
     private SoundPlayer m_soundPlayer;
 
     public event Action OnInterruptComplete;
+    public event Action OnAttackBegin;
     public event Action OnAttackEnd;
 
     [Serializable]
@@ -131,6 +132,7 @@ public class MonsterController : MonoBehaviour
 
         // Play the attack animation
         m_myAnimator.Play(attack.name);
+        OnAttackBegin();
     }
 
     public void AttackStarted()
