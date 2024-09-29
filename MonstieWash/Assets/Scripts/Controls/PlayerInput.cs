@@ -225,6 +225,39 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""Controller"",
+                    ""id"": ""44a49459-7d1f-4300-83bd-b40f7b6ed7d1"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchTool"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""0772e230-29ec-40e8-8274-ec26202aa875"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchTool"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""207ab084-fc77-4ae0-8212-f7b96f3e37bb"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchTool"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""dd02834b-0068-4dac-8865-7bba123f66a6"",
                     ""path"": ""<Gamepad>/buttonWest"",
@@ -346,7 +379,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""negative"",
+                    ""name"": ""positive"",
                     ""id"": ""91f92c7c-3d92-4362-ac5a-894f0ab2bcfa"",
                     ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
@@ -357,7 +390,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""positive"",
+                    ""name"": ""negative"",
                     ""id"": ""11d18d83-95a5-4624-8ca3-18bd3f144eb5"",
                     ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
