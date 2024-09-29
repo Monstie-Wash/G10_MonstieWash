@@ -28,16 +28,12 @@ public class MonsterBrain : MonoBehaviour
     #endregion
 
     #region Attacks
-    [Tooltip("Minimum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float minBetweenAttacks; // Creates an attack event between the min and max time, if possible.
-    [Tooltip("Maximum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float maxBetweenAttacks; // Creates an attack event between the min and max time, if possible.
-    private float m_attackTimer;    // Chosen time to wait before the next attack (randomized between min and max after every attack).
-    private float m_lastAttackTime = 0f;    // Time elapsed since the last attack.
-
     public event Action MonsterAttack;    // Monster attack event.
     #endregion
 
     #region Flinch
     public event Action OnFlinch;
+    private int flinchCount = 0;    // Number of times the monster has flinched in between attacks
     #endregion
 
     #region Debug
@@ -65,8 +61,6 @@ public class MonsterBrain : MonoBehaviour
         {
             Moods.Add(data.mood);
         }
-
-        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
     }
 
     private void OnEnable()
@@ -95,8 +89,6 @@ public class MonsterBrain : MonoBehaviour
         MaintainLimits();
         //Keep up-to-date on the current mood.
         UpdateHighestMood();
-        // Check whether an attack should occur.
-        CalculateAggression();
 
         //Debug Updates
         if (debug) UpdateDebugText();
@@ -273,26 +265,13 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     private void CalculateAggression()
     {
-        // Update time since the last attack.
-        m_lastAttackTime += Time.deltaTime;
-
-        // Check to see if an attack should be performed based on time (creates a cooldown-style effect).
-        if (m_lastAttackTime < m_attackTimer) return;
-
-        // Check to see if an attack should be performed based on mood values.
-        for (int i = 0; i < moodData.Count; i++)
+        // Check to see if the monster has flinched enough times
+        if (HighestMood.FlinchCount <= flinchCount)
         {
-            if (moodData[i].value < moodData[i].attackThreshold)    // If the value of a mood is below its attack threshold, an attack is not made.
-            {
-                m_lastAttackTime = 0f;
-                return;
-            }
+            // Perform the attack and reset the flinch count
+            MonsterAttack?.Invoke();
+            flinchCount = 0;
         }
-
-        // Attack is legal, perform the attack.
-        m_lastAttackTime = 0f;
-        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
-        MonsterAttack?.Invoke();
     }
 
     /// <summary>
@@ -307,8 +286,6 @@ public class MonsterBrain : MonoBehaviour
         }
 
         debugUi.text += $"Current Mood: {HighestMood.MoodName}\n\n";
-
-        debugUi.text += $"Time to next attack attempt: {m_attackTimer - m_lastAttackTime}";
     }
 
     /// <summary>
@@ -418,6 +395,9 @@ public class MonsterBrain : MonoBehaviour
 
     public void Flinch()
     {
+        flinchCount++;
         OnFlinch?.Invoke();
+        // Check to see whether the Monstie should attack
+        CalculateAggression();
     }
 }
