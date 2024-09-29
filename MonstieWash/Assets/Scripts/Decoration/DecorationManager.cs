@@ -37,7 +37,7 @@ public class DecorationManager : MonoBehaviour
     [SerializeField] private FadingSprite camFlash;
     [Tooltip("Area to capture screenshot for polaroid")]
     [SerializeField] private RectTransform screenshotArea;
-    [Tooltip("Save Path ie; /Save.Png, will be stored in default application data path.")]
+    [Tooltip("Save Name ie; /Polaroid, will be stored in default application data path.")]
     [SerializeField] private string savePath;
 
     //Private
@@ -51,6 +51,8 @@ public class DecorationManager : MonoBehaviour
 
     #region Internal Classes
     [Serializable]
+
+    //Holds data about sprites to be used as decorations. Relative bar scale is size when shown on the deco bar, actual scale is size shown when dragged into the scene.
     public class DecorationSprite
     {
         [Tooltip("The sprite to use as a decoration")] public Sprite sprite;
@@ -58,10 +60,11 @@ public class DecorationManager : MonoBehaviour
         [Tooltip("A scale to apply while in the scene to grow sprite")] public Vector3 relativeActualScale;
     }
 
-
+    //Object that will hold live data about a decoration, generated from list of decoration sprites ^.
     [Serializable]
     public class DecorationUi
     {
+        //Where the decoration currently is.
         public enum Status
         {
             onBar,
@@ -69,15 +72,16 @@ public class DecorationManager : MonoBehaviour
             activeInScene
         }
 
-        [SerializeField] public Status status;
-        private float moveSpeed; //How fast object moves in the ui.
-
-        public GameObject sceneObject; //Reference to decorations object in scene.
-        private SpriteRenderer m_backingImage; //Reference to image showing its backing sprite while on the bar.
-        public SpriteRenderer m_spriteImage; //Reference to image showing its actual representative sprite.
+        //Public
+        public Status status;
         public Vector3 desiredLocation; //Where the Ui object wants to be positioned in the scene.
-        private DecorationSprite spriteInfo; //Original sprite sizing data.
-        
+        public GameObject sceneObject; //Reference to decorations object in scene.
+        public SpriteRenderer m_spriteImage; //Reference to image showing its actual representative sprite.
+
+        //Private
+        private SpriteRenderer m_backingImage; //Reference to image showing its backing sprite while on the bar.
+        private float m_moveSpeed; //How fast object moves in the ui.
+        private DecorationSprite m_spriteInfo; //Original sprite sizing data.                            
 
         public DecorationUi(GameObject obj, SpriteRenderer back, SpriteRenderer sprite, float speed, DecorationSprite spr)
         {
@@ -86,8 +90,8 @@ public class DecorationManager : MonoBehaviour
             m_backingImage = back;
             m_spriteImage = sprite;
             m_spriteImage.sprite = spr.sprite;
-            moveSpeed = speed;
-            spriteInfo = spr;
+            m_moveSpeed = speed;
+            m_spriteInfo = spr;
         }
 
         /// <summary>
@@ -95,15 +99,18 @@ public class DecorationManager : MonoBehaviour
         /// </summary>
         public void MoveTowardDesiredLocation()
         {
-            sceneObject.gameObject.transform.position = Vector3.MoveTowards(sceneObject.gameObject.transform.position, desiredLocation, moveSpeed * Time.deltaTime);
+            sceneObject.gameObject.transform.position = Vector3.MoveTowards(sceneObject.gameObject.transform.position, desiredLocation, m_moveSpeed * Time.deltaTime);
         }
 
+        /// <summary>
+        /// Object will follow player hand.
+        /// </summary>
         public void pickUp()
         {
             //Change to relative scene scale if picked up off the bar.
             if (status == Status.onBar)
             {
-                m_spriteImage.gameObject.transform.localScale = spriteInfo.relativeActualScale;
+                m_spriteImage.gameObject.transform.localScale = m_spriteInfo.relativeActualScale;
             }
 
             status = Status.beingHeld;
@@ -113,14 +120,17 @@ public class DecorationManager : MonoBehaviour
             m_spriteImage.maskInteraction = SpriteMaskInteraction.None;   
         }
 
+        /// <summary>
+        /// Object will become a part of the deco bar list again.
+        /// </summary>
         public void returnToBar()
         {
             //Change back to local bar scale and save scale changes if was in scene.
             if (status == Status.activeInScene)
             {
-                spriteInfo.relativeActualScale = m_spriteImage.gameObject.transform.localScale;
+                m_spriteInfo.relativeActualScale = m_spriteImage.gameObject.transform.localScale;
             }
-            m_spriteImage.gameObject.transform.localScale = spriteInfo.relativeBarScale;
+            m_spriteImage.gameObject.transform.localScale = m_spriteInfo.relativeBarScale;
 
             status = Status.onBar;
             m_backingImage.gameObject.SetActive(true);
@@ -132,12 +142,15 @@ public class DecorationManager : MonoBehaviour
             sceneObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
+        /// <summary>
+        /// Object will be fixed to a location, rotation and size in the scene, unmoving.
+        /// </summary>
         public void placeInScene()
         {
             status = Status.activeInScene;
 
             //Save scale changes.
-            spriteInfo.relativeActualScale = m_spriteImage.gameObject.transform.localScale;
+            m_spriteInfo.relativeActualScale = m_spriteImage.gameObject.transform.localScale;
         }
     }
 
@@ -166,9 +179,14 @@ public class DecorationManager : MonoBehaviour
 
     private void Awake()
     {
+        //Create empty lists.
         m_barDecorations = new List<DecorationUi>();
         m_activeDecorations = new List<DecorationUi>();
+
+        //Set initial status.
         managerStatus = ManagerStatus.EmptyHand;
+
+        //Find player hand.
         m_hand = FindFirstObjectByType<PlayerHand>().gameObject.transform;
 
         //Enable Finish button. Disable decorate button
@@ -195,6 +213,7 @@ public class DecorationManager : MonoBehaviour
             dUI.sceneObject.transform.position = dUI.desiredLocation;
         }
 
+        //Set monster to the chosen decoration mood.
         LockMonsterMood();
     }
 
@@ -202,6 +221,7 @@ public class DecorationManager : MonoBehaviour
     {
         //Update positions of all decorations.
         MoveAllDecorations();
+
         //Rotate held object if desired.
         if (m_rotatingValue != 0 && m_currentlyHeldDecoration != null)
         {
@@ -231,18 +251,22 @@ public class DecorationManager : MonoBehaviour
                 //Check if object is in first or second half of list.
                 var halfwayPoint = Mathf.Round(m_barDecorations.Count * 0.5f);
 
-                //In first half
+                //In first half move via buffer to the left.
                 if (i <= (halfwayPoint - 1)) m_barDecorations[i].desiredLocation = (transform.position - new Vector3(decoBarBufferDist * (halfwayPoint - i) - decoBarBufferDist * 0.5f, 0, 0));
-                //In second half
+                //In second half move via buffer to the right.
                 else m_barDecorations[i].desiredLocation = (transform.position + new Vector3(decoBarBufferDist * (i - halfwayPoint) + decoBarBufferDist * 0.5f, 0, 0));
             }
         }        
     }
 
+    /// <summary>
+    /// Handles how each decoration should currently be moving.
+    /// </summary>
     private void MoveAllDecorations()
     {
         foreach (DecorationUi dUI in m_barDecorations)
         {
+            //Decorations on the bar will always seek their resting spot.
             if (dUI.status == DecorationUi.Status.onBar) dUI.MoveTowardDesiredLocation();
         }
 
@@ -251,15 +275,21 @@ public class DecorationManager : MonoBehaviour
             switch (aUI.status)
             {
                 case DecorationUi.Status.activeInScene:
-                    //Don't move while actively placed in scene.
+                    //Empty case as decorations in the scene should remain stationary.
+
                     break;
                 case DecorationUi.Status.beingHeld:
+                    //Objects being held should move with the player hand.
                     aUI.sceneObject.transform.position = m_hand.position;
                     break;
             }
         }
     }
 
+    /// <summary>
+    /// Takes an input direction from input manager and calls correct cycle method.
+    /// </summary>
+    /// <param name="dir">-1 for left 1 for right.</param>
     private void CycleOptions(int dir)
     {
         //While empty handed cycle through decoration options.
@@ -275,6 +305,9 @@ public class DecorationManager : MonoBehaviour
         }    
     }
 
+    /// <summary>
+    /// Moves bar items to the left.
+    /// </summary>
     private void CycleOptionsLeft()
     {
         //Only allow cycling while enough decorations exist to matter and not holding an item.
@@ -290,6 +323,9 @@ public class DecorationManager : MonoBehaviour
         m_barDecorations[m_barDecorations.Count - 1].sceneObject.transform.position = m_barDecorations[m_barDecorations.Count - 1].desiredLocation;
     }
 
+    /// <summary>
+    /// Moves bar items to the right.
+    /// </summary>
     private void CycleOptionsRight()
     {
         //Only allow cycling while enough decorations exist to matter and not holding an item.
@@ -305,25 +341,35 @@ public class DecorationManager : MonoBehaviour
         m_barDecorations[0].sceneObject.transform.position = m_barDecorations[0].desiredLocation - new Vector3(decoBarBufferDist , 0);
     }
 
-
+    /// <summary>
+    /// Called by releasing rotation input.
+    /// </summary>
     private void ResetRotation()
     {
         m_rotatingValue = 0f;
     }
 
-
+    /// <summary>
+    /// Takes a direction and updates scaling value via input.
+    /// </summary>
+    /// <param name="dir">-1 will rotate left, 1 will rotate right.</param>
     private void ScaleInput(int dir)
     {
         if (m_currentlyHeldDecoration == null) return;
         m_scaling = -dir;  
     }
 
+    /// <summary>
+    /// Resets scaling value when input is cancelled.
+    /// </summary>
     private void ResetScaling()
     {
         m_scaling = 0f;
     }
 
-
+    /// <summary>
+    /// Correctly manages items position in status lists after being released.
+    /// </summary>
     private void DropHeldItem()
     {
         if (m_currentlyHeldDecoration == null) return;      
@@ -336,6 +382,9 @@ public class DecorationManager : MonoBehaviour
         managerStatus = ManagerStatus.EmptyHand;
     }
 
+    /// <summary>
+    /// Called whenever player inputs activate. Handles cases differently based on what player hand is closest to and if holding an object already.
+    /// </summary>
     private void Clicked()
     {
         //Check you aren't already holding an item.
@@ -382,11 +431,18 @@ public class DecorationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Starts coroutine that handles monster mood management.
+    /// </summary>
     private void LockMonsterMood()
     {
         StartCoroutine(HandleMonsterMoods());
     }
 
+    /// <summary>
+    /// Locks monster to a single chosen mood for the duration of decorating.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator HandleMonsterMoods()
     {
         MonsterBrain mb = FindFirstObjectByType<MonsterBrain>();
@@ -408,12 +464,18 @@ public class DecorationManager : MonoBehaviour
         mb.PauseBrain(true);
     }
 
-
+    /// <summary>
+    /// Calls screenshot coroutine.
+    /// </summary>
     public void TakePolaroid()
     {
         StartCoroutine(PolaroidSnap());
     }
 
+    /// <summary>
+    /// Takes a screenshot in an area and saves it to file. Default path will be User/AppData/LocalLow/MagicalCleaningAgency/MonstieWash/variable name chosen.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator PolaroidSnap()
     {       
         //Screenshot area definition
