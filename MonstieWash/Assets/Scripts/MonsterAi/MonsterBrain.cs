@@ -460,4 +460,13 @@ public class MonsterBrain : MonoBehaviour
             eraser.PopulateErasables();
         }
     }
+
+    /// <summary>
+    /// Allows you to choose the brains pause status.
+    /// </summary>
+    /// <param name="toggle">Whether brain is paused or not.</param>
+    public void PauseBrain(bool toggle)
+    {
+        pause = toggle;
+    }
 }

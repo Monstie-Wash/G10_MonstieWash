@@ -1313,7 +1313,7 @@ PrefabInstance:
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: finishLevelButton
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2074831138}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: nextUncleanButton
       value: 

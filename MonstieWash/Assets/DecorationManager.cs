@@ -27,6 +27,8 @@ public class DecorationManager : MonoBehaviour
     [SerializeField] private float maxItemScale;
     [Tooltip("Min size an item can be scaled to")]
     [SerializeField] private float minItemScale;
+    [Tooltip("Mood during decoration")]
+    [SerializeField] private MoodType decoMood;
 
     [Header("References")]
     [Tooltip("Object that will be created to represent decoration on bar.")]
@@ -38,16 +40,16 @@ public class DecorationManager : MonoBehaviour
     [Tooltip("Save Path ie; /Save.Png, will be stored in default application data path.")]
     [SerializeField] private string savePath;
 
-    [Header("Status")]
-    [SerializeField] private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
-    [SerializeField] private List<DecorationUi> m_activeDecorations; //Decorations active in scene.
-    [SerializeField] private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
+    //Private
+    private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
+    private List<DecorationUi> m_activeDecorations; //Decorations active in scene.
+    private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
     private Transform m_hand; //reference to players hand transform.
     private float m_pickupDistance = 1.5f; //How far to check for an item to pickup.
-    private float rotatingValue = 0f; //Actively rotates held object with this.
-    private float scaling = 0f; //Actively scales held object with this.
+    private float m_rotatingValue = 0f; //Actively rotates held object with this.
+    private float m_scaling = 0f; //Actively scales held object with this.
 
-    #region Serializable 'Data' Classes
+    #region Internal Classes
     [Serializable]
     public class DecorationSprite
     {
@@ -192,6 +194,8 @@ public class DecorationManager : MonoBehaviour
         {
             dUI.sceneObject.transform.position = dUI.desiredLocation;
         }
+
+        LockMonsterMood();
     }
 
     private void Update()
@@ -199,14 +203,14 @@ public class DecorationManager : MonoBehaviour
         //Update positions of all decorations.
         MoveAllDecorations();
         //Rotate held object if desired.
-        if (rotatingValue != 0 && m_currentlyHeldDecoration != null)
+        if (m_rotatingValue != 0 && m_currentlyHeldDecoration != null)
         {
-            m_currentlyHeldDecoration.sceneObject.transform.Rotate(0,0, 100 * rotatingValue * Time.deltaTime);
+            m_currentlyHeldDecoration.sceneObject.transform.Rotate(0,0, 100 * m_rotatingValue * Time.deltaTime);
         }
         //Scales held object if desired.
-        if (scaling != 0 && m_currentlyHeldDecoration != null)
+        if (m_scaling != 0 && m_currentlyHeldDecoration != null)
         {
-            var scaleToApply = new Vector3(5 * scaling * Time.deltaTime, 5 * scaling * Time.deltaTime, 0);
+            var scaleToApply = new Vector3(5 * m_scaling * Time.deltaTime, 5 * m_scaling * Time.deltaTime, 0);
             var newScale = m_currentlyHeldDecoration.m_spriteImage.gameObject.transform.localScale + scaleToApply;
 
             //If new scale doesn't breach upper or lower limits then apply it.
@@ -267,7 +271,7 @@ public class DecorationManager : MonoBehaviour
         //If holding an item instead rotate it.
         else
         {
-            rotatingValue = -dir;
+            m_rotatingValue = -dir;
         }    
     }
 
@@ -304,19 +308,19 @@ public class DecorationManager : MonoBehaviour
 
     private void ResetRotation()
     {
-        rotatingValue = 0f;
+        m_rotatingValue = 0f;
     }
 
 
     private void ScaleInput(int dir)
     {
         if (m_currentlyHeldDecoration == null) return;
-        scaling = -dir;  
+        m_scaling = -dir;  
     }
 
     private void ResetScaling()
-    {       
-        scaling = 0f;
+    {
+        m_scaling = 0f;
     }
 
 
@@ -377,6 +381,33 @@ public class DecorationManager : MonoBehaviour
             m_currentlyHeldDecoration = null;
         }
     }
+
+    private void LockMonsterMood()
+    {
+        StartCoroutine(HandleMonsterMoods());
+    }
+
+    private IEnumerator HandleMonsterMoods()
+    {
+        MonsterBrain mb = FindFirstObjectByType<MonsterBrain>();
+
+        mb.UpdateMood(99999, decoMood);
+        foreach (MoodType mt in mb.Moods)
+        {
+            if (mt != decoMood)
+            {
+                mb.UpdateMood(-99999, mt);
+            }
+
+        }
+        
+
+        //Wait for frame to finish so animation updates can take place based on new moods.
+        yield return new WaitForEndOfFrame();
+
+        mb.PauseBrain(true);
+    }
+
 
     public void TakePolaroid()
     {

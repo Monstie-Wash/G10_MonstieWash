@@ -404,17 +404,11 @@ MonoBehaviour:
   decoBarItemSpeed: 15
   maxItemScale: 3
   minItemScale: 0.3
+  decoMood: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
   referenceBarItem: {fileID: 2423894526994754762, guid: b5cdaa9e7c02f81429276338b0b03db2, type: 3}
   camFlash: {fileID: 760505841}
   screenshotArea: {fileID: 341102340}
   savePath: /Polaroid
-  m_barDecorations: []
-  m_activeDecorations: []
-  m_currentlyHeldDecoration:
-    status: 0
-    sceneObject: {fileID: 0}
-    m_spriteImage: {fileID: 0}
-    desiredLocation: {x: 0, y: 0, z: 0}
 --- !u!4 &573636384
 Transform:
   m_ObjectHideFlags: 0
@@ -505,17 +499,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6975587544141363392, guid: 5d9e4051535963c4287d3897d41b403c, type: 3}
   m_PrefabInstance: {fileID: 617265148}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &617265150 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2523466697898283883, guid: 5d9e4051535963c4287d3897d41b403c, type: 3}
-  m_PrefabInstance: {fileID: 617265148}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a33fd88dca50740bbab487c11c9d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &633303277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -578,17 +561,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6975587544141363392, guid: 5d9e4051535963c4287d3897d41b403c, type: 3}
   m_PrefabInstance: {fileID: 633303277}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &633303279 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2523466697898283883, guid: 5d9e4051535963c4287d3897d41b403c, type: 3}
-  m_PrefabInstance: {fileID: 633303277}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a33fd88dca50740bbab487c11c9d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &686032789
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,17 +1595,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d9e4051535963c4287d3897d41b403c, type: 3}
---- !u!114 &1908516762 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2523466697898283883, guid: 5d9e4051535963c4287d3897d41b403c, type: 3}
-  m_PrefabInstance: {fileID: 1908516761}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a33fd88dca50740bbab487c11c9d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1908516763 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6975587544141363392, guid: 5d9e4051535963c4287d3897d41b403c, type: 3}
@@ -1904,6 +1865,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: c398ce3795017ba438f6b35b2fee2b1e, type: 2}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: attackSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 124e22d6c111de04baf4d0dee302b83e, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: attackList.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1912,21 +1877,69 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: 3419eb33094ab9a4db72bfaccca975b2, type: 2}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: completionEffectList.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c085ae8b7e03fe4f9f1412031a4109e, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b6422bdfb1f0e1c4ca508c40ae662291, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: 80365dfe12b830940bd694ce63fe3792, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b7609a6e08da2c042aa4956ce7d3f7a6, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: 'completionEffectList.Array.data[0]'
       value: 
-      objectReference: {fileID: 617265150}
+      objectReference: {fileID: 0}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: 'completionEffectList.Array.data[1]'
       value: 
-      objectReference: {fileID: 633303279}
+      objectReference: {fileID: 0}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: 'completionEffectList.Array.data[2]'
       value: 
-      objectReference: {fileID: 1908516762}
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: f1eed0e68ee572d4fb4c5a79c46beb93, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: fc22217ad01d762478e35bb48f4a10d0, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 5983b9fa0d27ae6498873a9b35ba3238, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 02d2f46010db86a4d958a2e4e23caf96, type: 2}
     - target: {fileID: 6174601992942811934, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: m_Name
       value: Slime_body&eyes
