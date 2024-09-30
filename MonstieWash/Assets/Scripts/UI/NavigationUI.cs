@@ -7,11 +7,12 @@ using UnityEngine.UI;
 /// </summary>
 public class NavigationUI : MonoBehaviour
 {
-    private List<GameScene> gameScenes;
     [SerializeField] private GameObject buttonTile;
     [SerializeField] private GameObject navPanel;
 
     [SerializeField] private float tilePadding = 1.25f; //Seems like a nice number. Means that the UI doesn't overlap with the bag on Mimic.
+
+    private List<GameScene> m_gameScenes;
 
     void Awake()
     {
@@ -20,7 +21,7 @@ public class NavigationUI : MonoBehaviour
 
         canvas.worldCamera = camera;
 
-        gameScenes = GameSceneManager.Instance.GetLevelScenes();
+        m_gameScenes = GameSceneManager.Instance.CurrentLevelScenes;
 
         InstantiateUI();
     }
@@ -28,11 +29,11 @@ public class NavigationUI : MonoBehaviour
     private void InstantiateUI ()
     {
         //Resize Nav Panel to fit all tiles.
-        RectTransform npSize = navPanel.GetComponent<RectTransform>();
-        npSize.sizeDelta = new Vector2(tilePadding, gameScenes.Count * tilePadding);
+        var npSize = navPanel.GetComponent<RectTransform>();
+        npSize.sizeDelta = new Vector2(tilePadding, m_gameScenes.Count * tilePadding);
 
         //Spawns a nav tile per scene. Pulls the image from the sciptable object. Probably a much nicer implementation than pulling direct from resources. Who would even do that? Certainly not me. Terrible idea.
-        foreach (var scene in gameScenes)
+        foreach (var scene in m_gameScenes)
         {
             buttonTile.GetComponent<Image>().sprite = scene.SceneThumb;
             buttonTile.GetComponent<TestTravObj>().TargetScene = scene;
