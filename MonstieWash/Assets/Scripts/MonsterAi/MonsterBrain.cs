@@ -12,7 +12,6 @@ public class MonsterBrain : MonoBehaviour
     protected class MoodData
     {
         public MoodType mood;
-        [Tooltip("Monster won't attack unless mood value is equal or higher than its attack threshold")]public float attackThreshold;
         public float value;
     }
 
@@ -282,13 +281,11 @@ public class MonsterBrain : MonoBehaviour
         if (m_lastAttackTime < m_attackTimer) return;
 
         // Check to see if an attack should be performed based on mood values.
-        for (int i = 0; i < moodData.Count; i++)
+        var highestMoodData = moodData.Find(m => m.mood == HighestMood);
+        if (highestMoodData == null || highestMoodData.value < highestMoodData.mood.AttackThreshold) // If the value of a mood is below its attack threshold, an attack is not made.
         {
-            if (moodData[i].value < moodData[i].attackThreshold)    // If the value of a mood is below its attack threshold, an attack is not made.
-            {
-                m_lastAttackTime = 0f;
-                return;
-            }
+            m_lastAttackTime = 0f;
+            return;
         }
 
         // Attack is legal, perform the attack.
@@ -391,39 +388,8 @@ public class MonsterBrain : MonoBehaviour
 
             // Modify the mood by its sceneEffectOnMood value
             UpdateMood(moodData[i].mood.SceneEffectOnMood, moodData[i].mood);
-            // Play the mood's particle system
-            StartCoroutine(PlayMoodParticles(moodData[i].mood));
             // Debug
             if (debug) print($"Mood {moodData[i].mood.name} was changed by {moodData[i].mood.SceneEffectOnMood} after scene completion");
-        }
-    }
-
-    /// <summary>
-    /// Plays the particle system associated with the mood.
-    /// </summary>
-    /// <param name="mood"> Which mood's particle system to use</param>
-    /// <param name="time"> How long to play for (default 1.5 seconds)</param>
-    IEnumerator PlayMoodParticles(MoodType mood, float time = 1.5f)
-    {
-        if (mood.MoodParticle != null)
-        {
-            /*
-            * NOTE: Creating and destroying particles sytems might not be the most performative, but consider that these particles need to exist across multiple
-            * scenes (each angle of the monster). Consider asking designers how frequently particles will play to determine if a better solution is required. 
-            */
-
-            var tempParticles = Instantiate(mood.MoodParticle, moodParticleOrigin, Quaternion.identity); // The mood's ParticleSystem
-            SceneManager.MoveGameObjectToScene(tempParticles.gameObject, GameSceneManager.Instance.CurrentScene);
-            tempParticles.Play();
-
-            yield return new WaitForSeconds(time);
-
-            tempParticles.Stop();
-            Destroy(tempParticles);
-        }
-        else
-        {
-            if (debug) print($"Moodtype {mood.name} doesn't have a particle system attached");
         }
     }
 

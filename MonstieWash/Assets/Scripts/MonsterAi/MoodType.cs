@@ -20,17 +20,17 @@ public class MoodType : ScriptableObject
 
     [Tooltip("The resting point that the mood will naturally change towards by above number")][SerializeField] private float moodRestingPoint; //The point at which the mood will remain stationary.
 
-    [Tooltip("Introduces random changes to the mood, recomended number 0-10 and can use decimals")][SerializeField] private float chaosMultiplier; //Random interference of mood level to create less certainty.
+    [Tooltip("Monster won't attack unless mood value is equal or higher than its attack threshold")][SerializeField] private float attackThreshold;
 
-    [Tooltip("Drag other moodtypes here that the brain has that will be positively affected by this mood")][SerializeField] private List<MoodType> positiveChainReactions; //This mood will push other moods of this type towards their upper limit based on how close this mood itself is to its upper limit.
+    [Tooltip("Introduces random changes to the mood, recomended number 0-10 and can use decimals")]/*[SerializeField]*/ private float chaosMultiplier; //Random interference of mood level to create less certainty.
 
-    [Tooltip("How strongly the positive effect is on other moods")][SerializeField] private float positiveReactionStrength; //How strong positive chain reactions will be.
+    [Tooltip("Drag other moodtypes here that the brain has that will be positively affected by this mood")]/*[SerializeField]*/ private List<MoodType> positiveChainReactions; //This mood will push other moods of this type towards their upper limit based on how close this mood itself is to its upper limit.
 
-    [Tooltip("Drag other moodtypes here that the brain has that will be negatively affected by this mood")][SerializeField] private List<MoodType> negativeChainReactions; //This mood will push other moods of this type towards their lower limit based on how close this mood itself is to its lower limit.
+    [Tooltip("How strongly the positive effect is on other moods")]/*[SerializeField]*/ private float positiveReactionStrength; //How strong positive chain reactions will be.
 
-    [Tooltip("How strongly the negative effect is on other moods")][SerializeField] private float negativeReactionStrength; //How strong negative chain reactions will be.
+    [Tooltip("Drag other moodtypes here that the brain has that will be negatively affected by this mood")]/*[SerializeField]*/ private List<MoodType> negativeChainReactions; //This mood will push other moods of this type towards their lower limit based on how close this mood itself is to its lower limit.
 
-    [Tooltip("An optional particle system that portrays the moood to the player")][SerializeField] private ParticleSystem moodParticle; // Particle system associated with the mood (e.g. hearts for happiness)
+    [Tooltip("How strongly the negative effect is on other moods")]/*[SerializeField]*/ private float negativeReactionStrength; //How strong negative chain reactions will be.
 
     [Tooltip("How much the mood changes by when a scene is completed")][SerializeField] private float sceneEffectOnMood; // The value by which the mood changes when the OnSceneCompleted event is called.
 
@@ -40,12 +40,12 @@ public class MoodType : ScriptableObject
     [HideInInspector] public float MoodStartingPoint { get { return moodStartingPoint; } }
     [HideInInspector] public float MoodNaturalChange { get { return moodNaturalChange; } }
     [HideInInspector] public float MoodRestingPoint { get { return moodRestingPoint; } }
+    [HideInInspector] public float AttackThreshold {  get { return attackThreshold; } }
     [HideInInspector] public float ChaosMultiplier { get { return chaosMultiplier; } }
     [HideInInspector] public List<MoodType> PositiveChainReactions { get { return positiveChainReactions; } }
     [HideInInspector] public float PositiveReactionStrength { get { return positiveReactionStrength; } }
     [HideInInspector] public List<MoodType> NegativeChainReactions { get { return negativeChainReactions; } }
     [HideInInspector] public float NegativeReactionStrength { get { return negativeReactionStrength; } }
-    [HideInInspector] public ParticleSystem MoodParticle { get { return moodParticle; } }
     [HideInInspector] public float SceneEffectOnMood { get { return sceneEffectOnMood; } }
 
     #region Equality
