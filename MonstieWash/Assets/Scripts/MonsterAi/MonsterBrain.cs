@@ -119,7 +119,7 @@ public class MonsterBrain : MonoBehaviour
             //Assign new value to active mood.
             moodData[i].value = currentValue;
 
-            //if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " naturally changed to " + currentValue);
+            if (debug) print("Active Mood: " + moodData[i].mood.MoodName + " naturally changed to " + currentValue);
         }
     }
 

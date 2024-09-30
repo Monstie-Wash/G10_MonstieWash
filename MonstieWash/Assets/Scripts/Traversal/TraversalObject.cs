@@ -4,6 +4,7 @@ public class TraversalObject : MonoBehaviour, INavigator
 {
     [SerializeField] private GameScene targetScene;
     [SerializeField] private bool targetIsUI;
+    [SerializeField] private Color disabledColour = new Color(0.5f, 0f, 0f);
 
     private string m_targetScene;
     private bool m_traversalEnabled = true;
@@ -30,7 +31,7 @@ public class TraversalObject : MonoBehaviour, INavigator
     private void MonsterController_OnAttackStart()
     {
         m_traversalEnabled = false;
-        m_spriteRenderer.color = new Color(0.5f, 0f, 0f);
+        m_spriteRenderer.color = disabledColour;
     }
 
     public void OnClicked()
