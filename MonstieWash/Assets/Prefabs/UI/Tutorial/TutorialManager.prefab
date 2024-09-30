@@ -1295,32 +1295,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tutorialPrompts:
   - prompt: {fileID: 1734384178934781368}
-    eventListen: 2
+    eventListen: 1
     promptCompletion: 2
     value: 0.5
     scriptedEvent: 0
   - prompt: {fileID: 1244945096486855166}
+    eventListen: 2
+    promptCompletion: 1
+    value: 2
+    scriptedEvent: 0
+  - prompt: {fileID: 2532625216321080376}
     eventListen: 3
     promptCompletion: 0
     value: 0
     scriptedEvent: 0
-  - prompt: {fileID: 2532625216321080376}
-    eventListen: 4
-    promptCompletion: 0
-    value: 0
-    scriptedEvent: 0
   - prompt: {fileID: 5247358923178901051}
-    eventListen: 1
-    promptCompletion: 0
+    eventListen: 6
+    promptCompletion: 2
     value: 3
     scriptedEvent: 0
   - prompt: {fileID: 9191060668291306312}
-    eventListen: 6
+    eventListen: 5
     promptCompletion: 1
     value: 3
-    scriptedEvent: 0
+    scriptedEvent: 1
   - prompt: {fileID: 1122825108535214267}
-    eventListen: 7
+    eventListen: 9
     promptCompletion: 1
     value: 3
     scriptedEvent: 0
@@ -1330,17 +1330,17 @@ MonoBehaviour:
     value: 0
     scriptedEvent: 0
   - prompt: {fileID: 6627067004768992560}
-    eventListen: 2
+    eventListen: 7
     promptCompletion: 2
-    value: 8
+    value: 5
     scriptedEvent: 0
   - prompt: {fileID: 7309649452551213401}
-    eventListen: 2
+    eventListen: 8
     promptCompletion: 2
     value: 8
     scriptedEvent: 0
   - prompt: {fileID: 9134240804589208188}
-    eventListen: 5
+    eventListen: 4
     promptCompletion: 0
     value: 0
     scriptedEvent: 0
@@ -4093,7 +4093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1938072722247351540, guid: 9f496fd34a6124040bce64caddff1e24, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -22
+      value: -27
       objectReference: {fileID: 0}
     - target: {fileID: 3385308330615224772, guid: 9f496fd34a6124040bce64caddff1e24, type: 3}
       propertyPath: m_SizeDelta.x
