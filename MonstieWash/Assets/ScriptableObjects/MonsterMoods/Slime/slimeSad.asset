@@ -26,3 +26,4 @@ MonoBehaviour:
   negativeReactionStrength: 1
   moodParticle: {fileID: 0}
   sceneEffectOnMood: -20
+  flinchCount: 3

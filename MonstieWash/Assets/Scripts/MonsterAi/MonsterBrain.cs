@@ -36,7 +36,7 @@ public class MonsterBrain : MonoBehaviour
 
     #region Flinch
     public event Action OnFlinch;
-    private int flinchCount = 0;    // Number of times the monster has flinched in between attacks
+    private int m_flinchCount = 0;    // Number of times the monster has flinched in between attacks
     #endregion
 
     #region Debug
@@ -255,8 +255,9 @@ public class MonsterBrain : MonoBehaviour
             }
         }
 
-        if (HighestMood != highestMoodData.mood)
+        if (HighestMood != highestMoodData.mood)    // Mood has changed
         {
+            m_flinchCount = 0;  // Reset flinchcount for new mood
             HighestMood = highestMoodData.mood;
             OnMoodChanged?.Invoke(HighestMood);
             if (debug) Debug.Log($"Highest mood changed to {HighestMood.MoodName}");
@@ -269,11 +270,11 @@ public class MonsterBrain : MonoBehaviour
     private void CalculateAggression()
     {
         // Check to see if the monster has flinched enough times
-        if (HighestMood.FlinchCount <= flinchCount)
+        if (HighestMood.FlinchCount <= m_flinchCount)
         {
             // Perform the attack and reset the flinch count
             MonsterAttack?.Invoke();
-            flinchCount = 0;
+            m_flinchCount = 0;
             
             var monsterController = FindFirstObjectByType<MonsterController>();
             Action onAttackComplete = null;
@@ -407,7 +408,7 @@ public class MonsterBrain : MonoBehaviour
 
     public void Flinch()
     {
-        flinchCount++;
+        m_flinchCount++;
         OnFlinch?.Invoke();
         // Check to see whether the Monstie should attack
         CalculateAggression();
