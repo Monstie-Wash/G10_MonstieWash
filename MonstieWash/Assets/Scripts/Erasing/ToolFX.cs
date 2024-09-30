@@ -27,6 +27,12 @@ public class ToolFX : MonoBehaviour
         m_eraser.OnErasing_Ended += Eraser_OnErasing_Ended;
         InputManager.Instance.OnActivate += Inputs_OnActivate;
         InputManager.Instance.OnActivate_Ended += Inputs_OnActivate_Ended;
+        GameSceneManager.Instance.OnSceneSwitch += OnSceneSwitch;
+    }
+
+    private void OnSceneSwitch()
+    {
+        m_myParticles.Clear();
     }
 
     private void OnDisable()

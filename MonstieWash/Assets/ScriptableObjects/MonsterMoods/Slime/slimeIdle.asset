@@ -13,16 +13,11 @@ MonoBehaviour:
   m_Name: slimeIdle
   m_EditorClassIdentifier: 
   moodName: slimeIdle
-  moodUpperLimit: 15
-  moodLowerLimit: 0
-  moodStartingPoint: 10
-  moodNaturalChange: 1
-  moodRestingPoint: 10
-  chaosMultiplier: 0
-  positiveChainReactions: []
-  positiveReactionStrength: 0
-  negativeChainReactions: []
-  negativeReactionStrength: 0
-  moodParticle: {fileID: 0}
+  moodUpperLimit: 5
+  moodLowerLimit: 5
+  moodStartingPoint: 5
+  moodNaturalChange: 0
+  moodRestingPoint: 5
+  attackThreshold: 99
   sceneEffectOnMood: 0
   flinchCount: 3

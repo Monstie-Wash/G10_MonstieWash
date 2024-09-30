@@ -22,6 +22,7 @@ public class MonsterController : MonoBehaviour
     private SoundPlayer m_soundPlayer;
 
     public event Action OnInterruptComplete;
+    public event Action OnAttackBegin;
     public event Action OnAttackEnd;
 
     [Serializable]
@@ -79,9 +80,6 @@ public class MonsterController : MonoBehaviour
         // If mood hasn't changed from last frame, don't bother updating
         if (currentMood == m_recentHighestMood) return;
 
-        // If currently performing an attack, should NOT update
-        if (m_interruptAnimation != null) return;
-
         // Update the recent highest mood, then play the exit animation followed by the new animation
         m_recentHighestMood = currentMood;
         if (debug) Debug.Log($"Current highest mood was changed to {m_recentHighestMood}");
@@ -131,6 +129,7 @@ public class MonsterController : MonoBehaviour
 
         // Play the attack animation
         m_myAnimator.Play(attack.name);
+        OnAttackBegin();
     }
 
     public void AttackStarted()
