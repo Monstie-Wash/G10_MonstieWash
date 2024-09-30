@@ -1311,7 +1311,7 @@ MonoBehaviour:
     scriptedEvent: 0
   - prompt: {fileID: 5247358923178901051}
     eventListen: 6
-    promptCompletion: 2
+    promptCompletion: 0
     value: 3
     scriptedEvent: 0
   - prompt: {fileID: 9191060668291306312}
@@ -1331,13 +1331,13 @@ MonoBehaviour:
     scriptedEvent: 0
   - prompt: {fileID: 6627067004768992560}
     eventListen: 7
-    promptCompletion: 2
+    promptCompletion: 0
     value: 5
     scriptedEvent: 0
   - prompt: {fileID: 7309649452551213401}
     eventListen: 8
-    promptCompletion: 2
-    value: 8
+    promptCompletion: 0
+    value: 5
     scriptedEvent: 0
   - prompt: {fileID: 9134240804589208188}
     eventListen: 4
