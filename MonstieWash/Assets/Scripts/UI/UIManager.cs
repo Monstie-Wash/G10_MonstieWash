@@ -28,6 +28,8 @@ public class UIManager : MonoBehaviour
     private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
     private Coroutine m_clipboardAutoHide;
 
+    public static event Action OnTaskHide;
+
     private void Awake()
     {
         m_taskTracker = FindFirstObjectByType<TaskTracker>();
@@ -108,18 +110,15 @@ public class UIManager : MonoBehaviour
 
     private void InitialiseStartList()
     {
-		for (var i = 0; i < m_taskList.Count; i++)
+		foreach (var pair in m_taskList)
 		{
-			foreach (var pair in m_taskList)
-			{
-				var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
+            var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
 
-				newTaskObject.name = pair.Key.ToString();
+			newTaskObject.name = pair.Key.ToString();
 
-				var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
-				newTaskText.fontSize = fontSize * fontBuffer;
-				newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
-			}
+			var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
+			newTaskText.fontSize = fontSize * fontBuffer;
+			newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
 		}
 	}
 
@@ -180,5 +179,6 @@ public class UIManager : MonoBehaviour
 		ToggleUIVisibility(taskListAnim);
 		ToggleUIVisibility(CBAnimator);
         Time.timeScale = 1.0f;
+        OnTaskHide?.Invoke();
     }
 }

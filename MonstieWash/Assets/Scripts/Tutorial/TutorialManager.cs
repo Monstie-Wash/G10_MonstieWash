@@ -12,8 +12,9 @@ public class TutorialManager : MonoBehaviour
 {
     [Tooltip("List of tutorial prompts in sequential order")][SerializeField] private List<TutorialPrompt> m_tutorialPrompts;     // List of prompts to iterate through
 
-    private int m_tutorialStep = 0;       // Index for current tutorial prompt in the List
-    private bool m_completed = false;     // Event flag for the current tutorial prompt
+    private int m_tutorialStep = 0;         // Index for current tutorial prompt in the List
+    private bool m_completed = false;       // Event flag for the current tutorial prompt
+    private bool m_running = false;         // Whether the tutorial is currently running or not
     private enum CompletionEvent { ChangeScene, OnMove, Scan, SwitchTool, ToggleUI, UnstickItem, UseBrush, UseSponge, UseWaterWand, UseTreat };    // Enumerated list for designers of events to listen for
     private enum CompletionType { Instant, Count, Time };
     // Enumerated list of ways the prompt can be completed:                                      
@@ -66,6 +67,7 @@ public class TutorialManager : MonoBehaviour
         m_toolSwitcher.OnSwitchTool += OnSwitchTool;
         InputManager.Instance.OnToggleUI += OnToggleUI;
         Treat.UseTreat += UseTreat;
+        UIManager.OnTaskHide += BeginTutorial;
     }
 
     private void OnMonsterScenesLoaded()
@@ -88,13 +90,15 @@ public class TutorialManager : MonoBehaviour
         m_toolSwitcher.OnSwitchTool -= OnSwitchTool;
         InputManager.Instance.OnToggleUI -= OnToggleUI;
         Treat.UseTreat -= UseTreat;
+        UIManager.OnTaskHide -= BeginTutorial;
     }
 
-    private void Start()
+    private void BeginTutorial()
     {
         // Activate the first prompt
         m_tutorialPrompts[m_tutorialStep].Prompt.SetActive(true);
         // Begin
+        m_running = true;
         StartCoroutine(RunTutorial());
     }
 
@@ -125,6 +129,11 @@ public class TutorialManager : MonoBehaviour
                 currentPrompt.Prompt.SetActive(true);
                 // run safety checks
                 if (currentPrompt.CompleteEvent == CompletionEvent.UnstickItem) SetStuckItemTrackedValue();
+            }
+            else
+            {
+                // end the tutorial
+                m_running = false;
             }
         }
     }
@@ -176,7 +185,7 @@ public class TutorialManager : MonoBehaviour
     /// <param name="value">The time (in seconds) to wait before completing.</param>
     private IEnumerator InstantCompletion(float value)
     {
-        if (m_trackedValue != -1f)  // Don't allow multiple instant completions to run simultaneously
+        if (m_trackedValue != -1f && m_running)  // Don't allow multiple instant completions to run simultaneously
         {
             m_trackedValue = -1f;
             yield return new WaitForSeconds(value);
@@ -191,11 +200,14 @@ public class TutorialManager : MonoBehaviour
     /// <param name="targetValue">The number of successes required.</param>
     private void CountCompletion(float targetValue)
     {
-        m_trackedValue++;
-        if (m_trackedValue >= targetValue)
+        if (m_running)
         {
-            m_trackedValue = 0f;
-            m_completed = true;
+            m_trackedValue++;
+            if (m_trackedValue >= targetValue)
+            {
+                m_trackedValue = 0f;
+                m_completed = true;
+            }
         }
     }
 
@@ -205,11 +217,14 @@ public class TutorialManager : MonoBehaviour
     /// <param name="targetValue">The time required to complete the task.</param>
     private void TimeCompletion(float targetValue)
     {
-        m_trackedValue += 0.002f;  // Approximate - can replace with how long the call actually takes
-        if (m_trackedValue >= targetValue)
+        if (m_running)
         {
-            m_trackedValue = 0f;
-            m_completed = true;
+            m_trackedValue += 0.002f;  // Approximate - can replace with how long the call actually takes
+            if (m_trackedValue >= targetValue)
+            {
+                m_trackedValue = 0f;
+                m_completed = true;
+            }
         }
     }
     #endregion
