@@ -100,13 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ec41a0aeeedc1408a6d28c1d386b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_id: 
-  m_progress: 0
-  m_complete: 0
-  m_threshold: 95
-  m_container: {fileID: 0}
-  m_score: 9.85
-  m_taskType: 0
+  id: 
+  progress: 0
+  threshold: 98
+  container: {fileID: 0}
+  score: 9.85
+  taskType: 0
 --- !u!114 &6759982977512803452
 MonoBehaviour:
   m_ObjectHideFlags: 0

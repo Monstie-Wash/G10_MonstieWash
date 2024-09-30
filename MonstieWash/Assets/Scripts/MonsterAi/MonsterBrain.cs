@@ -16,7 +16,7 @@ public class MonsterBrain : MonoBehaviour
         public float value;
     }
 
-    public System.Action<MoodType> OnMoodChanged;
+    public Action<MoodType> OnMoodChanged;
 
     [Tooltip("Add all moodtype objects intended for this brain here.")][SerializeField] protected List<MoodData> moodData = new(); //Scriptable objects holding data about moods.
     #endregion
@@ -28,6 +28,9 @@ public class MonsterBrain : MonoBehaviour
     #endregion
 
     #region Attacks
+    [Tooltip("Dirt that shows up on monster attack.")][SerializeField] private GameObject attackDirt;
+    [SerializeField] private int numOfDirt = 3;
+    
     public event Action MonsterAttack;    // Monster attack event.
     #endregion
 
@@ -271,6 +274,15 @@ public class MonsterBrain : MonoBehaviour
             // Perform the attack and reset the flinch count
             MonsterAttack?.Invoke();
             flinchCount = 0;
+            
+            var monsterController = FindFirstObjectByType<MonsterController>();
+            Action onAttackComplete = null;
+            onAttackComplete = delegate ()
+            {
+                monsterController.OnAttackEnd -= onAttackComplete;
+                SpawnDirt();
+            };
+            monsterController.OnAttackEnd += onAttackComplete;
         }
     }
 
@@ -399,5 +411,34 @@ public class MonsterBrain : MonoBehaviour
         OnFlinch?.Invoke();
         // Check to see whether the Monstie should attack
         CalculateAggression();
+    }
+
+    private void SpawnDirt()
+    {
+        //Add dirt from attack
+        var taskContainer = GameObject.FindGameObjectWithTag("TaskContainer");
+        var monsterCollider = FindFirstObjectByType<MonsterController>().GetComponent<BoxCollider2D>();
+        var halfMonsterWidth = monsterCollider.bounds.extents.x;
+        var halfMonsterHeight = monsterCollider.bounds.extents.y;
+        List<TaskData> tasks = new();
+
+        for (int i = 0; i < numOfDirt; i++)
+        {
+            var spawnPosX = UnityEngine.Random.Range(-halfMonsterWidth, halfMonsterWidth);
+            var spawnPosY = UnityEngine.Random.Range(-halfMonsterHeight, halfMonsterHeight);
+            var spawnPos = new Vector3(spawnPosX, spawnPosY);
+            var rotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f));
+            var obj = Instantiate(attackDirt, spawnPos, rotation, taskContainer.transform);
+            tasks.Add(obj.GetComponent<TaskData>());
+        }
+
+        m_taskTracker.AddTasks(tasks.ToArray());
+        m_taskTracker.UpdateUI();
+
+        var erasers = FindObjectsByType<Eraser>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var eraser in erasers)
+        {
+            eraser.PopulateErasables();
+        }
     }
 }

@@ -10,7 +10,6 @@ public class ErasableLayerer : MonoBehaviour
     {
         Dirt,
         Mold,
-        Soap,
         Slime
     }
 }
