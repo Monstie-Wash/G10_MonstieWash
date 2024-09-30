@@ -20,3 +20,4 @@ MonoBehaviour:
   moodRestingPoint: 0
   attackThreshold: 20
   sceneEffectOnMood: -30
+  flinchCount: 1

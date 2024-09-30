@@ -34,6 +34,8 @@ public class MoodType : ScriptableObject
 
     [Tooltip("How much the mood changes by when a scene is completed")][SerializeField] private float sceneEffectOnMood; // The value by which the mood changes when the OnSceneCompleted event is called.
 
+    [Tooltip("How many times the monster can flinch in this mood before attacking")][SerializeField] private int flinchCount;   // Number of flinches before the monster attacks (mood specific)
+
     [HideInInspector] public string MoodName { get { return moodName; } }
     [HideInInspector] public float MoodUpperLimit { get { return moodUpperLimit; } }
     [HideInInspector] public float MoodLowerLimit { get { return moodLowerLimit; } }
@@ -47,6 +49,7 @@ public class MoodType : ScriptableObject
     [HideInInspector] public List<MoodType> NegativeChainReactions { get { return negativeChainReactions; } }
     [HideInInspector] public float NegativeReactionStrength { get { return negativeReactionStrength; } }
     [HideInInspector] public float SceneEffectOnMood { get { return sceneEffectOnMood; } }
+    [HideInInspector] public int FlinchCount {  get { return flinchCount; } }
 
     #region Equality
     public override bool Equals(object other)
