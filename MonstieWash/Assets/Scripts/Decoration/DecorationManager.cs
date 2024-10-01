@@ -46,14 +46,14 @@ public class DecorationManager : MonoBehaviour
     private DecorationUi m_currentlyHeldDecoration; //Decoration hand is actively using.
     private Transform m_hand; //reference to players hand transform.
     private float m_pickupDistance = 1.5f; //How far to check for an item to pickup.
-    private float m_rotatingValue = 0f; //Actively rotates held object with this.
+    private float m_rotatingDirection = 0f; //Actively rotates held object with this.
     private float m_scaling = 0f; //Actively scales held object with this.
 
     #region Internal Classes
     [Serializable]
 
     //Holds data about sprites to be used as decorations. Relative bar scale is size when shown on the deco bar, actual scale is size shown when dragged into the scene.
-    public class DecorationSprite
+    private class DecorationSprite
     {
         [Tooltip("The sprite to use as a decoration")] public Sprite sprite;
         [Tooltip("A scale to apply while on the Ui bar to shrink sprite")] public Vector3 relativeBarScale;
@@ -62,14 +62,14 @@ public class DecorationManager : MonoBehaviour
 
     //Object that will hold live data about a decoration, generated from list of decoration sprites ^.
     [Serializable]
-    public class DecorationUi
+    private class DecorationUi
     {
         //Where the decoration currently is.
         public enum Status
         {
-            onBar,
-            beingHeld,
-            activeInScene
+            OnBar,
+            BeingHeld,
+            ActiveInScene
         }
 
         //Public
@@ -85,7 +85,7 @@ public class DecorationManager : MonoBehaviour
 
         public DecorationUi(GameObject obj, SpriteRenderer back, SpriteRenderer sprite, float speed, DecorationSprite spr)
         {
-            status = Status.onBar;
+            status = Status.OnBar;
             sceneObject = obj;
             m_backingImage = back;
             m_spriteImage = sprite;
@@ -105,15 +105,15 @@ public class DecorationManager : MonoBehaviour
         /// <summary>
         /// Object will follow player hand.
         /// </summary>
-        public void pickUp()
+        public void PickUp()
         {
             //Change to relative scene scale if picked up off the bar.
-            if (status == Status.onBar)
+            if (status == Status.OnBar)
             {
                 m_spriteImage.gameObject.transform.localScale = m_spriteInfo.relativeActualScale;
             }
 
-            status = Status.beingHeld;
+            status = Status.BeingHeld;
             m_backingImage.gameObject.SetActive(false);
 
             //Change sprite mask to appear anywhere.
@@ -123,16 +123,16 @@ public class DecorationManager : MonoBehaviour
         /// <summary>
         /// Object will become a part of the deco bar list again.
         /// </summary>
-        public void returnToBar()
+        public void ReturnToBar()
         {
             //Change back to local bar scale and save scale changes if was in scene.
-            if (status == Status.activeInScene)
+            if (status == Status.ActiveInScene)
             {
                 m_spriteInfo.relativeActualScale = m_spriteImage.gameObject.transform.localScale;
             }
             m_spriteImage.gameObject.transform.localScale = m_spriteInfo.relativeBarScale;
 
-            status = Status.onBar;
+            status = Status.OnBar;
             m_backingImage.gameObject.SetActive(true);
 
             //Reset spritemask to appear on mask.
@@ -145,9 +145,9 @@ public class DecorationManager : MonoBehaviour
         /// <summary>
         /// Object will be fixed to a location, rotation and size in the scene, unmoving.
         /// </summary>
-        public void placeInScene()
+        public void PlaceInScene()
         {
-            status = Status.activeInScene;
+            status = Status.ActiveInScene;
 
             //Save scale changes.
             m_spriteInfo.relativeActualScale = m_spriteImage.gameObject.transform.localScale;
@@ -223,9 +223,9 @@ public class DecorationManager : MonoBehaviour
         MoveAllDecorations();
 
         //Rotate held object if desired.
-        if (m_rotatingValue != 0 && m_currentlyHeldDecoration != null)
+        if (m_rotatingDirection != 0 && m_currentlyHeldDecoration != null)
         {
-            m_currentlyHeldDecoration.sceneObject.transform.Rotate(0,0, 100 * m_rotatingValue * Time.deltaTime);
+            m_currentlyHeldDecoration.sceneObject.transform.Rotate(0,0, 100 * m_rotatingDirection * Time.deltaTime);
         }
         //Scales held object if desired.
         if (m_scaling != 0 && m_currentlyHeldDecoration != null)
@@ -267,18 +267,18 @@ public class DecorationManager : MonoBehaviour
         foreach (DecorationUi dUI in m_barDecorations)
         {
             //Decorations on the bar will always seek their resting spot.
-            if (dUI.status == DecorationUi.Status.onBar) dUI.MoveTowardDesiredLocation();
+            if (dUI.status == DecorationUi.Status.OnBar) dUI.MoveTowardDesiredLocation();
         }
 
         foreach (DecorationUi aUI in m_activeDecorations)
         {
             switch (aUI.status)
             {
-                case DecorationUi.Status.activeInScene:
+                case DecorationUi.Status.ActiveInScene:
                     //Empty case as decorations in the scene should remain stationary.
 
                     break;
-                case DecorationUi.Status.beingHeld:
+                case DecorationUi.Status.BeingHeld:
                     //Objects being held should move with the player hand.
                     aUI.sceneObject.transform.position = m_hand.position;
                     break;
@@ -301,7 +301,7 @@ public class DecorationManager : MonoBehaviour
         //If holding an item instead rotate it.
         else
         {
-            m_rotatingValue = -dir;
+            m_rotatingDirection = -dir;
         }    
     }
 
@@ -346,7 +346,7 @@ public class DecorationManager : MonoBehaviour
     /// </summary>
     private void ResetRotation()
     {
-        m_rotatingValue = 0f;
+        m_rotatingDirection = 0f;
     }
 
     /// <summary>
@@ -375,7 +375,7 @@ public class DecorationManager : MonoBehaviour
         if (m_currentlyHeldDecoration == null) return;      
         m_activeDecorations.Remove(m_currentlyHeldDecoration);
         m_barDecorations.Add(m_currentlyHeldDecoration);
-        m_currentlyHeldDecoration.returnToBar();
+        m_currentlyHeldDecoration.ReturnToBar();
         RefreshBarUI();
         m_currentlyHeldDecoration.sceneObject.transform.position = m_currentlyHeldDecoration.desiredLocation;
         m_currentlyHeldDecoration = null;
@@ -395,13 +395,7 @@ public class DecorationManager : MonoBehaviour
             {
                 if (Vector2.Distance(m_hand.transform.position, d.sceneObject.transform.position) <= m_pickupDistance)
                 {
-                    m_currentlyHeldDecoration = d;
-                    m_barDecorations.Remove(d);
-                    m_activeDecorations.Add(d);
-                    d.pickUp();
-                    RefreshBarUI();
-
-                    managerStatus = ManagerStatus.Holding;
+                    PickupObject(d);
                     return;
                 }
             }
@@ -410,25 +404,30 @@ public class DecorationManager : MonoBehaviour
             {
                 if (Vector2.Distance(m_hand.transform.position, d.sceneObject.transform.position) <= m_pickupDistance)
                 {
-                    m_currentlyHeldDecoration = d;
-                    m_barDecorations.Remove(d);
-                    m_activeDecorations.Add(d);
-                    d.pickUp();
-                    RefreshBarUI();
-
-                    managerStatus = ManagerStatus.Holding;
+                    PickupObject(d);                    
                     return;
                 }
             }
         }
         else //When holding something
         {            
-            m_currentlyHeldDecoration.placeInScene();
+            m_currentlyHeldDecoration.PlaceInScene();
             RefreshBarUI();
 
             managerStatus = ManagerStatus.EmptyHand;
             m_currentlyHeldDecoration = null;
         }
+    }
+
+
+    private void PickupObject(DecorationUi d)
+    {
+        m_currentlyHeldDecoration = d;
+        m_barDecorations.Remove(d);
+        m_activeDecorations.Add(d);
+        d.PickUp();
+        RefreshBarUI();
+        managerStatus = ManagerStatus.Holding;
     }
 
     /// <summary>
@@ -477,12 +476,12 @@ public class DecorationManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     private IEnumerator PolaroidSnap()
-    {       
+    {
         //Screenshot area definition
-        Vector3[] corners = new Vector3[4];
+        var corners = new Vector3[4];
         screenshotArea.GetWorldCorners(corners);
-        int width = ((int)corners[3].x - (int)corners[0].x) - 100;
-        int height = (int)corners[1].y - (int)corners[0].y;
+        var width = ((int)corners[3].x - (int)corners[0].x) - 100;
+        var height = (int)corners[1].y - (int)corners[0].y;
         var startX = corners[0].x;
         var startY = corners[0].y;
 
@@ -500,15 +499,15 @@ public class DecorationManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         //Apply screen view to a texture (Take screenshot)
-        Texture2D tempText = new Texture2D(width, height, TextureFormat.RGB24, false);
+        var tempText = new Texture2D(width, height, TextureFormat.RGB24, false);
         tempText.ReadPixels(new Rect(startX, startY, width, height), 0, 0);
         tempText.Apply();
 
         //Apply a modifier to end of file based on count of objects stored.
         var fileCount = Directory.GetFiles(Application.persistentDataPath).Length;
         //Save to file.
-        byte[] byteArray = tempText.EncodeToPNG();
-        string saveLocation = Application.persistentDataPath + savePath + fileCount + ".Png";
+        var byteArray = tempText.EncodeToPNG();
+        var saveLocation = Application.persistentDataPath + savePath + fileCount + ".Png";
 
         File.WriteAllBytes(saveLocation, byteArray);
 

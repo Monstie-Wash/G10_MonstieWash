@@ -310,7 +310,7 @@ public class GameSceneManager : MonoBehaviour
         //Remove tool options.
         FindFirstObjectByType<ToolSwitcher>().RemoveOptions();
 
-        SetSceneActive(m_currentScene.name, false);
+        MoveToScene(loadingScene.SceneName);
         await LoadScene(m_currentLevelScenes.decorationScene.SceneName);
 
         MoveToScene(m_currentLevelScenes.decorationScene.SceneName, false);

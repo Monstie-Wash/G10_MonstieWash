@@ -18,9 +18,9 @@ public class CustomPolaroidLoader : MonoBehaviour
         var fileCount = Directory.GetFiles(Application.persistentDataPath).Length - 1;
 
 
-        Texture2D spriteTex = LoadTexture(Application.persistentDataPath + saveLocation + fileCount.ToString() + ".Png");
-        Sprite NewSprite = Sprite.Create(spriteTex, new Rect(0, 0, spriteTex.width, spriteTex.height), new Vector2(0, 0), 100f, 0, SpriteMeshType.Tight);
-        img.sprite = NewSprite;
+        var spriteTex = LoadTexture(Application.persistentDataPath + saveLocation + fileCount.ToString() + ".Png");
+        var newSprite = Sprite.Create(spriteTex, new Rect(0, 0, spriteTex.width, spriteTex.height), new Vector2(0, 0), 100f, 0, SpriteMeshType.Tight);
+        img.sprite = newSprite;
     }
 
     public Texture2D LoadTexture(string FilePath)
