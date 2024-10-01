@@ -192,6 +192,10 @@ public class InputManager : MonoBehaviour
 		m_playerInput.DebugActions.DebugReset.started -= DebugReset_started;
         m_playerInput.DebugActions.DebugReset.performed -= DebugReset_performed;
         m_playerInput.DebugActions.DebugReset.canceled -= DebugReset_canceled;
+
+        m_playerInput.DebugActions.FinishLevel.started -= FinishLevel_started;
+        m_playerInput.DebugActions.FinishLevel.performed -= FinishLevel_performed;
+        m_playerInput.DebugActions.FinishLevel.canceled -= FinishLevel_canceled;
         #endregion
     }
 
