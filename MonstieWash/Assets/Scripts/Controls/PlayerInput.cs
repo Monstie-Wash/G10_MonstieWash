@@ -941,6 +941,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=3)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FinishLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c44cf7d-891f-4cb9-8287-3edca9ae32fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=1)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -963,6 +972,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DebugReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b15c3f77-d6af-4906-8435-0f19bec56ced"",
+                    ""path"": ""<Keyboard>/equals"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FinishLevel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1001,6 +1021,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // DebugActions
         m_DebugActions = asset.FindActionMap("DebugActions", throwIfNotFound: true);
         m_DebugActions_DebugReset = m_DebugActions.FindAction("DebugReset", throwIfNotFound: true);
+        m_DebugActions_FinishLevel = m_DebugActions.FindAction("FinishLevel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1275,11 +1296,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_DebugActions;
     private List<IDebugActionsActions> m_DebugActionsActionsCallbackInterfaces = new List<IDebugActionsActions>();
     private readonly InputAction m_DebugActions_DebugReset;
+    private readonly InputAction m_DebugActions_FinishLevel;
     public struct DebugActionsActions
     {
         private @PlayerInput m_Wrapper;
         public DebugActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @DebugReset => m_Wrapper.m_DebugActions_DebugReset;
+        public InputAction @FinishLevel => m_Wrapper.m_DebugActions_FinishLevel;
         public InputActionMap Get() { return m_Wrapper.m_DebugActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1292,6 +1315,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @DebugReset.started += instance.OnDebugReset;
             @DebugReset.performed += instance.OnDebugReset;
             @DebugReset.canceled += instance.OnDebugReset;
+            @FinishLevel.started += instance.OnFinishLevel;
+            @FinishLevel.performed += instance.OnFinishLevel;
+            @FinishLevel.canceled += instance.OnFinishLevel;
         }
 
         private void UnregisterCallbacks(IDebugActionsActions instance)
@@ -1299,6 +1325,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @DebugReset.started -= instance.OnDebugReset;
             @DebugReset.performed -= instance.OnDebugReset;
             @DebugReset.canceled -= instance.OnDebugReset;
+            @FinishLevel.started -= instance.OnFinishLevel;
+            @FinishLevel.performed -= instance.OnFinishLevel;
+            @FinishLevel.canceled -= instance.OnFinishLevel;
         }
 
         public void RemoveCallbacks(IDebugActionsActions instance)
@@ -1351,5 +1380,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IDebugActionsActions
     {
         void OnDebugReset(InputAction.CallbackContext context);
+        void OnFinishLevel(InputAction.CallbackContext context);
     }
 }

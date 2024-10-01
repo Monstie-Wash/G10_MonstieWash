@@ -919,6 +919,15 @@
                     "processors": "",
                     "interactions": "Hold(duration=3)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "FinishLevel",
+                    "type": "Button",
+                    "id": "2c44cf7d-891f-4cb9-8287-3edca9ae32fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=1)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -941,6 +950,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DebugReset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b15c3f77-d6af-4906-8435-0f19bec56ced",
+                    "path": "<Keyboard>/equals",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FinishLevel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
