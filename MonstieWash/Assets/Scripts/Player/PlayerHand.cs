@@ -92,7 +92,6 @@ public class PlayerHand : MonoBehaviour
         //Keep within screen bounds
         newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits - extendBoundsX, cameraWidthInWorldUnits + extendBoundsX);
         newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits - extendBoundsY, cameraHeightInWorldUnits + extendBoundsY);
-
         return newPosition;
     }
 

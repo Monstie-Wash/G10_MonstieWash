@@ -23,6 +23,10 @@ public class InputManager : MonoBehaviour
     public event Action<int> OnSwitchTool;
     public event Action OnSwitchTool_Ended;
 
+    public event Action OnScroll_Started;
+    public event Action<int> OnScroll;
+    public event Action OnScroll_Ended;
+
     public event Action OnNavigate_Started;
     public event Action OnNavigate;
     public event Action OnNavigate_Ended;
@@ -50,6 +54,10 @@ public class InputManager : MonoBehaviour
 	public event Action OnDebugReset_Started;
     public event Action OnDebugReset;
     public event Action OnDebugReset_Ended;
+
+    public event Action OnFinishLevel_Started;
+    public event Action OnFinishLevel;
+    public event Action OnFinishLevel_Ended;
     #endregion
     #endregion
 
@@ -111,6 +119,10 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Scan.started += Scan_started;
         m_playerInput.PlayerActions.Scan.performed += Scan_performed;
         m_playerInput.PlayerActions.Scan.canceled += Scan_canceled;
+
+        m_playerInput.PlayerActions.Scroll.started += Scroll_started;
+        m_playerInput.PlayerActions.Scroll.performed += Scroll_performed;
+        m_playerInput.PlayerActions.Scroll.canceled += Scroll_canceled;
         #endregion
 
         #region MenuActions Subscription
@@ -127,6 +139,10 @@ public class InputManager : MonoBehaviour
 		m_playerInput.DebugActions.DebugReset.started += DebugReset_started;
         m_playerInput.DebugActions.DebugReset.performed += DebugReset_performed;
         m_playerInput.DebugActions.DebugReset.canceled += DebugReset_canceled;
+
+        m_playerInput.DebugActions.FinishLevel.started += FinishLevel_started;
+        m_playerInput.DebugActions.FinishLevel.performed += FinishLevel_performed;
+        m_playerInput.DebugActions.FinishLevel.canceled += FinishLevel_canceled;
         #endregion
     }
 
@@ -156,7 +172,11 @@ public class InputManager : MonoBehaviour
         m_playerInput.PlayerActions.Scan.started -= Scan_started;
         m_playerInput.PlayerActions.Scan.performed -= Scan_performed;
         m_playerInput.PlayerActions.Scan.canceled -= Scan_canceled;
-		#endregion
+
+        m_playerInput.PlayerActions.Scroll.started -= Scroll_started;
+        m_playerInput.PlayerActions.Scroll.performed -= Scroll_performed;
+        m_playerInput.PlayerActions.Scroll.canceled -= Scroll_canceled;
+        #endregion
 
 		#region MenuActions Subscription
 		m_playerInput.MenuActions.Cancel.started -= Cancel_started;
@@ -172,6 +192,10 @@ public class InputManager : MonoBehaviour
 		m_playerInput.DebugActions.DebugReset.started -= DebugReset_started;
         m_playerInput.DebugActions.DebugReset.performed -= DebugReset_performed;
         m_playerInput.DebugActions.DebugReset.canceled -= DebugReset_canceled;
+
+        m_playerInput.DebugActions.FinishLevel.started -= FinishLevel_started;
+        m_playerInput.DebugActions.FinishLevel.performed -= FinishLevel_performed;
+        m_playerInput.DebugActions.FinishLevel.canceled -= FinishLevel_canceled;
         #endregion
     }
 
@@ -253,6 +277,27 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnSwitchTool_Ended?.Invoke();
+    }
+    #endregion
+
+
+    #region Scroll
+    private void Scroll_started(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScroll_Started?.Invoke();
+    }
+
+    private void Scroll_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScroll?.Invoke(Math.Sign(context.ReadValue<float>()));
+    }
+
+    private void Scroll_canceled(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnScroll_Ended?.Invoke();
     }
     #endregion
 
@@ -377,6 +422,26 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnDebugReset_Ended?.Invoke();
+    }
+    #endregion
+
+    #region FinishLevel
+    private void FinishLevel_started(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnFinishLevel_Started?.Invoke();
+    }
+
+    private void FinishLevel_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnFinishLevel?.Invoke();
+    }
+
+    private void FinishLevel_canceled(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnFinishLevel_Ended?.Invoke();
     }
     #endregion
     #endregion

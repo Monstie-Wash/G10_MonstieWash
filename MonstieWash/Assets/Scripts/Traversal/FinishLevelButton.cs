@@ -4,6 +4,9 @@ public class FinishLevelButton : MonoBehaviour, INavigator
 {
     public void OnClicked()
     {
-        GameSceneManager.Instance.FinishLevel();
+        var dm = FindFirstObjectByType<DecorationManager>();
+        if (dm != null) dm.TakePolaroid();
+        else GameSceneManager.Instance.FinishLevel();
+
     }
 }
