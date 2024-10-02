@@ -9,17 +9,29 @@ public class TraversalObject : MonoBehaviour, INavigator
     private string m_targetScene;
     private bool m_traversalEnabled = true;
     private SpriteRenderer m_spriteRenderer;
+    private MonsterController m_monsterController;
 
     public void Awake()
     {
         if (targetScene == null) Debug.LogError($"Target scene not assigned for {name}!");
-        else m_targetScene = targetScene.SceneName;
+        else m_targetScene = targetScene.SceneName;        
 
-        var monsterController = FindFirstObjectByType<MonsterController>();
-        monsterController.OnAttackBegin += MonsterController_OnAttackStart;
-        monsterController.OnAttackEnd += MonsterController_OnAttackEnd;
-
+        m_monsterController = FindFirstObjectByType<MonsterController>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void OnEnable()
+    {
+        if (m_monsterController == null) return;
+        m_monsterController.OnAttackBegin += MonsterController_OnAttackStart;
+        m_monsterController.OnAttackEnd += MonsterController_OnAttackEnd;
+    }
+
+    private void OnDisable()
+    {
+        if (m_monsterController == null) return;
+        m_monsterController.OnAttackBegin -= MonsterController_OnAttackStart;
+        m_monsterController.OnAttackEnd -= MonsterController_OnAttackEnd;
     }
 
     private void MonsterController_OnAttackEnd()

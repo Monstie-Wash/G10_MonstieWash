@@ -8,7 +8,9 @@ public class GalleryManager : ImageLoader
 {
     [SerializeField] private Bounds bounds;
 
-    private void Start()
+    public Bounds Bounds { get { return bounds; } }
+
+    private void Awake()
     {
         var fileCount = Directory.GetFiles(Application.persistentDataPath + saveLocation).Length;
 
