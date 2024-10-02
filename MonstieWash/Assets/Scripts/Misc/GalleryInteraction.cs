@@ -6,16 +6,19 @@ using UnityEngine;
 public class GalleryInteraction : MonoBehaviour
 {
     private float m_rotatingDirection;
-    private bool holding = true;
-    private Transform currentPolaroid;
+    private bool m_holding = true;
+    private Transform m_currentPolaroid;
     private float m_pickupDistance = 1.5f;
     private float m_rotation;
     private GalleryManager m_galleryManager;
+    private GameObject m_finishButton;
 
     private void Start()
     {
         m_galleryManager = FindFirstObjectByType<GalleryManager>();
-        currentPolaroid = transform.GetChild(3).transform;
+        m_finishButton = FindFirstObjectByType<FinishLevelButton>().gameObject;
+        m_finishButton.SetActive(false);
+        m_currentPolaroid = transform.GetChild(3).transform;
     }
 
     private void OnEnable()
@@ -35,30 +38,32 @@ public class GalleryInteraction : MonoBehaviour
     private void Update()
     {
         //Rotate held object if desired.
-        if (holding && m_rotatingDirection != 0)
+        if (m_holding && m_rotatingDirection != 0)
         {
             var rotation = 100 * m_rotatingDirection * Time.deltaTime;
             m_rotation = Mathf.Clamp(m_rotation + rotation, -30f, 30f);
-            currentPolaroid.rotation = Quaternion.Euler(0, 0, m_rotation);
+            m_currentPolaroid.rotation = Quaternion.Euler(0, 0, m_rotation);
         }
     }
 
     private void Interact()
     {
-        if (holding)
+        if (m_holding)
         {
-            if (m_galleryManager.Bounds.Contains(currentPolaroid.transform.position))
+            if (m_galleryManager.Bounds.Contains(m_currentPolaroid.transform.position))
             {
-                currentPolaroid.parent = m_galleryManager.transform;
-                holding = false;
+                m_currentPolaroid.parent = m_galleryManager.transform;
+                m_finishButton.SetActive(true);
+                m_holding = false;
             }
         }
         else
         {
-            if (Vector2.Distance(transform.position, currentPolaroid.position) <= m_pickupDistance)
+            if (Vector2.Distance(transform.position, m_currentPolaroid.position) <= m_pickupDistance)
             {
-                currentPolaroid.parent = transform;
-                holding = true;
+                m_currentPolaroid.parent = transform;
+                m_finishButton.SetActive(false);
+                m_holding = true;
             }
         }
     }

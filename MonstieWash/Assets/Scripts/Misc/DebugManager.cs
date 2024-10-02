@@ -24,5 +24,8 @@ public class DebugManager : MonoBehaviour
     private void FinishLevel()
     {
         GameSceneManager.Instance.BeginDecoration();
+        var decoNav = FindFirstObjectByType<DecorationNavigate>(FindObjectsInactive.Include);
+        decoNav.InDecorationScene = true;
+        decoNav.gameObject.SetActive(true);
     }
 }

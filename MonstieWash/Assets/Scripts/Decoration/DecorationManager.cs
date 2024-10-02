@@ -187,11 +187,7 @@ public class DecorationManager : MonoBehaviour
         managerStatus = ManagerStatus.EmptyHand;
 
         //Find player hand.
-        m_hand = FindFirstObjectByType<PlayerHand>().gameObject.transform;
-
-        //Enable Finish button. Disable decorate button
-        FindFirstObjectByType<DecorationNavigate>(FindObjectsInactive.Include).gameObject.SetActive(false);
-        FindFirstObjectByType<FinishLevelButton>(FindObjectsInactive.Include).gameObject.SetActive(true);
+        m_hand = FindFirstObjectByType<PlayerHand>().gameObject.transform;        
 
         //Generate new gameobject and populate an equivalent Decoration Ui
         foreach (DecorationSprite s in decorations)
@@ -480,14 +476,14 @@ public class DecorationManager : MonoBehaviour
         //Screenshot area definition
         var corners = new Vector3[4];
         screenshotArea.GetWorldCorners(corners);
-        var width = ((int)corners[3].x - (int)corners[0].x) - 100;
+        var width = (int)corners[3].x - (int)corners[0].x;
         var height = (int)corners[1].y - (int)corners[0].y;
         var startX = corners[0].x;
         var startY = corners[0].y;
 
         //Turn off bar and button for photo.
         this.transform.GetChild(0).gameObject.SetActive(false);
-        FindFirstObjectByType<FinishLevelButton>().gameObject.SetActive(false);
+        FindFirstObjectByType<DecorationNavigate>().gameObject.SetActive(false);
         m_hand.gameObject.SetActive(false);
 
         //Wait for seconds and camera flash + sound here.
@@ -517,9 +513,8 @@ public class DecorationManager : MonoBehaviour
         Debug.Log("Saved screenshot at: " + saveFile);
         Destroy(tempText);
 
-
-
-        _ = GameSceneManager.Instance.GoToBedroomScene("Gallery", false);
+        m_hand.gameObject.SetActive(true);
+        GameSceneManager.Instance.GoToGallery();
     }
 
 }

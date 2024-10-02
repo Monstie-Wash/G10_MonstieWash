@@ -1162,7 +1162,7 @@ PrefabInstance:
       objectReference: {fileID: 1446344129}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: bedroomScenes.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'bedroomScenes.Array.data[0]'

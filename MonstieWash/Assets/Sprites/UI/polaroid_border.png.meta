@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 91e919939ce237445a32bf0d978db27a
+guid: ca507bf892a14ee4c968b81e176098c0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8434928813077973261
-    second: Tutorial Text background_0
+      213: -5459775447972136882
+    second: boarder_v2_900x900_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 750
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tutorial Text background_0
+      name: boarder_v2_900x900_0
       rect:
         serializedVersion: 2
-        x: 35
-        y: 34
-        width: 1820
-        height: 1348
+        x: 0
+        y: 0
+        width: 900
+        height: 900
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d094839b013ee0570800000000000000
-      internalID: 8434928813077973261
+      spriteID: e48b83e382bfa34b0800000000000000
+      internalID: -5459775447972136882
       vertices: []
       indices: 
       edges: []
@@ -136,7 +136,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Tutorial Text background_0: 8434928813077973261
+      boarder_v2_900x900_0: -5459775447972136882
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
