@@ -9,8 +9,9 @@ public class NavigationUI : MonoBehaviour
 {
     [SerializeField] private GameObject buttonTile;
     [SerializeField] private GameObject navPanel;
+    [SerializeField] private GameObject panelEnd;
 
-    [SerializeField] private float tilePadding = 1.25f; //Seems like a nice number. Means that the UI doesn't overlap with the bag on Mimic.
+	[SerializeField] private float tilePadding = 1.4f; //Seems like a nice number. Means that the UI doesn't overlap with the bag on Mimic.
 
     private List<GameScene> m_gameScenes;
 
@@ -39,5 +40,13 @@ public class NavigationUI : MonoBehaviour
             buttonTile.GetComponent<TestTravObj>().TargetScene = scene;
             Instantiate(buttonTile, navPanel.transform);
         }
-    }
+
+        var peSize = panelEnd.GetComponent<RectTransform>();
+
+        peSize.anchoredPosition = new Vector2(0, npSize.rect.height / 2.0f);
+        Instantiate(panelEnd, gameObject.transform);
+
+		peSize.anchoredPosition = new Vector2(0, -npSize.rect.height / 2.0f);
+		Instantiate(panelEnd, gameObject.transform);
+	}
 }

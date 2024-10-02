@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6112002346400558340, guid: 28b81e2d1c620e94b8ca91cab755af6c, type: 3}
+  m_Sprite: {fileID: -2561364423503544463, guid: 4f15e88bf70f6364bb969b64ba054604, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -139,7 +139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -7.75, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6017964427037714040
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3422540770633583555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,4 +219,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonTile: {fileID: 4598847733548012659, guid: 4c5fd23b49caa4b47b99d404d72034ad, type: 3}
   navPanel: {fileID: 90176986499578501}
-  tilePadding: 1.25
+  panelEnd: {fileID: 3888460119638378939, guid: adcd39870ca91ec4a956e2d4b5a966be, type: 3}
+  tilePadding: 1.28
