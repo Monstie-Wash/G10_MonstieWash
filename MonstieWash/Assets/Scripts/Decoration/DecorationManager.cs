@@ -190,7 +190,7 @@ public class DecorationManager : MonoBehaviour
         m_hand = FindFirstObjectByType<PlayerHand>().gameObject.transform;
 
         //Enable Finish button. Disable decorate button
-        FindFirstObjectByType<DecorationNavigate>().gameObject.SetActive(false);
+        FindFirstObjectByType<DecorationNavigate>(FindObjectsInactive.Include).gameObject.SetActive(false);
         FindFirstObjectByType<FinishLevelButton>(FindObjectsInactive.Include).gameObject.SetActive(true);
 
         //Generate new gameobject and populate an equivalent Decoration Ui
@@ -504,19 +504,22 @@ public class DecorationManager : MonoBehaviour
         tempText.Apply();
 
         //Apply a modifier to end of file based on count of objects stored.
-        var fileCount = Directory.GetFiles(Application.persistentDataPath).Length;
+        var saveLocation = Application.persistentDataPath + savePath;
+        Directory.CreateDirectory(saveLocation);
+        var fileCount = Directory.GetFiles(saveLocation).Length;
+
         //Save to file.
         var byteArray = tempText.EncodeToPNG();
-        var saveLocation = Application.persistentDataPath + savePath + fileCount + ".Png";
+        var saveFile = $"{saveLocation}/Polaroid_{fileCount}.Png";
 
-        File.WriteAllBytes(saveLocation, byteArray);
+        File.WriteAllBytes(saveFile, byteArray);
 
-        Debug.Log("Saved screenshot at: " + saveLocation);
+        Debug.Log("Saved screenshot at: " + saveFile);
         Destroy(tempText);
 
 
 
-        GameSceneManager.Instance.FinishLevel();
+        _ = GameSceneManager.Instance.GoToBedroomScene("Gallery", false);
     }
 
 }

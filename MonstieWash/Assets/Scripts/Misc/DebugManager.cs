@@ -23,6 +23,6 @@ public class DebugManager : MonoBehaviour
 
     private void FinishLevel()
     {
-        GameSceneManager.Instance.FinishLevel();
+        GameSceneManager.Instance.BeginDecoration();
     }
 }

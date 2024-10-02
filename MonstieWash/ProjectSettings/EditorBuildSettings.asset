@@ -50,5 +50,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Slime/SlimeDecorate.unity
     guid: dc4692b8f509a304b9be761c2e0b9145
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Bedroom/Gallery.unity
+    guid: 6a3b4c102dc0d5549b578bd38ea3885f
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

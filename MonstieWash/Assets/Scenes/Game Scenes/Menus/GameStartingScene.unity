@@ -1162,7 +1162,7 @@ PrefabInstance:
       objectReference: {fileID: 1446344129}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: bedroomScenes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'bedroomScenes.Array.data[0]'
@@ -1171,7 +1171,7 @@ PrefabInstance:
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'bedroomScenes.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: 2ac1808ce6417924a8cd357852ec8180, type: 2}
+      objectReference: {fileID: 11400000, guid: 7f06ca38424eccb4fa06db13d96a3597, type: 2}
     - target: {fileID: 8437575934485402516, guid: 7de047f7033100e49b73e17c1d959b99, type: 3}
       propertyPath: 'bedroomScenes.Array.data[2]'
       value: 

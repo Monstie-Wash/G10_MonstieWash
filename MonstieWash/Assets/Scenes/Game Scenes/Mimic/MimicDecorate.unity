@@ -412,7 +412,7 @@ MonoBehaviour:
   referenceBarItem: {fileID: 2423894526994754762, guid: b5cdaa9e7c02f81429276338b0b03db2, type: 3}
   camFlash: {fileID: 616396635}
   screenshotArea: {fileID: 433356351}
-  savePath: /Polaroid
+  savePath: /Polaroids
 --- !u!4 &404159188
 Transform:
   m_ObjectHideFlags: 0
