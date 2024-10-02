@@ -34,6 +34,7 @@ public class MoodArea : MonoBehaviour
     private bool m_isPetting;
     private BoxCollider2D m_collider;
     private bool m_isOnCooldown { get { return currentCooldown != 0f; } }
+    private MoodFXManager m_moodFXManager;
 
     public event Action OnPetStarted;
     public event Action OnPetEnded;
@@ -60,6 +61,11 @@ public class MoodArea : MonoBehaviour
         {
             m_OriginalMat = spriteToOutline.material;
         }
+    }
+
+    private void Start()
+    {
+        m_moodFXManager = FindFirstObjectByType<MoodFXManager>();
     }
 
     private void OnEnable()
@@ -109,6 +115,8 @@ public class MoodArea : MonoBehaviour
         {
             m_monsterBrain.UpdateMood(moodEffect.reactionStrength * (currentEffectiveness/100f), moodEffect.mood);
             if (debug) print($"Reaction Strength  {moodEffect.reactionStrength}  at effectivness of {currentEffectiveness} for the mood {moodEffect.mood.MoodName}");
+
+            m_moodFXManager.MoodParticleSystems[moodEffect.mood]?.Play();
         }
 
         //Apply diminishing effect if toggled on.
@@ -122,6 +130,7 @@ public class MoodArea : MonoBehaviour
             OnPetStarted?.Invoke();
             m_isPetting = true;
         }
+
     }
 
     /// <summary>

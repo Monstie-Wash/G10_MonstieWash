@@ -80,6 +80,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""3b00dd9e-d390-424d-94e6-abf350705d7e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -216,6 +225,39 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""Controller"",
+                    ""id"": ""44a49459-7d1f-4300-83bd-b40f7b6ed7d1"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchTool"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""0772e230-29ec-40e8-8274-ec26202aa875"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchTool"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""207ab084-fc77-4ae0-8212-f7b96f3e37bb"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchTool"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""dd02834b-0068-4dac-8865-7bba123f66a6"",
                     ""path"": ""<Gamepad>/buttonWest"",
@@ -291,6 +333,72 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Scan"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""KBM"",
+                    ""id"": ""704e116b-0298-4109-9c6f-ef2b33f49517"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b6a1d8d8-4637-4f6b-95f8-67a4b3743daf"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""849f3fc6-0ad4-49b2-ac14-27f4da167ddc"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Controller"",
+                    ""id"": ""acc60d2c-c420-4ac7-ada8-84b51c0ecfd5"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""91f92c7c-3d92-4362-ac5a-894f0ab2bcfa"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""11d18d83-95a5-4624-8ca3-18bd3f144eb5"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -362,7 +470,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RightClick"",
+                    ""name"": ""AltSelect"",
                     ""type"": ""PassThrough"",
                     ""id"": ""3dce965f-9205-4e85-ad90-dfd0fcd54f5a"",
                     ""expectedControlType"": ""Button"",
@@ -782,7 +890,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""RightClick"",
+                    ""action"": ""AltSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""752faf4d-7d6f-45d2-9957-ae8dbe97cd8f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AltSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -822,6 +941,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=3)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FinishLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""2c44cf7d-891f-4cb9-8287-3edca9ae32fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=1)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -846,6 +974,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""DebugReset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b15c3f77-d6af-4906-8435-0f19bec56ced"",
+                    ""path"": ""<Keyboard>/equals"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FinishLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -866,6 +1005,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions_Navigate = m_PlayerActions.FindAction("Navigate", throwIfNotFound: true);
         m_PlayerActions_ToggleUI = m_PlayerActions.FindAction("ToggleUI", throwIfNotFound: true);
         m_PlayerActions_Scan = m_PlayerActions.FindAction("Scan", throwIfNotFound: true);
+        m_PlayerActions_Scroll = m_PlayerActions.FindAction("Scroll", throwIfNotFound: true);
         // MenuActions
         m_MenuActions = asset.FindActionMap("MenuActions", throwIfNotFound: true);
         m_MenuActions_Navigate = m_MenuActions.FindAction("Navigate", throwIfNotFound: true);
@@ -875,12 +1015,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MenuActions_Click = m_MenuActions.FindAction("Click", throwIfNotFound: true);
         m_MenuActions_ScrollWheel = m_MenuActions.FindAction("ScrollWheel", throwIfNotFound: true);
         m_MenuActions_MiddleClick = m_MenuActions.FindAction("MiddleClick", throwIfNotFound: true);
-        m_MenuActions_RightClick = m_MenuActions.FindAction("RightClick", throwIfNotFound: true);
+        m_MenuActions_AltSelect = m_MenuActions.FindAction("AltSelect", throwIfNotFound: true);
         m_MenuActions_TrackedDevicePosition = m_MenuActions.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_MenuActions_TrackedDeviceOrientation = m_MenuActions.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         // DebugActions
         m_DebugActions = asset.FindActionMap("DebugActions", throwIfNotFound: true);
         m_DebugActions_DebugReset = m_DebugActions.FindAction("DebugReset", throwIfNotFound: true);
+        m_DebugActions_FinishLevel = m_DebugActions.FindAction("FinishLevel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -948,6 +1089,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Navigate;
     private readonly InputAction m_PlayerActions_ToggleUI;
     private readonly InputAction m_PlayerActions_Scan;
+    private readonly InputAction m_PlayerActions_Scroll;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -958,6 +1100,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Navigate => m_Wrapper.m_PlayerActions_Navigate;
         public InputAction @ToggleUI => m_Wrapper.m_PlayerActions_ToggleUI;
         public InputAction @Scan => m_Wrapper.m_PlayerActions_Scan;
+        public InputAction @Scroll => m_Wrapper.m_PlayerActions_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -985,6 +1128,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Scan.started += instance.OnScan;
             @Scan.performed += instance.OnScan;
             @Scan.canceled += instance.OnScan;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -1007,6 +1153,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Scan.started -= instance.OnScan;
             @Scan.performed -= instance.OnScan;
             @Scan.canceled -= instance.OnScan;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -1035,7 +1184,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuActions_Click;
     private readonly InputAction m_MenuActions_ScrollWheel;
     private readonly InputAction m_MenuActions_MiddleClick;
-    private readonly InputAction m_MenuActions_RightClick;
+    private readonly InputAction m_MenuActions_AltSelect;
     private readonly InputAction m_MenuActions_TrackedDevicePosition;
     private readonly InputAction m_MenuActions_TrackedDeviceOrientation;
     public struct MenuActionsActions
@@ -1049,7 +1198,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Click => m_Wrapper.m_MenuActions_Click;
         public InputAction @ScrollWheel => m_Wrapper.m_MenuActions_ScrollWheel;
         public InputAction @MiddleClick => m_Wrapper.m_MenuActions_MiddleClick;
-        public InputAction @RightClick => m_Wrapper.m_MenuActions_RightClick;
+        public InputAction @AltSelect => m_Wrapper.m_MenuActions_AltSelect;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_MenuActions_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_MenuActions_TrackedDeviceOrientation;
         public InputActionMap Get() { return m_Wrapper.m_MenuActions; }
@@ -1082,9 +1231,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MiddleClick.started += instance.OnMiddleClick;
             @MiddleClick.performed += instance.OnMiddleClick;
             @MiddleClick.canceled += instance.OnMiddleClick;
-            @RightClick.started += instance.OnRightClick;
-            @RightClick.performed += instance.OnRightClick;
-            @RightClick.canceled += instance.OnRightClick;
+            @AltSelect.started += instance.OnAltSelect;
+            @AltSelect.performed += instance.OnAltSelect;
+            @AltSelect.canceled += instance.OnAltSelect;
             @TrackedDevicePosition.started += instance.OnTrackedDevicePosition;
             @TrackedDevicePosition.performed += instance.OnTrackedDevicePosition;
             @TrackedDevicePosition.canceled += instance.OnTrackedDevicePosition;
@@ -1116,9 +1265,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MiddleClick.started -= instance.OnMiddleClick;
             @MiddleClick.performed -= instance.OnMiddleClick;
             @MiddleClick.canceled -= instance.OnMiddleClick;
-            @RightClick.started -= instance.OnRightClick;
-            @RightClick.performed -= instance.OnRightClick;
-            @RightClick.canceled -= instance.OnRightClick;
+            @AltSelect.started -= instance.OnAltSelect;
+            @AltSelect.performed -= instance.OnAltSelect;
+            @AltSelect.canceled -= instance.OnAltSelect;
             @TrackedDevicePosition.started -= instance.OnTrackedDevicePosition;
             @TrackedDevicePosition.performed -= instance.OnTrackedDevicePosition;
             @TrackedDevicePosition.canceled -= instance.OnTrackedDevicePosition;
@@ -1147,11 +1296,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_DebugActions;
     private List<IDebugActionsActions> m_DebugActionsActionsCallbackInterfaces = new List<IDebugActionsActions>();
     private readonly InputAction m_DebugActions_DebugReset;
+    private readonly InputAction m_DebugActions_FinishLevel;
     public struct DebugActionsActions
     {
         private @PlayerInput m_Wrapper;
         public DebugActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @DebugReset => m_Wrapper.m_DebugActions_DebugReset;
+        public InputAction @FinishLevel => m_Wrapper.m_DebugActions_FinishLevel;
         public InputActionMap Get() { return m_Wrapper.m_DebugActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1164,6 +1315,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @DebugReset.started += instance.OnDebugReset;
             @DebugReset.performed += instance.OnDebugReset;
             @DebugReset.canceled += instance.OnDebugReset;
+            @FinishLevel.started += instance.OnFinishLevel;
+            @FinishLevel.performed += instance.OnFinishLevel;
+            @FinishLevel.canceled += instance.OnFinishLevel;
         }
 
         private void UnregisterCallbacks(IDebugActionsActions instance)
@@ -1171,6 +1325,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @DebugReset.started -= instance.OnDebugReset;
             @DebugReset.performed -= instance.OnDebugReset;
             @DebugReset.canceled -= instance.OnDebugReset;
+            @FinishLevel.started -= instance.OnFinishLevel;
+            @FinishLevel.performed -= instance.OnFinishLevel;
+            @FinishLevel.canceled -= instance.OnFinishLevel;
         }
 
         public void RemoveCallbacks(IDebugActionsActions instance)
@@ -1205,6 +1362,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnNavigate(InputAction.CallbackContext context);
         void OnToggleUI(InputAction.CallbackContext context);
         void OnScan(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
     public interface IMenuActionsActions
     {
@@ -1215,12 +1373,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnScrollWheel(InputAction.CallbackContext context);
         void OnMiddleClick(InputAction.CallbackContext context);
-        void OnRightClick(InputAction.CallbackContext context);
+        void OnAltSelect(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
     }
     public interface IDebugActionsActions
     {
         void OnDebugReset(InputAction.CallbackContext context);
+        void OnFinishLevel(InputAction.CallbackContext context);
     }
 }

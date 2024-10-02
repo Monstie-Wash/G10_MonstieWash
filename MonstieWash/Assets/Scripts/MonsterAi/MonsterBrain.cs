@@ -12,11 +12,10 @@ public class MonsterBrain : MonoBehaviour
     protected class MoodData
     {
         public MoodType mood;
-        [Tooltip("Monster won't attack unless mood value is equal or higher than its attack threshold")]public float attackThreshold;
         public float value;
     }
 
-    public System.Action<MoodType> OnMoodChanged;
+    public Action<MoodType> OnMoodChanged;
 
     [Tooltip("Add all moodtype objects intended for this brain here.")][SerializeField] protected List<MoodData> moodData = new(); //Scriptable objects holding data about moods.
     #endregion
@@ -28,16 +27,15 @@ public class MonsterBrain : MonoBehaviour
     #endregion
 
     #region Attacks
-    [Tooltip("Minimum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float minBetweenAttacks; // Creates an attack event between the min and max time, if possible.
-    [Tooltip("Maximum time (inclusive, in seconds) between attack attempts while the monster is aggressive")][SerializeField] private float maxBetweenAttacks; // Creates an attack event between the min and max time, if possible.
-    private float m_attackTimer;    // Chosen time to wait before the next attack (randomized between min and max after every attack).
-    private float m_lastAttackTime = 0f;    // Time elapsed since the last attack.
-
+    [Tooltip("Dirt that shows up on monster attack.")][SerializeField] private GameObject attackDirt;
+    [SerializeField] private int numOfDirt = 3;
+    
     public event Action MonsterAttack;    // Monster attack event.
     #endregion
 
     #region Flinch
     public event Action OnFlinch;
+    private int m_flinchCount = 0;    // Number of times the monster has flinched in between attacks
     #endregion
 
     #region Debug
@@ -65,8 +63,6 @@ public class MonsterBrain : MonoBehaviour
         {
             Moods.Add(data.mood);
         }
-
-        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
     }
 
     private void OnEnable()
@@ -95,8 +91,6 @@ public class MonsterBrain : MonoBehaviour
         MaintainLimits();
         //Keep up-to-date on the current mood.
         UpdateHighestMood();
-        // Check whether an attack should occur.
-        CalculateAggression();
 
         //Debug Updates
         if (debug) UpdateDebugText();
@@ -260,8 +254,9 @@ public class MonsterBrain : MonoBehaviour
             }
         }
 
-        if (HighestMood != highestMoodData.mood)
+        if (HighestMood != highestMoodData.mood)    // Mood has changed
         {
+            m_flinchCount = 0;  // Reset flinchcount for new mood
             HighestMood = highestMoodData.mood;
             OnMoodChanged?.Invoke(HighestMood);
             if (debug) Debug.Log($"Highest mood changed to {HighestMood.MoodName}");
@@ -273,26 +268,22 @@ public class MonsterBrain : MonoBehaviour
     /// </summary>
     private void CalculateAggression()
     {
-        // Update time since the last attack.
-        m_lastAttackTime += Time.deltaTime;
-
-        // Check to see if an attack should be performed based on time (creates a cooldown-style effect).
-        if (m_lastAttackTime < m_attackTimer) return;
-
-        // Check to see if an attack should be performed based on mood values.
-        for (int i = 0; i < moodData.Count; i++)
+        // Check to see if the monster has flinched enough times
+        if (HighestMood.FlinchCount <= m_flinchCount)
         {
-            if (moodData[i].value < moodData[i].attackThreshold)    // If the value of a mood is below its attack threshold, an attack is not made.
+            // Perform the attack and reset the flinch count
+            MonsterAttack?.Invoke();
+            m_flinchCount = 0;
+            
+            var monsterController = FindFirstObjectByType<MonsterController>();
+            Action onAttackComplete = null;
+            onAttackComplete = delegate ()
             {
-                m_lastAttackTime = 0f;
-                return;
-            }
+                monsterController.OnAttackEnd -= onAttackComplete;
+                SpawnDirt();
+            };
+            monsterController.OnAttackEnd += onAttackComplete;
         }
-
-        // Attack is legal, perform the attack.
-        m_lastAttackTime = 0f;
-        m_attackTimer = UnityEngine.Random.Range(minBetweenAttacks, maxBetweenAttacks);
-        MonsterAttack?.Invoke();
     }
 
     /// <summary>
@@ -307,8 +298,6 @@ public class MonsterBrain : MonoBehaviour
         }
 
         debugUi.text += $"Current Mood: {HighestMood.MoodName}\n\n";
-
-        debugUi.text += $"Time to next attack attempt: {m_attackTimer - m_lastAttackTime}";
     }
 
     /// <summary>
@@ -380,44 +369,54 @@ public class MonsterBrain : MonoBehaviour
 
             // Modify the mood by its sceneEffectOnMood value
             UpdateMood(moodData[i].mood.SceneEffectOnMood, moodData[i].mood);
-            // Play the mood's particle system
-            StartCoroutine(PlayMoodParticles(moodData[i].mood));
             // Debug
             if (debug) print($"Mood {moodData[i].mood.name} was changed by {moodData[i].mood.SceneEffectOnMood} after scene completion");
         }
     }
 
-    /// <summary>
-    /// Plays the particle system associated with the mood.
-    /// </summary>
-    /// <param name="mood"> Which mood's particle system to use</param>
-    /// <param name="time"> How long to play for (default 1.5 seconds)</param>
-    IEnumerator PlayMoodParticles(MoodType mood, float time = 1.5f)
+    public void Flinch()
     {
-        if (mood.MoodParticle != null)
+        m_flinchCount++;
+        OnFlinch?.Invoke();
+        // Check to see whether the Monstie should attack
+        CalculateAggression();
+    }
+
+    private void SpawnDirt()
+    {
+        //Add dirt from attack
+        var taskContainer = GameObject.FindGameObjectWithTag("TaskContainer");
+        var monsterCollider = FindFirstObjectByType<MonsterController>().GetComponent<BoxCollider2D>();
+        var halfMonsterWidth = monsterCollider.bounds.extents.x;
+        var halfMonsterHeight = monsterCollider.bounds.extents.y;
+        List<TaskData> tasks = new();
+
+        for (int i = 0; i < numOfDirt; i++)
         {
-            /*
-            * NOTE: Creating and destroying particles sytems might not be the most performative, but consider that these particles need to exist across multiple
-            * scenes (each angle of the monster). Consider asking designers how frequently particles will play to determine if a better solution is required. 
-            */
-
-            var tempParticles = Instantiate(mood.MoodParticle, moodParticleOrigin, Quaternion.identity); // The mood's ParticleSystem
-            SceneManager.MoveGameObjectToScene(tempParticles.gameObject, GameSceneManager.Instance.CurrentScene);
-            tempParticles.Play();
-
-            yield return new WaitForSeconds(time);
-
-            tempParticles.Stop();
-            Destroy(tempParticles);
+            var spawnPosX = UnityEngine.Random.Range(-halfMonsterWidth, halfMonsterWidth);
+            var spawnPosY = UnityEngine.Random.Range(-halfMonsterHeight, halfMonsterHeight);
+            var spawnPos = new Vector3(spawnPosX, spawnPosY);
+            var rotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f));
+            var obj = Instantiate(attackDirt, spawnPos, rotation, taskContainer.transform);
+            tasks.Add(obj.GetComponent<TaskData>());
         }
-        else
+
+        m_taskTracker.AddTasks(tasks.ToArray());
+        m_taskTracker.UpdateUI();
+
+        var erasers = FindObjectsByType<Eraser>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var eraser in erasers)
         {
-            if (debug) print($"Moodtype {mood.name} doesn't have a particle system attached");
+            eraser.PopulateErasables();
         }
     }
 
-    public void Flinch()
+    /// <summary>
+    /// Allows you to choose the brains pause status.
+    /// </summary>
+    /// <param name="toggle">Whether brain is paused or not.</param>
+    public void PauseBrain(bool toggle)
     {
-        OnFlinch?.Invoke();
+        pause = toggle;
     }
 }

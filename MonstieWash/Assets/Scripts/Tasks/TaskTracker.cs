@@ -29,7 +29,7 @@ public class TaskTracker : MonoBehaviour
     private void OnEnable()
     {
         GameSceneManager.Instance.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
-        GameSceneManager.Instance.OnSceneChanged += RoomSaver_OnSceneChanged; ;
+        GameSceneManager.Instance.OnSceneChanged += RoomSaver_OnSceneChanged;
     }
 
     private void RoomSaver_OnSceneChanged()
@@ -45,12 +45,9 @@ public class TaskTracker : MonoBehaviour
 
     private void RoomSaver_OnScenesLoaded()
     {
-        foreach (var obj in FindObjectsByType<TaskData>(FindObjectsSortMode.None))
-        {
-            m_taskData.Add(obj);
-        }
+        AddTasks(FindObjectsByType<TaskData>(FindObjectsSortMode.None));
 
-        m_uiManager.LoadOverallTasks(m_taskData);
+        m_uiManager.LoadOverallTasks(m_taskData.ToArray());
 
         foreach (var task in m_taskData)
         {
@@ -59,6 +56,14 @@ public class TaskTracker : MonoBehaviour
         }
 
         GameSceneManager.Instance.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
+    }
+
+    public void AddTasks(TaskData[] tasks)
+    {
+        foreach (var obj in tasks)
+        {
+            m_taskData.Add(obj);
+        }
     }
 
     /// <summary>
@@ -75,15 +80,10 @@ public class TaskTracker : MonoBehaviour
 
         UpdateUI();
 
-        if (task.Progress < task.Threshold) return;
-
-        // Task over threshold; complete!
-        task.Complete = true;
-
-        // Needed to comment out the below line to keep bone picking tasks working. Will figure out a way to make dirt disappear later.
-        //task.gameObject.SetActive(false); // Remove task here?
+        if (!task.Complete) return;
 
         SceneCompletionCheck(task.gameObject.scene);
+        TaskTypeCompletionCheck(task);
 	}
 
     /// <summary>
@@ -104,11 +104,21 @@ public class TaskTracker : MonoBehaviour
         OnSceneCompleted?.Invoke(scene.name);
 
         m_scenesCompleted[scene] = true;
-        m_uiManager.UpdateClipboardTask(scene.name);
         m_soundPlayer.PlaySound(true, true);
 
         LevelCompletionCheck();
     }
+
+    private void TaskTypeCompletionCheck(TaskData toCheck)
+    {
+        foreach (var task in m_taskData.Where(task => task.TaskType == toCheck.TaskType))
+        {
+            if(!task.Complete)
+                return;
+        }
+
+		m_uiManager.UpdateClipboardTask(toCheck.TaskType);
+	}
 
     /// <summary>
     /// Return whether a scene exists in the dict of completed scenes, without requiring knowledge of other scenes.
@@ -144,7 +154,7 @@ public class TaskTracker : MonoBehaviour
     /// <summary>
     /// Updates the completion amounts in the UI
     /// </summary>
-    private void UpdateUI()
+    public void UpdateUI()
     {
         m_uiManager.UpdateProgressBar(CalculateCurrentSceneCompletionPercentage(GameSceneManager.Instance.CurrentScene));
         m_uiManager.UpdateCompletion(CalculateOverallCompletionPercentage());

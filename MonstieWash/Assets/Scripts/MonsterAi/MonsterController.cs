@@ -4,26 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(SoundPlayer))]
 
 public class MonsterController : MonoBehaviour
 {
-    [SerializeField] private List<MoodToAnimation> moodToAnimationMap = new(); // maps the name of moods to their animation names
+    [SerializeField] private List<MoodEffects> moodEffectMap = new(); // maps the name of moods to their animation names
     [Tooltip("Place each of the monster attack animations here.")][SerializeField] private List<AnimationClip> attackList;  // List of monster attack animations to be chosen from randomly when an attack is made. 
     [Tooltip("Place completion particle GameObjects here.")][SerializeField] private List<Effect> completionEffectList; // List of Effect objects to play when a scene is completed
     [SerializeField] private AnimationClip flinch;
     [SerializeField] private bool debug = false;
+    [SerializeField] Sound attackSound;
 
     private MonsterBrain m_monsterAI;
     private Animator m_myAnimator;
     private InterruptAnimation m_interruptAnimation;
     private MoodType m_recentHighestMood;
+    private SoundPlayer m_soundPlayer;
+
+    public event Action OnInterruptComplete;
+    public event Action OnAttackBegin;
+    public event Action OnAttackEnd;
 
     [Serializable]
-    private struct MoodToAnimation
+    private struct MoodEffects
     {
         public MoodType mood;
         public AnimationClip animation;
+        public Sound sound;
     }
 
     private class InterruptAnimation
@@ -45,6 +52,7 @@ public class MonsterController : MonoBehaviour
     {
         m_monsterAI = FindFirstObjectByType<MonsterBrain>();
         m_myAnimator = GetComponent<Animator>();
+        m_soundPlayer = GetComponent<SoundPlayer>();
     }
 
     private void OnEnable()
@@ -71,9 +79,6 @@ public class MonsterController : MonoBehaviour
     {
         // If mood hasn't changed from last frame, don't bother updating
         if (currentMood == m_recentHighestMood) return;
-
-        // If currently performing an attack, should NOT update
-        if (m_interruptAnimation != null) return;
 
         // Update the recent highest mood, then play the exit animation followed by the new animation
         m_recentHighestMood = currentMood;
@@ -124,6 +129,14 @@ public class MonsterController : MonoBehaviour
 
         // Play the attack animation
         m_myAnimator.Play(attack.name);
+        OnAttackBegin();
+    }
+
+    public void AttackStarted()
+    {
+        if (attackSound == null) return;
+        m_soundPlayer.SwitchSound(attackSound);
+        m_soundPlayer.PlaySound();
     }
 
     /// <summary>
@@ -166,7 +179,8 @@ public class MonsterController : MonoBehaviour
     public void TransitoryAnimationComplete()
     {
         var highestMood = m_monsterAI.HighestMood;
-        var animToPlay = moodToAnimationMap.Find(obj => obj.mood == highestMood).animation;
+        var moodEffect = moodEffectMap.Find(obj => obj.mood == highestMood);
+        var animToPlay = moodEffect.animation;
 
         if (animToPlay == null)
         {
@@ -178,10 +192,16 @@ public class MonsterController : MonoBehaviour
         m_myAnimator.Play(animToPlay.name);
         // Set mood_changed to false in the animator 
         m_myAnimator.SetBool("mood_changed", false);
+
+        if (moodEffect.sound == null) return;
+        m_soundPlayer.SwitchSound(moodEffect.sound);
+        m_soundPlayer.PlaySound();
     }
 
     public void InterruptAnimationComplete()
     {
+        OnInterruptComplete?.Invoke();
+
         if (m_interruptAnimation != null) 
         {
             // Return to the animation that was playing previously
@@ -209,5 +229,10 @@ public class MonsterController : MonoBehaviour
             effect.Play();
             yield return new WaitForSeconds(randTime);
         }
+    }
+
+    public void OnAttackEnded()
+    {
+        OnAttackEnd?.Invoke();
     }
 }
