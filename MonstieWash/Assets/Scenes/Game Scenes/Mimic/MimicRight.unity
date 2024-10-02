@@ -624,6 +624,10 @@ PrefabInstance:
       propertyPath: 'completionEffectList.Array.data[2]'
       value: 
       objectReference: {fileID: 836230469}
+    - target: {fileID: 4977835303720252318, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
+      propertyPath: hideWarning
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5036995656876074879, guid: 7110fc6e18aa90545a4248e5920ebbb9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

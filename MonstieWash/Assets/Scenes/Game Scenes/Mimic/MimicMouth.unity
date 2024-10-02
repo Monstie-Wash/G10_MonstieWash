@@ -1279,7 +1279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 0}
-  hideWarning: 0
+  hideWarning: 1
 --- !u!82 &1466242213
 AudioSource:
   m_ObjectHideFlags: 0
