@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GalleryInteraction : MonoBehaviour
@@ -18,7 +15,7 @@ public class GalleryInteraction : MonoBehaviour
         m_galleryManager = FindFirstObjectByType<GalleryManager>();
         m_finishButton = FindFirstObjectByType<FinishLevelButton>().gameObject;
         m_finishButton.SetActive(false);
-        m_currentPolaroid = transform.GetChild(3).transform;
+        m_currentPolaroid = m_galleryManager.CurrentPolaroid.transform;
     }
 
     private void OnEnable()
@@ -46,6 +43,9 @@ public class GalleryInteraction : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Either places or picks up the current polaroid
+    /// </summary>
     private void Interact()
     {
         if (m_holding)

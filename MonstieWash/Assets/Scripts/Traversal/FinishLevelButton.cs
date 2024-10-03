@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.IO;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 
 public class FinishLevelButton : MonoBehaviour, INavigator
 {
@@ -12,6 +10,9 @@ public class FinishLevelButton : MonoBehaviour, INavigator
         GameSceneManager.Instance.FinishLevel();
     }
 
+    /// <summary>
+    /// Saves the position and rotation of the most recently placed polaroid.
+    /// </summary>
     private void SaveCurrentPolaroidTransform()
     {
         var polaroidTransform = FindFirstObjectByType<GalleryManager>().CurrentPolaroid;

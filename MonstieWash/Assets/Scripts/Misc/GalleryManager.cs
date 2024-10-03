@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System;
 
 public class GalleryManager : ImageLoader
 {
@@ -33,21 +31,28 @@ public class GalleryManager : ImageLoader
         var playerHand = FindFirstObjectByType<PlayerHand>().gameObject;
         playerHand.AddComponent<GalleryInteraction>();
 
-        var fileCount = Directory.GetFiles(Application.persistentDataPath + saveLocation).Length;
-        PolaroidTransform[] polaroidTransforms = { };
+        var savePath = Application.persistentDataPath + saveLocation;
+        var fileCount = Directory.GetFiles(savePath).Length;
+
+        PolaroidTransform[] polaroidTransforms = { }; // Only used when there is more than one polaroid saved
         if (fileCount > 1) polaroidTransforms = ReadPolaroidTransforms();
 
+        // Oldest polaroids to newest polaroids
         for (int i = 0; i < fileCount; i++)
         {
-            var spriteTex = LoadTexture($"{Application.persistentDataPath}{saveLocation}/Polaroid_{i}.Png");
+            // Get polaroid sprite
+            var spriteTex = LoadTexture($"{savePath}/Polaroid_{i}.Png");
             var sizePercentage = spriteTex.width / 1920f;
             var newSprite = Sprite.Create(spriteTex, new Rect(0, 0, spriteTex.width, spriteTex.height), new Vector2(0.5f, 0.5f), sizePercentage * 750f, 0, SpriteMeshType.Tight);
+
+            // Create polaroid gameobject
             var polaroid = new GameObject($"Polaroid {i}");
             var sr = polaroid.AddComponent<SpriteRenderer>();
             sr.sprite = newSprite;
             sr.sortingLayerName = "Tools";
-            sr.sortingOrder = i*2;
+            sr.sortingOrder = i * 2; // Order from oldest to newest
 
+            // Create polaroid border
             var border = new GameObject($"Polaroid {i} Border");
             border.transform.parent = polaroid.transform;
             var psr = border.AddComponent<SpriteRenderer>();
@@ -55,7 +60,7 @@ public class GalleryManager : ImageLoader
             psr.sortingLayerName = "Tools";
             psr.sortingOrder = i * 2 + 1;
 
-            if (i == fileCount - 1)
+            if (i == fileCount - 1) // Last file is the one just captured
             {
                 polaroid.transform.position = playerHand.transform.position; 
                 polaroid.transform.parent = playerHand.transform;
@@ -73,6 +78,10 @@ public class GalleryManager : ImageLoader
         }
     }
 
+    /// <summary>
+    /// Reads positional and rotational data from PolaroidPositions.txt.
+    /// </summary>
+    /// <returns>Array of polaroid positions ordered from oldest to newest.</returns>
     private PolaroidTransform[] ReadPolaroidTransforms()
     {
         List<PolaroidTransform> polaroidTransforms = new();
