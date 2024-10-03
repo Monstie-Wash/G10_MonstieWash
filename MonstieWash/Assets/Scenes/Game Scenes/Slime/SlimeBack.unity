@@ -2635,6 +2635,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NavigationArrow
       objectReference: {fileID: 0}
+    - target: {fileID: 5883377530239027236, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7118541065661776800, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.5
