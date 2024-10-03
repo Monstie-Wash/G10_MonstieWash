@@ -428,37 +428,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1023289354297892063, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
   m_PrefabInstance: {fileID: 7241775246093986046}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &900225454
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 900225455}
-  m_Layer: 7
-  m_Name: DecorationPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &900225455
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900225454}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1909728572}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1038811373 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2099171719660594960, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
@@ -1070,10 +1039,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6504364132171233696, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 900225455}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4684039482537819662, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
       insertIndex: -1
@@ -1096,11 +1062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308ad569f5cc6494197e53d69362e526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1909728572 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1812419529350954751, guid: 12bf66da43a88484ea9e57d8f626e9af, type: 3}
-  m_PrefabInstance: {fileID: 1909728569}
-  m_PrefabAsset: {fileID: 0}
+  InDecorationScene: 0
 --- !u!1 &1984160772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2252,5 +2214,4 @@ SceneRoots:
   - {fileID: 1475573996}
   - {fileID: 165354733}
   - {fileID: 1909728569}
-  - {fileID: 1427603226}
   - {fileID: 403964369}

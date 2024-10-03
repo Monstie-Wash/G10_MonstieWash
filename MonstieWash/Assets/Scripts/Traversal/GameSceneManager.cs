@@ -302,12 +302,8 @@ public class GameSceneManager : MonoBehaviour
         //m_levelObjectActiveStates.Clear();
 
         //Turn off inventory bag if it exists.
-        ConsumablesManager c;
-        if (c = FindFirstObjectByType<ConsumablesManager>()) c.gameObject.SetActive(false);
-
-        //Turn off tutorial if it exists.
-        TutorialManager t;
-        if (t = FindFirstObjectByType<TutorialManager>()) t.transform.parent.gameObject.SetActive(false);
+        GameObject mainCanvas;
+        if (mainCanvas = GameObject.FindGameObjectWithTag("MainCanvas")) mainCanvas.SetActive(false);
 
         //Remove tool options.
         FindFirstObjectByType<ToolSwitcher>().RemoveOptions();
