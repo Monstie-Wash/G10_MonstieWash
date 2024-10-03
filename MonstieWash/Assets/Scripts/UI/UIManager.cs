@@ -1,15 +1,15 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private Image clipboard;
+    [SerializeField] private bool autoHideClipboard = true;
+    [SerializeField] private float clipboardAutoHideDelay = 5f;
     [SerializeField] private Animator CBAnimator;
     [SerializeField] private GameObject taskContainer;
     [SerializeField] private GameObject taskTextPrefab;
@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour
 
     private TaskTracker m_taskTracker;
     private ProgressBarUI[] m_progressBars; // Array is overhead if we have multiple progress bars to track scene vs total completion
+    private Coroutine m_clipboardAutoHide;
+
+    public static event Action OnTaskHide;
 
     private void Awake()
     {
@@ -55,7 +58,18 @@ public class UIManager : MonoBehaviour
     }
     private void ToggleUIVisibility(Animator animator)
     {
-        animator.SetBool("Hide", !animator.GetBool("Hide"));
+        var clipboardHidden = animator.GetBool("Hide");
+        animator.SetBool("Hide", !clipboardHidden);
+
+        if (!autoHideClipboard) return;
+        if (clipboardHidden) m_clipboardAutoHide = StartCoroutine(ClipboardHideTimer());
+        else StopCoroutine(m_clipboardAutoHide);
+    }
+
+    private IEnumerator ClipboardHideTimer()
+    {
+        yield return new WaitForSeconds(clipboardAutoHideDelay);
+        ToggleUIVisibility(CBAnimator);
     }
 
 /// <summary>
@@ -96,18 +110,15 @@ public class UIManager : MonoBehaviour
 
     private void InitialiseStartList()
     {
-		for (var i = 0; i < m_taskList.Count; i++)
+		foreach (var pair in m_taskList)
 		{
-			foreach (var pair in m_taskList)
-			{
-				var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
+            var newTaskObject = Instantiate(taskTextPrefab, startList.transform);
 
-				newTaskObject.name = pair.Key.ToString();
+			newTaskObject.name = pair.Key.ToString();
 
-				var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
-				newTaskText.fontSize = fontSize * fontBuffer;
-				newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
-			}
+			var newTaskText = newTaskObject.GetComponent<TextMeshProUGUI>();
+			newTaskText.fontSize = fontSize * fontBuffer;
+			newTaskText.text = Resources.Load<TaskDesc>(newTaskObject.name).description;
 		}
 	}
 
@@ -168,5 +179,6 @@ public class UIManager : MonoBehaviour
 		ToggleUIVisibility(taskListAnim);
 		ToggleUIVisibility(CBAnimator);
         Time.timeScale = 1.0f;
+        OnTaskHide?.Invoke();
     }
 }

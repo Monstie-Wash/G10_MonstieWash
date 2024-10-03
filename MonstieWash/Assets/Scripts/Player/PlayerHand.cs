@@ -92,7 +92,6 @@ public class PlayerHand : MonoBehaviour
         //Keep within screen bounds
         newPosition.x = Mathf.Clamp(newPosition.x, -cameraWidthInWorldUnits - extendBoundsX, cameraWidthInWorldUnits + extendBoundsX);
         newPosition.y = Mathf.Clamp(newPosition.y, -cameraHeightInWorldUnits - extendBoundsY, cameraHeightInWorldUnits + extendBoundsY);
-
         return newPosition;
     }
 
@@ -101,7 +100,10 @@ public class PlayerHand : MonoBehaviour
         var results = new Collider2D[1];
         Physics2D.OverlapCollider(m_collider, m_contactFilter, results);
 
-        if (results[0] == null) return;
+        if (results[0] == null)
+        {
+			return;
+        }
         
         //Navigate
         INavigator navArrow = results[0].GetComponent<INavigator>();

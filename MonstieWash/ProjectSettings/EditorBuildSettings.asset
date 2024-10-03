@@ -36,6 +36,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/Mimic/MimicMouth.unity
     guid: 8b49fecc4bd037a49b50d861bfd33f93
   - enabled: 1
+    path: Assets/Scenes/Game Scenes/Mimic/MimicDecorate.unity
+    guid: b929f43ddb865a44fbc7507a7f7ef897
+  - enabled: 1
     path: Assets/Scenes/Game Scenes/Slime/SlimeStartingScene.unity
     guid: 69f26f9bceca3d445b1abc3d024b3f3b
   - enabled: 1
@@ -44,5 +47,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Scenes/Slime/SlimeBack.unity
     guid: 878efb7d1f30caa4dacc04b2f66a0b95
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/Slime/SlimeDecorate.unity
+    guid: dc4692b8f509a304b9be761c2e0b9145
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

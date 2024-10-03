@@ -23,4 +23,6 @@ MonoBehaviour:
   positiveReactionStrength: 0
   negativeChainReactions: []
   negativeReactionStrength: 0.1
+  moodParticle: {fileID: 0}
   sceneEffectOnMood: -4
+  flinchCount: 1

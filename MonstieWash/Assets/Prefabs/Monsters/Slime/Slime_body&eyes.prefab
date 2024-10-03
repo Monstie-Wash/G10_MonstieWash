@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8992106390371102444}
   - component: {fileID: 5183965847806619997}
   - component: {fileID: 2965728221432256605}
+  - component: {fileID: 2669817682647519192}
   m_Layer: 0
   m_Name: attack_hitbox_1
   m_TagString: Untagged
@@ -106,6 +107,33 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!50 &2669817682647519192
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4096721866334953891}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5822840661693204689
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +323,9 @@ MonoBehaviour:
     animation: {fileID: 7400000, guid: 5983b9fa0d27ae6498873a9b35ba3238, type: 2}
   - mood: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
     animation: {fileID: 7400000, guid: 02d2f46010db86a4d958a2e4e23caf96, type: 2}
+  attackList: []
+  completionEffectList: []
+  flinch: {fileID: 0}
   debug: 0
 --- !u!61 &6777827233399769068
 BoxCollider2D:

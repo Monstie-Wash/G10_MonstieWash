@@ -286,6 +286,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: moodParticleSystem
+      value: 
+      objectReference: {fileID: 93028141}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
       objectReference: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
@@ -303,7 +307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4147582261773358337, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: m_SortingLayer
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4147582261773358337, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: m_SortingLayerID
@@ -486,6 +490,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: moodParticleSystem
+      value: 
+      objectReference: {fileID: 705359369}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: outlineAppearanceTime
       value: 1
       objectReference: {fileID: 0}
@@ -522,6 +530,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 33909124130840307, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
   m_PrefabInstance: {fileID: 87660214}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &93028141 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3386892717480709554, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+  m_PrefabInstance: {fileID: 727965351172851106}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &335257493 stripped
 Transform:
@@ -771,6 +784,10 @@ PrefabInstance:
       propertyPath: spriteToOutline
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: moodParticleSystem
+      value: 
+      objectReference: {fileID: 705359369}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: outlineAppearanceTime
       value: 1
@@ -1115,6 +1132,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
   m_PrefabInstance: {fileID: 698529060}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &705359369 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 779581136623032217, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+  m_PrefabInstance: {fileID: 727965351172851106}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &709318619
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1320,6 +1342,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
   m_PrefabInstance: {fileID: 718725982}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &760040763 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+  m_PrefabInstance: {fileID: 727965351172851106}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &773159399 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7655684740453951490, guid: 2fd9d8eac5c5b3b40852235023eacbe5, type: 3}
@@ -1340,6 +1367,10 @@ PrefabInstance:
     - target: {fileID: 5883377530239027236, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: m_Name
       value: NavigationArrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 5883377530239027236, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7118541065661776800, guid: 9eab2c0e4ac7c284bbcb55e7a0464f3d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2634,6 +2665,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: moodParticleSystem
+      value: 
+      objectReference: {fileID: 93028141}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
       objectReference: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
@@ -2651,7 +2686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4147582261773358337, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: m_SortingLayer
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4147582261773358337, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: m_SortingLayerID
@@ -2869,7 +2904,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 315494217286825171, guid: fea34a9156e2f4242a67f0f55d501f34, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.84
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 315494217286825171, guid: fea34a9156e2f4242a67f0f55d501f34, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3467,6 +3502,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
+--- !u!1001 &727965351172851106
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3799121171791714584}
+    m_Modifications:
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.17223775
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4466417
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4620877448687494269, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701429289123836779, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
+      propertyPath: m_Name
+      value: Mood FX
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 067bd41c3bb0def4484096612ecba263, type: 3}
 --- !u!1001 &2289189531036507539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3593,6 +3685,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: c398ce3795017ba438f6b35b2fee2b1e, type: 2}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: SadSound
+      value: 
+      objectReference: {fileID: 11400000, guid: b6422bdfb1f0e1c4ca508c40ae662291, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: AngrySound
+      value: 
+      objectReference: {fileID: 11400000, guid: 80365dfe12b830940bd694ce63fe3792, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: HappySound
+      value: 
+      objectReference: {fileID: 11400000, guid: b7609a6e08da2c042aa4956ce7d3f7a6, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: attackSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 124e22d6c111de04baf4d0dee302b83e, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: attackList.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -3601,9 +3709,41 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7400000, guid: 3419eb33094ab9a4db72bfaccca975b2, type: 2}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: completionEffectList.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c085ae8b7e03fe4f9f1412031a4109e, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 9960f9a81733f884797d9bf5e07ff6fc, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].mood
+      value: 
+      objectReference: {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b6422bdfb1f0e1c4ca508c40ae662291, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: 80365dfe12b830940bd694ce63fe3792, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].sound
+      value: 
+      objectReference: {fileID: 11400000, guid: b7609a6e08da2c042aa4956ce7d3f7a6, type: 2}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: 'completionEffectList.Array.data[0]'
       value: 
@@ -3616,6 +3756,22 @@ PrefabInstance:
       propertyPath: 'completionEffectList.Array.data[2]'
       value: 
       objectReference: {fileID: 1908516762}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[0].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: f1eed0e68ee572d4fb4c5a79c46beb93, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[1].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: fc22217ad01d762478e35bb48f4a10d0, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[2].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 5983b9fa0d27ae6498873a9b35ba3238, type: 2}
+    - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: moodEffectMap.Array.data[3].animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 02d2f46010db86a4d958a2e4e23caf96, type: 2}
     - target: {fileID: 6174601992942811934, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: m_Name
       value: Slime_body&eyes
@@ -3664,6 +3820,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9068842602551363734, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      propertyPath: hideWarning
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6793149257861410724, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
@@ -3679,6 +3839,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3388646996981217167, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1947080509}
+    - targetCorrespondingSourceObject: {fileID: 3388646996981217167, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 760040763}
     - targetCorrespondingSourceObject: {fileID: 1968287971661902663, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1752247919}
