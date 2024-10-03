@@ -11,7 +11,7 @@ public class CustomPolaroidLoader : ImageLoader
         var image = GetComponent<Image>();
 
         //Get file location lenght
-        var fileCount = Directory.GetFiles(Application.persistentDataPath).Length - 1;
+        var fileCount = Directory.GetFiles($"{Application.persistentDataPath}{saveLocation}").Length - 1;
 
 
         var spriteTex = LoadTexture($"{Application.persistentDataPath}{saveLocation}/Polaroid_{fileCount}.Png");

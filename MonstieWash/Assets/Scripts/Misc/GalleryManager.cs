@@ -9,7 +9,24 @@ public class GalleryManager : ImageLoader
     [SerializeField] private Bounds bounds;
     [SerializeField] private Sprite polaroidBorder;
 
+    private GameObject m_currentPolaroid;
+
     public Bounds Bounds { get { return bounds; } }
+    public Transform CurrentPolaroid { get { return m_currentPolaroid.transform; } }
+
+    private struct PolaroidTransform
+    {
+        public float posX;
+        public float posY;
+        public float rot;
+
+        public PolaroidTransform(float posX, float posY, float rot)
+        {
+            this.posX = posX;
+            this.posY = posY;
+            this.rot = rot;
+        }
+    }
 
     private void Awake()
     {
@@ -17,6 +34,8 @@ public class GalleryManager : ImageLoader
         playerHand.AddComponent<GalleryInteraction>();
 
         var fileCount = Directory.GetFiles(Application.persistentDataPath + saveLocation).Length;
+        PolaroidTransform[] polaroidTransforms = { };
+        if (fileCount > 1) polaroidTransforms = ReadPolaroidTransforms();
 
         for (int i = 0; i < fileCount; i++)
         {
@@ -40,16 +59,41 @@ public class GalleryManager : ImageLoader
             {
                 polaroid.transform.position = playerHand.transform.position; 
                 polaroid.transform.parent = playerHand.transform;
+                m_currentPolaroid = polaroid;
             }
             else
             {
-                polaroid.transform.position = new Vector3(UnityEngine.Random.Range(bounds.min.x, bounds.max.x), UnityEngine.Random.Range(bounds.min.y, bounds.max.y), 0);
-                polaroid.transform.rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(-30f, 30f));
+                var polaroidTransform = polaroidTransforms[i];
+                polaroid.transform.position = new Vector3(polaroidTransform.posX, polaroidTransform.posY, 0);
+                polaroid.transform.rotation = Quaternion.Euler(0, 0, polaroidTransform.rot);
                 polaroid.transform.localScale = Vector3.one * Mathf.Lerp(0.75f, 1f, i / (fileCount - 1f));
                 polaroid.transform.parent = transform;
             }
             
         }
+    }
+
+    private PolaroidTransform[] ReadPolaroidTransforms()
+    {
+        List<PolaroidTransform> polaroidTransforms = new();
+        var saveLocation = Path.Combine(Application.persistentDataPath, "PolaroidPositions.txt");
+
+        using (var inputFile = new StreamReader(saveLocation))
+        {
+            while (!inputFile.EndOfStream)
+            {
+                var line = inputFile.ReadLine();
+                var values = line.Split(',');
+                var posX = float.Parse(values[0]);
+                var posY = float.Parse(values[1]);
+                var rot = float.Parse(values[2]);
+
+                var polaroidTransform = new PolaroidTransform(posX, posY, rot);
+                polaroidTransforms.Add(polaroidTransform);
+            }
+        }
+
+        return polaroidTransforms.ToArray();
     }
 
     private void OnDrawGizmosSelected()
