@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DecorationNavigate : MonoBehaviour, INavigator
 {
-    public bool InDecorationScene;
+    [HideInInspector] public bool InDecorationScene;
 
     public void OnClicked()
     {
