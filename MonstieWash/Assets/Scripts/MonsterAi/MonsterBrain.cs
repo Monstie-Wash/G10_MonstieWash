@@ -402,7 +402,6 @@ public class MonsterBrain : MonoBehaviour
         }
 
         m_taskTracker.AddTasks(tasks.ToArray());
-        m_taskTracker.UpdateUI();
 
         var erasers = FindObjectsByType<Eraser>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var eraser in erasers)
