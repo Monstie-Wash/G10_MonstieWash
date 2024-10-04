@@ -308,6 +308,9 @@ public class GameSceneManager : MonoBehaviour
         TutorialManager t;
         if (t = FindFirstObjectByType<TutorialManager>()) t.transform.parent.gameObject.SetActive(false);
 
+        NavigationUI n;
+        if (n = FindFirstObjectByType<NavigationUI>()) n.gameObject.SetActive(false);
+
         //Remove tool options.
         FindFirstObjectByType<ToolSwitcher>().RemoveOptions();
 
