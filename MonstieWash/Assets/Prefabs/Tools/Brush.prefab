@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3028125934884543323}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8769999, y: 0.066000015, z: 0}
+  m_LocalPosition: {x: -0.31, y: -0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -350,6 +350,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7381658881967609582}
   - component: {fileID: 7522106548468571616}
+  - component: {fileID: 7378887005323319359}
+  - component: {fileID: 3953867199396651901}
   m_Layer: 6
   m_Name: BrushSprite
   m_TagString: Untagged
@@ -366,7 +368,7 @@ Transform:
   m_GameObject: {fileID: 5747709288254856341}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.18422444, w: 0.9828842}
-  m_LocalPosition: {x: -1.212, y: -0.059, z: 0}
+  m_LocalPosition: {x: 1.94, y: -0.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -413,9 +415,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1881744917
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ad42e5a495010df43816db19843234bd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cfb3034ee4061c94ea164e7c6be1cefe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -426,3 +428,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7378887005323319359
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747709288254856341}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e082beaf6654fd643a95fd5edae17972, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3953867199396651901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747709288254856341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8926691ef91ac54092f39551e5db967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
