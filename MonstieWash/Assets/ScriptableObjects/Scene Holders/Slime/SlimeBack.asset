@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SlimeBack
   m_EditorClassIdentifier: 
   sceneName: SlimeBack
+  sceneThumb: {fileID: 1348977960010495174, guid: f6a6805f3206fd8419a4d74a6906b7d4, type: 3}
