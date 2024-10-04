@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SlimeFront
   m_EditorClassIdentifier: 
   sceneName: SlimeFront
+  sceneThumb: {fileID: -7507659705398724790, guid: 3256ac74a3624a143b1560b451a2d644, type: 3}
