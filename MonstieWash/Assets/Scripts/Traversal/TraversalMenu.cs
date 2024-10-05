@@ -13,11 +13,15 @@ public class TraversalMenu : MonoBehaviour, INavigator
 
     private Button m_button;
 
+    //Accesor used by Video Controller to start level after finishing;
+    public GameSceneManager.Level Level { get { return level; } }
+
     public enum MenuAction
     {
         StartNewLevel,
         Restart,
         GoToBedroomScene,
+        GoToAnimatic,
         Quit
     }
 
@@ -46,6 +50,11 @@ public class TraversalMenu : MonoBehaviour, INavigator
                 {
                     if (setMusic) _ = GameSceneManager.Instance.GoToBedroomScene(targetScene.SceneName, targetIsUI, music);
                     else _ = GameSceneManager.Instance.GoToBedroomScene(targetScene.SceneName, targetIsUI);
+                }
+                break;
+            case MenuAction.GoToAnimatic:
+                {
+                    FindFirstObjectByType<VideoController>().PlayAnimatic();
                 }
                 break;
             case MenuAction.Quit:

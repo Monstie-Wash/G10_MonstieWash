@@ -1970,6 +1970,7 @@ GameObject:
   - component: {fileID: 1915768565}
   - component: {fileID: 1915768564}
   - component: {fileID: 1915768563}
+  - component: {fileID: 1915768566}
   m_Layer: 0
   m_Name: LSCanvas
   m_TagString: Untagged
@@ -2049,7 +2050,7 @@ Canvas:
   m_GameObject: {fileID: 1915768561}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -2063,6 +2064,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1915768566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915768561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2557d0ef73bbeb543b263b09a5a565bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1970580311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2235,6 +2248,10 @@ PrefabInstance:
     - target: {fileID: 136731160910880527, guid: cd5c837f517b4b6409dd24104165069d, type: 3}
       propertyPath: level
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 136731160910880527, guid: cd5c837f517b4b6409dd24104165069d, type: 3}
+      propertyPath: action
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1963727702645800770, guid: cd5c837f517b4b6409dd24104165069d, type: 3}
       propertyPath: m_AnchorMax.y
