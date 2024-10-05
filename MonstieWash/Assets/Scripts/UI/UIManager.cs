@@ -83,24 +83,24 @@ public class UIManager : MonoBehaviour
 
     private void OnLevelCompleted()
     {
-        var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        foreach (var button in uncleanButtons)
-        {
-            GameSceneManager.Instance.SetObjectActiveState(button.gameObject.GetHashCode(), false);
-            button.gameObject.SetActive(false);
-        }
+        //var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        //foreach (var button in uncleanButtons)
+        //{
+        //   GameSceneManager.Instance.SetObjectActiveState(button.gameObject.GetHashCode(), false);
+        //    button.gameObject.SetActive(false);
+        //}
 
         finishLevelButton.SetActive(true);
     }
 
     private void OnSceneCompleted(string scene)
     {
-        if (GameSceneManager.Instance.CurrentScene.name.Equals(scene))
-        {
-            var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            var button = Array.Find(uncleanButtons, button => button.gameObject.scene.name.Equals(scene));
-            button.gameObject.SetActive(true);
-        }
+        //if (GameSceneManager.Instance.CurrentScene.name.Equals(scene))
+        //{
+        //    var uncleanButtons = FindObjectsByType<NextUncleanButton>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        //    var button = Array.Find(uncleanButtons, button => button.gameObject.scene.name.Equals(scene));
+        //    button.gameObject.SetActive(true);
+        //}
     }
 
     public void OnTaskListHide()
