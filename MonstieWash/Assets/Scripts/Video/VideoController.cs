@@ -21,13 +21,13 @@ public class VideoController : MonoBehaviour
     [Tooltip("How long the video will play after afking.")] [SerializeField] float afkTimeToPlay;
 
     [Header("Animatic Settings")]
-    [SerializeField] private VideoClip Animatic;
-    [SerializeField] private GameSceneManager.Level levelFollowingAnimatic;
+    [Tooltip("Animatic video to play.")] [SerializeField] private VideoClip Animatic;
+    [Tooltip("Level to load after Animatic.")] [SerializeField] private GameSceneManager.Level levelFollowingAnimatic;
 
     //Private
     private VideoPlayer m_vPlayer;
-    private float m_timeSinceLastInput;
-    private bool m_moving;
+    private float m_timeSinceLastInput; //How long since player moved mouse/joystick.
+    private bool m_moving; //Whether player is moving mouse/joystick currently.
 
     private void OnEnable()
     {
@@ -41,17 +41,21 @@ public class VideoController : MonoBehaviour
         InputManager.Instance.OnMove_Ended -= MoveEnded;
     }
 
-
+    /// <summary>
+    /// Reset move counter whenever input received.
+    /// </summary>
     private void MovePerformed(Vector2 movementInput)
     {
         m_timeSinceLastInput = 0;
         m_moving = true;
     }
 
+    /// <summary>
+    /// //Stop video when moving stops.
+    /// </summary>
     private void MoveEnded()
     {
         m_moving = false;
-
         if (status == Status.Title) StopVideo();
     }
 
@@ -74,7 +78,9 @@ public class VideoController : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// Sets correct settings for title vid and plays.
+    /// </summary>
     private void PlayTitleVideo()
     {       
         m_vPlayer.clip = TitleVideo;
@@ -84,6 +90,9 @@ public class VideoController : MonoBehaviour
     }
 
     //Called by Slime poster navigation
+    /// <summary>
+    /// Sets correct settings and plays animatic.
+    /// </summary>
     public void PlayAnimatic()
     {      
         m_vPlayer.clip = Animatic;
@@ -92,11 +101,18 @@ public class VideoController : MonoBehaviour
         m_vPlayer.Play();
         status = Status.Animatic;
     }
+
+    /// <summary>
+    /// Disables video player.
+    /// </summary>
     private void StopVideo()
     {
         m_vPlayer.enabled = false;
     }
 
+    /// <summary>
+    /// Sets correct settings after leaving main menu, assigns animatic finish function.
+    /// </summary>
     //Called by main menu start game.
     public void TransitionFromMainMenu()
     {
@@ -106,10 +122,14 @@ public class VideoController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Transition to slime scene and delete video player.
+    /// </summary>
     private void OnVideoFinish(VideoPlayer vp)
     {
         StopVideo();
         status = Status.Idle;
-        GameSceneManager.Instance.StartNewLevel(levelFollowingAnimatic);      
+        GameSceneManager.Instance.StartNewLevel(levelFollowingAnimatic);
+        Destroy(this.gameObject);
     }
 }
