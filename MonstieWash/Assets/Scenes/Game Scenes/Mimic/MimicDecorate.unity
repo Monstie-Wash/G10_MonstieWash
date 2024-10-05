@@ -748,7 +748,7 @@ MonoBehaviour:
     relativeActualScale: {x: 1.5, y: 1.5, z: 1.5}
   decoBarBufferDist: 2.5
   decoBarItemSpeed: 15
-  maxItemScale: 3
+  maxItemScale: 2
   minItemScale: 0.3
   decoMood: {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
   referenceBarItem: {fileID: 2423894526994754762, guid: b5cdaa9e7c02f81429276338b0b03db2, type: 3}
