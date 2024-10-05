@@ -100,6 +100,7 @@ public class VideoController : MonoBehaviour
         m_vPlayer.enabled = true;
         m_vPlayer.Play();
         status = Status.Animatic;
+        FindFirstObjectByType<SoundPlayer>().StopSound();
     }
 
     /// <summary>
