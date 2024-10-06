@@ -2085,6 +2085,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[1].value
       value: 2
       objectReference: {fileID: 0}
@@ -2110,6 +2114,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[9].value
+      value: 9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.data[10].value
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
@@ -2144,6 +2152,10 @@ PrefabInstance:
       propertyPath: m_tutorialPrompts.Array.data[9].prompt
       value: 
       objectReference: {fileID: 7241775246093986047}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.data[10].prompt
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[0].eventListen
       value: 1
@@ -2182,6 +2194,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[9].eventListen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.data[10].eventListen
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
@@ -2226,6 +2242,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
       propertyPath: m_tutorialPrompts.Array.data[9].promptCompletion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470456935035511546, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+      propertyPath: m_tutorialPrompts.Array.data[10].promptCompletion
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4688208615737586938, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
@@ -2278,12 +2298,13 @@ PrefabInstance:
     - {fileID: 3993260974402666914, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
     - {fileID: 6212927846494255661, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
     - {fileID: 4264479322727599151, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+    - {fileID: 9134240804589208188, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
 --- !u!1 &7241775246093986047 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 9134240804589208188, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
+  m_CorrespondingSourceObject: {fileID: 799598087331625270, guid: 601d67c9f3f20954486675e29cc75b69, type: 3}
   m_PrefabInstance: {fileID: 7241775246093986046}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7241775246093986048 stripped
