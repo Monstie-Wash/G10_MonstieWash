@@ -13,17 +13,10 @@ MonoBehaviour:
   m_Name: HungryMimic
   m_EditorClassIdentifier: 
   moodName: Hungry
-  moodUpperLimit: 40
-  moodLowerLimit: -10
-  moodStartingPoint: -10
-  moodNaturalChange: 0.2
-  moodRestingPoint: 40
-  chaosMultiplier: 0
-  positiveChainReactions:
-  - {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
-  positiveReactionStrength: 1
-  negativeChainReactions: []
-  negativeReactionStrength: 1
-  moodParticle: {fileID: 0}
+  moodUpperLimit: 0
+  moodLowerLimit: 0
+  moodStartingPoint: 0
+  moodNaturalChange: 0
+  moodRestingPoint: 0
   sceneEffectOnMood: 0
-  flinchCount: 3
+  flinchCount: 0
