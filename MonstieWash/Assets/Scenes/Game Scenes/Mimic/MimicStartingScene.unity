@@ -1381,7 +1381,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4025347225716900208, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4695030007197572884, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
       insertIndex: -1
@@ -1394,38 +1395,6 @@ PrefabInstance:
       addedObject: {fileID: 161585844}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
---- !u!1 &1333992974056510847 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2838673010913092998, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
-  m_PrefabInstance: {fileID: 1333992974056510846}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1333992974056510848 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2869982573539889976, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
-  m_PrefabInstance: {fileID: 1333992974056510846}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1333992974056510849 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7575682151688121040, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
-  m_PrefabInstance: {fileID: 1333992974056510846}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1333992974056510850 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8595949309307684373, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
-  m_PrefabInstance: {fileID: 1333992974056510846}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1333992974056510851 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2570531277318799392, guid: 1b98c4b530574ff4496abcd0d30e53ef, type: 3}
@@ -1548,9 +1517,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: pause
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: debugUi
+      value: 
+      objectReference: {fileID: 210014948}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: maxBetweenAttacks
       value: 12
@@ -1565,7 +1542,7 @@ PrefabInstance:
       objectReference: {fileID: 7105375229832933360, guid: 23141edc3a8763b4d8577e2b243e4ee5, type: 3}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: moodData.Array.size
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: moodParticleOrigin.y
@@ -1593,11 +1570,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: bb988f1e660887a40b96f28bbd3e5c5b, type: 2}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: moodData.Array.data[0].value
-      value: -50
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: moodData.Array.data[1].value
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5291749803512059139, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: sound
@@ -1650,7 +1627,7 @@ PrefabInstance:
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: clipboard
       value: 
-      objectReference: {fileID: 1333992974056510849}
+      objectReference: {fileID: 0}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: startList
       value: 
@@ -1658,15 +1635,15 @@ PrefabInstance:
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: CBAnimator
       value: 
-      objectReference: {fileID: 1333992974056510848}
+      objectReference: {fileID: 0}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: m_clipboard
       value: 
-      objectReference: {fileID: 1333992974056510849}
+      objectReference: {fileID: 0}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: m_CBAnimator
       value: 
-      objectReference: {fileID: 1333992974056510848}
+      objectReference: {fileID: 0}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: taskListAnim
       value: 
@@ -1674,11 +1651,11 @@ PrefabInstance:
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: taskContainer
       value: 
-      objectReference: {fileID: 1333992974056510847}
+      objectReference: {fileID: 0}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: completionText
       value: 
-      objectReference: {fileID: 1333992974056510850}
+      objectReference: {fileID: 0}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: taskTextPrefab
       value: 
@@ -1686,7 +1663,7 @@ PrefabInstance:
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: m_taskContainer
       value: 
-      objectReference: {fileID: 1333992974056510847}
+      objectReference: {fileID: 0}
     - target: {fileID: 8005725319209823100, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: finishLevelButton
       value: 
