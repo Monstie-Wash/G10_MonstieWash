@@ -13,16 +13,10 @@ MonoBehaviour:
   m_Name: AngryMimic
   m_EditorClassIdentifier: 
   moodName: Angry
-  moodUpperLimit: 50
-  moodLowerLimit: -100
-  moodStartingPoint: 0
-  moodNaturalChange: 5
-  moodRestingPoint: 75
-  chaosMultiplier: 0
-  positiveChainReactions: []
-  positiveReactionStrength: 0
-  negativeChainReactions: []
-  negativeReactionStrength: 0.1
-  moodParticle: {fileID: 0}
-  sceneEffectOnMood: -4
+  moodUpperLimit: 35
+  moodLowerLimit: 0
+  moodStartingPoint: 35
+  moodNaturalChange: 1
+  moodRestingPoint: 0
+  sceneEffectOnMood: -35
   flinchCount: 1
