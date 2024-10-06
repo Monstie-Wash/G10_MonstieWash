@@ -447,12 +447,16 @@ PrefabInstance:
       value: CircleMoodArea (4)
       objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: diminishingEffectiveness
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].mood
       value: 
       objectReference: {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: moodEffects.Array.data[0].reactionStrength
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4147582261773358337, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: m_Color.b
@@ -1370,6 +1374,10 @@ PrefabInstance:
       value: 0.34509802
       objectReference: {fileID: 0}
     - target: {fileID: 3024575792153552753, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: diminishingEffectiveness
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3024575792153552753, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: moodEffects.Array.data[0].mt
       value: 
       objectReference: {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
@@ -1379,7 +1387,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
     - target: {fileID: 3024575792153552753, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: moodEffects.Array.data[0].reactionStrength
-      value: 15
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3233500995100931915, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: areaCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3233500995100931915, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: diminishingEffectiveness
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3233500995100931915, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: moodEffects.Array.data[0].mood
@@ -1459,11 +1475,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5195101204616905161, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: m_Size.x
-      value: 1.19
+      value: 1.34
       objectReference: {fileID: 0}
     - target: {fileID: 5195101204616905161, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: m_Size.y
-      value: 1.28
+      value: 1.84
       objectReference: {fileID: 0}
     - target: {fileID: 5381096203401150910, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: m_Name
@@ -1474,12 +1490,32 @@ PrefabInstance:
       value: Front
       objectReference: {fileID: 0}
     - target: {fileID: 5521885064973687048, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521885064973687048, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521885064973687048, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521885064973687048, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.3
       objectReference: {fileID: 0}
     - target: {fileID: 5521885064973687048, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070260849994986673, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: areaCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070260849994986673, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
+      propertyPath: diminishingEffectiveness
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6070260849994986673, guid: eeddb0c6a6ff8ba4099f77693e8c86b5, type: 3}
       propertyPath: moodEffects.Array.data[0].mood
