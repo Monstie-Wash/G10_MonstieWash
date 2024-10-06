@@ -178,7 +178,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      metal_fragments_v1_300x300_0: -6715270673755338789
+      metal_fragments_v1_300x300_1: 612860138520094080
+      metal_fragments_v1_300x300_2: 5765257331197838705
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

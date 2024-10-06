@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      piratehat_600x600_0: -1414349279266805601
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

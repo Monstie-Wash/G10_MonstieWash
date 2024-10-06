@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      glasses_600x600_0: 4681843228700144401
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

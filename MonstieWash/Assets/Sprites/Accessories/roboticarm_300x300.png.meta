@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      roboticarm_300x300_0: 706858217955730576
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

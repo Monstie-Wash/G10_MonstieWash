@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      seashell_v2_0: 2375495570395418037
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

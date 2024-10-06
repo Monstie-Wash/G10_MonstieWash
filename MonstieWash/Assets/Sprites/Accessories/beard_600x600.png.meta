@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      beard_600x600_0: -4424731561782526927
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

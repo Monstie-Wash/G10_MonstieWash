@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Slimeattackdirt_v8_300x300_0: -3371189280853547327
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cowboyhat_600x600_0: 3969618185074694359
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      nurse hat_0: -7978341009278133879
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
