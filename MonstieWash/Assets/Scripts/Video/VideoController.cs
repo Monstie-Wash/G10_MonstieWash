@@ -19,6 +19,7 @@ public class VideoController : MonoBehaviour
     [Tooltip("Whether title plays on initial game load.")] [SerializeField] bool playTitleOnLoad;
     [Tooltip("Whether title video will play after no user input for certain time.")] [SerializeField] bool playOnAfk;
     [Tooltip("How long the video will play after afking.")] [SerializeField] float afkTimeToPlay;
+    [Tooltip("Background on title to turn on and off while video is/isn't playing")] [SerializeField] GameObject backgroundObj;
 
     [Header("Animatic Settings")]
     [Tooltip("Animatic video to play.")] [SerializeField] private VideoClip Animatic;
@@ -63,9 +64,11 @@ public class VideoController : MonoBehaviour
     private void Awake()
     {
         m_vPlayer = GetComponent<VideoPlayer>();
-
+        m_vPlayer.renderMode = VideoRenderMode.CameraFarPlane;
         status = Status.Title;
         if (playTitleOnLoad) PlayTitleVideo();
+
+
     }
 
     private void Update()
@@ -87,6 +90,7 @@ public class VideoController : MonoBehaviour
         m_vPlayer.isLooping = true;
         m_vPlayer.enabled = true;
         m_vPlayer.Play();
+        backgroundObj.SetActive(false);
     }
 
     //Called by Slime poster navigation
@@ -108,6 +112,7 @@ public class VideoController : MonoBehaviour
     /// </summary>
     private void StopVideo()
     {
+        if (status == Status.Title) backgroundObj.SetActive(true);
         m_vPlayer.enabled = false;
     }
 
@@ -120,6 +125,7 @@ public class VideoController : MonoBehaviour
         StopVideo();
         status = Status.Idle;
         m_vPlayer.loopPointReached += OnVideoFinish;
+        m_vPlayer.renderMode = VideoRenderMode.CameraNearPlane;
 
     }
 
@@ -131,6 +137,6 @@ public class VideoController : MonoBehaviour
         StopVideo();
         status = Status.Idle;
         GameSceneManager.Instance.StartNewLevel(levelFollowingAnimatic);
-        Destroy(this.gameObject);
+        m_vPlayer.enabled = false;
     }
 }

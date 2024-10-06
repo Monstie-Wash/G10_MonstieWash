@@ -583,10 +583,9 @@ MonoBehaviour:
   playTitleOnLoad: 1
   playOnAfk: 1
   afkTimeToPlay: 3
+  backgroundObj: {fileID: 1909861987}
   Animatic: {fileID: 32900000, guid: 8a6d814c5889a0545b5a3894a7596485, type: 3}
   levelFollowingAnimatic: 1
-  m_timeSinceLastInput: 0
-  moving: 0
 --- !u!1 &788627209
 GameObject:
   m_ObjectHideFlags: 0
