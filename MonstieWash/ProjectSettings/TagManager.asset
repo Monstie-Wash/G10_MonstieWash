@@ -11,6 +11,7 @@ TagManager:
   - Left
   - Back
   - Pickable
+  - Mouth
   layers:
   - Default
   - TransparentFX
@@ -59,6 +60,9 @@ TagManager:
     locked: 0
   - name: DirtFront
     uniqueID: 3114074857
+    locked: 0
+  - name: MonsterFront
+    uniqueID: 2552713379
     locked: 0
   - name: Tool Particles
     uniqueID: 918385231
