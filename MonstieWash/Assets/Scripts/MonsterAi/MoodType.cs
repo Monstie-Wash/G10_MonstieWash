@@ -20,7 +20,7 @@ public class MoodType : ScriptableObject
 
     [Tooltip("The resting point that the mood will naturally change towards by above number")][SerializeField] private float moodRestingPoint; //The point at which the mood will remain stationary.
 
-    [Tooltip("Monster won't attack unless mood value is equal or higher than its attack threshold")][SerializeField] private float attackThreshold;
+    [Tooltip("Monster won't attack unless mood value is equal or higher than its attack threshold")]/*[SerializeField]*/ private float attackThreshold;
 
     [Tooltip("Introduces random changes to the mood, recomended number 0-10 and can use decimals")]/*[SerializeField]*/ private float chaosMultiplier; //Random interference of mood level to create less certainty.
 
