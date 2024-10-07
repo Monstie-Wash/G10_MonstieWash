@@ -133,10 +133,14 @@ public class InputManager : MonoBehaviour
 		m_playerInput.MenuActions.AltSelect.started += AltSelect_started;
 		m_playerInput.MenuActions.AltSelect.performed += AltSelect_performed;
 		m_playerInput.MenuActions.AltSelect.canceled += AltSelect_canceled;
-		#endregion
 
-		#region DebugActions Subscription
-		m_playerInput.DebugActions.DebugReset.started += DebugReset_started;
+        m_playerInput.MenuActions.Move.started += Move_started;
+        m_playerInput.MenuActions.Move.performed += Move_performed;
+        m_playerInput.MenuActions.Move.canceled += Move_canceled;
+        #endregion
+
+        #region DebugActions Subscription
+        m_playerInput.DebugActions.DebugReset.started += DebugReset_started;
         m_playerInput.DebugActions.DebugReset.performed += DebugReset_performed;
         m_playerInput.DebugActions.DebugReset.canceled += DebugReset_canceled;
 
@@ -186,10 +190,14 @@ public class InputManager : MonoBehaviour
 		m_playerInput.MenuActions.AltSelect.started -= AltSelect_started;
 		m_playerInput.MenuActions.AltSelect.performed -= AltSelect_performed;
 		m_playerInput.MenuActions.AltSelect.canceled -= AltSelect_canceled;
-		#endregion
 
-		#region DebugActions Subscription
-		m_playerInput.DebugActions.DebugReset.started -= DebugReset_started;
+        m_playerInput.MenuActions.Move.started -= Move_started;
+        m_playerInput.MenuActions.Move.performed -= Move_performed;
+        m_playerInput.MenuActions.Move.canceled -= Move_canceled;
+        #endregion
+
+        #region DebugActions Subscription
+        m_playerInput.DebugActions.DebugReset.started -= DebugReset_started;
         m_playerInput.DebugActions.DebugReset.performed -= DebugReset_performed;
         m_playerInput.DebugActions.DebugReset.canceled -= DebugReset_canceled;
 

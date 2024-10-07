@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: MimicFront
   m_EditorClassIdentifier: 
   sceneName: MimicFront
+  sceneThumb: {fileID: 3928538090898734563, guid: dd75f47844d53df43b9b632dabd86cd8, type: 3}

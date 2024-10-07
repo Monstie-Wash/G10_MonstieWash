@@ -24,6 +24,8 @@ public class UIConsumable : MonoBehaviour
     [SerializeField] public Image fadedBackground;
     private PlayerHand m_playerHand;
 
+    [SerializeField] private bool showDebug;
+
     public void OnEnable()
     {
         InputManager.Instance.OnActivate += CheckClickedOn;
@@ -47,7 +49,7 @@ public class UIConsumable : MonoBehaviour
 
     public void ClickedOn()
     {
-        print("Clicked on");
+        if (showDebug) print("Clicked on");
         //Return if bag isnt in an open state.
         if (manager.state != ConsumablesManager.UiState.Open) return;
 
@@ -58,9 +60,9 @@ public class UIConsumable : MonoBehaviour
         }
         else
         {
-            if (CheckOverPlayer())
+            if (CheckOverMonster())
             {
-                print("Consuming");
+                if (showDebug) print("Consuming");
                 consumable.Consume();
             }
             else
@@ -109,7 +111,7 @@ public class UIConsumable : MonoBehaviour
 
     }
 
-    public bool CheckOverPlayer()
+    public bool CheckOverMonster()
     {
         if (Physics2D.OverlapCircle(m_playerHand.transform.position, 1f, manager.MonsterLayer)) return true;
             else return false;

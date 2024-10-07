@@ -495,6 +495,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""b0347e1b-3789-45b4-a041-8c3718c97e97"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -926,6 +935,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea4a4e30-023e-4d15-b07c-ae3d7c083081"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""209f54bb-ceec-47c0-934e-f6f577ce50fc"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1018,6 +1049,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MenuActions_AltSelect = m_MenuActions.FindAction("AltSelect", throwIfNotFound: true);
         m_MenuActions_TrackedDevicePosition = m_MenuActions.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_MenuActions_TrackedDeviceOrientation = m_MenuActions.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_MenuActions_Move = m_MenuActions.FindAction("Move", throwIfNotFound: true);
         // DebugActions
         m_DebugActions = asset.FindActionMap("DebugActions", throwIfNotFound: true);
         m_DebugActions_DebugReset = m_DebugActions.FindAction("DebugReset", throwIfNotFound: true);
@@ -1187,6 +1219,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuActions_AltSelect;
     private readonly InputAction m_MenuActions_TrackedDevicePosition;
     private readonly InputAction m_MenuActions_TrackedDeviceOrientation;
+    private readonly InputAction m_MenuActions_Move;
     public struct MenuActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -1201,6 +1234,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @AltSelect => m_Wrapper.m_MenuActions_AltSelect;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_MenuActions_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_MenuActions_TrackedDeviceOrientation;
+        public InputAction @Move => m_Wrapper.m_MenuActions_Move;
         public InputActionMap Get() { return m_Wrapper.m_MenuActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1240,6 +1274,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         private void UnregisterCallbacks(IMenuActionsActions instance)
@@ -1274,6 +1311,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         public void RemoveCallbacks(IMenuActionsActions instance)
@@ -1376,6 +1416,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnAltSelect(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
     public interface IDebugActionsActions
     {
