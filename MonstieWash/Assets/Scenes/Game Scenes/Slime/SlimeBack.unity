@@ -1052,6 +1052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CircleMoodArea
       objectReference: {fileID: 0}
+    - target: {fileID: 450824420945548116, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1793614670579725130, guid: 1d1fa450123df58439f99361b34669c1, type: 3}
       propertyPath: causesFlinch
       value: 1
@@ -1153,7 +1157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: attackList.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4962742453479070444, guid: 08c63dbf93e909148809b2f7991bb70c, type: 3}
       propertyPath: 'attackList.Array.data[0]'
