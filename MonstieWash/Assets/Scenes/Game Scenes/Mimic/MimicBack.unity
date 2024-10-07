@@ -384,8 +384,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1204393193
+  m_SortingLayer: 1
   m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.32156864, g: 0.32156864, b: 0.32156864, a: 1}
@@ -685,6 +685,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3727697547000754429, guid: a4f9d4b1173ebfd4c9ade26bd102853d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 12.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727697547000754429, guid: a4f9d4b1173ebfd4c9ade26bd102853d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 9.52
+      objectReference: {fileID: 0}
     - target: {fileID: 4977835303720252318, guid: a4f9d4b1173ebfd4c9ade26bd102853d, type: 3}
       propertyPath: hideWarning
       value: 1
@@ -790,8 +798,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8599367604774255420, guid: 7ed1f1045d86b074b939a55fd6a396e2, type: 3}
     - target: {fileID: 9094874810309194301, guid: a4f9d4b1173ebfd4c9ade26bd102853d, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9094874810309194301, guid: a4f9d4b1173ebfd4c9ade26bd102853d, type: 3}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9094874810309194301, guid: a4f9d4b1173ebfd4c9ade26bd102853d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1311236353
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1563,7 +1579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4938277568639111315, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
       propertyPath: m_SortingOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1845,8 +1861,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1204393193
+  m_SortingLayer: 1
   m_SortingOrder: -2
   m_Sprite: {fileID: -3641247767731177697, guid: 03fc6726e5e2be14d891a11618e7673e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
