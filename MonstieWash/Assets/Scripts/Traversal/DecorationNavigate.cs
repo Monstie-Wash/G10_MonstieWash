@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class DecorationNavigate : MonoBehaviour, INavigator
 {
+    [HideInInspector] public bool InDecorationScene;
+
     public void OnClicked()
     {
-        GameSceneManager.Instance.BeginDecoration();
+        if (!InDecorationScene)
+        {
+            GameSceneManager.Instance.BeginDecoration();
+            InDecorationScene = true;
+        }
+        else FindFirstObjectByType<DecorationManager>().TakePolaroid();
     }
 
 }

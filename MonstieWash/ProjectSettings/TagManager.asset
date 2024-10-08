@@ -12,6 +12,7 @@ TagManager:
   - Back
   - Pickable
   - Mouth
+  - MainCanvas
   layers:
   - Default
   - TransparentFX

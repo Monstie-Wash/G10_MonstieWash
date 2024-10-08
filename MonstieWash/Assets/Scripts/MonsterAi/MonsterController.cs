@@ -129,7 +129,7 @@ public class MonsterController : MonoBehaviour
 
         // Play the attack animation
         m_myAnimator.Play(attack.name);
-        OnAttackBegin();
+        OnAttackBegin?.Invoke();
     }
 
     public void AttackStarted()
