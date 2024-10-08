@@ -116,7 +116,8 @@ public class MoodArea : MonoBehaviour
             m_monsterBrain.UpdateMood(moodEffect.reactionStrength * (currentEffectiveness/100f), moodEffect.mood);
             if (debug) print($"Reaction Strength  {moodEffect.reactionStrength}  at effectivness of {currentEffectiveness} for the mood {moodEffect.mood.MoodName}");
 
-            m_moodFXManager.MoodParticleSystems[moodEffect.mood]?.Play();
+            ParticleSystem ps;
+            if (m_moodFXManager.MoodParticleSystems.TryGetValue(moodEffect.mood, out ps)) ps.Play();
         }
 
         //Apply diminishing effect if toggled on.

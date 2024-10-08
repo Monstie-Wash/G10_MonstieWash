@@ -48,17 +48,17 @@ public class LevelSelectManager : MonoBehaviour
         var Buttons = FindObjectsByType<Button>(FindObjectsSortMode.None);
         foreach (Button b in Buttons)
         {
-            if (b.gameObject.name == "Back" && b.gameObject.activeInHierarchy)
+            if (b.gameObject.name == "Back" && b.gameObject.activeInHierarchy && b != null)
                 return b;
         }
 
-        Debug.LogError("Back Button not found.");
+        Debug.Log("Back Button not found.");
         return null;
     }
 
     private void Inputs_Back()
     {
-        m_backButton.onClick.Invoke();
-
+        if (m_backButton != null)
+            m_backButton.onClick.Invoke();
     }
 }

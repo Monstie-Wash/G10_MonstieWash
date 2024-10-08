@@ -29,18 +29,11 @@ public class TaskTracker : MonoBehaviour
     private void OnEnable()
     {
         GameSceneManager.Instance.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
-        GameSceneManager.Instance.OnSceneChanged += RoomSaver_OnSceneChanged;
-    }
-
-    private void RoomSaver_OnSceneChanged()
-    {
-        if (GameSceneManager.Instance.CurrentLevel != GameSceneManager.Level.None) UpdateUI();
     }
 
     private void OnDisable()
     {
         GameSceneManager.Instance.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
-        GameSceneManager.Instance.OnSceneChanged -= RoomSaver_OnSceneChanged;
     }
 
     private void RoomSaver_OnScenesLoaded()
@@ -78,8 +71,6 @@ public class TaskTracker : MonoBehaviour
             return;
         }
 
-        UpdateUI();
-
         if (!task.Complete) return;
 
         SceneCompletionCheck(task.gameObject.scene);
@@ -116,8 +107,6 @@ public class TaskTracker : MonoBehaviour
             if(!task.Complete)
                 return;
         }
-
-		m_uiManager.UpdateClipboardTask(toCheck.TaskType);
 	}
 
     /// <summary>
@@ -149,15 +138,6 @@ public class TaskTracker : MonoBehaviour
         OnLevelCompleted?.Invoke();
 
         MusicManager.Instance.SetMusic(MusicManager.MusicType.Victory);
-    }
-
-    /// <summary>
-    /// Updates the completion amounts in the UI
-    /// </summary>
-    public void UpdateUI()
-    {
-        m_uiManager.UpdateProgressBar(CalculateCurrentSceneCompletionPercentage(GameSceneManager.Instance.CurrentScene));
-        m_uiManager.UpdateCompletion(CalculateOverallCompletionPercentage());
     }
 
     /// <summary>

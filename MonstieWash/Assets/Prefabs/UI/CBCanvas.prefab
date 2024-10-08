@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 5852822851186105201}
   m_Layer: 5
   m_Name: CBCanvas
-  m_TagString: Untagged
+  m_TagString: MainCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
