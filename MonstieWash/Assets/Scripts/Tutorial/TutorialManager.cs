@@ -28,8 +28,21 @@ public class TutorialManager : MonoBehaviour
     private ToolSwitcher m_toolSwitcher;
     private TaskTracker m_taskTracker;
 
+    public event Action ProgressUpdate;
+
     // scripted events - include scripted event enumtypes to be used here (tutoriial should probably have all types)
     private ScriptedEventsManager m_scriptedEventsManager;
+
+    // getters for prompt completion progress
+    public float Progress { get { return (float)Math.Round(m_trackedValue, 2, MidpointRounding.AwayFromZero); } }
+    public float Complete { get { return (float)Math.Round(m_tutorialPrompts[m_tutorialStep].Value, 2, MidpointRounding.AwayFromZero); } }
+    public string Completion { get 
+        { 
+            if (m_tutorialPrompts[m_tutorialStep].CompleteType != CompletionType.Instant) return $"{Progress} / {Complete}"; 
+            else if (m_trackedValue == -1f) return "Complete!"; 
+            else return ""; 
+        } 
+    }
 
     [Serializable] 
     private struct TutorialPrompt
@@ -113,6 +126,9 @@ public class TutorialManager : MonoBehaviour
             var currentPrompt = m_tutorialPrompts[m_tutorialStep];
             if (currentPrompt.ScriptedEventType != ScriptedEventsManager.ScriptedEventType.None) m_scriptedEventsManager.RunScriptedEvent(gameObject, currentPrompt.ScriptedEventType);
 
+            // update tutorial counters
+            ProgressUpdate?.Invoke();
+
             // wait for the prompt to be completed
             yield return new WaitUntil(() => m_completed);
 
@@ -127,6 +143,8 @@ public class TutorialManager : MonoBehaviour
                 m_tutorialStep++;
                 currentPrompt = m_tutorialPrompts[m_tutorialStep];
                 currentPrompt.Prompt.SetActive(true);
+                // update tutorial counters
+                ProgressUpdate?.Invoke();
                 // run safety checks
                 if (currentPrompt.CompleteEvent == CompletionEvent.UnstickItem) SetStuckItemTrackedValue();
             }
@@ -203,6 +221,7 @@ public class TutorialManager : MonoBehaviour
         if (m_running)
         {
             m_trackedValue++;
+            ProgressUpdate?.Invoke();
             if (m_trackedValue >= targetValue)
             {
                 m_trackedValue = 0f;
@@ -220,6 +239,7 @@ public class TutorialManager : MonoBehaviour
         if (m_running)
         {
             m_trackedValue += 0.002f;  // Approximate - can replace with how long the call actually takes
+            ProgressUpdate?.Invoke();
             if (m_trackedValue >= targetValue)
             {
                 m_trackedValue = 0f;
