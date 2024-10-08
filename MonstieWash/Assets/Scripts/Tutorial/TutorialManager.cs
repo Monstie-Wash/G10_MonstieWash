@@ -36,7 +36,13 @@ public class TutorialManager : MonoBehaviour
     // getters for prompt completion progress
     public float Progress { get { return (float)Math.Round(m_trackedValue, 2, MidpointRounding.AwayFromZero); } }
     public float Complete { get { return (float)Math.Round(m_tutorialPrompts[m_tutorialStep].Value, 2, MidpointRounding.AwayFromZero); } }
-    public string Completion { get { if (m_tutorialPrompts[m_tutorialStep].CompleteType != CompletionType.Instant) return $"{Progress} / {Complete}"; else if (m_trackedValue == -1f) return "Complete!"; else return ""; } }
+    public string Completion { get 
+        { 
+            if (m_tutorialPrompts[m_tutorialStep].CompleteType != CompletionType.Instant) return $"{Progress} / {Complete}"; 
+            else if (m_trackedValue == -1f) return "Complete!"; 
+            else return ""; 
+        } 
+    }
 
     [Serializable] 
     private struct TutorialPrompt

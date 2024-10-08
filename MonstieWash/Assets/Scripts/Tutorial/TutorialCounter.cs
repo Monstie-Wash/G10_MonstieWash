@@ -6,30 +6,30 @@ using UnityEngine.UI;
 
 public class TutorialCounter : MonoBehaviour
 {
-    private TextMeshProUGUI m_Text;
-    private TutorialManager m_Manager;
+    private TextMeshProUGUI m_text;
+    private TutorialManager m_manager;
 
     // Start is called before the first frame update
     void Awake()
     {
-        m_Text = GetComponent<TextMeshProUGUI>();
-        m_Manager = FindFirstObjectByType<TutorialManager>();
+        m_text = GetComponent<TextMeshProUGUI>();
+        m_manager = FindFirstObjectByType<TutorialManager>();
     }
 
     private void OnEnable()
     {
-        m_Manager.ProgressUpdate += UpdateText;
+        m_manager.ProgressUpdate += UpdateText;
     }
 
     private void OnDisable()
     {
-        m_Manager.ProgressUpdate -= UpdateText;
+        m_manager.ProgressUpdate -= UpdateText;
     }
 
     // Update is called once per frame
     void UpdateText()
     {
-        if (m_Manager == null || m_Text == null) return;
-        else m_Text.text = m_Manager.Completion;
+        if (m_manager == null || m_text == null) return;
+        else m_text.text = m_manager.Completion;
     }
 }
