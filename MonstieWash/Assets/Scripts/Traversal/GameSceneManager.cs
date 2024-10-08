@@ -305,6 +305,9 @@ public class GameSceneManager : MonoBehaviour
         GameObject mainCanvas;
         if (mainCanvas = GameObject.FindGameObjectWithTag("MainCanvas")) mainCanvas.SetActive(false);
 
+        NavigationUI n;
+        if (n = FindFirstObjectByType<NavigationUI>()) n.gameObject.SetActive(false);
+
         //Remove tool options.
         FindFirstObjectByType<ToolSwitcher>().RemoveOptions();
 

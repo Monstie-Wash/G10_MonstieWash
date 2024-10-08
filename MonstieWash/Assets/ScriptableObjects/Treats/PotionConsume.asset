@@ -17,8 +17,12 @@ MonoBehaviour:
   maxQuantity: 99
   sortingTags: 03000000
   diminishingReturns: 0
-  moods:
+  moodEffects:
   - target: {fileID: 11400000, guid: 34568d0770a2eb24fa70568ba9044e08, type: 2}
     effect: -30
   - target: {fileID: 11400000, guid: 78750ed21c19e0e4ebc7d1f00b732044, type: 2}
     effect: -30
+  moodFXOnUse:
+  - {fileID: 11400000, guid: c21217ce1f7317e46922f477e55c6ab2, type: 2}
+  - {fileID: 11400000, guid: ccbfee3ea46a08a40bc6f491debfcaba, type: 2}
+  showDebug: 0
