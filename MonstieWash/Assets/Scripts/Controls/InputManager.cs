@@ -207,6 +207,16 @@ public class InputManager : MonoBehaviour
         #endregion
     }
 
+    public void Enable()
+    {
+        this.enabled = true;
+    }
+
+    public void Disable()
+    {
+        this.enabled = false;
+    }
+
     private void UpdateInputDevice(InputDevice device)
     {
         if (device is Gamepad) m_inputDevice = PlayerInputDevice.Controller;
