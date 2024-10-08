@@ -2311,7 +2311,7 @@ GameObject:
   - component: {fileID: 3054304000912556021}
   - component: {fileID: 1919246944545930554}
   m_Layer: 5
-  m_Name: '''A'' Button'
+  m_Name: '''RT'' Button'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2364,7 +2364,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3474547559559131886, guid: 4eb8be04faf4efd4394d9ec1baeaefea, type: 3}
+  m_Sprite: {fileID: 3913453193044211575, guid: f3c7e7e09e1208f4fb5e036ff060e70f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
