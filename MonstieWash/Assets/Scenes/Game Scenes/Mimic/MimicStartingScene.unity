@@ -1420,6 +1420,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 210014948}
     - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: numOfDirt
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: attackDirt
+      value: 
+      objectReference: {fileID: 487633809713049485, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+    - target: {fileID: 1661805892012121062, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       propertyPath: maxBetweenAttacks
       value: 12
       objectReference: {fileID: 0}
