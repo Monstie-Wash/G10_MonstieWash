@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,6 +25,7 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameScene initialScene;
     [SerializeField] private List<GameScene> bedroomScenes;
     [SerializeField] private GameScene scoreSummaryScene;
+    [SerializeField] private GameScene galleryScene;
     [SerializeField] private List<LevelScenes> allLevelScenes = new();
 
     private Level m_currentLevel;
@@ -275,11 +277,8 @@ public class GameSceneManager : MonoBehaviour
     /// </summary>
     public async void FinishLevel()
     {
-        OnLevelEnd?.Invoke();
-
         MoveToScene(loadingScene.SceneName);
 
-        m_levelObjectActiveStates.Clear();
         SetSceneActive(m_currentLevelScenes.startingScene.SceneName, false);
         await LoadScene(scoreSummaryScene.SceneName);
 
@@ -291,6 +290,8 @@ public class GameSceneManager : MonoBehaviour
     /// </summary>
     public async void BeginDecoration()
     {
+        OnLevelEnd?.Invoke();
+
         //Null check for unassigned decoration scene. Will likely remove once full setup is implemented.
         if (m_currentLevelScenes.decorationScene == null)
         {
@@ -301,12 +302,8 @@ public class GameSceneManager : MonoBehaviour
         //m_levelObjectActiveStates.Clear();
 
         //Turn off inventory bag if it exists.
-        ConsumablesManager c;
-        if (c = FindFirstObjectByType<ConsumablesManager>()) c.gameObject.SetActive(false);
-
-        //Turn off tutorial if it exists.
-        TutorialManager t;
-        if (t = FindFirstObjectByType<TutorialManager>()) t.transform.parent.gameObject.SetActive(false);
+        GameObject mainCanvas;
+        if (mainCanvas = GameObject.FindGameObjectWithTag("MainCanvas")) mainCanvas.SetActive(false);
 
         NavigationUI n;
         if (n = FindFirstObjectByType<NavigationUI>()) n.gameObject.SetActive(false);
@@ -314,10 +311,23 @@ public class GameSceneManager : MonoBehaviour
         //Remove tool options.
         FindFirstObjectByType<ToolSwitcher>().RemoveOptions();
 
+        var decoNav = FindFirstObjectByType<DecorationNavigate>(FindObjectsInactive.Include).gameObject;
+        decoNav.SetActive(true);
+        decoNav.transform.position = decoNav.transform.GetChild(2).position;
+        decoNav.GetComponentInChildren<TextMeshProUGUI>().text = "Gallery!";
+
         MoveToScene(loadingScene.SceneName);
         await LoadScene(m_currentLevelScenes.decorationScene.SceneName);
 
         MoveToScene(m_currentLevelScenes.decorationScene.SceneName, false);
+    }
+
+    public async void GoToGallery()
+    {
+        MoveToScene(loadingScene.SceneName);
+        await LoadScene(galleryScene.SceneName);
+
+        MoveToScene(galleryScene.SceneName);
     }
 
     /// <summary>
@@ -328,16 +338,16 @@ public class GameSceneManager : MonoBehaviour
     public async Task GoToBedroomScene(string target, bool targetIsUI)
     {
         var lastActiveScene = m_currentScene.name;
-        m_currentLevel = Level.None;
         MoveToScene(loadingScene.SceneName);
 
         if (!bedroomScenes.Exists(scene => scene.SceneName.Equals(lastActiveScene)))
         {
-            await UnloadActiveLevelScenes();
-            await UnloadScene(lastActiveScene);
+            await UnloadAllScenes();
             await LoadBedroomScenes();
         }
 
+        m_levelObjectActiveStates.Clear();
+        m_currentLevel = Level.None;
         MoveToScene(target, targetIsUI);
     }
 
