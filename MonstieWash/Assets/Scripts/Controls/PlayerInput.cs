@@ -981,6 +981,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=3)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkipAnimatic"",
+                    ""type"": ""Button"",
+                    ""id"": ""d5e98f8b-4c39-432b-aaad-35ddb62e5a77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1071,6 +1080,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""FinishLevel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5c48682-fcfe-4ec6-b0c6-acb83e4497b3"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipAnimatic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6776c418-0a7f-4765-b850-c1b9a96028b1"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipAnimatic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1109,6 +1140,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_DebugActions = asset.FindActionMap("DebugActions", throwIfNotFound: true);
         m_DebugActions_DebugReset = m_DebugActions.FindAction("DebugReset", throwIfNotFound: true);
         m_DebugActions_FinishLevel = m_DebugActions.FindAction("FinishLevel", throwIfNotFound: true);
+        m_DebugActions_SkipAnimatic = m_DebugActions.FindAction("SkipAnimatic", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1392,12 +1424,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IDebugActionsActions> m_DebugActionsActionsCallbackInterfaces = new List<IDebugActionsActions>();
     private readonly InputAction m_DebugActions_DebugReset;
     private readonly InputAction m_DebugActions_FinishLevel;
+    private readonly InputAction m_DebugActions_SkipAnimatic;
     public struct DebugActionsActions
     {
         private @PlayerInput m_Wrapper;
         public DebugActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @DebugReset => m_Wrapper.m_DebugActions_DebugReset;
         public InputAction @FinishLevel => m_Wrapper.m_DebugActions_FinishLevel;
+        public InputAction @SkipAnimatic => m_Wrapper.m_DebugActions_SkipAnimatic;
         public InputActionMap Get() { return m_Wrapper.m_DebugActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1413,6 +1447,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @FinishLevel.started += instance.OnFinishLevel;
             @FinishLevel.performed += instance.OnFinishLevel;
             @FinishLevel.canceled += instance.OnFinishLevel;
+            @SkipAnimatic.started += instance.OnSkipAnimatic;
+            @SkipAnimatic.performed += instance.OnSkipAnimatic;
+            @SkipAnimatic.canceled += instance.OnSkipAnimatic;
         }
 
         private void UnregisterCallbacks(IDebugActionsActions instance)
@@ -1423,6 +1460,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @FinishLevel.started -= instance.OnFinishLevel;
             @FinishLevel.performed -= instance.OnFinishLevel;
             @FinishLevel.canceled -= instance.OnFinishLevel;
+            @SkipAnimatic.started -= instance.OnSkipAnimatic;
+            @SkipAnimatic.performed -= instance.OnSkipAnimatic;
+            @SkipAnimatic.canceled -= instance.OnSkipAnimatic;
         }
 
         public void RemoveCallbacks(IDebugActionsActions instance)
@@ -1477,5 +1517,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnDebugReset(InputAction.CallbackContext context);
         void OnFinishLevel(InputAction.CallbackContext context);
+        void OnSkipAnimatic(InputAction.CallbackContext context);
     }
 }

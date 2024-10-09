@@ -148,6 +148,12 @@ public class VideoController : MonoBehaviour
     /// </summary>
     private void OnVideoFinish(VideoPlayer vp)
     {
+        FinishAnimatic();
+    }
+
+    public void FinishAnimatic()
+    {
+        m_vPlayer.loopPointReached -= OnVideoFinish;
         StopVideo();
         status = Status.Idle;
         GameSceneManager.Instance.StartNewLevel(levelFollowingAnimatic);

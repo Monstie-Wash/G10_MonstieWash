@@ -20,19 +20,21 @@ public class FinishLevelButton : MonoBehaviour, INavigator
         var polaroidRot = polaroidTransform.rotation.eulerAngles.z;
 
         var saveLocation = Application.persistentDataPath + "/PolaroidSaving/PolaroidPositions.txt";
+        var saveString = $"{polaroidPos.x.ToString("0.00")}, {polaroidPos.y.ToString("0.00")}, {polaroidRot.ToString("0.00")}";
+        Debug.Log(saveString);
 
         if (File.Exists(saveLocation))
         {
             using (var outputFile = File.AppendText(saveLocation))
             {
-                outputFile.WriteLine($"{polaroidPos.x.ToString("0.00")}, {polaroidPos.y.ToString("0.00")}, {polaroidRot.ToString("0.00")}");
+                outputFile.WriteLine(saveString);
             }
         }
         else
         {
             using (var outputFile = File.CreateText(saveLocation))
             {
-                outputFile.WriteLine($"{polaroidPos.x.ToString("0.00")}, {polaroidPos.y.ToString("0.00")}, {polaroidRot.ToString("0.00")}");
+                outputFile.WriteLine(saveString);
             }
         }
 
