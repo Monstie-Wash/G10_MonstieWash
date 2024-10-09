@@ -594,7 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   status: 2
-  TitleVideo: {fileID: 32900000, guid: bfe9e6e904fc0a149b32ff6c9abbeab4, type: 3}
+  TitleVideo: {fileID: 32900000, guid: ddf754a0d0aae35448a621fa8457f0d0, type: 3}
   playTitleOnLoad: 0
   playOnAfk: 1
   afkTimeToPlay: 10
