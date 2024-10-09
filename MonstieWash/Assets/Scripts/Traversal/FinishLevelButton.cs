@@ -19,7 +19,7 @@ public class FinishLevelButton : MonoBehaviour, INavigator
         var polaroidPos = polaroidTransform.position;
         var polaroidRot = polaroidTransform.rotation.eulerAngles.z;
 
-        var saveLocation = Path.Combine(Application.persistentDataPath, "PolaroidPositions.txt");
+        var saveLocation = Application.persistentDataPath + "/PolaroidPositions.txt";
 
         if (File.Exists(saveLocation))
         {

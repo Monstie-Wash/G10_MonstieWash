@@ -31,8 +31,12 @@ public class GalleryManager : ImageLoader
         var playerHand = FindFirstObjectByType<PlayerHand>().gameObject;
         playerHand.AddComponent<GalleryInteraction>();
 
-        var savePath = Path.Combine(Application.persistentDataPath, saveLocation);
-        var fileCount = Directory.GetFiles(savePath).Length;
+        var savePath = Application.persistentDataPath + saveLocation;
+        int fileCount = 0;
+        if (Directory.Exists(savePath))
+        {
+            fileCount = Directory.GetFiles(savePath).Length;
+        }
 
         PolaroidTransform[] polaroidTransforms = { }; // Only used when there is more than one polaroid saved
         if (fileCount > 1) polaroidTransforms = ReadPolaroidTransforms();
@@ -85,7 +89,7 @@ public class GalleryManager : ImageLoader
     private PolaroidTransform[] ReadPolaroidTransforms()
     {
         List<PolaroidTransform> polaroidTransforms = new();
-        var saveLocation = Path.Combine(Application.persistentDataPath, "PolaroidPositions.txt");
+        var saveLocation = Application.persistentDataPath + "/PolaroidPositions.txt";
 
         if (File.Exists(saveLocation))
         {
