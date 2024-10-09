@@ -87,18 +87,21 @@ public class GalleryManager : ImageLoader
         List<PolaroidTransform> polaroidTransforms = new();
         var saveLocation = Path.Combine(Application.persistentDataPath, "PolaroidPositions.txt");
 
-        using (var inputFile = new StreamReader(saveLocation))
+        if (File.Exists(saveLocation))
         {
-            while (!inputFile.EndOfStream)
+            using (var inputFile = new StreamReader(saveLocation))
             {
-                var line = inputFile.ReadLine();
-                var values = line.Split(',');
-                var posX = float.Parse(values[0]);
-                var posY = float.Parse(values[1]);
-                var rot = float.Parse(values[2]);
+                while (!inputFile.EndOfStream)
+                {
+                    var line = inputFile.ReadLine();
+                    var values = line.Split(',');
+                    var posX = float.Parse(values[0]);
+                    var posY = float.Parse(values[1]);
+                    var rot = float.Parse(values[2]);
 
-                var polaroidTransform = new PolaroidTransform(posX, posY, rot);
-                polaroidTransforms.Add(polaroidTransform);
+                    var polaroidTransform = new PolaroidTransform(posX, posY, rot);
+                    polaroidTransforms.Add(polaroidTransform);
+                }
             }
         }
 
