@@ -31,11 +31,16 @@ public class GalleryManager : ImageLoader
         var playerHand = FindFirstObjectByType<PlayerHand>().gameObject;
         playerHand.AddComponent<GalleryInteraction>();
 
-        var savePath = Application.persistentDataPath + saveLocation;
-        var fileCount = Directory.GetFiles(savePath).Length;
+        var savePath = Application.persistentDataPath + "/PolaroidSaving" + saveLocation;
+        int fileCount = 0;
+        if (Directory.Exists(savePath)) fileCount = Directory.GetFiles(savePath).Length;
 
         PolaroidTransform[] polaroidTransforms = { }; // Only used when there is more than one polaroid saved
-        if (fileCount > 1) polaroidTransforms = ReadPolaroidTransforms();
+        if (fileCount > 1)
+        {
+            polaroidTransforms = ReadPolaroidTransforms();
+            CorrectMismatch(ref polaroidTransforms, fileCount); // Rewrite PolaroidPositions.txt when mismatch occurs
+        }
 
         // Oldest polaroids to newest polaroids
         for (int i = 0; i < fileCount; i++)
@@ -85,24 +90,59 @@ public class GalleryManager : ImageLoader
     private PolaroidTransform[] ReadPolaroidTransforms()
     {
         List<PolaroidTransform> polaroidTransforms = new();
-        var saveLocation = Path.Combine(Application.persistentDataPath, "PolaroidPositions.txt");
+        var saveLocation = Application.persistentDataPath + "/PolaroidSaving/PolaroidPositions.txt";
 
-        using (var inputFile = new StreamReader(saveLocation))
+        if (File.Exists(saveLocation))
         {
-            while (!inputFile.EndOfStream)
+            using (var inputFile = new StreamReader(saveLocation))
             {
-                var line = inputFile.ReadLine();
-                var values = line.Split(',');
-                var posX = float.Parse(values[0]);
-                var posY = float.Parse(values[1]);
-                var rot = float.Parse(values[2]);
+                while (!inputFile.EndOfStream)
+                {
+                    try
+                    {
+                        var line = inputFile.ReadLine();
+                        var values = line.Split(',');
+                        var posX = float.Parse(values[0]);
+                        var posY = float.Parse(values[1]);
+                        var rot = float.Parse(values[2]);
 
-                var polaroidTransform = new PolaroidTransform(posX, posY, rot);
-                polaroidTransforms.Add(polaroidTransform);
+                        var polaroidTransform = new PolaroidTransform(posX, posY, rot);
+                        polaroidTransforms.Add(polaroidTransform);
+                    }
+                    catch
+                    {
+                        //Skip this line
+                    }
+                }
             }
         }
 
         return polaroidTransforms.ToArray();
+    }
+
+    /// <summary>
+    /// Rewrites PolaroidPositions.txt when mismatch between polaroid count and position data occurs.
+    /// </summary>
+    /// <param name="polaroidTransforms">The array of polaroid positions read from PolaroidPositions.txt.</param>
+    /// <param name="polaroidCount">The number of polaroids saved.</param>
+    private void CorrectMismatch(ref PolaroidTransform[] polaroidTransforms, int polaroidCount)
+    {
+        if (polaroidTransforms.Length != polaroidCount - 1)
+        {
+            var path = Application.persistentDataPath + "/PolaroidSaving/PolaroidPositions.txt";
+            using (var outputFile = File.CreateText(path))
+            {
+                for (int l = 0; l < polaroidCount - 1; l++)
+                {
+                    var xPos = Random.Range(bounds.min.x, bounds.max.x);
+                    var yPos = Random.Range(bounds.min.y, bounds.max.y);
+                    var rot = Random.Range(-30f, 30f);
+                    outputFile.WriteLine($"{xPos.ToString("0.00")}, {yPos.ToString("0.00")}, {rot.ToString("0.00")}");
+                }
+            }
+
+            polaroidTransforms = ReadPolaroidTransforms();
+        }
     }
 
     private void OnDrawGizmosSelected()

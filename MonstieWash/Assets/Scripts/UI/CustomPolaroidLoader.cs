@@ -9,7 +9,7 @@ public class CustomPolaroidLoader : ImageLoader
         var image = GetComponent<Image>();
 
         //Get file location lenght
-        var savePath = Application.persistentDataPath + saveLocation;
+        var savePath = Application.persistentDataPath + "/PolaroidSaving" + saveLocation;
         var fileCount = Directory.GetFiles(savePath).Length - 1;
 
         var spriteTex = LoadTexture($"{savePath}/Polaroid_{fileCount}.Png");

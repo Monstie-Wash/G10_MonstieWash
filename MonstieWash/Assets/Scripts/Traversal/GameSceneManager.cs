@@ -69,6 +69,8 @@ public class GameSceneManager : MonoBehaviour
                 else AllLevelScenes.Add(gameScene.SceneName);
             }
         }
+
+        m_currentScene = gameObject.scene;
     }
 
     /// <summary>
@@ -84,7 +86,7 @@ public class GameSceneManager : MonoBehaviour
         m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
         InputManager.Instance.SetCursorMode(false);
         InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
-        MusicManager.Instance.SetMusic(MusicManager.MusicType.Morning);
+        //MusicManager.Instance.SetMusic(MusicManager.MusicType.Morning); Animatic sound plays over this now.
         SetSceneActive(loadingScene.SceneName, false);
     }
 

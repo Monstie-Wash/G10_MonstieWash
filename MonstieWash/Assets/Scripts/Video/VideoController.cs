@@ -19,16 +19,18 @@ public class VideoController : MonoBehaviour
     [Tooltip("Whether title plays on initial game load.")] [SerializeField] bool playTitleOnLoad;
     [Tooltip("Whether title video will play after no user input for certain time.")] [SerializeField] bool playOnAfk;
     [Tooltip("How long the video will play after afking.")] [SerializeField] float afkTimeToPlay;
-    [Tooltip("Background on title to turn on and off while video is/isn't playing")] [SerializeField] GameObject backgroundObj;
+    [Tooltip("Background on title to turn on and off while video is/isn't playing")] [SerializeField] List<GameObject> backgroundObjs;
 
     [Header("Animatic Settings")]
     [Tooltip("Animatic video to play.")] [SerializeField] private VideoClip Animatic;
     [Tooltip("Level to load after Animatic.")] [SerializeField] private GameSceneManager.Level levelFollowingAnimatic;
+   
 
     //Private
     private VideoPlayer m_vPlayer;
     private float m_timeSinceLastInput; //How long since player moved mouse/joystick.
     private bool m_moving; //Whether player is moving mouse/joystick currently.
+    private SoundPlayer soundPlayer;
 
     private void OnEnable()
     {
@@ -63,6 +65,7 @@ public class VideoController : MonoBehaviour
 
     private void Awake()
     {
+        soundPlayer = FindFirstObjectByType<SoundPlayer>();
         m_vPlayer = GetComponent<VideoPlayer>();
         m_vPlayer.renderMode = VideoRenderMode.CameraFarPlane;
         status = Status.Title;
@@ -90,7 +93,11 @@ public class VideoController : MonoBehaviour
         m_vPlayer.isLooping = true;
         m_vPlayer.enabled = true;
         m_vPlayer.Play();
-        backgroundObj.SetActive(false);
+        soundPlayer.StopSound();
+        foreach (GameObject g in backgroundObjs)
+        {
+            g.SetActive(false);
+        }
     }
 
     //Called by Slime poster navigation
@@ -112,7 +119,14 @@ public class VideoController : MonoBehaviour
     /// </summary>
     private void StopVideo()
     {
-        if (status == Status.Title) backgroundObj.SetActive(true);
+        if (status == Status.Title)
+        {
+            if(!soundPlayer.IsPlaying()) soundPlayer.PlaySound();
+            foreach (GameObject g in backgroundObjs)
+            {
+                g.SetActive(true);
+            }
+        }
         m_vPlayer.enabled = false;
     }
 
@@ -134,6 +148,12 @@ public class VideoController : MonoBehaviour
     /// </summary>
     private void OnVideoFinish(VideoPlayer vp)
     {
+        FinishAnimatic();
+    }
+
+    public void FinishAnimatic()
+    {
+        m_vPlayer.loopPointReached -= OnVideoFinish;
         StopVideo();
         status = Status.Idle;
         GameSceneManager.Instance.StartNewLevel(levelFollowingAnimatic);

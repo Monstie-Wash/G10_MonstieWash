@@ -86,4 +86,13 @@ public class SoundPlayer : MonoBehaviour
         sound = newSound;
         SetupAudio();
     }
+
+    /// <summary>
+    /// Check if this is playing sound.
+    /// </summary>
+    public bool IsPlaying()
+    {
+        if (m_audioSource.isPlaying) return true;
+        else return false;
+    }
 }
