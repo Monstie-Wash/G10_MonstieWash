@@ -21,9 +21,21 @@ public class FinishLevelButton : MonoBehaviour, INavigator
 
         var saveLocation = Path.Combine(Application.persistentDataPath, "PolaroidPositions.txt");
 
-        using (var outputFile = new StreamWriter(saveLocation, true))
+        if (File.Exists(saveLocation))
         {
-            outputFile.WriteLine($"{polaroidPos.x.ToString("0.00")}, {polaroidPos.y.ToString("0.00")}, {polaroidRot.ToString("0.00")}");
+            using (var outputFile = File.AppendText(saveLocation))
+            {
+                outputFile.WriteLine($"{polaroidPos.x.ToString("0.00")}, {polaroidPos.y.ToString("0.00")}, {polaroidRot.ToString("0.00")}");
+            }
         }
+        else
+        {
+            using (var outputFile = File.CreateText(saveLocation))
+            {
+                outputFile.WriteLine($"{polaroidPos.x.ToString("0.00")}, {polaroidPos.y.ToString("0.00")}, {polaroidRot.ToString("0.00")}");
+            }
+        }
+
+        
     }
 }
