@@ -979,7 +979,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""2c44cf7d-891f-4cb9-8287-3edca9ae32fe"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=1)"",
+                    ""interactions"": ""Hold(duration=3)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkipAnimatic"",
+                    ""type"": ""Button"",
+                    ""id"": ""d5e98f8b-4c39-432b-aaad-35ddb62e5a77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -996,15 +1005,37 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""608d33d2-228d-48b6-abc4-0bec60ed231d"",
+                    ""name"": ""One Modifier"",
+                    ""id"": ""b400d4fe-f408-4d9f-a86e-d009effe6f1c"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugReset"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""7460915f-9970-4aec-bbfd-a4d68bcd952c"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""50ae386c-455c-49af-9716-ef834ff7936f"",
                     ""path"": ""<Gamepad>/rightStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DebugReset"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -1014,6 +1045,61 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""FinishLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""333debf6-d285-421e-a314-80f7ac4adb1b"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FinishLevel"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""fc9a1709-1dc3-49e7-91b4-5a9f394ab611"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FinishLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""d0c3828d-cdc7-4546-91df-47d0fdfdf1a4"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FinishLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5c48682-fcfe-4ec6-b0c6-acb83e4497b3"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipAnimatic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6776c418-0a7f-4765-b850-c1b9a96028b1"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkipAnimatic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1054,6 +1140,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_DebugActions = asset.FindActionMap("DebugActions", throwIfNotFound: true);
         m_DebugActions_DebugReset = m_DebugActions.FindAction("DebugReset", throwIfNotFound: true);
         m_DebugActions_FinishLevel = m_DebugActions.FindAction("FinishLevel", throwIfNotFound: true);
+        m_DebugActions_SkipAnimatic = m_DebugActions.FindAction("SkipAnimatic", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1337,12 +1424,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IDebugActionsActions> m_DebugActionsActionsCallbackInterfaces = new List<IDebugActionsActions>();
     private readonly InputAction m_DebugActions_DebugReset;
     private readonly InputAction m_DebugActions_FinishLevel;
+    private readonly InputAction m_DebugActions_SkipAnimatic;
     public struct DebugActionsActions
     {
         private @PlayerInput m_Wrapper;
         public DebugActionsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @DebugReset => m_Wrapper.m_DebugActions_DebugReset;
         public InputAction @FinishLevel => m_Wrapper.m_DebugActions_FinishLevel;
+        public InputAction @SkipAnimatic => m_Wrapper.m_DebugActions_SkipAnimatic;
         public InputActionMap Get() { return m_Wrapper.m_DebugActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1358,6 +1447,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @FinishLevel.started += instance.OnFinishLevel;
             @FinishLevel.performed += instance.OnFinishLevel;
             @FinishLevel.canceled += instance.OnFinishLevel;
+            @SkipAnimatic.started += instance.OnSkipAnimatic;
+            @SkipAnimatic.performed += instance.OnSkipAnimatic;
+            @SkipAnimatic.canceled += instance.OnSkipAnimatic;
         }
 
         private void UnregisterCallbacks(IDebugActionsActions instance)
@@ -1368,6 +1460,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @FinishLevel.started -= instance.OnFinishLevel;
             @FinishLevel.performed -= instance.OnFinishLevel;
             @FinishLevel.canceled -= instance.OnFinishLevel;
+            @SkipAnimatic.started -= instance.OnSkipAnimatic;
+            @SkipAnimatic.performed -= instance.OnSkipAnimatic;
+            @SkipAnimatic.canceled -= instance.OnSkipAnimatic;
         }
 
         public void RemoveCallbacks(IDebugActionsActions instance)
@@ -1422,5 +1517,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnDebugReset(InputAction.CallbackContext context);
         void OnFinishLevel(InputAction.CallbackContext context);
+        void OnSkipAnimatic(InputAction.CallbackContext context);
     }
 }

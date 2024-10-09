@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Video;
 
 public class DebugManager : MonoBehaviour
 {
@@ -6,12 +7,14 @@ public class DebugManager : MonoBehaviour
     {
         InputManager.Instance.OnDebugReset += ResetGame;
         InputManager.Instance.OnFinishLevel += FinishLevel;
+        InputManager.Instance.OnSkipAnimatic += SkipAnimatic;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnDebugReset -= ResetGame;
         InputManager.Instance.OnFinishLevel -= FinishLevel;
+        InputManager.Instance.OnSkipAnimatic -= SkipAnimatic;
     }
 
     private void ResetGame()
@@ -25,5 +28,13 @@ public class DebugManager : MonoBehaviour
         var decoNav = FindFirstObjectByType<DecorationNavigate>(FindObjectsInactive.Include);
         decoNav.InDecorationScene = true;
         decoNav.gameObject.SetActive(true);
+    }
+
+    private void SkipAnimatic()
+    {
+        if (!GameSceneManager.Instance.CurrentScene.name.Equals("LevelSelectScene")) return;
+
+        var vc = FindFirstObjectByType<VideoController>();
+        if (vc.GetComponent<VideoPlayer>().enabled) vc.FinishAnimatic();
     }
 }

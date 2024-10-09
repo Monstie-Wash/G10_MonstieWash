@@ -58,6 +58,10 @@ public class InputManager : MonoBehaviour
     public event Action OnFinishLevel_Started;
     public event Action OnFinishLevel;
     public event Action OnFinishLevel_Ended;
+
+    public event Action OnSkipAnimatic_Started;
+    public event Action OnSkipAnimatic;
+    public event Action OnSkipAnimatic_Ended;
     #endregion
     #endregion
 
@@ -147,6 +151,10 @@ public class InputManager : MonoBehaviour
         m_playerInput.DebugActions.FinishLevel.started += FinishLevel_started;
         m_playerInput.DebugActions.FinishLevel.performed += FinishLevel_performed;
         m_playerInput.DebugActions.FinishLevel.canceled += FinishLevel_canceled;
+
+        m_playerInput.DebugActions.SkipAnimatic.started += SkipAnimatic_started;
+        m_playerInput.DebugActions.SkipAnimatic.performed += SkipAnimatic_performed;
+        m_playerInput.DebugActions.SkipAnimatic.canceled += SkipAnimatic_canceled;
         #endregion
     }
 
@@ -204,6 +212,10 @@ public class InputManager : MonoBehaviour
         m_playerInput.DebugActions.FinishLevel.started -= FinishLevel_started;
         m_playerInput.DebugActions.FinishLevel.performed -= FinishLevel_performed;
         m_playerInput.DebugActions.FinishLevel.canceled -= FinishLevel_canceled;
+
+        m_playerInput.DebugActions.SkipAnimatic.started -= SkipAnimatic_started;
+        m_playerInput.DebugActions.SkipAnimatic.performed -= SkipAnimatic_performed;
+        m_playerInput.DebugActions.SkipAnimatic.canceled -= SkipAnimatic_canceled;
         #endregion
     }
 
@@ -450,6 +462,26 @@ public class InputManager : MonoBehaviour
     {
         UpdateInputDevice(context.control.device);
         OnFinishLevel_Ended?.Invoke();
+    }
+    #endregion
+
+    #region SkipAnimatic
+    private void SkipAnimatic_started(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnSkipAnimatic_Started?.Invoke();
+    }
+
+    private void SkipAnimatic_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnSkipAnimatic?.Invoke();
+    }
+
+    private void SkipAnimatic_canceled(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnSkipAnimatic_Ended?.Invoke();
     }
     #endregion
     #endregion

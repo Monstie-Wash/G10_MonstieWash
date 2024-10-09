@@ -69,6 +69,8 @@ public class GameSceneManager : MonoBehaviour
                 else AllLevelScenes.Add(gameScene.SceneName);
             }
         }
+
+        m_currentScene = gameObject.scene;
     }
 
     /// <summary>
