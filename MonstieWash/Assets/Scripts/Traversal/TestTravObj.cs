@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class TestTravObj : MonoBehaviour, INavigator
 
     private string m_targetScene;
 
+	public event Action<Button, bool> OnStateChanged;
+
     public GameScene TargetScene { get => targetScene; set => targetScene = value; }
 
     public void Awake()
@@ -17,23 +20,28 @@ public class TestTravObj : MonoBehaviour, INavigator
         else m_targetScene = targetScene.SceneName;
     }
 
-	private void OnEnable()
+    private void OnEnable()
 	{
 		GameSceneManager.Instance.OnSceneChanged += OnSceneChanged;
-	}
+    }
 
 	private void OnDisable()
 	{
 		GameSceneManager.Instance.OnSceneChanged -= OnSceneChanged;
-	}
+    }
 
 	private void OnSceneChanged()
 	{
 		if (GameSceneManager.Instance.CurrentScene.name == targetScene.name)
 		{
 			button.interactable = false;
+			OnStateChanged?.Invoke(button, false);
 		}
-		else button.interactable = true;
+		else
+		{
+			button.interactable = true;
+			OnStateChanged?.Invoke(button, true);
+		}
 	}
 
 	public void OnClicked()

@@ -259,6 +259,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3048519194275305867, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -3474547559559131886, guid: 4eb8be04faf4efd4394d9ec1baeaefea, type: 3}
     - target: {fileID: 3171940478322963763, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -306,6 +310,10 @@ PrefabInstance:
     - target: {fileID: 4172878646121257948, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4570413979519613831, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
+      propertyPath: m_Name
+      value: A Button
       objectReference: {fileID: 0}
     - target: {fileID: 4616425057889726121, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
       propertyPath: m_AnchorMax.y

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Brush
   m_EditorClassIdentifier: 
   toolName: Brush
-  mask: {fileID: 21300000, guid: 0164c7e401b05ec4c9f268127bc98a86, type: 3}
-  size: 2
+  mask: {fileID: 21300000, guid: 05cfd3d621785c54f821f6030b2bd2c8, type: 3}
+  size: 3
   doNotErase: 0
   inputStrength: 66
   erasableLayers: 0000000002000000

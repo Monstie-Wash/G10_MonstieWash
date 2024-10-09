@@ -14,6 +14,8 @@ public class NavigationUI : MonoBehaviour
 	[SerializeField] private float tilePadding = 1.4f; //Seems like a nice number. Means that the UI doesn't overlap with the bag on Mimic.
 
     private List<GameScene> m_gameScenes;
+    private List<MonsterController> m_monsterControllers = new();
+    private Button m_currentlyActiveButton;
 
     void Awake()
     {
@@ -25,6 +27,21 @@ public class NavigationUI : MonoBehaviour
         m_gameScenes = GameSceneManager.Instance.CurrentLevelScenes;
 
         InstantiateUI();
+
+        GameSceneManager.Instance.OnMonsterScenesLoaded += OnMonsterScenesLoaded;
+    }
+
+    private void OnMonsterScenesLoaded()
+    {
+        GameSceneManager.Instance.OnMonsterScenesLoaded -= OnMonsterScenesLoaded;
+
+        var controllers = FindObjectsByType<MonsterController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var controller in controllers)
+        {
+            m_monsterControllers.Add(controller);
+            controller.OnAttackBegin += MonsterController_OnAttackStart;
+            controller.OnAttackEnd += MonsterController_OnAttackEnd;
+        }
     }
 
     private void InstantiateUI ()
@@ -38,7 +55,8 @@ public class NavigationUI : MonoBehaviour
         {
             buttonTile.GetComponent<Image>().sprite = scene.SceneThumb;
             buttonTile.GetComponent<TestTravObj>().TargetScene = scene;
-            Instantiate(buttonTile, navPanel.transform);
+            var buttonObj = Instantiate(buttonTile, navPanel.transform);
+            buttonObj.GetComponent<TestTravObj>().OnStateChanged += OnButtonStateChanged;
         }
 
         var peSize = panelEnd.GetComponent<RectTransform>();
@@ -49,4 +67,19 @@ public class NavigationUI : MonoBehaviour
 		peSize.anchoredPosition = new Vector2(0, -npSize.rect.height / 2.0f);
 		Instantiate(panelEnd, gameObject.transform);
 	}
+
+    private void OnButtonStateChanged(Button button, bool enabled)
+    {
+        if (enabled) m_currentlyActiveButton = button;
+    }
+
+    private void MonsterController_OnAttackStart()
+    {
+        m_currentlyActiveButton.interactable = false;
+    }
+
+    private void MonsterController_OnAttackEnd()
+    {
+        m_currentlyActiveButton.interactable = true;
+    }
 }

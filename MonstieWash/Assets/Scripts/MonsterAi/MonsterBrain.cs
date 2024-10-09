@@ -29,6 +29,8 @@ public class MonsterBrain : MonoBehaviour
     #region Attacks
     [Tooltip("Dirt that shows up on monster attack.")][SerializeField] private GameObject attackDirt;
     [SerializeField] private int numOfDirt = 3;
+    [SerializeField] private int maxNumOfDirt = 3;
+    private bool m_isAttacking = false;
     
     public event Action MonsterAttack;    // Monster attack event.
     #endregion
@@ -274,13 +276,15 @@ public class MonsterBrain : MonoBehaviour
             // Perform the attack and reset the flinch count
             MonsterAttack?.Invoke();
             m_flinchCount = 0;
+            m_isAttacking = true;
             
             var monsterController = FindFirstObjectByType<MonsterController>();
             Action onAttackComplete = null;
             onAttackComplete = delegate ()
             {
                 monsterController.OnAttackEnd -= onAttackComplete;
-                SpawnDirt();
+                if (maxNumOfDirt > 0) SpawnDirt();
+                m_isAttacking = false;
             };
             monsterController.OnAttackEnd += onAttackComplete;
         }
@@ -376,6 +380,8 @@ public class MonsterBrain : MonoBehaviour
 
     public void Flinch()
     {
+        if (m_isAttacking) return;
+
         m_flinchCount++;
         OnFlinch?.Invoke();
         // Check to see whether the Monstie should attack
@@ -393,8 +399,11 @@ public class MonsterBrain : MonoBehaviour
 
         for (int i = 0; i < numOfDirt; i++)
         {
-            var spawnPosX = UnityEngine.Random.Range(-halfMonsterWidth, halfMonsterWidth);
-            var spawnPosY = UnityEngine.Random.Range(-halfMonsterHeight, halfMonsterHeight);
+            if (maxNumOfDirt <= 0) continue;
+            maxNumOfDirt--;
+
+            var spawnPosX = UnityEngine.Random.Range(-halfMonsterWidth, halfMonsterWidth) + monsterCollider.bounds.center.x;
+            var spawnPosY = UnityEngine.Random.Range(-halfMonsterHeight, halfMonsterHeight) + monsterCollider.bounds.center.y;
             var spawnPos = new Vector3(spawnPosX, spawnPosY);
             var rotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f));
             var obj = Instantiate(attackDirt, spawnPos, rotation, taskContainer.transform);
