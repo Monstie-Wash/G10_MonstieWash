@@ -603,7 +603,7 @@ MonoBehaviour:
   - {fileID: 335507892455895994}
   - {fileID: 4469738196506430070}
   Animatic: {fileID: 32900000, guid: a5ecb262b46d59744a489734f86cbf7b, type: 3}
-  levelFollowingAnimatic: 1
+  levelFollowingAnimatic: 2
 --- !u!1 &788627209
 GameObject:
   m_ObjectHideFlags: 0
