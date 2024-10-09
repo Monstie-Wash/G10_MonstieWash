@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class VideoController : MonoBehaviour
 {
@@ -36,14 +37,14 @@ public class VideoController : MonoBehaviour
 
     private void OnEnable()
     {
-        InputManager.Instance.OnMove += MovePerformed;
-        InputManager.Instance.OnMove_Ended += MoveEnded;
+        InputManager.Instance.OnMenuMove += MovePerformed;
+        InputManager.Instance.OnMenuMove_Ended += MoveEnded;
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.OnMove -= MovePerformed;
-        InputManager.Instance.OnMove_Ended -= MoveEnded;
+        InputManager.Instance.OnMenuMove -= MovePerformed;
+        InputManager.Instance.OnMenuMove_Ended -= MoveEnded;
     }
 
     /// <summary>
@@ -110,9 +111,7 @@ public class VideoController : MonoBehaviour
     public void PlayAnimatic()
     {
         // disable all forms of player input during animatic
-        InputSystem.DisableDevice(Keyboard.current);
-        InputSystem.DisableDevice(Mouse.current);
-        m_inputManager.Disable();
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.None);
 
         // play animatic
         m_vPlayer.clip = Animatic;
@@ -168,9 +167,7 @@ public class VideoController : MonoBehaviour
         GameSceneManager.Instance.StartNewLevel(levelFollowingAnimatic);
 
         // re-enable player input
-        InputSystem.EnableDevice(Keyboard.current);
-        InputSystem.EnableDevice(Mouse.current);
-        m_inputManager.Enable();
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
 
         // disable this
         m_vPlayer.enabled = false;
