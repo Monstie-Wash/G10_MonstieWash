@@ -36,9 +36,11 @@ public class GalleryManager : ImageLoader
         if (Directory.Exists(savePath)) fileCount = Directory.GetFiles(savePath).Length;
 
         PolaroidTransform[] polaroidTransforms = { }; // Only used when there is more than one polaroid saved
-        if (fileCount > 1) polaroidTransforms = ReadPolaroidTransforms();
-
-        CorrectMismatch(ref polaroidTransforms, fileCount); // Rewrite PolaroidPositions.txt when mismatch occurs
+        if (fileCount > 1)
+        {
+            polaroidTransforms = ReadPolaroidTransforms();
+            CorrectMismatch(ref polaroidTransforms, fileCount); // Rewrite PolaroidPositions.txt when mismatch occurs
+        }
 
         // Oldest polaroids to newest polaroids
         for (int i = 0; i < fileCount; i++)
@@ -125,12 +127,12 @@ public class GalleryManager : ImageLoader
     /// <param name="polaroidCount">The number of polaroids saved.</param>
     private void CorrectMismatch(ref PolaroidTransform[] polaroidTransforms, int polaroidCount)
     {
-        if (polaroidTransforms.Length != polaroidCount)
+        if (polaroidTransforms.Length != polaroidCount - 1)
         {
             var path = Application.persistentDataPath + "/PolaroidSaving/PolaroidPositions.txt";
             using (var outputFile = File.CreateText(path))
             {
-                for (int l = 0; l < polaroidCount; l++)
+                for (int l = 0; l < polaroidCount - 1; l++)
                 {
                     var xPos = Random.Range(bounds.min.x, bounds.max.x);
                     var yPos = Random.Range(bounds.min.y, bounds.max.y);
