@@ -31,7 +31,7 @@ public class GalleryManager : ImageLoader
         var playerHand = FindFirstObjectByType<PlayerHand>().gameObject;
         playerHand.AddComponent<GalleryInteraction>();
 
-        var savePath = Application.persistentDataPath + saveLocation;
+        var savePath = Path.Combine(Application.persistentDataPath, saveLocation);
         var fileCount = Directory.GetFiles(savePath).Length;
 
         PolaroidTransform[] polaroidTransforms = { }; // Only used when there is more than one polaroid saved
