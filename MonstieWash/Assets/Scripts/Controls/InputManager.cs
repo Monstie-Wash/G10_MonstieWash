@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -48,6 +49,10 @@ public class InputManager : MonoBehaviour
 	public event Action OnAltSelect_Started;
 	public event Action OnAltSelect;
 	public event Action OnAltSelect_Ended;
+
+    public event Action OnMenuMove_Started;
+    public event Action<Vector2> OnMenuMove;
+    public event Action OnMenuMove_Ended;
 	#endregion
 
 	#region DebugActions
@@ -138,9 +143,9 @@ public class InputManager : MonoBehaviour
 		m_playerInput.MenuActions.AltSelect.performed += AltSelect_performed;
 		m_playerInput.MenuActions.AltSelect.canceled += AltSelect_canceled;
 
-        m_playerInput.MenuActions.Move.started += Move_started;
-        m_playerInput.MenuActions.Move.performed += Move_performed;
-        m_playerInput.MenuActions.Move.canceled += Move_canceled;
+        m_playerInput.MenuActions.Move.started += Menu_Move_started;
+        m_playerInput.MenuActions.Move.performed += Menu_Move_performed;
+        m_playerInput.MenuActions.Move.canceled += Menu_Move_canceled;
         #endregion
 
         #region DebugActions Subscription
@@ -199,9 +204,9 @@ public class InputManager : MonoBehaviour
 		m_playerInput.MenuActions.AltSelect.performed -= AltSelect_performed;
 		m_playerInput.MenuActions.AltSelect.canceled -= AltSelect_canceled;
 
-        m_playerInput.MenuActions.Move.started -= Move_started;
-        m_playerInput.MenuActions.Move.performed -= Move_performed;
-        m_playerInput.MenuActions.Move.canceled -= Move_canceled;
+        m_playerInput.MenuActions.Move.started -= Menu_Move_started;
+        m_playerInput.MenuActions.Move.performed -= Menu_Move_performed;
+        m_playerInput.MenuActions.Move.canceled -= Menu_Move_canceled;
         #endregion
 
         #region DebugActions Subscription
@@ -300,7 +305,6 @@ public class InputManager : MonoBehaviour
     }
     #endregion
 
-
     #region Scroll
     private void Scroll_started(InputAction.CallbackContext context)
     {
@@ -379,12 +383,32 @@ public class InputManager : MonoBehaviour
         UpdateInputDevice(context.control.device);
         OnScan_Ended?.Invoke();
     }
-	#endregion
-	#endregion
+    #endregion
+    #endregion
 
-	#region MenuInput
-	#region Cancel
-	private void Cancel_started(InputAction.CallbackContext context)
+    #region MenuInput
+    #region Move
+    private void Menu_Move_started(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnMenuMove_Started?.Invoke();
+    }
+
+    private void Menu_Move_performed(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnMenuMove?.Invoke(context.ReadValue<Vector2>());
+    }
+
+    private void Menu_Move_canceled(InputAction.CallbackContext context)
+    {
+        UpdateInputDevice(context.control.device);
+        OnMenuMove_Ended?.Invoke();
+    }
+    #endregion
+
+    #region Cancel
+    private void Cancel_started(InputAction.CallbackContext context)
 	{
 		UpdateInputDevice(context.control.device);
 		OnCancel_Started?.Invoke();
@@ -512,6 +536,8 @@ public class InputManager : MonoBehaviour
                     m_playerInput.PlayerActions.Disable();
                     m_playerInput.MenuActions.Disable();
                     m_playerInput.DebugActions.Enable();
+                    SetCursorMode(true);
+                    FindFirstObjectByType<EventSystem>().sendNavigationEvents = false;
                 }
                 break;
             case ControlScheme.PlayerActions:
@@ -519,6 +545,8 @@ public class InputManager : MonoBehaviour
                     m_playerInput.MenuActions.Disable();
                     m_playerInput.PlayerActions.Enable();
                     m_playerInput.DebugActions.Enable();
+                    SetCursorMode(true);
+                    FindFirstObjectByType<EventSystem>().sendNavigationEvents = true;
                 }
                 break;
             case ControlScheme.MenuActions:
@@ -526,6 +554,8 @@ public class InputManager : MonoBehaviour
                     m_playerInput.PlayerActions.Disable();
                     m_playerInput.MenuActions.Enable();
                     m_playerInput.DebugActions.Enable();
+                    SetCursorMode(false);
+                    FindFirstObjectByType<EventSystem>().sendNavigationEvents = true;
                 }
                 break;
         }

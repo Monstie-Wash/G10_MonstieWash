@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class VideoController : MonoBehaviour
 {
@@ -31,17 +33,18 @@ public class VideoController : MonoBehaviour
     private float m_timeSinceLastInput; //How long since player moved mouse/joystick.
     private bool m_moving; //Whether player is moving mouse/joystick currently.
     private SoundPlayer soundPlayer;
+    private InputManager m_inputManager;
 
     private void OnEnable()
     {
-        InputManager.Instance.OnMove += MovePerformed;
-        InputManager.Instance.OnMove_Ended += MoveEnded;
+        InputManager.Instance.OnMenuMove += MovePerformed;
+        InputManager.Instance.OnMenuMove_Ended += MoveEnded;
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.OnMove -= MovePerformed;
-        InputManager.Instance.OnMove_Ended -= MoveEnded;
+        InputManager.Instance.OnMenuMove -= MovePerformed;
+        InputManager.Instance.OnMenuMove_Ended -= MoveEnded;
     }
 
     /// <summary>
@@ -67,6 +70,7 @@ public class VideoController : MonoBehaviour
     {
         soundPlayer = FindFirstObjectByType<SoundPlayer>();
         m_vPlayer = GetComponent<VideoPlayer>();
+        m_inputManager = FindFirstObjectByType<InputManager>();
         m_vPlayer.renderMode = VideoRenderMode.CameraFarPlane;
         status = Status.Title;
         if (playTitleOnLoad) PlayTitleVideo();
@@ -105,7 +109,11 @@ public class VideoController : MonoBehaviour
     /// Sets correct settings and plays animatic.
     /// </summary>
     public void PlayAnimatic()
-    {      
+    {
+        // disable all forms of player input during animatic
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.None);
+
+        // play animatic
         m_vPlayer.clip = Animatic;
         m_vPlayer.isLooping = false;
         m_vPlayer.enabled = true;
@@ -157,6 +165,11 @@ public class VideoController : MonoBehaviour
         StopVideo();
         status = Status.Idle;
         GameSceneManager.Instance.StartNewLevel(levelFollowingAnimatic);
+
+        // re-enable player input
+        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.PlayerActions);
+
+        // disable this
         m_vPlayer.enabled = false;
     }
 }

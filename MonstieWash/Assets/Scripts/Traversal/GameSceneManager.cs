@@ -84,8 +84,6 @@ public class GameSceneManager : MonoBehaviour
         SetSceneActive(initialScene.SceneName, true);
 
         m_currentScene = SceneManager.GetSceneByName(initialScene.SceneName);
-        InputManager.Instance.SetCursorMode(false);
-        InputManager.Instance.SetControlScheme(InputManager.ControlScheme.MenuActions);
         //MusicManager.Instance.SetMusic(MusicManager.MusicType.Morning); Animatic sound plays over this now.
         SetSceneActive(loadingScene.SceneName, false);
     }
