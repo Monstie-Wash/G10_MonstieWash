@@ -402,8 +402,8 @@ public class MonsterBrain : MonoBehaviour
             if (maxNumOfDirt <= 0) continue;
             maxNumOfDirt--;
 
-            var spawnPosX = UnityEngine.Random.Range(-halfMonsterWidth, halfMonsterWidth);
-            var spawnPosY = UnityEngine.Random.Range(-halfMonsterHeight, halfMonsterHeight);
+            var spawnPosX = UnityEngine.Random.Range(-halfMonsterWidth, halfMonsterWidth) + monsterCollider.bounds.center.x;
+            var spawnPosY = UnityEngine.Random.Range(-halfMonsterHeight, halfMonsterHeight) + monsterCollider.bounds.center.y;
             var spawnPos = new Vector3(spawnPosX, spawnPosY);
             var rotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f));
             var obj = Instantiate(attackDirt, spawnPos, rotation, taskContainer.transform);

@@ -189,6 +189,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2054118432}
     m_Modifications:
+    - target: {fileID: 233640108633167322, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
       propertyPath: m_Name
       value: Dirt_Clump
@@ -406,6 +410,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dirt (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.46398035
@@ -618,6 +626,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dirt (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.46398035
@@ -696,6 +708,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dirt (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6798653
@@ -769,6 +785,10 @@ PrefabInstance:
     - target: {fileID: 487633809713049485, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_Name
       value: Dirt (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
@@ -896,6 +916,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4500140306808643018, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4938277568639111315, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -918,6 +942,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2054118432}
     m_Modifications:
+    - target: {fileID: -2142071259344566989, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
       propertyPath: m_Name
       value: Mold
@@ -973,6 +1001,10 @@ PrefabInstance:
     - target: {fileID: 3772029328255838128, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8297278871180745052, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
+      propertyPath: layer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1784,6 +1816,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2054118432}
     m_Modifications:
+    - target: {fileID: -2142071259344566989, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
       propertyPath: m_Name
       value: Mold (1)
@@ -1839,6 +1875,10 @@ PrefabInstance:
     - target: {fileID: 3772029328255838128, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8297278871180745052, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
+      propertyPath: layer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1948,6 +1988,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dirt (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.46398035
@@ -2050,6 +2094,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2054118432}
     m_Modifications:
+    - target: {fileID: 233640108633167322, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
       propertyPath: m_Name
       value: Dirt_Clump (1)
@@ -2184,6 +2232,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4500140306808643018, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4938277568639111315, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2209,6 +2261,10 @@ PrefabInstance:
     - target: {fileID: 487633809713049485, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_Name
       value: Dirt (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
@@ -2390,6 +2446,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dirt (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.46398035
@@ -2467,6 +2527,10 @@ PrefabInstance:
     - target: {fileID: 487633809713049485, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_Name
       value: Dirt (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
@@ -2786,6 +2850,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2054118432}
     m_Modifications:
+    - target: {fileID: 233640108633167322, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
+      propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
       propertyPath: m_Name
       value: Dirt_Clump (2)
@@ -2937,6 +3005,10 @@ PrefabInstance:
     - target: {fileID: 487633809713049485, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_Name
       value: Dirt
+      objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalScale.x
@@ -3115,6 +3187,10 @@ PrefabInstance:
     - target: {fileID: 3772029328255838128, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4500140306808643018, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
+      propertyPath: score
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4938277568639111315, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
       propertyPath: m_Sprite

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Water Staff
   m_EditorClassIdentifier: 
   toolName: Water Staff
-  mask: {fileID: 21300000, guid: ad28d0a2b7038634397d714f30e18305, type: 3}
-  size: 2
+  mask: {fileID: 21300000, guid: e71378431c91e534aae0db07bfedc3e7, type: 3}
+  size: 3
   doNotErase: 0
   inputStrength: 100
   erasableLayers: 0000000001000000

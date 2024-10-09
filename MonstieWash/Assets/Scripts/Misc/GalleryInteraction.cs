@@ -12,6 +12,7 @@ public class GalleryInteraction : MonoBehaviour
 
     private void Start()
     {
+        transform.position = Vector3.zero;
         m_galleryManager = FindFirstObjectByType<GalleryManager>();
         m_finishButton = FindFirstObjectByType<FinishLevelButton>().gameObject;
         m_finishButton.SetActive(false);

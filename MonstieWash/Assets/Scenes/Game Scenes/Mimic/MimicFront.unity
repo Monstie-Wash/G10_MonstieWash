@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4500140306808643018, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
+      propertyPath: score
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4938277568639111315, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -204,6 +208,10 @@ PrefabInstance:
     - target: {fileID: 487633809713049485, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_Name
       value: Dirt
+      objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalPosition.x
@@ -663,6 +671,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 131483679}
     m_Modifications:
+    - target: {fileID: -2142071259344566989, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
+      propertyPath: score
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8b5d2e1ced276be4bae7a0f68ffc582e, type: 3}
       propertyPath: m_Name
       value: Mold
@@ -729,6 +741,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 701978726}
     m_Modifications:
+    - target: {fileID: 233640108633167322, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
+      propertyPath: score
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
       propertyPath: m_Name
       value: Dirt_Clump (1)
@@ -834,6 +850,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 701978726}
     m_Modifications:
+    - target: {fileID: 233640108633167322, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
+      propertyPath: score
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
       propertyPath: m_Name
       value: Dirt_Clump(2)
@@ -984,6 +1004,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4500140306808643018, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
+      propertyPath: score
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4938277568639111315, guid: a3e76050a0540a246a72f2fd58d45ecf, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1014,6 +1038,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 701978726}
     m_Modifications:
+    - target: {fileID: 233640108633167322, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
+      propertyPath: score
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 487633809713049485, guid: 8121d4f1152a2904ab42bd3f6e93d082, type: 3}
       propertyPath: m_Name
       value: Dirt_Clump
@@ -1792,6 +1820,10 @@ PrefabInstance:
     - target: {fileID: 487633809713049485, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_Name
       value: Dirt
+      objectReference: {fileID: 0}
+    - target: {fileID: 1944687891999862071, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
+      propertyPath: score
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3772029328255838128, guid: d1925c9cf3e58d34d9a95cd0e08c5844, type: 3}
       propertyPath: m_LocalPosition.x
