@@ -500,7 +500,7 @@ public class DecorationManager : MonoBehaviour
         tempText.Apply();
 
         //Apply a modifier to end of file based on count of objects stored.
-        var saveLocation = Application.persistentDataPath + savePath;
+        var saveLocation = Application.persistentDataPath + "/PolaroidSaving" + savePath;
         Directory.CreateDirectory(saveLocation);
         var fileCount = Directory.GetFiles(saveLocation).Length;
 
