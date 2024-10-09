@@ -957,7 +957,7 @@
                     "id": "2c44cf7d-891f-4cb9-8287-3edca9ae32fe",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=1)",
+                    "interactions": "Hold(duration=3)",
                     "initialStateCheck": false
                 }
             ],
@@ -974,15 +974,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "608d33d2-228d-48b6-abc4-0bec60ed231d",
+                    "name": "One Modifier",
+                    "id": "b400d4fe-f408-4d9f-a86e-d009effe6f1c",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugReset",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "7460915f-9970-4aec-bbfd-a4d68bcd952c",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugReset",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "50ae386c-455c-49af-9716-ef834ff7936f",
                     "path": "<Gamepad>/rightStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "DebugReset",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -994,6 +1016,39 @@
                     "action": "FinishLevel",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "333debf6-d285-421e-a314-80f7ac4adb1b",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FinishLevel",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "fc9a1709-1dc3-49e7-91b4-5a9f394ab611",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FinishLevel",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "d0c3828d-cdc7-4546-91df-47d0fdfdf1a4",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FinishLevel",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
