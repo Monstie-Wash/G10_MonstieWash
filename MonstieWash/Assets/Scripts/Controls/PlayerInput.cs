@@ -119,7 +119,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""7775d467-062c-4e81-9047-256c16ea19c4"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone(min=9.5,max=9.5)"",
                     ""groups"": """",
                     ""action"": ""Activate"",
                     ""isComposite"": false,
