@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.InputSystem;
 
 public class VideoController : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class VideoController : MonoBehaviour
     private float m_timeSinceLastInput; //How long since player moved mouse/joystick.
     private bool m_moving; //Whether player is moving mouse/joystick currently.
     private SoundPlayer soundPlayer;
+    private InputManager m_inputManager;
 
     private void OnEnable()
     {
@@ -67,6 +69,7 @@ public class VideoController : MonoBehaviour
     {
         soundPlayer = FindFirstObjectByType<SoundPlayer>();
         m_vPlayer = GetComponent<VideoPlayer>();
+        m_inputManager = FindFirstObjectByType<InputManager>();
         m_vPlayer.renderMode = VideoRenderMode.CameraFarPlane;
         status = Status.Title;
         if (playTitleOnLoad) PlayTitleVideo();
@@ -105,7 +108,13 @@ public class VideoController : MonoBehaviour
     /// Sets correct settings and plays animatic.
     /// </summary>
     public void PlayAnimatic()
-    {      
+    {
+        // disable all forms of player input during animatic
+        InputSystem.DisableDevice(Keyboard.current);
+        InputSystem.DisableDevice(Mouse.current);
+        m_inputManager.Disable();
+
+        // play animatic
         m_vPlayer.clip = Animatic;
         m_vPlayer.isLooping = false;
         m_vPlayer.enabled = true;
@@ -157,6 +166,13 @@ public class VideoController : MonoBehaviour
         StopVideo();
         status = Status.Idle;
         GameSceneManager.Instance.StartNewLevel(levelFollowingAnimatic);
+
+        // re-enable player input
+        InputSystem.EnableDevice(Keyboard.current);
+        InputSystem.EnableDevice(Mouse.current);
+        m_inputManager.Enable();
+
+        // disable this
         m_vPlayer.enabled = false;
     }
 }
