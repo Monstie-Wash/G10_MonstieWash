@@ -1297,12 +1297,12 @@ MonoBehaviour:
   - prompt: {fileID: 1734384178934781368}
     eventListen: 1
     promptCompletion: 2
-    value: 0.5
+    value: 0.25
     scriptedEvent: 0
   - prompt: {fileID: 1244945096486855166}
     eventListen: 2
     promptCompletion: 1
-    value: 2
+    value: 1
     scriptedEvent: 0
   - prompt: {fileID: 2532625216321080376}
     eventListen: 3
@@ -1322,7 +1322,7 @@ MonoBehaviour:
   - prompt: {fileID: 1122825108535214267}
     eventListen: 9
     promptCompletion: 1
-    value: 3
+    value: 1
     scriptedEvent: 0
   - prompt: {fileID: 7413795151935393421}
     eventListen: 0
@@ -2558,7 +2558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &51491745187822302
 Transform:
   m_ObjectHideFlags: 0
