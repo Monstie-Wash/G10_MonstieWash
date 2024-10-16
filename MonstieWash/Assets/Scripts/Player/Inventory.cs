@@ -42,6 +42,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private int lastEarnedScore;
     public int LastEarnedScore { get { return lastEarnedScore; } set { lastEarnedScore = value; } }
 
+    [SerializeField] private bool showDebug;
+
     private void Awake()
     {
         //Ensure there is only one class of this existing and that it persists.
@@ -179,7 +181,7 @@ public class Inventory : MonoBehaviour
             ConsumablesManager cm;
             if (cm = FindFirstObjectByType<ConsumablesManager>())
             {
-            print("refreshing consumable ui from inv");
+                if (showDebug) print("refreshing consumable ui from inv");
                 cm.RefreshUI();
             }
     }
