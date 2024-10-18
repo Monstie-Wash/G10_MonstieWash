@@ -712,6 +712,8 @@ MonoBehaviour:
   camFlash: {fileID: 760505841}
   screenshotArea: {fileID: 341102340}
   savePath: /Polaroids
+  polaroidDisableObjects:
+  - {fileID: 1697589436599592764}
 --- !u!4 &573636384
 Transform:
   m_ObjectHideFlags: 0
@@ -1982,6 +1984,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Decoration Instructions
       objectReference: {fileID: 0}
+    - target: {fileID: 1659795626241239671, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2513571862146529119, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2199,6 +2205,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
+--- !u!1 &1697589436599592764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1659795626241239671, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
+  m_PrefabInstance: {fileID: 1697589436599592763}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3799121171791714579
 PrefabInstance:
   m_ObjectHideFlags: 0

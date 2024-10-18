@@ -39,6 +39,8 @@ public class DecorationManager : MonoBehaviour
     [SerializeField] private RectTransform screenshotArea;
     [Tooltip("Save Name ie; /Polaroid, will be stored in default application data path.")]
     [SerializeField] private string savePath;
+    [Tooltip("List of Objects to hide during polaroid screenshot")]
+    [SerializeField] private List<GameObject> polaroidDisableObjects;
 
     //Private
     private List<DecorationUi> m_barDecorations; //Decorations on the deco bar.    
@@ -485,6 +487,15 @@ public class DecorationManager : MonoBehaviour
         this.transform.GetChild(0).gameObject.SetActive(false);
         FindFirstObjectByType<DecorationNavigate>().gameObject.SetActive(false);
         m_hand.gameObject.SetActive(false);
+
+        //Check objects desired to disable are not null then disable them.
+        if (polaroidDisableObjects != null)
+        {
+            foreach(GameObject g in polaroidDisableObjects)
+            {
+                g.SetActive(false);
+            }
+        }
 
         //Wait for seconds and camera flash + sound here.
         camFlash.FadeIn();
