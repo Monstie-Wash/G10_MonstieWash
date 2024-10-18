@@ -469,6 +469,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1359834826722142030, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
   m_PrefabInstance: {fileID: 252062432}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &252062434 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1659795626241239671, guid: d37fe4d3bb6e5484d8c753e750268b93, type: 3}
+  m_PrefabInstance: {fileID: 252062432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &340639117
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,6 +687,8 @@ MonoBehaviour:
   camFlash: {fileID: 616396635}
   screenshotArea: {fileID: 433356351}
   savePath: /Polaroids
+  polaroidDisableObjects:
+  - {fileID: 252062434}
 --- !u!4 &404159188
 Transform:
   m_ObjectHideFlags: 0
