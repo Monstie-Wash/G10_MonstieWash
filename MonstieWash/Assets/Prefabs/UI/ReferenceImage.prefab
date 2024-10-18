@@ -179,6 +179,7 @@ MonoBehaviour:
   manager: {fileID: 0}
   quantityText: {fileID: 5249245392454697735}
   fadedBackground: {fileID: 4212251326135111733}
+  showDebug: 0
 --- !u!61 &1916922649006077514
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -259,7 +260,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 95.8, y: -38.5}
+  m_AnchoredPosition: {x: 96.6, y: -23.4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7649793352675905126

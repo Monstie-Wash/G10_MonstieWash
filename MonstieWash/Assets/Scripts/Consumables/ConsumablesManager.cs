@@ -7,7 +7,7 @@ using System;
 public class ConsumablesManager : MonoBehaviour
 {
 
-    [Tooltip("How far apart the consumables are in the UI")] [SerializeField] private int uiBorderDistance; //Distance between objects in the Ui;
+    [Tooltip("How far apart the consumables are in the UI")] [SerializeField] private float uiBorderDistance; //Distance between objects in the Ui;
     [Tooltip("How quickly Consumables move towards their open position")] [SerializeField] private float uiMoveSpeed; //How fast Ui Elements close and open;
     [Tooltip("Sprite to represent open bag.")] [SerializeField] private Sprite openSprite; //Sprite used to represent open bag.
     [Tooltip("Sprite to represent closed bag.")] [SerializeField] private Sprite closedSprite; //Sprite used to represent closed bag.
@@ -24,6 +24,7 @@ public class ConsumablesManager : MonoBehaviour
     private PlayerHand m_playerHand;
     private float m_TimeSinceLastHoldOrHover; //How long since the player held an item or hovered over the bag.
     [Tooltip("How long until the bag closes when not being interacted with.")] [SerializeField] private float bagRefreshTime; 
+    private float m_borderDistRelativeMultiplier;
 
     public bool holdingConsumable;
 
@@ -47,6 +48,7 @@ public class ConsumablesManager : MonoBehaviour
         inventory = FindFirstObjectByType<Inventory>();
         m_managerimage = gameObject.GetComponent<Image>();
         state = UiState.Closed;
+        m_borderDistRelativeMultiplier = 1920 / uiBorderDistance;
         RefreshUI();
     }
 
@@ -118,6 +120,9 @@ public class ConsumablesManager : MonoBehaviour
     /// </summary>
     public void RefreshUI()
     {
+        //Get screen width and change ui distance.
+        uiBorderDistance = Screen.width / m_borderDistRelativeMultiplier;
+
         //Generate new Ui objects
         foreach (Inventory.InventoryEntry itemData in inventory.StoredItemsList)
         {
@@ -167,6 +172,7 @@ public class ConsumablesManager : MonoBehaviour
         newImage.transform.position = this.transform.position;
         newImage.transform.GetChild(0).GetComponent<Image>().sprite = data.ItemData.Sprite;
         newImage.gameObject.SetActive(false);
+        newImage.gameObject.transform.localScale = new Vector3(0.83f, 0.83f, 0.83f);
 
         var newImageUi = newImage.transform.GetChild(0).GetComponent<UIConsumable>();
         newImageUi.fadedBackground.sprite = data.ItemData.Sprite;
@@ -218,6 +224,7 @@ public class ConsumablesManager : MonoBehaviour
         if (state != UiState.Closed) return;
         if (state == UiState.Opening) return;
 
+        RefreshUI();
         state = UiState.Opening;
         m_managerimage.sprite = openSprite;
     }
