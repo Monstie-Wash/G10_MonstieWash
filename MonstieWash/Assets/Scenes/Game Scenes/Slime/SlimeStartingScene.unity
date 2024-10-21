@@ -287,25 +287,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8775785613464145712, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
+      propertyPath: toolSwitcher
+      value: 
+      objectReference: {fileID: 1475573997}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7942194253567946431, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1369750622}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8168637763214906077, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 165354738}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
 --- !u!4 &165354734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7942194253567946431, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
-  m_PrefabInstance: {fileID: 165354733}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &165354735 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8168637763214906077, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
   m_PrefabInstance: {fileID: 165354733}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &165354736 stripped
@@ -319,31 +315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1640cfac3b933404b8fcf4cef7c94a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &165354737 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6151242935161151279, guid: 8224d585e82748442ae79dfd4e22549a, type: 3}
-  m_PrefabInstance: {fileID: 165354733}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c330dc06251f3da488d2b35918bf4d39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &165354738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165354735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 946df848361e23b4a9df0e4d79709451, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolSwitcher: {fileID: 1475573997}
-  taskTracker: {fileID: 165354737}
 --- !u!1001 &403964369
 PrefabInstance:
   m_ObjectHideFlags: 0
