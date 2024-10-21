@@ -36,7 +36,6 @@ public class Eraser : MonoBehaviour
         public ErasableLayerer.ErasableLayer layer { get; private set; }
 
         public bool Complete { get => erasableTask.Complete; }
-        public List<int> affectedPixels = new();
 
         private SpriteRenderer m_spriteRenderer;
 
