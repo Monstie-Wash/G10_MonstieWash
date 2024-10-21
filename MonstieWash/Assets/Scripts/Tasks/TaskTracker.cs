@@ -26,17 +26,7 @@ public class TaskTracker : MonoBehaviour
         m_soundPlayer = GetComponent<SoundPlayer>();
     }
 
-    private void OnEnable()
-    {
-        GameSceneManager.Instance.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
-    }
-
-    private void OnDisable()
-    {
-        GameSceneManager.Instance.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
-    }
-
-    private void RoomSaver_OnScenesLoaded()
+    public void Initialize()
     {
         AddTasks(FindObjectsByType<TaskData>(FindObjectsSortMode.None));
 
@@ -47,8 +37,6 @@ public class TaskTracker : MonoBehaviour
             var taskScene = task.gameObject.scene;
             if (!m_scenesCompleted.ContainsKey(taskScene)) m_scenesCompleted.Add(taskScene, false);
         }
-
-        GameSceneManager.Instance.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
     public void AddTasks(TaskData[] tasks)
@@ -56,6 +44,14 @@ public class TaskTracker : MonoBehaviour
         foreach (var obj in tasks)
         {
             m_taskData.Add(obj);
+        }
+    }
+
+    public void RemoveTasks(TaskData[] tasks)
+    {
+        foreach (var obj in tasks)
+        { 
+            m_taskData.Remove(obj);
         }
     }
 
@@ -67,7 +63,7 @@ public class TaskTracker : MonoBehaviour
 	{
         if (!m_taskData.Contains(task))
         {
-            Debug.LogWarning($"{task.Id} is not being tracked! Something went wrong!");
+            Debug.LogWarning($"{task.Name} is not being tracked! Something went wrong!");
             return;
         }
 

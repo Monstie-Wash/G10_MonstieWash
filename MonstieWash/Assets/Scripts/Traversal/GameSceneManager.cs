@@ -218,6 +218,7 @@ public class GameSceneManager : MonoBehaviour
         await Task.WhenAll(tasks);
 
         OnMonsterScenesLoaded?.Invoke();
+        await FindFirstObjectByType<LevelManager>().InitializeLevel();
 
         //Set all as inactive
         for (int i = 0; i < monsterScenes.Count; i++)

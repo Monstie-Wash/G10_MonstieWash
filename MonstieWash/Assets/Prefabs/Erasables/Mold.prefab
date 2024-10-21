@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2142071259344566989}
   - component: {fileID: 8297278871180745052}
   - component: {fileID: 8052595693567828647}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: Mold
   m_TagString: Erasable
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ec41a0aeeedc1408a6d28c1d386b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
+  id: 0
   progress: 0
   threshold: 98
   container: {fileID: 0}
@@ -136,7 +136,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

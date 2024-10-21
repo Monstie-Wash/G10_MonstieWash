@@ -88,7 +88,7 @@ public class Eraser : MonoBehaviour
 
     private void Start()
     {
-        InitializeTool();
+        tool.Initialize();
     }
 
     private void OnEnable()
@@ -184,14 +184,6 @@ public class Eraser : MonoBehaviour
             OnErasing_Ended?.Invoke(true, tool);
             m_isErasingClean = false;
         }
-    }
-
-    /// <summary>
-    /// Sets up the tool and related variables ready for use.
-    /// </summary>
-    public void InitializeTool()
-    {
-        tool.Initialize();
     }
 
     /// <summary>
@@ -370,8 +362,9 @@ public class Eraser : MonoBehaviour
         return vector.x * a + vector.y * b;
     }
 
-    public void RemoveErasable(string id)
+    public void RemoveErasable(GameObject obj)
     {
-        m_erasables.Remove(m_erasables.Find(erasable => erasable.erasableTask.Id.Equals(id)));
+        var erasable = m_erasables.Find(erasable => erasable.obj == obj);
+        m_erasables.Remove(erasable);
     }
 }
