@@ -9,6 +9,7 @@ public class DirtCombiner : MonoBehaviour
     [SerializeField] float scorePerDirt = 5f;
 
     private Vector3 combinedDirtPos;
+    private const float pixelsPerUnit = 108f;
 
     private void Start()
     {
@@ -19,7 +20,7 @@ public class DirtCombiner : MonoBehaviour
         var taskData = combinedDirt.GetComponent<TaskData>();
         taskData.Score = erasables.Length * scorePerDirt;
         var spriteRenderer = combinedDirt.GetComponent<SpriteRenderer>();
-        var sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
+        var sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f, pixelsPerUnit);
         spriteRenderer.sprite = sprite;
 
         foreach (var erasable in erasables)
@@ -53,8 +54,8 @@ public class DirtCombiner : MonoBehaviour
         var width = botRight.x - topLeft.x;
         var height = topLeft.y - botRight.y;
         var center = new Vector2(topLeft.x + (width / 2f), botRight.y + (height / 2f));
-        var textureWidth = Mathf.CeilToInt(width * 100);
-        var textureHeight = Mathf.CeilToInt(height * 100);
+        var textureWidth = Mathf.CeilToInt(width * pixelsPerUnit);
+        var textureHeight = Mathf.CeilToInt(height * pixelsPerUnit);
 
         combinedDirtPos = center;
 
