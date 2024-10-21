@@ -6,14 +6,19 @@ using UnityEngine.Experimental.AI;
 public class DirtCombiner : MonoBehaviour
 {
     [SerializeField] GameObject dirtPrefab;
+    [SerializeField] float scorePerDirt = 5f;
+
+    private Vector3 combinedDirtPos;
 
     private void Start()
     {
         var erasables = GameObject.FindGameObjectsWithTag("Erasable");
         var taskContainer = GameObject.FindGameObjectWithTag("TaskContainer");
-        var combinedDirt = Instantiate(dirtPrefab, taskContainer.transform);
-        var spriteRenderer = combinedDirt.GetComponent<SpriteRenderer>();
         var tex = GetCameraTexture();
+        var combinedDirt = Instantiate(dirtPrefab, combinedDirtPos, Quaternion.identity, taskContainer.transform);
+        var taskData = combinedDirt.GetComponent<TaskData>();
+        taskData.Score = erasables.Length * scorePerDirt;
+        var spriteRenderer = combinedDirt.GetComponent<SpriteRenderer>();
         var sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.one * 0.5f);
         spriteRenderer.sprite = sprite;
 
@@ -40,32 +45,37 @@ public class DirtCombiner : MonoBehaviour
             var erasableBounds = erasable.GetComponent<BoxCollider2D>().bounds;
             
             if (erasableBounds.min.x < topLeft.x) topLeft.x = erasableBounds.min.x;
-            if (erasableBounds.min.y > topLeft.y) topLeft.y = erasableBounds.min.y;
-            if (erasableBounds.max.x > botRight.x) botRight.x = erasableBounds.min.x;
-            if (erasableBounds.max.y < botRight.y) botRight.y = erasableBounds.min.y;
+            if (erasableBounds.max.y > topLeft.y) topLeft.y = erasableBounds.max.y;
+            if (erasableBounds.max.x > botRight.x) botRight.x = erasableBounds.max.x;
+            if (erasableBounds.min.y < botRight.y) botRight.y = erasableBounds.min.y;
         }
-        var topLeftScreen = Camera.main.WorldToScreenPoint(topLeft);
-        var botRightScreen = Camera.main.WorldToScreenPoint(botRight);
 
-        Rect rect = new Rect(topLeftScreen.x, topLeftScreen.y, botRightScreen.x - topLeftScreen.x, topLeftScreen.y - botRightScreen.y);
-        RenderTexture rt = RenderTexture.GetTemporary((int)rect.width, (int)rect.height);
-        Texture2D screenshot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGBA32, false);
+        var width = botRight.x - topLeft.x;
+        var height = topLeft.y - botRight.y;
+        var center = new Vector2(topLeft.x + (width / 2f), botRight.y + (height / 2f));
+        var textureWidth = Mathf.CeilToInt(width * 100);
+        var textureHeight = Mathf.CeilToInt(height * 100);
+
+        combinedDirtPos = center;
+
+        RenderTexture rt = RenderTexture.GetTemporary(textureWidth, textureHeight);
+        Texture2D screenshot = new Texture2D(textureWidth, textureHeight, TextureFormat.RGBA32, false);
 
         Camera tempCamera = new GameObject().AddComponent<Camera>();
 
         int erasableLayerMask = 1 << LayerMask.NameToLayer("Erasable");
         tempCamera.cullingMask = erasableLayerMask;
-
         tempCamera.targetTexture = rt;
-        tempCamera.transform.position -= Vector3.forward * 10f;
+        tempCamera.transform.position = new Vector3(center.x, center.y, -10f);
         tempCamera.orthographic = true;
-        tempCamera.orthographicSize = Camera.main.orthographicSize;
+        tempCamera.orthographicSize = height / 2f;
         tempCamera.backgroundColor = Color.clear;
+        tempCamera.clearFlags = CameraClearFlags.SolidColor;
 
         tempCamera.Render();
 
         RenderTexture.active = rt;
-        screenshot.ReadPixels(rect, 0, 0);
+        screenshot.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
         screenshot.Apply();
 
         Camera.main.targetTexture = null;

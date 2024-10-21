@@ -20,7 +20,7 @@ public class TaskData : MonoBehaviour
     public bool Complete { get => progress >= threshold; }
     public float Threshold { get => threshold; set => threshold = value; }
     public Transform Container { get => container; }
-	public float Score { get => score; }
+	public float Score { get => score; set => score = value; }
 	public TaskType TaskType { get => taskType; set => taskType = value; }
 
 	private void Awake()
@@ -29,4 +29,12 @@ public class TaskData : MonoBehaviour
         id = container.name;
         progress = 0f;
 	}
+
+    private void OnDestroy()
+    {
+        foreach (var eraser in FindObjectsByType<Eraser>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            eraser.RemoveErasable(Id);
+        }
+    }
 }

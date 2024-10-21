@@ -192,7 +192,6 @@ public class Eraser : MonoBehaviour
     public void InitializeTool()
     {
         tool.Initialize();
-        PopulateErasables();
     }
 
     /// <summary>
@@ -369,5 +368,10 @@ public class Eraser : MonoBehaviour
         var b = new Vector2(-sin, cos);
 
         return vector.x * a + vector.y * b;
+    }
+
+    public void RemoveErasable(string id)
+    {
+        m_erasables.Remove(m_erasables.Find(erasable => erasable.erasableTask.Id.Equals(id)));
     }
 }
