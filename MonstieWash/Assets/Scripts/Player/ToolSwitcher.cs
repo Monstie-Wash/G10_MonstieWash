@@ -27,27 +27,25 @@ public class ToolSwitcher : MonoBehaviour
         {
             var toolInstance = Instantiate(tool, toolHolder);
             m_toolInstances.Add(toolInstance);
+            toolInstance.SetActive(false);
         }
     }
 
     private void OnEnable()
     {
         InputManager.Instance.OnSwitchTool += Inputs_OnSwitchTool;
-        GameSceneManager.Instance.OnMonsterScenesLoaded += RoomSaver_OnScenesLoaded;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnSwitchTool -= Inputs_OnSwitchTool;
-        GameSceneManager.Instance.OnMonsterScenesLoaded -= RoomSaver_OnScenesLoaded;
     }
 
-    private void RoomSaver_OnScenesLoaded()
+    public void InitializeTools()
     {
         foreach (var tool in m_toolInstances)
         {
-            tool.GetComponent<Eraser>().InitializeTool();
-            tool.SetActive(false);
+            
         }
     }
     

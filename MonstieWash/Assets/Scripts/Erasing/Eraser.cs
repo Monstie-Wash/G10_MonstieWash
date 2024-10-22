@@ -59,19 +59,19 @@ public class Eraser : MonoBehaviour
         public void ApplyMask()
         {
             var colors = sprite.texture.GetPixels();
-            var newColors = new Color[maskPixels.Length];
+            var newColors = new byte[maskPixels.Length * 4];
             var erasedCount = 0;
 
-            for (int i = 0; i < newColors.Length; i++)
+            for (int i = 0; i < newColors.Length; i += 4)
             {
-                newColors[i].r = colors[i].r;
-                newColors[i].g = colors[i].g;
-                newColors[i].b = colors[i].b;
-                newColors[i].a = Mathf.Min((255 - maskPixels[i])/255f, colors[i].a);
-                if (newColors[i].a < 0.1f) erasedCount++;
+                newColors[i] = (byte)Mathf.RoundToInt(colors[i/4].r * 255);
+                newColors[i + 1] = (byte)Mathf.RoundToInt(colors[i/4].g * 255);
+                newColors[i + 2] = (byte)Mathf.RoundToInt(colors[i/4].b * 255);
+                newColors[i + 3] = (byte)Mathf.Min(255 - maskPixels[i/4], Mathf.RoundToInt(colors[i/4].a * 255));
+                if (newColors[i + 3] < 0.1f) erasedCount++;
             }
 
-            sprite.texture.SetPixels(newColors, 0);
+            sprite.texture.SetPixelData(newColors, 0);
             sprite.texture.Apply(false);
 
 			erasableTask.Progress = ((float)erasedCount / maskPixels.Length) * 100;
@@ -88,7 +88,7 @@ public class Eraser : MonoBehaviour
 
     private void Start()
     {
-        InitializeTool();
+        tool.Initialize();
     }
 
     private void OnEnable()
@@ -184,15 +184,6 @@ public class Eraser : MonoBehaviour
             OnErasing_Ended?.Invoke(true, tool);
             m_isErasingClean = false;
         }
-    }
-
-    /// <summary>
-    /// Sets up the tool and related variables ready for use.
-    /// </summary>
-    public void InitializeTool()
-    {
-        tool.Initialize();
-        PopulateErasables();
     }
 
     /// <summary>
@@ -369,5 +360,11 @@ public class Eraser : MonoBehaviour
         var b = new Vector2(-sin, cos);
 
         return vector.x * a + vector.y * b;
+    }
+
+    public void RemoveErasable(GameObject obj)
+    {
+        var erasable = m_erasables.Find(erasable => erasable.obj == obj);
+        m_erasables.Remove(erasable);
     }
 }
